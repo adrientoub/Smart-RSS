@@ -51,10 +51,6 @@ const Settings = BB.Model.extend({
         sortBy2: "title",
         askRmPinned: "trashed",
         titleIsLink: true,
-        soundNotifications: false,
-        defaultSound: "",
-        useSound: ":user",
-        soundVolume: 1, // min: 0, max: 1
         showSpinner: true,
         concurrentDownloads: 5,
         updateFrequency: 15, // in minutes

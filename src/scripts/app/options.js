@@ -76,11 +76,6 @@ const documentReady = () => {
         item.addEventListener("change", handleCheck);
     });
 
-    document.querySelector("#useSound").addEventListener("change", () => {
-        bg.loader.playNotificationSound();
-    });
-
-    document.querySelector("#default-sound").addEventListener("change", handleDefaultSound);
     document.querySelector("#suggest-style").addEventListener("click", handleSuggestStyle);
     document.querySelector("#reset-style").addEventListener("click", handleResetStyle);
     document.querySelector("#export-settings").addEventListener("click", handleExportSettings);
@@ -342,30 +337,6 @@ function handleChange(event) {
 function handleCheck(event) {
     const target = event.target;
     bg.settings.save(target.id, target.checked);
-}
-
-function handleDefaultSound(event) {
-    const file = event.currentTarget.files[0];
-    if (!file || file.size === 0) {
-        return;
-    }
-
-    if (!file.type.match(/audio.*/)) {
-        alert("Please select audio file!");
-        return;
-    }
-
-    if (file.size > 500000) {
-        alert("Please use file smaller than 500kB!");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function () {
-        bg.settings.save("defaultSound", this.result);
-    };
-
-    reader.readAsDataURL(file);
 }
 
 function handleExportSmart() {

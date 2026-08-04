@@ -33,9 +33,23 @@ npm run build    # esbuild bundle into dist/
 
 Both must pass. `npm run check` is the gate; lint warnings are tolerated, errors are not.
 
-Nothing in this project is currently verified in a real browser. If a change could affect
-runtime behaviour, say so plainly and list what needs manual testing rather than implying
-it works.
+Automated checks never exercise the extension. Run it before claiming runtime behaviour
+works:
+
+```
+npm run dev       # build, then launch Firefox with the extension and devtools
+npm run lint:ext  # web-ext lint against dist/ (0 errors expected)
+npm run watch     # rebuild src -> dist in another terminal; web-ext reloads on change
+```
+
+`npm run dev` loads `dist/` as a temporary add-on. The background page has its own
+console, reachable from `about:debugging#/runtime/this-firefox` via "Inspect".
+
+**Chromium cannot be tested yet.** The manifest is still `manifest_version: 2` and Chrome
+no longer loads MV2 extensions, so Firefox is the only target until the MV3 flip.
+
+If a change could affect runtime behaviour and you have not run it, say so plainly and
+list what needs manual testing rather than implying it works.
 
 ## Architecture notes
 

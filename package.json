@@ -18,7 +18,8 @@
     "prettier": "^3.9.6",
     "semver": "^7.8.5",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.66.0"
+    "typescript-eslint": "^8.66.0",
+    "web-ext": "^10.6.0"
   },
   "scripts": {
     "build": "node build.js prepare",
@@ -28,6 +29,8 @@
     "release:major": "node build.js release major",
     "watch": "node build.js watch",
     "bump-version": "node build.js bump-version",
+    "dev": "npm run build && web-ext run --source-dir dist --devtools",
+    "lint:ext": "npm run build && web-ext lint --source-dir dist",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",

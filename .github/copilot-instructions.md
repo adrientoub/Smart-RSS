@@ -101,11 +101,14 @@ There is no CI. The `check` and `build` scripts are the only gate.
 The target is a single build running on both Firefox and Chromium. Remaining blockers,
 roughly in order:
 
-1. `DOMParser` in `RSSParser.js` and `favicon.js` — service workers have no DOM
-2. `document.createRange()` article diffing in `FeedLoader.js`
-3. `new Audio()` in `Loader.js` — needs an offscreen document on Chromium
-4. `browser.runtime.getBackgroundPage()` — replace with typed message passing
-5. The `manifest_version: 3` flip, `host_permissions`, `webextension-polyfill`, `_locales`
+1. `new Audio()` in `Loader.js` — needs an offscreen document on Chromium
+2. `browser.runtime.getBackgroundPage()` — replace with typed message passing
+3. The `manifest_version: 3` flip, `host_permissions`, `webextension-polyfill`, `_locales`
+
+The background process no longer parses with the DOM: `RSSParser.ts` uses
+`@rgrove/parse-xml`, favicons come from `/favicon.ico` directly, and article diffing
+uses `articleDiff.ts`. Keep it that way — nothing under `bgprocess/` may use
+`DOMParser`, `XMLSerializer`, `document` or `XMLHttpRequest`.
 
 Prefer changes that work under MV2 _and_ MV3 so they can ship incrementally. When an API
 differs between manifest versions, resolve it once behind a small shim, as

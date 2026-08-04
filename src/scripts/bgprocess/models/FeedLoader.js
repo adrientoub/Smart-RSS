@@ -5,6 +5,7 @@
 
 import RSSParser from "../modules/RSSParser.ts";
 import { getFavicon } from "../modules/favicon.ts";
+import { articlesDiffer } from "../modules/articleDiff.ts";
 
 const REQUEST_TIMEOUT_MS = 1000 * 15; // TODO: make configurable
 
@@ -95,43 +96,16 @@ export default class FeedLoader {
                 if (existingItem.get("deleted")) {
                     return;
                 }
-                const areDifferent = function (newItem, existingItem) {
-                    const existingContent = existingItem.get("content");
-                    const newContent = newItem.content;
-                    if (existingContent !== newContent) {
-                        const existingContentFragment = document
-                            .createRange()
-                            .createContextualFragment(existingContent);
-                        if (!existingContentFragment) {
-                            return true;
-                        }
-                        const newContentFragment = document
-                            .createRange()
-                            .createContextualFragment(newContent);
-                        if (!newContentFragment) {
-                            return true;
-                        }
-                        let existingContentText = "";
-                        [...existingContentFragment.children].forEach((child) => {
-                            existingContentText += child.innerText;
-                        });
 
-                        let newContentText = "";
-                        [...newContentFragment.children].forEach((child) => {
-                            newContentText += child.innerText;
-                        });
-
-                        if (!existingContentText) {
-                            return true;
-                        }
-                        if (existingContentText.trim() !== newContentText.trim()) {
-                            return true;
-                        }
-                    }
-                    return existingItem.get("title").trim() !== newItem.title.trim();
-                };
-
-                if (areDifferent(item, existingItem)) {
+                if (
+                    articlesDiffer(
+                        {
+                            title: existingItem.get("title"),
+                            content: existingItem.get("content"),
+                        },
+                        { title: item.title, content: item.content }
+                    )
+                ) {
                     insert.push({
                         id: item.id,
                         content: item.content,

@@ -13,6 +13,19 @@ const {
 const { execSync } = require("child_process");
 const semver = require("semver");
 const AdmZip = require("adm-zip");
+const esbuild = require("esbuild");
+
+const SRC = join(__dirname, "src");
+const DIST = join(__dirname, "dist");
+
+// Bundled by esbuild rather than copied.
+const BUNDLE_ENTRIES = [
+    "scripts/appEntrypoint.js",
+    "scripts/optionsEntrypoint.js",
+    "scripts/bgprocess.js",
+];
+// Runs as a Web Worker, so it gets its own classic-script bundle.
+const WORKER_ENTRY = "scripts/options/worker.js";
 
 // Utility functions
 const scan = (dir) => {
@@ -65,51 +78,67 @@ const commit = (level = "patch") => {
 };
 
 const copyFiles = () => {
-    console.log("Copying files from src to dist...");
-    const srcDir = join(__dirname, "src");
-    const distDir = join(__dirname, "dist");
+    console.log("Copying static files from src to dist...");
 
-    // Ensure dist directory exists
-    ensureDirectoryExists(distDir);
+    ensureDirectoryExists(DIST);
 
-    // Get all files from src
-    const srcFiles = scan(srcDir);
+    const srcFiles = scan(SRC);
+    let copied = 0;
 
-    // Copy each file to dist, preserving directory structure
     srcFiles.forEach((srcFile) => {
-        const relativePath = relative(srcDir, srcFile);
-        const destFile = join(distDir, relativePath);
-        const destDir = dirname(destFile);
+        const relativePath = relative(SRC, srcFile).replace(/\\/g, "/");
 
-        ensureDirectoryExists(destDir);
-        copyFileSync(srcFile, destFile);
-    });
-
-    console.log("Files copied");
-};
-
-const stripComments = () => {
-    console.log("Stripping comments from JS files...");
-    const root = join(__dirname, "dist");
-    const filesList = scan(root);
-
-    const multilineComment = /^[\t\s]*\/\*\*?[^!][\s\S]*?\*\/[\r\n]/gm;
-    const specialComments = /^[\t\s]*\/\*!\*?[^!][\s\S]*?\*\/[\r\n]/gm;
-    const singleLineComment = /^[\t\s]*(\/\/)[^\n\r]*[\n\r]/gm;
-
-    filesList.forEach((filePath) => {
-        if (!filePath.endsWith(".js")) {
+        // Everything under scripts/ is bundled, except the worker which is
+        // emitted separately. Templates are inlined into the bundles.
+        if (relativePath.startsWith("scripts/")) {
             return;
         }
-        const contents = readFileSync(filePath, "utf8")
-            .replace(multilineComment, "")
-            .replace(singleLineComment, "")
-            .replace(specialComments, "");
 
-        writeFileSync(filePath, contents);
+        const destFile = join(DIST, relativePath);
+        ensureDirectoryExists(dirname(destFile));
+        copyFileSync(srcFile, destFile);
+        copied++;
     });
 
-    console.log("Comments stripped");
+    console.log(`Static files copied (${copied})`);
+};
+
+const bundle = async ({ minify = false } = {}) => {
+    console.log(`Bundling with esbuild (minify: ${minify})...`);
+
+    const shared = {
+        bundle: true,
+        // Baseline is the current Firefox ESR and an equivalent Chrome; both have
+        // AbortSignal.any, used by the feed loader.
+        target: ["firefox128", "chrome120"],
+        minify,
+        sourcemap: minify ? false : "linked",
+        logLevel: "warning",
+        loader: { ".html": "text" },
+        // Keep third-party license banners in the shipped output.
+        legalComments: "eof",
+    };
+
+    // Extension pages load ES modules; splitting keeps shared code in one chunk.
+    await esbuild.build({
+        ...shared,
+        entryPoints: BUNDLE_ENTRIES.map((e) => join(SRC, e)),
+        outdir: join(DIST, "scripts"),
+        format: "esm",
+        splitting: true,
+        chunkNames: "chunks/[name]-[hash]",
+    });
+
+    // Web Workers cannot be ES modules here, so this one is a classic script.
+    await esbuild.build({
+        ...shared,
+        entryPoints: [join(SRC, WORKER_ENTRY)],
+        outfile: join(DIST, WORKER_ENTRY),
+        format: "iife",
+        splitting: false,
+    });
+
+    console.log("Bundled");
 };
 
 const zipPackage = () => {
@@ -123,8 +152,7 @@ const zipPackage = () => {
 
     filesList.forEach((file) => {
         // Get the directory relative to the root, or empty string if it's at the root
-        const relativePath =
-            dirname(file) === root ? "" : relative(root, dirname(file));
+        const relativePath = dirname(file) === root ? "" : relative(root, dirname(file));
         zipFile.addLocalFile(file, relativePath);
     });
 
@@ -137,31 +165,46 @@ const watch = () => {
     console.log("Watching for changes in src directory...");
     const chokidar = require("chokidar");
 
+    let running = false;
+    const rebuild = async () => {
+        if (running) {
+            return;
+        }
+        running = true;
+        try {
+            await prepare();
+        } catch (error) {
+            console.error("Rebuild failed:", error.message);
+        } finally {
+            running = false;
+        }
+    };
+
     chokidar
         .watch(join(__dirname, "src"), {
-            ignored: /(^|[\/\\])\../,
+            ignored: /(^|[/\\])\../,
             persistent: true,
         })
         .on("change", (path) => {
             console.log(`File ${path} has been changed`);
-            prepare();
+            rebuild();
         });
 
     console.log("Watching for changes. Press Ctrl+C to stop.");
 };
 
 // Combined tasks
-const prepare = () => {
+const prepare = async ({ minify = false } = {}) => {
     copyFiles();
-    stripComments();
+    await bundle({ minify });
 };
 
-const packageTask = () => {
-    prepare();
+const packageTask = async () => {
+    await prepare({ minify: true });
     zipPackage();
 };
 
-const release = (level = "patch") => {
+const release = async (level = "patch") => {
     if (!["major", "minor", "patch"].includes(level)) {
         console.error("Wrong update level, aborting");
         return false;
@@ -169,8 +212,7 @@ const release = (level = "patch") => {
 
     bumpVersion(level);
     commit(level);
-    copyFiles();
-    stripComments();
+    await prepare({ minify: true });
     zipPackage();
 };
 
@@ -180,8 +222,8 @@ const printUsage = () => {
 Usage: node build.js [command] [options]
 
 Commands:
-  prepare             Copy files from src to dist and strip comments
-  package             Prepare and create zip package
+  prepare             Copy static assets and bundle sources into dist
+  package             Prepare (minified) and create zip package
   release [level]     Bump version, commit, prepare, and create zip package
                       level can be: patch, minor, major (default: patch)
   watch               Watch for changes in src directory
@@ -205,24 +247,32 @@ if (!command) {
     process.exit(0);
 }
 
-switch (command) {
-    case "prepare":
-        prepare();
-        break;
-    case "package":
-        packageTask();
-        break;
-    case "release":
-        release(option || "patch");
-        break;
-    case "watch":
-        watch();
-        break;
-    case "bump-version":
-        bumpVersion(option || "patch");
-        break;
-    default:
-        console.error(`Unknown command: ${command}`);
-        printUsage();
-        process.exit(1);
-}
+const run = async () => {
+    switch (command) {
+        case "prepare":
+            await prepare();
+            break;
+        case "package":
+            await packageTask();
+            break;
+        case "release":
+            await release(option || "patch");
+            break;
+        case "watch":
+            await prepare();
+            watch();
+            break;
+        case "bump-version":
+            bumpVersion(option || "patch");
+            break;
+        default:
+            console.error(`Unknown command: ${command}`);
+            printUsage();
+            process.exit(1);
+    }
+};
+
+run().catch((error) => {
+    console.error(error);
+    process.exit(1);
+});

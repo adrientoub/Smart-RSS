@@ -1,18 +1,19 @@
-define(['backbone', 'modules/Locale'], function (BB, Locale) {
-    return BB.View.extend({
-        tagName: 'input',
-        className: 'input-search',
-        initialize: function () {
-            this.el.setAttribute('placeholder', Locale.SEARCH);
-            this.el.setAttribute('type', 'search');
-            this.el.setAttribute('tabindex', -1);
+import BB from "backbone";
+import Locale from "../modules/Locale.js";
 
-            const action = app.actions.get(this.model.get('actionName'));
+export default BB.View.extend({
+    tagName: "input",
+    className: "input-search",
+    initialize: function () {
+        this.el.setAttribute("placeholder", Locale.SEARCH);
+        this.el.setAttribute("type", "search");
+        this.el.setAttribute("tabindex", -1);
 
-            this.el.dataset.action = this.model.get('actionName');
-            this.el.title = action.get('title');
+        const action = app.actions.get(this.model.get("actionName"));
 
-            this.el.view = this;
-        }
-    });
+        this.el.dataset.action = this.model.get("actionName");
+        this.el.title = action.get("title");
+
+        this.el.view = this;
+    },
 });

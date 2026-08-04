@@ -4,7 +4,6 @@ Library lack any newer licensing information, so I'm copying header from the fil
 
 Please note that the original repository mentioned here is not accessible anymore
 
-
 ---
 
 Copyright (c) 2010 Arc90 Inc

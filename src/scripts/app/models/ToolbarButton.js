@@ -2,33 +2,32 @@
  * @module App
  * @submodule models/ToolbarButton
  */
-define(function (require) {
-    const BB = require('backbone');
-    /**
-     * Button model for toolbars
-     * @class ToolbarButton
-     * @constructor
-     * @extends Backbone.Model
-     */
-    let ToolbarButton = BB.Model.extend({
-        defaults: {
 
-            /**
-             * @attribute actionName
-             * @type String
-             * @default global:default
-             */
-            actionName: 'global:default',
+import BB from "backbone";
 
-            /**
-             * Is button aligned to left or right?
-             * @attribute position
-             * @type String
-             * @default left
-             */
-            position: 'left'
-        }
-    });
+/**
+ * Button model for toolbars
+ * @class ToolbarButton
+ * @constructor
+ * @extends Backbone.Model
+ */
+const ToolbarButton = BB.Model.extend({
+    defaults: {
+        /**
+         * @attribute actionName
+         * @type String
+         * @default global:default
+         */
+        actionName: "global:default",
 
-    return ToolbarButton;
+        /**
+         * Is button aligned to left or right?
+         * @attribute position
+         * @type String
+         * @default left
+         */
+        position: "left",
+    },
 });
+
+export default ToolbarButton;

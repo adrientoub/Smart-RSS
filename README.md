@@ -14,10 +14,9 @@ Extension is available in following repositories:
 
 #### AMO: https://addons.mozilla.org/firefox/addon/smart-rss-reader/
 
-~#### Chrome Web Store: https://chrome.google.com/webstore/detail/eggggihfcaabljfpjiiaohloefmgejic/~
+~~#### Chrome Web Store: https://chrome.google.com/webstore/detail/eggggihfcaabljfpjiiaohloefmgejic/~~
 
 If you encounter issue with a specific feed for best results please back up and include current state of that feed in your report, this will be helpful in case the feed changes before I get to check it, thanks in advance
-
 
 ## For developers
 
@@ -25,8 +24,8 @@ If you are interested in improving Smart RSS then there are few tips to get star
 
 First of all you will need several command line tools:
 
--   Git
--   Node.JS (v12 or higher recommended) & npm
+- Git
+- Node.JS (v12 or higher recommended) & npm
 
 To setup your Smart RSS project open your console, go to your projects folders and type:
 
@@ -42,8 +41,8 @@ Sometimes you may encounter texts ending with `*` or `!` in app, first ones are 
 
 The project uses a clear separation of concerns for code quality:
 
--   **ESLint** checks for logical and semantic issues (potential bugs, unused variables, etc.)
--   **EditorConfig** handles all formatting concerns (indentation, line endings, quotes, etc.)
+- **ESLint** checks for logical and semantic issues (potential bugs, unused variables, etc.)
+- **EditorConfig** handles all formatting concerns (indentation, line endings, quotes, etc.)
 
 This separation ensures that ESLint focuses on code correctness while EditorConfig manages consistent formatting across different editors and IDEs.
 
@@ -55,9 +54,9 @@ npm run lint
 
 This will check your code for:
 
--   Syntax errors and potential bugs
--   Logical issues and best practices
--   Browser extension-specific concerns
+- Syntax errors and potential bugs
+- Logical issues and best practices
+- Browser extension-specific concerns
 
 ### Build System
 

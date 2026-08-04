@@ -8,10 +8,13 @@ A browser extension RSS reader (Firefox today, Chromium and Manifest V3 in progr
 
 This works today with no build changes:
 
-- esbuild resolves an import of `./thing.js` to `./thing.ts`, so a file can be renamed
-  without touching any importer.
-- **Keep the `.js` extension in import specifiers**, even when the target is a `.ts`
-  file. That is what both esbuild and `moduleResolution: "bundler"` expect.
+- **Use the real file extension in import specifiers.** Import a `.ts` module as
+  `./thing.ts` and a `.js` module as `./thing.js`. esbuild, `tsc` and Node's ESM loader
+  all agree on that.
+- Do not write `./thing.js` when the file is really `./thing.ts`. esbuild and `tsc`
+  tolerate it, but **Node does not**, so any test importing that module fails to
+  resolve. `allowImportingTsExtensions` is enabled precisely so the real extension
+  can be used everywhere.
 
 Existing `.js` files are migrated **opportunistically**, not in bulk:
 

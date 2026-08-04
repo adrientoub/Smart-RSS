@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Marquer comme (Non-)Lu",
     DELETE: "Supprimer",
     UPDATE: "Mettre à jour",
@@ -104,4 +104,4 @@ define({
 
     SORTING: "Tri",
     SECONDARY_SORTING: "Tri secondaire",
-});
+};

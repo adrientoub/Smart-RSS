@@ -1,18 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { loadAmd } from "./helpers/loadAmd.ts";
-
-interface DateUtils {
-    getWeekOfYear(date: Date): number;
-    getDayOfYear(date: Date | number | string): number;
-    getDaysSinceEpoch(date: Date | number | string): number;
-    startOfDay(date: Date | number | string): number;
-    startOfMonth(date: Date | number | string): number;
-    startOfWeek(date: Date, firstDayOfWeekIndex?: number): Date;
-    addDays(date: Date | number | string, days?: number): Date;
-}
-
-const dateUtils = loadAmd<DateUtils>("scripts/app/helpers/dateUtils.js");
+import dateUtils from "../src/scripts/app/helpers/dateUtils.js";
 
 describe("dateUtils", () => {
     it("computes ISO week numbers", () => {

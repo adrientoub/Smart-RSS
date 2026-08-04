@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Als (un)gelesen markieren",
     DELETE: "Löschen",
     UPDATE: "Aktualisieren",
@@ -97,4 +97,4 @@ define({
     OLDER_THAN_WEEK: "Älter als eine Woche",
     OLDER_THAN_MONTH: "Älter als einen Monat",
     OLDER_THAN_TWO_MONTHS: "Älter als 2 Monate",
-});
+};

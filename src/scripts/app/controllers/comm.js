@@ -3,7 +3,7 @@
  * @module App
  * @submodule controllers/comm
  */
-define(function (require) {
-    const BB = require("backbone");
-    return Object.create(BB.Events);
-});
+
+import BB from "backbone";
+
+export default Object.create(BB.Events);

@@ -7,8 +7,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": false,
-        "allowImportingTsExtensions": true,
-        "rewriteRelativeImportExtensions": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+
+    // Type-check JS opt-in per file via `// @ts-check`. Enabling checkJs
+    // project-wide currently reports ~770 errors, so files are migrated
+    // gradually (or renamed to .ts) rather than all at once.
     "allowJs": true,
     "checkJs": false,
     "noEmit": true,
@@ -30,5 +34,5 @@
     "types": ["firefox-webext-browser", "node"]
   },
   "include": ["src/**/*.js", "src/**/*.ts", "test/**/*.ts", "build.js"],
-  "exclude": ["node_modules", "dist", "src/scripts/libs"]
+  "exclude": ["node_modules", "dist"]
 }

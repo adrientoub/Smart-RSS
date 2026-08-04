@@ -6,11 +6,10 @@
  * and renamed the matching context-menu context along with it. Resolving both
  * here keeps the call sites identical across manifest versions.
  */
-define(function () {
-    const isMV3 = typeof browser.action !== "undefined";
 
-    return {
-        action: isMV3 ? browser.action : browser.browserAction,
-        menuContext: isMV3 ? "action" : "browser_action",
-    };
-});
+const isMV3 = typeof browser.action !== "undefined";
+
+export default {
+    action: isMV3 ? browser.action : browser.browserAction,
+    menuContext: isMV3 ? "action" : "browser_action",
+};

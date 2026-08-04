@@ -1,36 +1,12 @@
-require.config({
-    baseUrl: "scripts/app",
-    waitSeconds: 0,
-
-    paths: {
-        jquery: "../libs/jquery.min",
-        underscore: "../libs/underscore.min",
-        backbone: "../libs/backbone.min",
-        text: "../libs/require.text",
-    },
-
-    shim: {
-        jquery: {
-            exports: "$",
-        },
-        backbone: {
-            deps: ["underscore"],
-            exports: "Backbone",
-        },
-        underscore: {
-            exports: "_",
-        },
-    },
-});
-
+/**
+ * The app modules read `window.bg` while they evaluate, so the background page
+ * has to be attached before they are imported. Static imports would run too
+ * early, hence the dynamic import.
+ */
 browser.runtime.getBackgroundPage(function (bg) {
-    /**
-     * Setup work, that has to be done before any dependencies get executed
-     */
     window.bg = bg;
-    bg.appStarted.then(() => {
-        requirejs(["app"], function (app) {
-            app.start();
-        });
+    bg.appStarted.then(async () => {
+        const { default: app } = await import("./app/app.js");
+        app.start();
     });
 });

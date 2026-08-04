@@ -1,8 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { loadAmd } from "./helpers/loadAmd.ts";
-
-const escapeHtml = loadAmd<(s: unknown) => string>("scripts/app/helpers/escapeHtml.js");
+import escapeHtml from "../src/scripts/app/helpers/escapeHtml.js";
 
 describe("escapeHtml", () => {
     it("escapes the five HTML-significant characters", () => {

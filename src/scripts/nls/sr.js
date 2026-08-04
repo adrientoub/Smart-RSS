@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Означи као (не)прочитано",
     DELETE: "Избриши",
     UPDATE: "Ажурирај",
@@ -102,4 +102,4 @@ define({
 
     SORTING: "Сортирање по",
     SECONDARY_SORTING: "Споредно сортирање по",
-});
+};

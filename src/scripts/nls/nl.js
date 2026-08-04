@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Markeren als (on)gelezen",
     DELETE: "Verwijderen",
     UPDATE: "Bijwerken",
@@ -102,4 +102,4 @@ define({
 
     SORTING: "Sortering",
     SECONDARY_SORTING: "Secundaire sortering",
-});
+};

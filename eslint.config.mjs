@@ -5,13 +5,13 @@ import prettier from "eslint-config-prettier";
 
 export default tseslint.config(
     {
-        ignores: ["dist/**", "node_modules/**", "docs/**", "src/scripts/libs/**"],
+        ignores: ["dist/**", "node_modules/**", "docs/**"],
     },
 
     js.configs.recommended,
     ...tseslint.configs.recommended,
 
-    // Extension sources: browser + WebExtension APIs, still AMD until the ESM migration.
+    // Extension sources: browser + WebExtension APIs.
     {
         files: ["src/**/*.{js,ts}"],
         languageOptions: {
@@ -20,11 +20,6 @@ export default tseslint.config(
             globals: {
                 ...globals.browser,
                 ...globals.webextensions,
-                define: "readonly",
-                require: "readonly",
-                requirejs: "readonly",
-                Backbone: "readonly",
-                _: "readonly",
             },
         },
         rules: {
@@ -42,8 +37,6 @@ export default tseslint.config(
             "@typescript-eslint/no-explicit-any": "off",
             "@typescript-eslint/ban-ts-comment": "off",
             "@typescript-eslint/no-empty-object-type": "off",
-            // AMD `require()`, not CommonJS. Goes away with the ESM migration.
-            "@typescript-eslint/no-require-imports": "off",
         },
     },
 

@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Отметить прочтённой",
     DELETE: "Удалить",
     UPDATE: "Обновление",
@@ -94,4 +94,4 @@ define({
     OLDER_THAN_WEEK: "Старше недели",
     OLDER_THAN_MONTH: "Старше месяц",
     OLDER_THAN_TWO_MONTHS: "Старше два месяца",
-});
+};

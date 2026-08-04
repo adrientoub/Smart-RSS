@@ -2,56 +2,55 @@
  * @module App
  * @submodule models/Action
  */
-define(function (require) {
-    const BB = require("backbone");
 
+import BB from "backbone";
+
+/**
+ * Executable action. Actions are usually executed by shorcuts, buttons or context menus.
+ * @class Action
+ * @constructor
+ * @extends Backbone.Model
+ */
+const Action = BB.Model.extend({
     /**
-     * Executable action. Actions are usually executed by shorcuts, buttons or context menus.
-     * @class Action
-     * @constructor
-     * @extends Backbone.Model
+     * @property idAttribute
+     * @type String
+     * @default name
      */
-    const Action = BB.Model.extend({
+    idAttribute: "name",
+    defaults: {
         /**
-         * @property idAttribute
+         * @attribute name
          * @type String
-         * @default name
+         * @default global:default
          */
-        idAttribute: "name",
-        defaults: {
-            /**
-             * @attribute name
-             * @type String
-             * @default global:default
-             */
-            name: "global:default",
+        name: "global:default",
 
-            /**
-             * Function to be called when action is executed
-             * @attribute fn
-             * @type function
-             */
-            fn: function () {
-                return function () {};
-            },
-
-            /**
-             * @attribute icon
-             * @type String
-             * @default unknown.png
-             */
-            icon: null,
-
-            /**
-             * @attribute title
-             * @type String
-             * @default ''
-             */
-            title: "",
-            state: null,
-            glyph: null,
+        /**
+         * Function to be called when action is executed
+         * @attribute fn
+         * @type function
+         */
+        fn: function () {
+            return function () {};
         },
-    });
 
-    return Action;
+        /**
+         * @attribute icon
+         * @type String
+         * @default unknown.png
+         */
+        icon: null,
+
+        /**
+         * @attribute title
+         * @type String
+         * @default ''
+         */
+        title: "",
+        state: null,
+        glyph: null,
+    },
 });
+
+export default Action;

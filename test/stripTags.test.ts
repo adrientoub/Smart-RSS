@@ -1,8 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { loadAmd } from "./helpers/loadAmd.ts";
-
-const stripTags = loadAmd<(s: unknown) => string>("scripts/app/helpers/stripTags.js");
+import stripTags from "../src/scripts/app/helpers/stripTags.js";
 
 describe("stripTags", () => {
     it("returns an empty string for falsy input", () => {

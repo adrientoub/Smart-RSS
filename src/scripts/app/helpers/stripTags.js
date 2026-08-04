@@ -5,11 +5,10 @@
  * @submodule helpers/stripTags
  * @param string {String} String with html to be removed
  */
-define(function () {
-    return function (str) {
-        if (!str) {
-            return "";
-        }
-        return String(str).replace(/<\/?[^>]+>/g, "");
-    };
-});
+
+export default function (str) {
+    if (!str) {
+        return "";
+    }
+    return String(str).replace(/<\/?[^>]+>/g, "");
+}

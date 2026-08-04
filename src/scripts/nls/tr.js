@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Okunmadı Olarak İşaretle",
     DELETE: "Sil",
     UPDATE: "Güncelle",
@@ -95,4 +95,4 @@ define({
     OLDER_THAN_WEEK: "Haftadan daha eski",
     OLDER_THAN_MONTH: "Aydan daha eski",
     OLDER_THAN_TWO_MONTHS: "Iki aydan daha eski",
-});
+};

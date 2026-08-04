@@ -5,7 +5,9 @@
   "homepage": "https://github.com/zakius/Smart-RSS",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/backbone": "^1.4.23",
     "@types/firefox-webext-browser": "^120.0.4",
+    "@types/he": "^1.2.3",
     "@types/node": "^26.1.2",
     "adm-zip": "^0.6.0",
     "chokidar": "^4.0.3",
@@ -53,6 +55,9 @@
   ],
   "private": true,
   "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "backbone": "^1.6.1",
+    "he": "^1.2.0",
     "jquery": "^3.7.1",
     "underscore": "^1.13.8"
   }

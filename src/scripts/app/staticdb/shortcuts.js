@@ -1,4 +1,4 @@
-define({
+export default {
     keys: {
         8: "backspace",
         9: "tab",
@@ -19,4 +19,4 @@ define({
         45: "insert",
         46: "del",
     },
-});
+};

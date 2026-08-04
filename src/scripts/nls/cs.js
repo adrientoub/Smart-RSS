@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Označit jako (Ne)Přečtené",
     DELETE: "Odstranit",
     UPDATE: "Načíst",
@@ -102,4 +102,4 @@ define({
 
     SORTING: "Hlavní řazení",
     SECONDARY_SORTING: "Vedlejší řazení",
-});
+};

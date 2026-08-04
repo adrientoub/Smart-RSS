@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Mark As (Un)Read",
     DELETE: "Delete",
     UPDATE: "Update",
@@ -138,4 +138,4 @@ define({
     FOCUS_CONTENT: "Focus article content",
     SCROLL_UP: "Scroll up",
     SCROLL_DOWN: "Scroll down",
-});
+};

@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Označiť ako (Ne)Prečítané",
     DELETE: "Odstrániť",
     UPDATE: "Aktualizovať",
@@ -94,4 +94,4 @@ define({
     OLDER_THAN_WEEK: "Staršie ako týždeň",
     OLDER_THAN_MONTH: "Staršie ako mesiac",
     OLDER_THAN_TWO_MONTHS: "Staršie ako dva mesiace",
-});
+};

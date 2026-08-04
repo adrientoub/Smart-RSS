@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Označi kao (ne)pročitano",
     DELETE: "Obriši",
     UPDATE: "Ažuriraj",
@@ -99,4 +99,4 @@ define({
     DATE: "Datumu",
     TITLE: "Nazivu",
     AUTHOR: "Autoru",
-});
+};

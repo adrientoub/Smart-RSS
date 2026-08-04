@@ -1,4 +1,4 @@
-define({
+export default {
     MARK_AS_READ: "Olvasottnak/olvasatlannak jelölés",
     DELETE: "Törlés",
     UPDATE: "Frissítés",
@@ -94,4 +94,4 @@ define({
     OLDER_THAN_WEEK: "Régebbi, mint egy hét",
     OLDER_THAN_MONTH: "Az idősebb, mint egy hónap",
     OLDER_THAN_TWO_MONTHS: "Az idősebb, mint két hónap",
-});
+};

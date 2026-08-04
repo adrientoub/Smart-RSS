@@ -4,7 +4,7 @@
  */
 
 import RSSParser from "../modules/RSSParser.ts";
-import Favicon from "../modules/favicon.js";
+import { getFavicon } from "../modules/favicon.ts";
 
 const REQUEST_TIMEOUT_MS = 1000 * 15; // TODO: make configurable
 
@@ -269,7 +269,7 @@ export default class FeedLoader {
         }
 
         if (isFaviconExpired(this.model)) {
-            return Favicon.getFavicon(this.model)
+            return getFavicon(this.model)
                 .then(
                     (response) => {
                         modelUpdate.favicon = response.favicon;

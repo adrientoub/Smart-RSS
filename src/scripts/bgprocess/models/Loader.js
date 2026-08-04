@@ -6,7 +6,7 @@
 import "backbone";
 import "../modules/RSSParser.js";
 import animation from "../modules/Animation.js";
-import "../modules/favicon.js";
+import "../modules/favicon.ts";
 import FeedLoader from "./FeedLoader.js";
 
 /**

@@ -194,7 +194,6 @@ const Settings = BB.Model.extend({
         showPinned: true,
         showOnlyUnreadSources: false,
         displayFaviconInsteadOfPin: false,
-        faviconSource: "internal",
         queries: [],
         invertColors: false,
         defaultView: "feed",

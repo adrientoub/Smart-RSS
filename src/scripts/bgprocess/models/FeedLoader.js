@@ -3,7 +3,7 @@
  * @submodule models/FeedLoader
  */
 
-import RSSParser from "../modules/RSSParser.js";
+import RSSParser from "../modules/RSSParser.ts";
 import Favicon from "../modules/favicon.js";
 
 const REQUEST_TIMEOUT_MS = 1000 * 15; // TODO: make configurable
@@ -44,9 +44,16 @@ export default class FeedLoader {
     }
 
     parseResponse() {
-        const response = this.responseText;
-        const parser = new RSSParser(response, this.model);
-        return parser.parse();
+        const parser = new RSSParser(this.responseText, {
+            id: this.model.get("id"),
+            url: this.model.get("url"),
+            base: this.model.get("base"),
+            title: this.model.get("title"),
+        });
+        const { items: parsedItems, sourceData } = parser.parse();
+        // The parser is pure, so persisting what it discovered is done here.
+        this.model.save(sourceData);
+        return parsedItems;
     }
 
     onLoad() {

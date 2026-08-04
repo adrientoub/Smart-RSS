@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <title>Atom Example</title>
+  <link rel="self" href="https://atom.example.com/feed.xml"/>
+  <link rel="alternate" href="https://atom.example.com/"/>
+  <updated>2025-03-04T10:00:00Z</updated>
+  <entry>
+    <id>urn:uuid:entry-1</id>
+    <title>Atom entry one</title>
+    <link rel="alternate" type="text/html" href="https://atom.example.com/one"/>
+    <published>2025-03-04T10:00:00Z</published>
+    <author>
+      <name>Grace Hopper</name>
+    </author>
+    <summary>Summary text</summary>
+    <content type="xhtml">
+      <xhtml:div>
+        <xhtml:p>Rich <xhtml:strong>xhtml</xhtml:strong> content</xhtml:p>
+      </xhtml:div>
+    </content>
+  </entry>
+  <entry>
+    <id>urn:uuid:entry-2</id>
+    <title>Atom entry two</title>
+    <link rel="alternate" href="https://atom.example.com/two"/>
+    <summary>Second summary</summary>
+  </entry>
+</feed>

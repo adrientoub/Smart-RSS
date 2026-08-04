@@ -59,6 +59,7 @@
   "private": true,
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
+    "@rgrove/parse-xml": "^4.2.3",
     "backbone": "^1.6.1",
     "he": "^1.2.0",
     "jquery": "^3.7.1",

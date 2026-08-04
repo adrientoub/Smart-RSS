@@ -15,7 +15,7 @@ import Folder from "./models/Folder.js";
 import Toolbars from "./collections/Toolbars.js";
 import actionApi from "./modules/actionApi.js";
 
-const { action, menuContext } = actionApi;
+const { action } = actionApi;
 
 /**
  * Messages
@@ -41,7 +41,6 @@ function addSource(address) {
 }
 
 const SUBSCRIBE_LINK_MENU_ID = "smart-rss-subscribe-link";
-const FEED_MENU_ROOT_ID = "SmartRss";
 
 function createLinksMenu() {
     if (!getBoolean("displaySubscribeToLink")) {
@@ -55,18 +54,10 @@ function createLinksMenu() {
     });
 }
 
-// MV3 removed the per-item `onclick` property, so all menu clicks are routed here.
-// Feed entries use their feed URL as the menu item id.
+// MV3 removed the per-item `onclick` property, so menu clicks are routed here.
 browser.contextMenus.onClicked.addListener((info) => {
     if (info.menuItemId === SUBSCRIBE_LINK_MENU_ID) {
         addSource(info.linkUrl);
-        return;
-    }
-    if (info.menuItemId === FEED_MENU_ROOT_ID) {
-        return;
-    }
-    if (typeof info.menuItemId === "string" && /^https?:/i.test(info.menuItemId)) {
-        addSource(info.menuItemId);
     }
 });
 
@@ -83,92 +74,6 @@ function onMessage(message) {
     if (message.action === "new-rss" && message.value) {
         addSource(message.value);
         return;
-    }
-    if (message.action === "list-feeds") {
-        browser.contextMenus.removeAll();
-        createLinksMenu();
-        if (!settings.get("detectFeeds")) {
-            return;
-        }
-        setTimeout(() => {
-            let feeds = message.value;
-            let subscribedFound = 0;
-            let unsubscribedFound = 0;
-            if (settings.get("hideSubscribedFeeds") === "hide") {
-                feeds = feeds.filter((feed) => {
-                    const isFound = !sources.where({ url: feed.url }).length;
-                    if (isFound) {
-                        subscribedFound++;
-                    } else {
-                        unsubscribedFound++;
-                    }
-                    return isFound;
-                });
-            } else {
-                feeds = feeds.map((feed) => {
-                    const isFound = sources.where({ url: feed.url }).length;
-                    if (isFound) {
-                        subscribedFound++;
-                        feed.title = "[*] " + feed.title;
-                    } else {
-                        unsubscribedFound++;
-                    }
-                    return feed;
-                });
-            }
-
-            if (feeds.length === 0) {
-                Animation.handleIconChange();
-                return;
-            }
-
-            const whenToChangeIcon = settings.get("showNewArticlesIcon");
-            let shouldChangeIcon = true;
-            if (whenToChangeIcon === "not-subscribed-found" && unsubscribedFound === 0) {
-                shouldChangeIcon = false;
-            }
-            if (whenToChangeIcon === "no-subscribed-found" && subscribedFound > 0) {
-                shouldChangeIcon = false;
-            }
-            if (whenToChangeIcon === "never") {
-                shouldChangeIcon = false;
-            }
-            if (shouldChangeIcon) {
-                action.setIcon({
-                    path: "/images/icon19-" + settings.get("sourcesFoundIcon") + ".png",
-                });
-            }
-            browser.contextMenus.create(
-                {
-                    id: FEED_MENU_ROOT_ID,
-                    contexts: [menuContext],
-                    title: "Subscribe",
-                },
-                function () {
-                    feeds.forEach(function (feed) {
-                        browser.contextMenus.create({
-                            id: feed.url,
-                            title: feed.title,
-                            contexts: [menuContext],
-                            parentId: FEED_MENU_ROOT_ID,
-                        });
-                    });
-                }
-            );
-            if (settings.get("badgeMode") === "sources") {
-                action.setBadgeText({
-                    text: feeds.length.toString(),
-                });
-            }
-        }, 250);
-    }
-    if (message.action === "visibility-lost") {
-        Animation.handleIconChange();
-        browser.contextMenus.removeAll();
-        createLinksMenu();
-        if (settings.get("badgeMode") === "sources") {
-            action.setBadgeText({ text: "" });
-        }
     }
     if (message.action === "get-setting") {
         return new Promise((resolve) => {
@@ -419,6 +324,12 @@ window.appStarted = new Promise((resolve) => {
          * onclick:button -> open RSS
          */
         createLinksMenu();
+
+        // The menu used to be rebuilt on every page visit as a side effect of feed
+        // detection, which is how toggling this setting took effect. Rebuild explicitly.
+        settings.on("change:displaySubscribeToLink", () => {
+            Promise.resolve(browser.contextMenus.removeAll()).then(createLinksMenu);
+        });
 
         /**
          * Set icon

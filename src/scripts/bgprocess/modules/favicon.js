@@ -2,99 +2,69 @@
  * @module BgProcess
  * @submodule modules/favicon
  */
-async function getFavicon(source) {
-    return new Promise((resolve, reject) => {
-        async function getFaviconAddress(source) {
-            const baseUrl = new URL(source.get("base"));
-            return new Promise((resolve, reject) => {
-                if (settings.get("faviconSource") === "duckduckgo") {
-                    resolve("https://icons.duckduckgo.com/ip3/" + baseUrl.host + ".ico");
-                    return;
-                }
+const FAVICON_TIMEOUT_MS = 1000 * 30;
 
-                if (settings.get("faviconsSource") === "google") {
-                    resolve("https://www.google.com/s2/favicons?domain=" + baseUrl.host);
-                    return;
-                }
+async function getFaviconAddress(source) {
+    const baseUrl = new URL(source.get("base"));
 
-                const xhr = new XMLHttpRequest();
-                xhr.ontimeout = () => {
-                    reject("timeout");
-                };
-                xhr.onloadend = () => {
-                    if (xhr.readyState !== XMLHttpRequest.DONE) {
-                        reject("network error");
-                        return;
-                    }
-                    if (xhr.status !== 200) {
-                        reject("Encountered non-200 response trying to parse " + baseUrl.origin);
-                        return;
-                    }
-                    const baseDocumentContents = xhr.responseText.replace(
-                        /<body(.*?)<\/body>/gm,
-                        ""
-                    );
-                    const baseDocument = new DOMParser().parseFromString(
-                        baseDocumentContents,
-                        "text/html"
-                    );
-                    const linkElements = [
-                        ...baseDocument.querySelectorAll('link[rel*="icon"][href]'),
-                    ];
+    if (settings.get("faviconSource") === "duckduckgo") {
+        return ["https://icons.duckduckgo.com/ip3/" + baseUrl.host + ".ico"];
+    }
 
-                    const links = new Set();
-                    links.add(baseUrl.origin + "/favicon.ico");
+    if (settings.get("faviconsSource") === "google") {
+        return ["https://www.google.com/s2/favicons?domain=" + baseUrl.host];
+    }
 
-                    linkElements.forEach((linkElement) => {
-                        const faviconAddress = linkElement.getAttribute("href");
-                        if (!faviconAddress) {
-                            return;
-                        }
-                        if (faviconAddress.includes("svg")) {
-                            return;
-                        }
-                        if (faviconAddress.startsWith("http")) {
-                            return links.add(faviconAddress);
-                        }
-                        if (faviconAddress.startsWith("//")) {
-                            return links.add(baseUrl.protocol + faviconAddress);
-                        }
-                        if (faviconAddress.startsWith("data")) {
-                            return links.add(faviconAddress);
-                        }
-                        if (faviconAddress.startsWith("/")) {
-                            return links.add(baseUrl.origin + faviconAddress);
-                        }
+    let response;
+    try {
+        response = await fetch(baseUrl.origin, {
+            signal: AbortSignal.timeout(FAVICON_TIMEOUT_MS),
+        });
+    } catch (error) {
+        throw error.name === "TimeoutError" ? "timeout" : "network error";
+    }
 
-                        links.add(baseUrl.origin + "/" + faviconAddress);
-                    });
+    if (response.status !== 200) {
+        throw "Encountered non-200 response trying to parse " + baseUrl.origin;
+    }
 
-                    resolve([...links]);
-                };
+    const baseDocumentContents = (await response.text()).replace(/<body(.*?)<\/body>/gm, "");
+    const baseDocument = new DOMParser().parseFromString(baseDocumentContents, "text/html");
+    const linkElements = [...baseDocument.querySelectorAll('link[rel*="icon"][href]')];
 
-                xhr.open("GET", baseUrl.origin);
-                xhr.timeout = 1000 * 30;
-                xhr.send();
-            });
+    const links = new Set();
+    links.add(baseUrl.origin + "/favicon.ico");
+
+    linkElements.forEach((linkElement) => {
+        const faviconAddress = linkElement.getAttribute("href");
+        if (!faviconAddress) {
+            return;
+        }
+        if (faviconAddress.includes("svg")) {
+            return;
+        }
+        if (faviconAddress.startsWith("http")) {
+            return links.add(faviconAddress);
+        }
+        if (faviconAddress.startsWith("//")) {
+            return links.add(baseUrl.protocol + faviconAddress);
+        }
+        if (faviconAddress.startsWith("data")) {
+            return links.add(faviconAddress);
+        }
+        if (faviconAddress.startsWith("/")) {
+            return links.add(baseUrl.origin + faviconAddress);
         }
 
-        getFaviconAddress(source)
-            .then((faviconAddresses) => {
-                const promises = faviconAddresses.map((favicon) => {
-                    return toDataURI(favicon);
-                });
-                Promise.any(promises)
-                    .then((dataURI) => {
-                        resolve(dataURI);
-                    })
-                    .catch((errors) => {
-                        reject(errors);
-                    });
-            })
-            .catch((error) => {
-                reject(error);
-            });
+        links.add(baseUrl.origin + "/" + faviconAddress);
     });
+
+    return [...links];
+}
+
+async function getFavicon(source) {
+    const faviconAddresses = await getFaviconAddress(source);
+    return Promise.any(faviconAddresses.map((favicon) => toDataURI(favicon)));
 }
 
 // /**
@@ -103,68 +73,64 @@ async function getFavicon(source) {
 //  * @constructor
 //  * @extends Object
 //  */
-function toDataURI(favicon) {
-    return new Promise((resolve, reject) => {
-        if (favicon.startsWith("data")) {
-            resolve(favicon);
+async function toDataURI(favicon) {
+    if (favicon.startsWith("data")) {
+        return favicon;
+    }
+
+    let response;
+    try {
+        response = await fetch(favicon, { signal: AbortSignal.timeout(FAVICON_TIMEOUT_MS) });
+    } catch (error) {
+        throw error.name === "TimeoutError"
+            ? "timeout"
+            : "[modules/toDataURI] error on: " + favicon;
+    }
+
+    if (response.status !== 200) {
+        throw "[modules/toDataURI] non-200 on: " + favicon;
+    }
+
+    const buffer = await response.arrayBuffer();
+    const imageDataUri = getImageData(response.headers.get("content-type"), buffer);
+    if (!imageDataUri) {
+        throw "[modules/toDataURI] Not an image on: " + favicon;
+    }
+
+    const expiresHeader = response.headers.get("expires");
+
+    let expires;
+    if (expiresHeader) {
+        expires = Math.round(new Date(expiresHeader).getTime() / 1000);
+    } else {
+        const cacheControlHeader = response.headers.get("cache-control");
+        let maxAge = 60 * 60 * 24 * 7;
+        if (cacheControlHeader && cacheControlHeader.includes("max-age=")) {
+            const newMaxAge = parseInt(/max-age=([0-9]+).*/gi.exec(cacheControlHeader)[1]);
+            maxAge = Math.max(newMaxAge, maxAge);
         }
-        const xhr = new window.XMLHttpRequest();
-        xhr.responseType = "arraybuffer";
-        xhr.onerror = () => {
-            reject("[modules/toDataURI] error on: " + favicon);
-        };
-        xhr.ontimeout = () => {
-            reject("timeout");
-        };
-        xhr.onloadend = function () {
-            if (xhr.readyState !== XMLHttpRequest.DONE) {
-                reject("[modules/toDataURI] network error on: " + favicon);
-                return;
-            }
-            if (xhr.status !== 200) {
-                reject("[modules/toDataURI] non-200 on: " + favicon);
-                return;
-            }
+        expires = Math.round(new Date().getTime() / 1000) + maxAge;
+    }
 
-            const imageDataUri = getImageData(xhr);
-            if (!imageDataUri) {
-                reject("[modules/toDataURI] Not an image on: " + favicon);
-            }
-
-            const expiresHeader = xhr.getResponseHeader("expires");
-
-            let expires;
-            if (expiresHeader) {
-                expires = Math.round(new Date(expiresHeader).getTime() / 1000);
-            } else {
-                const cacheControlHeader = xhr.getResponseHeader("cache-control");
-                let maxAge = 60 * 60 * 24 * 7;
-                if (cacheControlHeader && cacheControlHeader.includes("max-age=")) {
-                    const newMaxAge = parseInt(/max-age=([0-9]+).*/gi.exec(cacheControlHeader)[1]);
-                    maxAge = Math.max(newMaxAge, maxAge);
-                }
-                expires = Math.round(new Date().getTime() / 1000) + maxAge;
-            }
-
-            resolve({ favicon: imageDataUri, faviconExpires: expires });
-        };
-        xhr.open("GET", favicon);
-        xhr.timeout = 1000 * 30;
-        xhr.send();
-    });
+    return { favicon: imageDataUri, faviconExpires: expires };
 }
 
-function getImageData(xhr) {
-    const type = xhr.getResponseHeader("content-type");
-    if (!~type.indexOf("image") || xhr.response.byteLength < 10) {
+function getImageData(type, buffer) {
+    if (!type || !type.includes("image") || buffer.byteLength < 10) {
         return;
     }
 
-    const array = new Uint8Array(xhr.response);
-    const raw = String.fromCharCode.apply(null, array);
+    const array = new Uint8Array(buffer);
+    let raw = "";
+    // Chunked: String.fromCharCode.apply overflows the call stack on large icons.
+    for (let i = 0; i < array.length; i += 0x8000) {
+        raw += String.fromCharCode.apply(null, array.subarray(i, i + 0x8000));
+    }
 
     return "data:" + type + ";base64," + btoa(raw);
 }
+
+export { getImageData };
 
 export default {
     image: toDataURI,

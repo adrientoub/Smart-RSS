@@ -6,15 +6,20 @@
 import RSSParser from "../modules/RSSParser.js";
 import Favicon from "../modules/favicon.js";
 
+const REQUEST_TIMEOUT_MS = 1000 * 15; // TODO: make configurable
+
 export default class FeedLoader {
     constructor(loader) {
         this.loader = loader;
-        this.request = new XMLHttpRequest();
-        this.request.timeout = 1000 * 15; // TODO: make configurable
-        this.request.onload = this.onLoad.bind(this);
-        this.request.onerror = this.onError.bind(this);
-        this.request.ontimeout = this.onTimeout.bind(this);
-        this.request.onabort = this.onAbort.bind(this);
+        this.controller = new AbortController();
+        // Mirrors the XMLHttpRequest fields the rest of the class used to read.
+        this.status = 0;
+        this.responseUrl = null;
+        this.responseText = "";
+    }
+
+    abort() {
+        this.controller.abort();
     }
 
     onAbort() {
@@ -22,7 +27,7 @@ export default class FeedLoader {
     }
 
     parseProxyResponse() {
-        const response = JSON.parse(this.request.responseText);
+        const response = JSON.parse(this.responseText);
         return response.items.map((item) => {
             const canonical = item.canonical ? item.canonical[0] : item.alternate[0];
             return {
@@ -39,7 +44,7 @@ export default class FeedLoader {
     }
 
     parseResponse() {
-        const response = this.request.responseText;
+        const response = this.responseText;
         const parser = new RSSParser(response, this.model);
         return parser.parse();
     }
@@ -234,8 +239,8 @@ export default class FeedLoader {
             trashed: false,
         }).length;
 
-        if (this.request.responseURL !== modelUrl) {
-            modelUrl = this.request.responseURL;
+        if (this.responseUrl && this.responseUrl !== modelUrl) {
+            modelUrl = this.responseUrl;
         }
 
         const modelUpdate = {
@@ -283,11 +288,11 @@ export default class FeedLoader {
 
     onError() {
         this.model.save({
-            lastStatus: this.request.status,
+            lastStatus: this.status,
         });
         return this.onFeedProcessed({
             success: false,
-            isOnline: this.request.status > 0,
+            isOnline: this.status > 0,
         });
     }
 
@@ -411,12 +416,12 @@ export default class FeedLoader {
                         1000 +
                         ("&newerThan=" + date);
                 }
-                this.request.open("GET", sourceUrl);
+                const headers = {};
+                let credentials = "same-origin";
+                // Forbidden header name; browsers drop it. Kept for parity with the
+                // previous XHR call, which could not set it either.
                 if (sourceUrl.startsWith("https://openrss.org/")) {
-                    this.request.setRequestHeader(
-                        "User-Agent",
-                        navigator.userAgent + " + SmartRSS"
-                    );
+                    headers["User-Agent"] = navigator.userAgent + " + SmartRSS";
                 }
                 if (
                     !shouldUseFeedlyCache &&
@@ -424,13 +429,40 @@ export default class FeedLoader {
                 ) {
                     const username = this.model.get("username") || "";
                     const password = this.model.getPass() || "";
-                    this.request.withCredentials = true;
-                    this.request.setRequestHeader(
-                        "Authorization",
-                        "Basic " + btoa(`${username}:${password}`)
-                    );
+                    credentials = "include";
+                    headers.Authorization = "Basic " + btoa(`${username}:${password}`);
                 }
-                this.request.send();
+
+                return this.send(sourceUrl, { headers, credentials });
             });
+    }
+
+    /**
+     * Maps fetch outcomes onto the XHR events this class was written against:
+     * any completed HTTP response is a "load" regardless of status, and only
+     * network-level failures are errors.
+     */
+    async send(sourceUrl, { headers, credentials }) {
+        const signal = AbortSignal.any([
+            this.controller.signal,
+            AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        ]);
+
+        try {
+            const response = await fetch(sourceUrl, { headers, credentials, signal });
+            this.status = response.status;
+            this.responseUrl = response.url;
+            this.responseText = await response.text();
+        } catch (error) {
+            if (error.name === "TimeoutError") {
+                return this.onTimeout();
+            }
+            if (error.name === "AbortError") {
+                return this.onAbort();
+            }
+            return this.onError();
+        }
+
+        return this.onLoad();
     }
 }

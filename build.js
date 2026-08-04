@@ -108,7 +108,9 @@ const bundle = async ({ minify = false } = {}) => {
 
     const shared = {
         bundle: true,
-        target: ["firefox115", "chrome115"],
+        // Baseline is the current Firefox ESR and an equivalent Chrome; both have
+        // AbortSignal.any, used by the feed loader.
+        target: ["firefox128", "chrome120"],
         minify,
         sourcemap: minify ? false : "linked",
         logLevel: "warning",

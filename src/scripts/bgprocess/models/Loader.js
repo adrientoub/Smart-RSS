@@ -107,8 +107,7 @@ export default class Loader {
     abortDownloading() {
         this.sourcesToLoad = [];
         this.loaders.forEach((loader) => {
-            loader.request.abort();
-            delete loader.request;
+            loader.abort();
         });
         this.loaders = [];
         this.sourcesLoading = [];

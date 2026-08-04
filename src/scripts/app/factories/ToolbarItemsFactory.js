@@ -4,9 +4,9 @@
  * @submodule factories/ToolbarItemsFactory
  */
 define(function (require) {
-    const ToolbarButtonView = require('views/ToolbarButtonView');
-    const ToolbarDynamicSpaceView = require('views/ToolbarDynamicSpaceView');
-    const ToolbarSearchView = require('views/ToolbarSearchView');
+    const ToolbarButtonView = require("views/ToolbarButtonView");
+    const ToolbarDynamicSpaceView = require("views/ToolbarDynamicSpaceView");
+    const ToolbarSearchView = require("views/ToolbarSearchView");
 
     return {
         /**
@@ -17,13 +17,13 @@ define(function (require) {
          * @returns ToolbarDynamicSpaceView|ToolbarSearchView|ToolbarButtonView
          */
         create: function (name, itemModel) {
-            if (name === 'dynamicSpace') {
-                return new ToolbarDynamicSpaceView({model: itemModel});
-            } else if (name === 'search') {
-                return new ToolbarSearchView({model: itemModel});
+            if (name === "dynamicSpace") {
+                return new ToolbarDynamicSpaceView({ model: itemModel });
+            } else if (name === "search") {
+                return new ToolbarSearchView({ model: itemModel });
             } else {
-                return new ToolbarButtonView({model: itemModel});
+                return new ToolbarButtonView({ model: itemModel });
             }
-        }
+        },
     };
 });

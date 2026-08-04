@@ -3,7 +3,7 @@
  * @submodule models/MenuItem
  */
 define(function (require) {
-    const BB = require('backbone');
+    const BB = require("backbone");
 
     /**
      * Context menu item
@@ -11,15 +11,14 @@ define(function (require) {
      * @constructor
      * @extends Backbone.Model
      */
-    let MenuItem = BB.Model.extend({
+    const MenuItem = BB.Model.extend({
         defaults: {
-
             /**
              * @attribute title
              * @type String
              * @default '<no title>'
              */
-            'title': '<no title>',
+            title: "<no title>",
 
             /**
              * Function to be called when user selects this item
@@ -27,8 +26,8 @@ define(function (require) {
              * @type function
              * @default null
              */
-            'action': null
-        }
+            action: null,
+        },
     });
 
     return MenuItem;

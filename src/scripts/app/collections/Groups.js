@@ -3,8 +3,8 @@
  * @submodule collections/Groups
  */
 define(function (require) {
-    const BB = require('backbone');
-    const Group = require('models/Group');
+    const BB = require("backbone");
+    const Group = require("models/Group");
 
     /**
      * Collection of date groups
@@ -13,7 +13,7 @@ define(function (require) {
      * @extends Backbone.Collection
      */
     const Groups = BB.Collection.extend({
-        model: Group
+        model: Group,
     });
 
     return Groups;

@@ -1,41 +1,59 @@
 {
-    "name": "smartrss",
-    "version": "2.0.0",
-    "description": "RSS Reader",
-    "homepage": "https://github.com/zakius/Smart-RSS",
-    "devDependencies": {
-        "@types/firefox-webext-browser": "^120.0.4",
-        "adm-zip": "^0.5.16",
-        "chokidar": "^3.5.3",
-        "eslint": "^8.57.1",
-        "md5-file": "^5.0.0",
-        "semver": "^7.7.1"
-    },
-    "scripts": {
-        "prepare": "node build.js prepare",
-        "package": "node build.js package",
-        "release": "node build.js release",
-        "release:minor": "node build.js release minor",
-        "release:major": "node build.js release major",
-        "watch": "node build.js watch",
-        "bump-version": "node build.js bump-version",
-        "lint": "eslint src/"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/zakius/Smart-RSS.git"
-    },
-    "author": "zakius",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/zakius/Smart-RSS/issues"
-    },
-    "engines": {
-        "node": ">=12.0.0"
-    },
-    "browserslist": [
-        "last 2 Firefox versions",
-        "last 2 Chrome versions"
-    ],
-    "private": true
+  "name": "smartrss",
+  "version": "2.0.0",
+  "description": "RSS Reader",
+  "homepage": "https://github.com/zakius/Smart-RSS",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/firefox-webext-browser": "^120.0.4",
+    "@types/node": "^26.1.2",
+    "adm-zip": "^0.6.0",
+    "chokidar": "^4.0.3",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.9.0",
+    "prettier": "^3.9.6",
+    "semver": "^7.8.5",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.66.0"
+  },
+  "scripts": {
+    "build": "node build.js prepare",
+    "package": "node build.js package",
+    "release": "node build.js release",
+    "release:minor": "node build.js release minor",
+    "release:major": "node build.js release major",
+    "watch": "node build.js watch",
+    "bump-version": "node build.js bump-version",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "check": "npm run lint && npm run typecheck && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zakius/Smart-RSS.git"
+  },
+  "author": "zakius",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zakius/Smart-RSS/issues"
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "browserslist": [
+    "last 2 Firefox versions",
+    "last 2 Chrome versions"
+  ],
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.7.1",
+    "underscore": "^1.13.8"
+  }
 }

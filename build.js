@@ -92,19 +92,23 @@ const stripComments = () => {
     console.log("Stripping comments from JS files...");
     const root = join(__dirname, "dist");
     const filesList = scan(root);
+    const libsDir = join(root, "scripts", "libs");
 
     const multilineComment = /^[\t\s]*\/\*\*?[^!][\s\S]*?\*\/[\r\n]/gm;
-    const specialComments = /^[\t\s]*\/\*!\*?[^!][\s\S]*?\*\/[\r\n]/gm;
     const singleLineComment = /^[\t\s]*(\/\/)[^\n\r]*[\n\r]/gm;
 
     filesList.forEach((filePath) => {
         if (!filePath.endsWith(".js")) {
             return;
         }
+        // Third-party libraries ship minified and carry `/*! ... */` license banners
+        // that must survive redistribution.
+        if (filePath.startsWith(libsDir)) {
+            return;
+        }
         const contents = readFileSync(filePath, "utf8")
             .replace(multilineComment, "")
-            .replace(singleLineComment, "")
-            .replace(specialComments, "");
+            .replace(singleLineComment, "");
 
         writeFileSync(filePath, contents);
     });
@@ -123,8 +127,7 @@ const zipPackage = () => {
 
     filesList.forEach((file) => {
         // Get the directory relative to the root, or empty string if it's at the root
-        const relativePath =
-            dirname(file) === root ? "" : relative(root, dirname(file));
+        const relativePath = dirname(file) === root ? "" : relative(root, dirname(file));
         zipFile.addLocalFile(file, relativePath);
     });
 
@@ -139,7 +142,7 @@ const watch = () => {
 
     chokidar
         .watch(join(__dirname, "src"), {
-            ignored: /(^|[\/\\])\../,
+            ignored: /(^|[/\\])\../,
             persistent: true,
         })
         .on("change", (path) => {

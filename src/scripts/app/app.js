@@ -9,22 +9,11 @@ define([
     "layouts/ArticlesLayout",
     "layouts/ContentLayout",
     "staticdb/shortcuts",
-], function (
-    comm,
-    Layout,
-    Actions,
-    FeedsLayout,
-    ArticlesLayout,
-    ContentLayout,
-    shortcuts
-) {
-    document.documentElement.style.fontSize =
-        bg.settings.get("uiFontSize") + "%";
+], function (comm, Layout, Actions, FeedsLayout, ArticlesLayout, ContentLayout, shortcuts) {
+    document.documentElement.style.fontSize = bg.settings.get("uiFontSize") + "%";
 
     document.addEventListener("contextmenu", function (event) {
-        if (
-            !event.target.matches("#content header, #content header *, input")
-        ) {
+        if (!event.target.matches("#content header, #content header *, input")) {
             event.preventDefault();
         }
     });
@@ -38,9 +27,7 @@ define([
         if (!frame) {
             return;
         }
-        const customStyleTag = frame.contentDocument.querySelector(
-            "[data-custom-style]"
-        );
+        const customStyleTag = frame.contentDocument.querySelector("[data-custom-style]");
         if (!customStyleTag) {
             return;
         }
@@ -87,15 +74,13 @@ define([
             return;
         }
 
-        const baseStyleTag =
-            frame.contentDocument.querySelector("[data-base-style]");
+        const baseStyleTag = frame.contentDocument.querySelector("[data-base-style]");
         if (baseStyleTag) {
             baseStyleTag.setAttribute("href", baseStylePath);
         }
 
         const darkStylePath = browser.runtime.getURL("styles/dark.css");
-        const darkStyleTag =
-            frame.contentDocument.querySelector("[data-dark-style]");
+        const darkStyleTag = frame.contentDocument.querySelector("[data-dark-style]");
         if (darkStyleTag) {
             darkStyleTag.setAttribute("href", darkStylePath);
         }
@@ -131,16 +116,10 @@ define([
         handleLayoutChange: function () {
             if (bg.settings.get("layout") === "vertical") {
                 this.layoutToVertical();
-                this.articles.enableResizing(
-                    bg.settings.get("layout"),
-                    bg.settings.get("posC")
-                );
+                this.articles.enableResizing(bg.settings.get("layout"), bg.settings.get("posC"));
             } else {
                 this.layoutToHorizontal();
-                this.articles.enableResizing(
-                    bg.settings.get("layout"),
-                    bg.settings.get("posB")
-                );
+                this.articles.enableResizing(bg.settings.get("layout"), bg.settings.get("posB"));
             }
         },
         layoutToVertical: function () {
@@ -165,14 +144,8 @@ define([
                     this.attach("articles", new ArticlesLayout());
                     this.attach("content", new ContentLayout());
 
-                    this.feeds.enableResizing(
-                        "horizontal",
-                        bg.settings.get("posA")
-                    );
-                    this.articles.enableResizing(
-                        "horizontal",
-                        bg.settings.get("posB")
-                    );
+                    this.feeds.enableResizing("horizontal", bg.settings.get("posA"));
+                    this.articles.enableResizing("horizontal", bg.settings.get("posB"));
                     applyStylesToSandbox();
                     changeUserStyle();
                     changeInvertColors();
@@ -190,8 +163,7 @@ define([
 
             if (
                 activeElement &&
-                (activeElement.tagName === "INPUT" ||
-                    activeElement.tagName === "TEXTAREA")
+                (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA")
             ) {
                 return;
             }
@@ -220,10 +192,7 @@ define([
 
             if (activeRegionName && activeRegionName in hotkeys) {
                 if (shortcut in hotkeys[activeRegionName]) {
-                    app.actions.execute(
-                        hotkeys[activeRegionName][shortcut],
-                        event
-                    );
+                    app.actions.execute(hotkeys[activeRegionName][shortcut], event);
                     event.preventDefault();
                     return false;
                 }

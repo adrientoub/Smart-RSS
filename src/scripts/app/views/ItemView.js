@@ -3,24 +3,26 @@
  * @submodule views/ItemView
  */
 define([
-    'backbone', 'helpers/dateUtils', 'instances/contextMenus', 'helpers/stripTags', 'text!templates/itemView.html'
+    "backbone",
+    "helpers/dateUtils",
+    "instances/contextMenus",
+    "helpers/stripTags",
+    "text!templates/itemView.html",
 ], function (BB, dateUtils, contextMenus, stripTags, itemTemplate) {
-
     /**
      * View of one article item in article list
      * @class ItemView
      * @constructor
      * @extends Backbone.View
      */
-    let ItemView = BB.View.extend({
-
+    const ItemView = BB.View.extend({
         /**
          * Tag name of article item element
          * @property tagName
          * @default 'a'
          * @type String
          */
-        tagName: 'a',
+        tagName: "a",
 
         /**
          * Class name of article item element
@@ -28,7 +30,7 @@ define([
          * @default 'item'
          * @type String
          */
-        className: 'articles-list-item',
+        className: "articles-list-item",
 
         /**
          * Reference to view/articleList instance. It should be replaced with require('views/articleList')
@@ -57,11 +59,10 @@ define([
          * @method setEvents
          */
         setEvents: function () {
-            this.model.on('change', this.handleModelChange, this);
-            this.model.on('destroy', this.handleModelDestroy, this);
-            bg.sources.on('clear-events', this.handleClearEvents, this);
+            this.model.on("change", this.handleModelChange, this);
+            this.model.on("destroy", this.handleModelDestroy, this);
+            bg.sources.on("clear-events", this.handleClearEvents, this);
         },
-
 
         /**
          * If the tab is closed, it will remove all events bound to bgprocess
@@ -81,10 +82,10 @@ define([
          */
         clearEvents: function () {
             if (this.model) {
-                this.model.off('change', this.handleModelChange, this);
-                this.model.off('destroy', this.handleModelDestroy, this);
+                this.model.off("change", this.handleModelChange, this);
+                this.model.off("destroy", this.handleModelDestroy, this);
             }
-            bg.sources.off('clear-events', this.handleClearEvents, this);
+            bg.sources.off("clear-events", this.handleClearEvents, this);
         },
 
         /**
@@ -94,67 +95,75 @@ define([
          */
         render: function () {
             const classList = this.el.classList;
-            classList.remove('pinned');
-            classList.remove('unvisited');
-            classList.remove('unread');
-            classList.remove('one-line');
+            classList.remove("pinned");
+            classList.remove("unvisited");
+            classList.remove("unread");
+            classList.remove("one-line");
 
-            if (!this.model.get('visited')) {
-                classList.add('unvisited');
+            if (!this.model.get("visited")) {
+                classList.add("unvisited");
             }
-            if (this.model.get('unread')) {
-                classList.add('unread');
+            if (this.model.get("unread")) {
+                classList.add("unread");
             }
-            if (this.model.get('pinned')) {
-                classList.add('pinned');
+            if (this.model.get("pinned")) {
+                classList.add("pinned");
             }
-            if (bg.settings.get('lines') === '1') {
-                classList.add('one-line');
+            if (bg.settings.get("lines") === "1") {
+                classList.add("one-line");
             }
 
             const changedAttributes = this.model.changedAttributes();
             if (changedAttributes) {
                 const caKeys = Object.keys(changedAttributes);
-                if ((('unread' in changedAttributes || 'visited' in changedAttributes) && caKeys.length === 1) || ('unread' in changedAttributes && 'visited' in changedAttributes && caKeys.length === 2)) {
+                if (
+                    (("unread" in changedAttributes || "visited" in changedAttributes) &&
+                        caKeys.length === 1) ||
+                    ("unread" in changedAttributes &&
+                        "visited" in changedAttributes &&
+                        caKeys.length === 2)
+                ) {
                     return this;
                 }
             }
 
-            let article = this.model.toJSON();
+            const article = this.model.toJSON();
             article.datetime = new Date(article.date).toISOString();
             article.date = this.getItemDate(article.date);
             if (this.multiple) {
-                const source = bg.sources.find({id: this.model.get('sourceID')});
-                article.sourceTitle = source.get('title');
-                if (bg.getBoolean('displayFaviconInsteadOfPin')) {
-                    article.favicon = source.get('favicon');
+                const source = bg.sources.find({ id: this.model.get("sourceID") });
+                article.sourceTitle = source.get("title");
+                if (bg.getBoolean("displayFaviconInsteadOfPin")) {
+                    article.favicon = source.get("favicon");
                 }
-                article.author = article.sourceTitle !== article.author ? article.sourceTitle + ' - ' + article.author : article.author;
+                article.author =
+                    article.sourceTitle !== article.author
+                        ? article.sourceTitle + " - " + article.author
+                        : article.author;
             }
-            this.el.setAttribute('href', article.url);
-            if (bg.getBoolean('showFullHeadline')) {
-                this.el.classList.add('full-headline');
+            this.el.setAttribute("href", article.url);
+            if (bg.getBoolean("showFullHeadline")) {
+                this.el.classList.add("full-headline");
             } else {
-                this.el.setAttribute('title', article.title);
+                this.el.setAttribute("title", article.title);
             }
-
 
             while (this.el.firstChild) {
                 this.el.removeChild(this.el.firstChild);
             }
 
             const fragment = document.createRange().createContextualFragment(itemTemplate);
-            const itemPin = fragment.querySelector('.item-pin');
-            const icon = itemPin.querySelector('.icon');
-            if (typeof article.favicon !== 'undefined') {
+            const itemPin = fragment.querySelector(".item-pin");
+            const icon = itemPin.querySelector(".icon");
+            if (typeof article.favicon !== "undefined") {
                 icon.src = article.favicon;
             } else {
                 itemPin.removeChild(icon);
             }
-            fragment.querySelector('.item-author').textContent = article.author;
-            fragment.querySelector('.item-title').textContent = article.title;
-            fragment.querySelector('.item-date').textContent = article.date;
-            fragment.querySelector('.item-date').setAttribute('datetime', article.datetime);
+            fragment.querySelector(".item-author").textContent = article.author;
+            fragment.querySelector(".item-title").textContent = article.title;
+            fragment.querySelector(".item-date").textContent = article.date;
+            fragment.querySelector(".item-date").setAttribute("datetime", article.datetime);
 
             this.el.appendChild(fragment);
 
@@ -168,18 +177,22 @@ define([
          * @return String
          */
         getItemDate: function (date) {
-            const dateFormats = {normal: 'DD.MM.YYYY', iso: 'YYYY-MM-DD', us: 'MM/DD/YYYY'};
-            const pickedFormat = dateFormats[bg.settings.get('dateType') || 'normal'] || dateFormats['normal'];
+            const dateFormats = { normal: "DD.MM.YYYY", iso: "YYYY-MM-DD", us: "MM/DD/YYYY" };
+            const pickedFormat =
+                dateFormats[bg.settings.get("dateType") || "normal"] || dateFormats["normal"];
 
-            const timeFormat = bg.settings.get('hoursFormat') === '12h' ? 'H:mm a' : 'hh:mm';
+            const timeFormat = bg.settings.get("hoursFormat") === "12h" ? "H:mm a" : "hh:mm";
 
             if (date) {
-                if (bg.getBoolean('fullDate')) {
-                    date = dateUtils.formatDate(date, pickedFormat + ' ' + timeFormat);
-                } else if (Math.floor(dateUtils.formatDate(date, 'T') / 86400000) >= Math.floor(dateUtils.formatDate(Date.now(), 'T') / 86400000)) {
+                if (bg.getBoolean("fullDate")) {
+                    date = dateUtils.formatDate(date, pickedFormat + " " + timeFormat);
+                } else if (
+                    Math.floor(dateUtils.formatDate(date, "T") / 86400000) >=
+                    Math.floor(dateUtils.formatDate(Date.now(), "T") / 86400000)
+                ) {
                     date = dateUtils.formatDate(date, timeFormat);
-                } else if ((new Date(date)).getFullYear() === (new Date()).getFullYear()) {
-                    date = dateUtils.formatDate(date, pickedFormat.replace(/\/?YYYY(?!-)/, ''));
+                } else if (new Date(date).getFullYear() === new Date().getFullYear()) {
+                    date = dateUtils.formatDate(date, pickedFormat.replace(/\/?YYYY(?!-)/, ""));
                 } else {
                     date = dateUtils.formatDate(date, pickedFormat);
                 }
@@ -206,11 +219,11 @@ define([
          * @param event {MouseEvent}
          */
         showContextMenu: function (event) {
-            if (!this.el.classList.contains('selected')) {
+            if (!this.el.classList.contains("selected")) {
                 this.list.select(this, event);
             }
-            contextMenus.get('items').currentSource = this.model;
-            contextMenus.get('items').show(event.clientX, event.clientY);
+            contextMenus.get("items").currentSource = this.model;
+            contextMenus.get("items").show(event.clientX, event.clientY);
         },
 
         /**
@@ -219,7 +232,10 @@ define([
          * @triggered when model is changed
          */
         handleModelChange: function () {
-            if (this.model.get('deleted') || (this.list.currentData.name !== 'trash' && this.model.get('trashed'))) {
+            if (
+                this.model.get("deleted") ||
+                (this.list.currentData.name !== "trash" && this.model.get("trashed"))
+            ) {
                 this.list.destroyItem(this);
             } else {
                 this.render();
@@ -242,8 +258,8 @@ define([
          */
         handleClickPin: function (event) {
             event.stopPropagation();
-            this.model.save({pinned: !this.model.get('pinned')});
-        }
+            this.model.save({ pinned: !this.model.get("pinned") });
+        },
     });
 
     return ItemView;

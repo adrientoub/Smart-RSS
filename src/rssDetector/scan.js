@@ -6,19 +6,11 @@
 
     function init() {
         scan();
-        document.addEventListener(
-            "visibilitychange",
-            updateAvailableSourcesList,
-            false
-        );
-        document.addEventListener(
-            "pagehide",
-            updateAvailableSourcesList,
-            false
-        );
+        document.addEventListener("visibilitychange", updateAvailableSourcesList, false);
+        document.addEventListener("pagehide", updateAvailableSourcesList, false);
 
         if (oldHref.includes("youtube")) {
-            let bodyList = document.querySelector("body");
+            const bodyList = document.querySelector("body");
             const observer = new MutationObserver(function () {
                 if (oldHref === document.location.href) {
                     return;
@@ -40,10 +32,7 @@
 
     function docReady(fn) {
         // see if DOM is already available
-        if (
-            document.readyState === "complete" ||
-            document.readyState === "interactive"
-        ) {
+        if (document.readyState === "complete" || document.readyState === "interactive") {
             // call on next available tick
             setTimeout(fn, 1);
         } else {
@@ -72,12 +61,12 @@
         feedsData.length = 0;
         const address = document.location.href;
         if (typeof document.getRootNode !== "undefined") {
-            let rootNode = document.getRootNode();
+            const rootNode = document.getRootNode();
             if (rootNode) {
                 let rootDocumentElement = rootNode.documentElement;
                 // for chrome
 
-                let d = document.getElementById("webkit-xml-viewer-source-xml");
+                const d = document.getElementById("webkit-xml-viewer-source-xml");
 
                 if (d && d.firstChild) {
                     rootDocumentElement = d.firstChild;
@@ -90,9 +79,7 @@
                 if (rootName === "rdf" || rootName === "rdf:rdf") {
                     if (rootDocumentElement.attributes["xmlns"]) {
                         isRSS1 =
-                            rootDocumentElement.attributes[
-                                "xmlns"
-                            ].nodeValue.search("rss") > 0;
+                            rootDocumentElement.attributes["xmlns"].nodeValue.search("rss") > 0;
                     }
                 }
                 if (
@@ -107,15 +94,10 @@
         }
 
         if (address.match(/^https:\/\/github.com\/.+\/.+/)) {
-            const base = address.replace(
-                /(^https:\/\/github.com\/.+\/.+)(\/.+)/,
-                "$1"
-            );
+            const base = address.replace(/(^https:\/\/github.com\/.+\/.+)(\/.+)/, "$1");
             feedsData.push({
                 url: base + "/releases.atom",
-                title:
-                    base.match(/^https:\/\/github.com\/(.+\/.+)/)[1] +
-                    " - Releases",
+                title: base.match(/^https:\/\/github.com\/(.+\/.+)/)[1] + " - Releases",
             });
         }
 
@@ -123,27 +105,22 @@
             const youtubeFeeds = [];
             const userMatch = /c\/(.+)/.exec(address);
             let deeperScan = true;
-            let feedUrl = "";
+            let feedUrl;
             if (userMatch) {
-                feedUrl =
-                    "https://www.youtube.com/feeds/videos.xml?user=" +
-                    userMatch[1];
+                feedUrl = "https://www.youtube.com/feeds/videos.xml?user=" + userMatch[1];
                 deeperScan = false;
                 youtubeFeeds.push({ url: feedUrl, title: "User feed" });
             }
             const channelMatch = /channel\/(.+)/.exec(address);
             if (channelMatch) {
-                feedUrl =
-                    "https://www.youtube.com/feeds/videos.xml?channel_id=" +
-                    channelMatch[1];
+                feedUrl = "https://www.youtube.com/feeds/videos.xml?channel_id=" + channelMatch[1];
                 deeperScan = false;
                 youtubeFeeds.push({ url: feedUrl, title: "Channel feed" });
             }
             const playlistMatch = /list=([a-zA-Z\d\-_]+)/.exec(address);
             if (playlistMatch) {
                 feedUrl =
-                    "https://www.youtube.com/feeds/videos.xml?playlist_id=" +
-                    playlistMatch[1];
+                    "https://www.youtube.com/feeds/videos.xml?playlist_id=" + playlistMatch[1];
                 youtubeFeeds.push({
                     url: feedUrl,
                     title: "Current playlist feed",
@@ -153,13 +130,10 @@
         }
 
         if (address.includes("youtube")) {
-            const [youtubeFeeds, deeperScan] =
-                findFeedsForYoutubeAddress(address);
+            const [youtubeFeeds, deeperScan] = findFeedsForYoutubeAddress(address);
             feedsData.push(...youtubeFeeds);
             if (deeperScan && address.includes("watch")) {
-                const channelLink = document.querySelector(
-                    "#upload-info .ytd-channel-name>a"
-                );
+                const channelLink = document.querySelector("#upload-info .ytd-channel-name>a");
                 if (channelLink) {
                     const href = channelLink.getAttribute("href");
                     if (href) {
@@ -176,8 +150,7 @@
             const channelLink = document.querySelector(".owner>a");
             if (channelLink) {
                 const channelName = channelLink.textContent;
-                const href =
-                    "https://www.bitchute.com/feeds/rss/channel/" + channelName;
+                const href = "https://www.bitchute.com/feeds/rss/channel/" + channelName;
                 feedsData.push({ url: href, title: "Channel feed" });
             }
 
@@ -190,8 +163,7 @@
             if (channelNameMatch) {
                 const channelName = channelNameMatch[1];
 
-                const href =
-                    "https://lbryfeed.melroy.org/channel/" + channelName;
+                const href = "https://lbryfeed.melroy.org/channel/" + channelName;
                 feedsData.push({ url: href, title: "Channel feed" });
             }
 
@@ -208,8 +180,7 @@
                 if (match2) {
                     channelName = potentialChannelName;
                 } else {
-                    const channelLink =
-                        document.querySelector("a.js-user-link");
+                    const channelLink = document.querySelector("a.js-user-link");
                     if (channelLink) {
                         channelName = channelLink.href.replace("/", "");
                     }
@@ -217,8 +188,7 @@
                 if (!channelName) {
                     return;
                 }
-                const href =
-                    "https://vimeo.com/" + channelName + "/videos/rss/";
+                const href = "https://vimeo.com/" + channelName + "/videos/rss/";
                 feedsData.push({ url: href, title: "Channel feed" });
             }
 
@@ -247,8 +217,7 @@
             return updateAvailableSourcesList();
         }
 
-        const selector =
-            'link[type="application/rss+xml"], link[type="application/atom+xml"]';
+        const selector = 'link[type="application/rss+xml"], link[type="application/atom+xml"]';
 
         feedsData.push(
             ...[...document.querySelectorAll(selector)].map((feed) => {
@@ -260,16 +229,10 @@
         if (feedsData.length === 0) {
             const generator = document.querySelector('meta[name="generator"]');
 
-            if (
-                generator &&
-                generator.getAttribute("content").includes("WordPress")
-            ) {
+            if (generator && generator.getAttribute("content").includes("WordPress")) {
                 const url = document.URL;
 
-                const feedUrl =
-                    url.charAt(url.length - 1) === "/"
-                        ? url + "feed"
-                        : url + "/feed";
+                const feedUrl = url.charAt(url.length - 1) === "/" ? url + "feed" : url + "/feed";
 
                 feedsData.push({ url: feedUrl, title: feedUrl });
             }

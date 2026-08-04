@@ -3,7 +3,7 @@
  * @submodule layouts/Layout
  */
 define(function (require) {
-    const BB = require('backbone');
+    const BB = require("backbone");
 
     /**
      * Layout abstract class
@@ -11,8 +11,7 @@ define(function (require) {
      * @constructor
      * @extends Backbone.View
      */
-    let Layout = BB.View.extend({
-
+    const Layout = BB.View.extend({
         /**
          * Gives focus to layout region element
          * @method setFocus
@@ -22,21 +21,21 @@ define(function (require) {
             if (!name || !this[name]) {
                 return;
             }
-            const articles = document.querySelector('#articles');
+            const articles = document.querySelector("#articles");
             if (articles) {
-                articles.classList.remove('focused');
+                articles.classList.remove("focused");
             }
-            const feeds = document.querySelector('#feeds');
+            const feeds = document.querySelector("#feeds");
             if (feeds) {
-                feeds.classList.remove('focused');
+                feeds.classList.remove("focused");
             }
-            const content = document.querySelector('#content');
+            const content = document.querySelector("#content");
             if (content) {
-                content.classList.remove('focused');
+                content.classList.remove("focused");
             }
-            const x = document.querySelector('#' + name);
+            const x = document.querySelector("#" + name);
             if (x) {
-                x.classList.add('focused');
+                x.classList.add("focused");
             }
 
             this[name].el.focus();
@@ -56,18 +55,18 @@ define(function (require) {
             this[name] = view;
             if (!view.el.parentNode) {
                 if (old && old instanceof BB.View) {
-                    old.el.insertAdjacentElement('beforebegin', view.el);
+                    old.el.insertAdjacentElement("beforebegin", view.el);
                     old.el.parentElement.removeChild(old.el);
-                    old.trigger('close');
+                    old.trigger("close");
                 } else {
-                    this.el.insertAdjacentElement('beforeend', view.el);
+                    this.el.insertAdjacentElement("beforeend", view.el);
                 }
             }
-            view.trigger('attach');
+            view.trigger("attach");
             if (!this.focus) {
                 this.setFocus(name);
             }
-        }
+        },
     });
 
     return Layout;

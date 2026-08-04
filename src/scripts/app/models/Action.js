@@ -3,7 +3,7 @@
  * @submodule models/Action
  */
 define(function (require) {
-    const BB = require('backbone');
+    const BB = require("backbone");
 
     /**
      * Executable action. Actions are usually executed by shorcuts, buttons or context menus.
@@ -11,20 +11,20 @@ define(function (require) {
      * @constructor
      * @extends Backbone.Model
      */
-    let Action = BB.Model.extend({
+    const Action = BB.Model.extend({
         /**
          * @property idAttribute
          * @type String
          * @default name
          */
-        idAttribute: 'name',
+        idAttribute: "name",
         defaults: {
             /**
              * @attribute name
              * @type String
              * @default global:default
              */
-            name: 'global:default',
+            name: "global:default",
 
             /**
              * Function to be called when action is executed
@@ -32,8 +32,7 @@ define(function (require) {
              * @type function
              */
             fn: function () {
-                return function () {
-                };
+                return function () {};
             },
 
             /**
@@ -48,10 +47,10 @@ define(function (require) {
              * @type String
              * @default ''
              */
-            title: '',
+            title: "",
             state: null,
             glyph: null,
-        }
+        },
     });
 
     return Action;

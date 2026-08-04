@@ -6,12 +6,12 @@
  */
 define(function () {
     const entityMap = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        '\'': '&#39;',
-        '/': '&#x2F;'
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+        "/": "&#x2F;",
     };
 
     return function (str) {
@@ -19,10 +19,10 @@ define(function () {
             return entityMap[s];
         });
         str = str.replace(/\s/, function (f) {
-            if (f === ' ') {
-                return ' ';
+            if (f === " ") {
+                return " ";
             }
-            return '';
+            return "";
         });
         return str;
     };

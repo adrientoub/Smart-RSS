@@ -2,11 +2,13 @@
  * @module BgProcess
  * @submodule models/Info
  */
-define(["backbone", "modules/Animation"], function (BB, animation) {
-    let handleAllCountChange = function (model) {
+define(["backbone", "modules/Animation", "modules/actionApi"], function (BB, animation, actionApi) {
+    const { action } = actionApi;
+
+    const handleAllCountChange = function (model) {
         if (settings.get("badgeMode") === "disabled") {
             if (model === settings) {
-                browser.browserAction.setBadgeText({ text: "" });
+                action.setBadgeText({ text: "" });
             }
             return;
         }
@@ -27,20 +29,14 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
         info.badgeTimeout = setTimeout(function () {
             let val;
             if (settings.get("badgeMode") === "unread") {
-                val =
-                    info.get("allCountUnread") > 99
-                        ? "+"
-                        : info.get("allCountUnread");
+                val = info.get("allCountUnread") > 99 ? "+" : info.get("allCountUnread");
             } else {
-                val =
-                    info.get("allCountUnvisited") > 99
-                        ? "+"
-                        : info.get("allCountUnvisited");
+                val = info.get("allCountUnvisited") > 99 ? "+" : info.get("allCountUnvisited");
             }
 
             val = val <= 0 ? "" : String(val);
-            browser.browserAction.setBadgeText({ text: val });
-            browser.browserAction.setBadgeBackgroundColor({ color: "#777" });
+            action.setBadgeText({ text: val });
+            action.setBadgeBackgroundColor({ color: "#777" });
             info.badgeTimeout = null;
         });
     };
@@ -51,7 +47,7 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
      * @constructor
      * @extends Backbone.Model
      */
-    let Info = BB.Model.extend({
+    const Info = BB.Model.extend({
         defaults: {
             id: "info-id",
             allCountUnread: 0,
@@ -70,8 +66,7 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                     deleted: false,
                     unread: true,
                 }).length,
-                allCountTotal: items.where({ trashed: false, deleted: false })
-                    .length,
+                allCountTotal: items.where({ trashed: false, deleted: false }).length,
                 allCountUnvisited: items.where({
                     visited: false,
                     trashed: false,
@@ -81,8 +76,7 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                     deleted: false,
                     unread: true,
                 }).length,
-                trashCountTotal: items.where({ trashed: true, deleted: false })
-                    .length,
+                trashCountTotal: items.where({ trashed: true, deleted: false }).length,
                 pinnedCountUnread: items.where({
                     trashed: false,
                     deleted: false,
@@ -113,12 +107,10 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
             folders.forEach(function (folder) {
                 let count = 0;
                 let countAll = 0;
-                sources
-                    .where({ folderID: folder.id })
-                    .forEach(function (source) {
-                        count += source.get("count");
-                        countAll += source.get("countAll");
-                    });
+                sources.where({ folderID: folder.id }).forEach(function (source) {
+                    count += source.get("count");
+                    countAll += source.get("countAll");
+                });
                 folder.set({ count: count, countAll: countAll });
             });
         },
@@ -137,45 +129,34 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                 let allUnvisited = 0;
                 let pinnedAll = 0;
                 let pinnedUnread = 0;
-                items
-                    .where({ sourceID: source.get("id") })
-                    .forEach(function (item) {
-                        if (!item.get("deleted")) {
-                            if (!item.get("visited")) {
-                                allUnvisited++;
-                            }
-                            if (item.get("trashed")) {
-                                trashAll++;
-                            }
-                            if (item.get("trashed") && item.get("unread")) {
-                                trashUnread++;
-                            }
-                            if (item.get("pinned") && !item.get("trashed")) {
-                                pinnedAll++;
-                            }
-                            if (
-                                item.get("pinned") &&
-                                !item.get("trashed") &&
-                                item.get("unread")
-                            ) {
-                                pinnedUnread++;
-                            }
+                items.where({ sourceID: source.get("id") }).forEach(function (item) {
+                    if (!item.get("deleted")) {
+                        if (!item.get("visited")) {
+                            allUnvisited++;
                         }
-                        item.destroy();
-                    });
+                        if (item.get("trashed")) {
+                            trashAll++;
+                        }
+                        if (item.get("trashed") && item.get("unread")) {
+                            trashUnread++;
+                        }
+                        if (item.get("pinned") && !item.get("trashed")) {
+                            pinnedAll++;
+                        }
+                        if (item.get("pinned") && !item.get("trashed") && item.get("unread")) {
+                            pinnedUnread++;
+                        }
+                    }
+                    item.destroy();
+                });
 
                 info.set({
-                    allCountUnread:
-                        info.get("allCountUnread") - source.get("count"),
-                    allCountTotal:
-                        info.get("allCountTotal") - source.get("countAll"),
-                    allCountUnvisited:
-                        info.get("allCountUnvisited") - allUnvisited,
-                    trashCountUnread:
-                        info.get("trashCountUnread") - trashUnread,
+                    allCountUnread: info.get("allCountUnread") - source.get("count"),
+                    allCountTotal: info.get("allCountTotal") - source.get("countAll"),
+                    allCountUnvisited: info.get("allCountUnvisited") - allUnvisited,
+                    trashCountUnread: info.get("trashCountUnread") - trashUnread,
                     trashCountTotal: info.get("trashCountTotal") - trashAll,
-                    pinnedCountUnread:
-                        info.get("pinnedCountUnread") - pinnedUnread,
+                    pinnedCountUnread: info.get("pinnedCountUnread") - pinnedUnread,
                     pinnedCountTotal: info.get("pinnedCountAll") - pinnedAll,
                 });
 
@@ -186,8 +167,7 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                     if (folder) {
                         folder.set({
                             count: folder.get("count") - source.get("count"),
-                            countAll:
-                                folder.get("countAll") - source.get("countAll"),
+                            countAll: folder.get("countAll") - source.get("countAll"),
                         });
                     }
                 }
@@ -209,18 +189,14 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                             count: source.get("count") - 1,
                         });
 
-                        if (
-                            source.get("count") === 0 &&
-                            source.get("hasNew") === true
-                        ) {
+                        if (source.get("count") === 0 && source.get("hasNew") === true) {
                             source.save("hasNew", false);
                         }
                     }
                 } else if (!model.get("deleted")) {
                     info.set({
                         trashCountUnread:
-                            info.get("trashCountUnread") +
-                            (model.get("unread") ? 1 : -1),
+                            info.get("trashCountUnread") + (model.get("unread") ? 1 : -1),
                     });
                 }
             });
@@ -234,10 +210,7 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                             countAll: source.get("countAll") - 1,
                         });
 
-                        if (
-                            source.get("count") === 0 &&
-                            source.get("hasNew") === true
-                        ) {
+                        if (source.get("count") === 0 && source.get("hasNew") === true) {
                             source.save("hasNew", false);
                         }
                     } else {
@@ -250,25 +223,20 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                     if (!model.get("deleted")) {
                         info.set({
                             trashCountTotal:
-                                info.get("trashCountTotal") +
-                                (model.get("trashed") ? 1 : -1),
+                                info.get("trashCountTotal") + (model.get("trashed") ? 1 : -1),
                             trashCountUnread:
-                                info.get("trashCountUnread") +
-                                (model.get("trashed") ? 1 : -1),
+                                info.get("trashCountUnread") + (model.get("trashed") ? 1 : -1),
                         });
                     }
                 } else {
                     source.set({
-                        countAll:
-                            source.get("countAll") +
-                            (model.get("trashed") ? -1 : 1),
+                        countAll: source.get("countAll") + (model.get("trashed") ? -1 : 1),
                     });
 
                     if (!model.get("deleted")) {
                         info.set({
                             trashCountTotal:
-                                info.get("trashCountTotal") +
-                                (model.get("trashed") ? 1 : -1),
+                                info.get("trashCountTotal") + (model.get("trashed") ? 1 : -1),
                         });
                     }
                 }
@@ -277,12 +245,10 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                     info.set({
                         pinnedCountTotal:
                             info.get("pinnedCountTotal") +
-                            (model.get("trashed") ? -1 : 1) *
-                                (model.get("pinned") ? 1 : 0),
+                            (model.get("trashed") ? -1 : 1) * (model.get("pinned") ? 1 : 0),
                         pinnedCountUnread:
                             info.get("pinnedCountUnread") +
-                            (model.get("trashed") ? -1 : 1) *
-                                (model.get("pinned") ? 1 : 0),
+                            (model.get("trashed") ? -1 : 1) * (model.get("pinned") ? 1 : 0),
                     });
                 }
             });
@@ -311,8 +277,7 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
             items.on("change:visited", function (model) {
                 info.set({
                     allCountUnvisited:
-                        info.get("allCountUnvisited") +
-                        (model.get("visited") ? -1 : 1),
+                        info.get("allCountUnvisited") + (model.get("visited") ? -1 : 1),
                 });
             });
 
@@ -320,9 +285,7 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                 // SPECIALS
                 info.set({
                     allCountUnread:
-                        info.get("allCountUnread") +
-                        source.get("count") -
-                        source.previous("count"),
+                        info.get("allCountUnread") + source.get("count") - source.previous("count"),
                 });
 
                 // FOLDER
@@ -338,10 +301,7 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                 }
 
                 folder.set({
-                    count:
-                        folder.get("count") +
-                        source.get("count") -
-                        source.previous("count"),
+                    count: folder.get("count") + source.get("count") - source.previous("count"),
                 });
             });
 
@@ -384,8 +344,7 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
 
                     folder.set({
                         count: folder.get("count") + source.get("count"),
-                        countAll:
-                            folder.get("countAll") + source.get("countAll"),
+                        countAll: folder.get("countAll") + source.get("countAll"),
                     });
                 }
 
@@ -398,14 +357,8 @@ define(["backbone", "modules/Animation"], function (BB, animation) {
                     }
 
                     folder.set({
-                        count: Math.max(
-                            folder.get("count") - source.get("count"),
-                            0
-                        ),
-                        countAll: Math.max(
-                            folder.get("countAll") - source.get("countAll"),
-                            0
-                        ),
+                        count: Math.max(folder.get("count") - source.get("count"), 0),
+                        countAll: Math.max(folder.get("countAll") - source.get("countAll"), 0),
                     });
                 }
             });

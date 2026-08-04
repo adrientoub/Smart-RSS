@@ -2,23 +2,21 @@
  * @module App
  * @submodule views/GroupView
  */
-define(['backbone'], function (BB) {
-
+define(["backbone"], function (BB) {
     /**
      * View for Date Groups in list of articles
      * @class GroupView
      * @constructor
      * @extends Backbone.View
      */
-    let GroupView = BB.View.extend({
-
+    const GroupView = BB.View.extend({
         /**
          * Tag name of date group element
          * @property tagName
          * @default 'div'
          * @type String
          */
-        tagName: 'div',
+        tagName: "div",
 
         /**
          * Class name of date group element
@@ -26,7 +24,7 @@ define(['backbone'], function (BB) {
          * @default 'date-group'
          * @type String
          */
-        className: 'date-group',
+        className: "date-group",
 
         /**
          * Initializations (*constructor*)
@@ -36,8 +34,8 @@ define(['backbone'], function (BB) {
          */
         initialize: function (model, groups) {
             this.el.view = this;
-            this.listenTo(groups, 'reset', this.handleReset);
-            this.listenTo(groups, 'remove', this.handleRemove);
+            this.listenTo(groups, "reset", this.handleReset);
+            this.listenTo(groups, "remove", this.handleRemove);
         },
 
         /**
@@ -45,7 +43,7 @@ define(['backbone'], function (BB) {
          * @method render
          */
         render: function () {
-            this.el.textContent = this.model.get('title');
+            this.el.textContent = this.model.get("title");
             return this;
         },
 
@@ -71,7 +69,7 @@ define(['backbone'], function (BB) {
         handleReset: function () {
             this.stopListening();
             this.el.parentNode.removeChild(this.el);
-        }
+        },
     });
 
     return GroupView;

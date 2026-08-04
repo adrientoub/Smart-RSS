@@ -2,7 +2,9 @@
  * @module BgProcess
  * @submodule modules/Animation
  */
-define(function () {
+define(function (require) {
+    const { action } = require("modules/actionApi");
+
     /**
      * Handles animation of browser action button icon
      * @class Animation
@@ -13,7 +15,7 @@ define(function () {
         i: 2,
         interval: null,
         update: function () {
-            browser.browserAction.setIcon({
+            action.setIcon({
                 path: "/images/reload_anim_" + this.i + ".png",
             });
             this.i++;
@@ -42,11 +44,11 @@ define(function () {
             }
             const icon = settings.get("icon");
             if (sources.findWhere({ hasNew: true }) && icon !== "disabled") {
-                browser.browserAction.setIcon({
+                action.setIcon({
                     path: "/images/icon19-" + icon + ".png",
                 });
             } else {
-                browser.browserAction.setIcon({
+                action.setIcon({
                     path: "/images/icon19.png",
                 });
             }

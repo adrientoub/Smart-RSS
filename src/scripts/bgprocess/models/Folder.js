@@ -2,8 +2,7 @@
  * @module BgProcess
  * @submodule models/Folder
  */
-define(['backbone'], function (BB) {
-
+define(["backbone"], function (BB) {
     /**
      * Model for feed folders
      * @class Folder
@@ -12,10 +11,10 @@ define(['backbone'], function (BB) {
      */
     return BB.Model.extend({
         defaults: {
-            title: '<no title>',
+            title: "<no title>",
             opened: false,
             count: 0, // unread
-            countAll: 0
-        }
+            countAll: 0,
+        },
     });
 });

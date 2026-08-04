@@ -4,6 +4,7 @@
 
 define(function (require) {
     const Animation = require("modules/Animation");
+    const { action, menuContext } = require("modules/actionApi");
     const Settings = require("models/Settings");
     const Info = require("models/Info");
     const Source = require("models/Source");
@@ -38,22 +39,38 @@ define(function (require) {
         openRSS(false, source.get("id"));
     }
 
+    const SUBSCRIBE_LINK_MENU_ID = "smart-rss-subscribe-link";
+    const FEED_MENU_ROOT_ID = "SmartRss";
+
     function createLinksMenu() {
         if (!getBoolean("displaySubscribeToLink")) {
             return;
         }
         browser.contextMenus.create({
+            id: SUBSCRIBE_LINK_MENU_ID,
             title: "Subscribe to this feed",
             contexts: ["link"],
             checked: false,
-            onclick: (info) => {
-                addSource(info.linkUrl);
-            },
         });
     }
 
+    // MV3 removed the per-item `onclick` property, so all menu clicks are routed here.
+    // Feed entries use their feed URL as the menu item id.
+    browser.contextMenus.onClicked.addListener((info) => {
+        if (info.menuItemId === SUBSCRIBE_LINK_MENU_ID) {
+            addSource(info.linkUrl);
+            return;
+        }
+        if (info.menuItemId === FEED_MENU_ROOT_ID) {
+            return;
+        }
+        if (typeof info.menuItemId === "string" && /^https?:/i.test(info.menuItemId)) {
+            addSource(info.menuItemId);
+        }
+    });
+
     function onMessage(message) {
-        if (!message.hasOwnProperty("action")) {
+        if (!Object.hasOwn(message, "action")) {
             return;
         }
 
@@ -78,8 +95,7 @@ define(function (require) {
                 let unsubscribedFound = 0;
                 if (settings.get("hideSubscribedFeeds") === "hide") {
                     feeds = feeds.filter((feed) => {
-                        const isFound = !sources.where({ url: feed.url })
-                            .length;
+                        const isFound = !sources.where({ url: feed.url }).length;
                         if (isFound) {
                             subscribedFound++;
                         } else {
@@ -107,33 +123,24 @@ define(function (require) {
 
                 const whenToChangeIcon = settings.get("showNewArticlesIcon");
                 let shouldChangeIcon = true;
-                if (
-                    whenToChangeIcon === "not-subscribed-found" &&
-                    unsubscribedFound === 0
-                ) {
+                if (whenToChangeIcon === "not-subscribed-found" && unsubscribedFound === 0) {
                     shouldChangeIcon = false;
                 }
-                if (
-                    whenToChangeIcon === "no-subscribed-found" &&
-                    subscribedFound > 0
-                ) {
+                if (whenToChangeIcon === "no-subscribed-found" && subscribedFound > 0) {
                     shouldChangeIcon = false;
                 }
                 if (whenToChangeIcon === "never") {
                     shouldChangeIcon = false;
                 }
                 if (shouldChangeIcon) {
-                    browser.browserAction.setIcon({
-                        path:
-                            "/images/icon19-" +
-                            settings.get("sourcesFoundIcon") +
-                            ".png",
+                    action.setIcon({
+                        path: "/images/icon19-" + settings.get("sourcesFoundIcon") + ".png",
                     });
                 }
                 browser.contextMenus.create(
                     {
-                        id: "SmartRss",
-                        contexts: ["browser_action"],
+                        id: FEED_MENU_ROOT_ID,
+                        contexts: [menuContext],
                         title: "Subscribe",
                     },
                     function () {
@@ -141,17 +148,14 @@ define(function (require) {
                             browser.contextMenus.create({
                                 id: feed.url,
                                 title: feed.title,
-                                contexts: ["browser_action"],
-                                parentId: "SmartRss",
-                                onclick: function () {
-                                    addSource(feed.url);
-                                },
+                                contexts: [menuContext],
+                                parentId: FEED_MENU_ROOT_ID,
                             });
                         });
                     }
                 );
                 if (settings.get("badgeMode") === "sources") {
-                    browser.browserAction.setBadgeText({
+                    action.setBadgeText({
                         text: feeds.length.toString(),
                     });
                 }
@@ -162,7 +166,7 @@ define(function (require) {
             browser.contextMenus.removeAll();
             createLinksMenu();
             if (settings.get("badgeMode") === "sources") {
-                browser.browserAction.setBadgeText({ text: "" });
+                action.setBadgeText({ text: "" });
             }
         }
         if (message.action === "get-setting") {
@@ -225,7 +229,7 @@ define(function (require) {
         );
     }
 
-    browser.browserAction.onClicked.addListener(function (tab, onClickData) {
+    action.onClicked.addListener(function (tab, onClickData) {
         if (typeof onClickData !== "undefined") {
             if (onClickData.button === 1) {
                 openInNewTab();
@@ -318,9 +322,7 @@ define(function (require) {
                 return;
             }
             const oneTask = tasks.shift();
-            oneTask
-                .then(() => resolve(fetchOne(tasks)))
-                .catch(() => resolve(fetchOne(tasks)));
+            oneTask.then(() => resolve(fetchOne(tasks))).catch(() => resolve(fetchOne(tasks)));
         });
     }
 
@@ -403,18 +405,12 @@ define(function (require) {
                         return;
                     }
                     const now = Date.now();
-                    const trashCleaningDelayInMs =
-                        trashCleaningDelay * 1000 * 60 * 60 * 24;
-                    items
-                        .where({ trashed: true, deleted: false })
-                        .forEach((item) => {
-                            if (
-                                now - item.get("trashedOn") >
-                                trashCleaningDelayInMs
-                            ) {
-                                item.markAsDeleted();
-                            }
-                        });
+                    const trashCleaningDelayInMs = trashCleaningDelay * 1000 * 60 * 60 * 24;
+                    items.where({ trashed: true, deleted: false }).forEach((item) => {
+                        if (now - item.get("trashedOn") > trashCleaningDelayInMs) {
+                            item.markAsDeleted();
+                        }
+                    });
                 }
             });
 

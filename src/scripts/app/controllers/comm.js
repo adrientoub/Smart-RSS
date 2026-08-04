@@ -4,6 +4,6 @@
  * @submodule controllers/comm
  */
 define(function (require) {
-    const BB = require('backbone');
+    const BB = require("backbone");
     return Object.create(BB.Events);
 });

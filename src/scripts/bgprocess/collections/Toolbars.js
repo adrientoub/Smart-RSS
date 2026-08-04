@@ -2,12 +2,11 @@
  * @module BgProcess
  * @submodule collections/Toolbars
  */
-define([
-    "backbone",
-    "models/Toolbar",
-    "staticdb/defaultToolbarItems",
-    "preps/indexeddb",
-], function (BB, Toolbar, defaultToolbarItems) {
+define(["backbone", "models/Toolbar", "staticdb/defaultToolbarItems", "preps/indexeddb"], function (
+    BB,
+    Toolbar,
+    defaultToolbarItems
+) {
     function getDataByRegion(data, region) {
         if (!Array.isArray(data)) {
             return null;
@@ -31,7 +30,7 @@ define([
      * @constructor
      * @extends Backbone.Collection
      */
-    let Toolbars = BB.Collection.extend({
+    const Toolbars = BB.Collection.extend({
         model: Toolbar,
         indexedDB: new Backbone.IndexedDB("toolbars-backbone"),
         parse: function (data) {

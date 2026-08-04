@@ -1,10 +1,12 @@
-define([
-    'backbone', 'modules/Locale', 'text!templates/topView.html',
-], function (BB, Locale, topViewTemplate) {
+define(["backbone", "modules/Locale", "text!templates/topView.html"], function (
+    BB,
+    Locale,
+    topViewTemplate
+) {
     return BB.View.extend({
-        tagName: 'a',
+        tagName: "a",
         template: topViewTemplate,
-        className: 'sources-list-item',
+        className: "sources-list-item",
         handleMouseUp: function (e) {
             if (e.button === 2) {
                 this.showContextMenu(e);
@@ -12,16 +14,26 @@ define([
         },
         getSelectData: function (e) {
             return {
-                action: 'new-select',
-                value: this.model.id || Object.assign({}, this.model.get('filter')),
-                name: this.model.get('name'),
-                unreadOnly: !!e.altKey
+                action: "new-select",
+                value: this.model.id || Object.assign({}, this.model.get("filter")),
+                name: this.model.get("name"),
+                unreadOnly: !!e.altKey,
             };
         },
         setTitle: function (unread, total) {
-            this.el.setAttribute('title',
-                this.model.get('title') + ' (' + unread + ' ' + Locale.UNREAD + ', ' + total + ' ' + Locale.TOTAL + ')'
+            this.el.setAttribute(
+                "title",
+                this.model.get("title") +
+                    " (" +
+                    unread +
+                    " " +
+                    Locale.UNREAD +
+                    ", " +
+                    total +
+                    " " +
+                    Locale.TOTAL +
+                    ")"
             );
-        }
+        },
     });
 });

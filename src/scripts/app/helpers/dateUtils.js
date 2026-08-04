@@ -1,9 +1,9 @@
 define(function () {
     const millisecondsInDay = 86400000;
-    const unixUtcOffset = (new Date).getTimezoneOffset() * 60000;
+    const unixUtcOffset = new Date().getTimezoneOffset() * 60000;
     const zeroPad = function (num) {
         if (num < 10) {
-            num = '0' + num;
+            num = "0" + num;
         }
         return num;
     };
@@ -23,14 +23,15 @@ define(function () {
             const _date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
             const dayNum = _date.getUTCDay() || 7;
             _date.setUTCDate(_date.getUTCDate() + 4 - dayNum);
-            const yearStart = new Date(Date.UTC(_date.getUTCFullYear(),0,1));
-            return Math.ceil((((_date - yearStart) / millisecondsInDay) + 1)/7);
+            const yearStart = new Date(Date.UTC(_date.getUTCFullYear(), 0, 1));
+            return Math.ceil(((_date - yearStart) / millisecondsInDay + 1) / 7);
         },
         getDayOfYear: function (date) {
             const _date = new Date(date);
             _date.setHours(0, 0, 0);
             const start = new Date(_date.getFullYear(), 0, 0);
-            const diff = (_date - start) + ((start.getTimezoneOffset() - _date.getTimezoneOffset()) * 60 * 1000);
+            const diff =
+                _date - start + (start.getTimezoneOffset() - _date.getTimezoneOffset()) * 60 * 1000;
             const oneDay = 1000 * 60 * 60 * 24;
             return Math.floor(diff / oneDay);
         },
@@ -41,7 +42,8 @@ define(function () {
         startOfWeek: function (date, firstDayOfWeekIndex = 1) {
             const dayOfWeek = date.getDay();
             const _date = new Date(date);
-            const diff = dayOfWeek >= firstDayOfWeekIndex ? dayOfWeek - firstDayOfWeekIndex : 6 - dayOfWeek;
+            const diff =
+                dayOfWeek >= firstDayOfWeekIndex ? dayOfWeek - firstDayOfWeekIndex : 6 - dayOfWeek;
 
             _date.setDate(date.getDate() - diff);
             return new Date(this.startOfDay(_date));
@@ -61,55 +63,58 @@ define(function () {
             const _date = new Date(date);
             const dateVal = (all, found) => {
                 switch (found) {
-                    case 'DD':
+                    case "DD":
                         return zeroPad(_date.getDate());
-                    case 'D':
+                    case "D":
                         return _date.getDate();
-                    case 'MM':
+                    case "MM":
                         return zeroPad(_date.getMonth() + 1);
-                    case 'M':
+                    case "M":
                         return _date.getMonth() + 1;
-                    case 'YYYY':
+                    case "YYYY":
                         return _date.getFullYear();
-                    case 'YY':
+                    case "YY":
                         return _date.getFullYear().toString().substr(2, 2);
-                    case 'hh':
+                    case "hh":
                         return zeroPad(_date.getHours());
-                    case 'h':
+                    case "h":
                         return _date.getHours();
-                    case 'HH':
+                    case "HH":
                         return zeroPad(toTwelveHoursFormat(_date.getHours()));
-                    case 'H':
+                    case "H":
                         return toTwelveHoursFormat(_date.getHours());
-                    case 'mm':
+                    case "mm":
                         return zeroPad(_date.getMinutes());
-                    case 'm':
+                    case "m":
                         return _date.getMinutes();
-                    case 'ss':
+                    case "ss":
                         return zeroPad(_date.getSeconds());
-                    case 's':
+                    case "s":
                         return _date.getSeconds();
-                    case 'u':
+                    case "u":
                         return _date.getMilliseconds();
-                    case 'U':
+                    case "U":
                         return _date.getTime();
-                    case 'T':
+                    case "T":
                         return _date.getTime() - _date.getTimezoneOffset() * 60000;
-                    case 'W':
+                    case "W":
                         return _date.getDay();
-                    case 'y':
+                    case "y":
                         return this.getDayOfYear(_date);
-                    case 'w':
+                    case "w":
                         return this.getWeekOfYear(_date);
-                    case 'G':
+                    case "G":
                         return _date.getTimezoneOffset();
-                    case 'a':
-                        return _date.getHours() > 12 ? 'PM' : 'AM';
+                    case "a":
+                        return _date.getHours() > 12 ? "PM" : "AM";
                     default:
-                        return '';
+                        return "";
                 }
             };
-            return template.replace(/(DD|D|MM|M|YYYY|YY|hh|h|HH|H|mm|m|ss|s|u|U|W|y|w|G|a|T)/g, dateVal);
-        }
+            return template.replace(
+                /(DD|D|MM|M|YYYY|YY|hh|h|HH|H|mm|m|ss|s|u|U|W|y|w|G|a|T)/g,
+                dateVal
+            );
+        },
     };
 });

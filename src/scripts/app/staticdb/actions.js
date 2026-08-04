@@ -1,8 +1,4 @@
-define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
-    stripTags,
-    L,
-    comm
-) {
+define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (stripTags, L, comm) {
     return {
         global: {
             default: {
@@ -32,9 +28,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 state: "showOnlyUnreadSources",
                 title: L.TOGGLE_SHOW_ONLY_UNREAD,
                 fn: function () {
-                    const currentUnread = bg.getBoolean(
-                        "showOnlyUnreadSources"
-                    );
+                    const currentUnread = bg.getBoolean("showOnlyUnreadSources");
                     bg.settings.save("showOnlyUnreadSources", !currentUnread);
                 },
             },
@@ -49,8 +43,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 icon: "reload.png",
                 title: L.UPDATE,
                 fn: function () {
-                    const selectedItems =
-                        require("views/feedList").selectedItems;
+                    const selectedItems = require("views/feedList").selectedItems;
                     if (selectedItems.length) {
                         const models = selectedItems.map((item) => {
                             return item.model;
@@ -70,8 +63,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 icon: "read.png",
                 title: L.MARK_ALL_AS_READ,
                 fn: function () {
-                    const selectedFeeds =
-                        require("views/feedList").getSelectedFeeds();
+                    const selectedFeeds = require("views/feedList").getSelectedFeeds();
                     if (!selectedFeeds.length) {
                         return;
                     }
@@ -98,8 +90,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
             openHome: {
                 title: L.OPEN_HOME,
                 fn: function () {
-                    const selectedFeeds =
-                        require("views/feedList").getSelectedFeeds();
+                    const selectedFeeds = require("views/feedList").getSelectedFeeds();
                     if (!selectedFeeds.length) {
                         return;
                     }
@@ -114,17 +105,14 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
             refetch: {
                 title: L.REFETCH,
                 fn: function () {
-                    const selectedFeeds =
-                        require("views/feedList").getSelectedFeeds();
+                    const selectedFeeds = require("views/feedList").getSelectedFeeds();
                     if (!selectedFeeds.length) {
                         return;
                     }
                     selectedFeeds.forEach(function (source) {
-                        bg.items
-                            .where({ sourceID: source.get("id") })
-                            .forEach(function (item) {
-                                item.destroy();
-                            });
+                        bg.items.where({ sourceID: source.get("id") }).forEach(function (item) {
+                            item.destroy();
+                        });
                     });
                     app.actions.execute("feeds:update");
                 },
@@ -138,8 +126,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                     }
 
                     const feeds = require("views/feedList").getSelectedFeeds();
-                    const folders =
-                        require("views/feedList").getSelectedFolders();
+                    const folders = require("views/feedList").getSelectedFolders();
 
                     feeds.forEach(function (feed) {
                         feed.destroy();
@@ -154,14 +141,11 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 icon: "back.png",
                 title: L.SCROLL_INTO_VIEW,
                 fn: function () {
-                    const folders =
-                        require("views/feedList").getSelectedFolders();
+                    const folders = require("views/feedList").getSelectedFolders();
 
                     if (folders.length > 0) {
                         const id = folders[0].get("id");
-                        const sourceElement = document.querySelector(
-                            `[data-id="${id}"]`
-                        );
+                        const sourceElement = document.querySelector(`[data-id="${id}"]`);
                         sourceElement.scrollIntoView();
                         return;
                     }
@@ -169,9 +153,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                     const feeds = require("views/feedList").getSelectedFeeds();
                     if (feeds.length > 0) {
                         const id = feeds[0].get("id");
-                        const sourceElement = document.querySelector(
-                            `[data-id="${id}"]`
-                        );
+                        const sourceElement = document.querySelector(`[data-id="${id}"]`);
                         sourceElement.scrollIntoView();
                     }
                 },
@@ -185,10 +167,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                     const feeds = feedList.getSelectedFeeds();
                     const folders = feedList.getSelectedFolders();
 
-                    if (
-                        feedList.selectedItems.length === 1 &&
-                        folders.length === 1
-                    ) {
+                    if (feedList.selectedItems.length === 1 && folders.length === 1) {
                         properties.show(folders[0]);
                     } else if (!folders.length && feeds.length === 1) {
                         properties.show(feeds[0]);
@@ -220,9 +199,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                     }
 
                     url = app.fixURL(url);
-                    const uid = url
-                        .replace(/^(.*:)?(\/\/)?(www*?\.)?/, "")
-                        .replace(/\/$/, "");
+                    const uid = url.replace(/^(.*:)?(\/\/)?(www*?\.)?/, "").replace(/\/$/, "");
                     const duplicate = bg.sources.findWhere({ uid: uid });
 
                     if (!duplicate) {
@@ -279,9 +256,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
             closeFolders: {
                 title: L.CLOSE_FOLDERS,
                 fn: function (event) {
-                    const folders = Array.from(
-                        document.querySelectorAll(".folder.opened")
-                    );
+                    const folders = Array.from(document.querySelectorAll(".folder.opened"));
                     if (!folders.length) {
                         return;
                     }
@@ -295,9 +270,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
             openFolders: {
                 title: L.OPEN_FOLDERS,
                 fn: function (event) {
-                    const folders = Array.from(
-                        document.querySelectorAll(".folder:not(.opened)")
-                    );
+                    const folders = Array.from(document.querySelectorAll(".folder:not(.opened)"));
                     folders.forEach((folder) => {
                         if (folder.view) {
                             folder.view.handleClickArrow(event);
@@ -309,12 +282,8 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 title: L.TOGGLE_FOLDER,
                 fn: function (event) {
                     event = event || {};
-                    const selectedItems =
-                        require("views/feedList").selectedItems;
-                    if (
-                        selectedItems.length &&
-                        selectedItems[0].el.classList.contains("folder")
-                    ) {
+                    const selectedItems = require("views/feedList").selectedItems;
+                    if (selectedItems.length && selectedItems[0].el.classList.contains("folder")) {
                         selectedItems[0].handleClickArrow(event);
                     }
                 },
@@ -328,15 +297,11 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                     const feedIds = feeds.map((feed) => {
                         return feed.id;
                     });
-                    let special = Array.from(
-                        document.querySelectorAll(".special.selected")
-                    )[0];
+                    let special = Array.from(document.querySelectorAll(".special.selected"))[0];
                     if (special) {
                         special = special.view.model;
                     }
-                    const folder = Array.from(
-                        document.querySelectorAll(".folder.selected")
-                    )[0];
+                    const folder = Array.from(document.querySelectorAll(".folder.selected"))[0];
 
                     let unreadOnly = false;
                     if (bg.getBoolean("defaultToUnreadOnly")) {
@@ -347,19 +312,14 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                         unreadOnly = true;
                     }
 
-                    if (
-                        !!event.altKey ||
-                        target.className === "source-counter"
-                    ) {
+                    if (!!event.altKey || target.className === "source-counter") {
                         unreadOnly = !unreadOnly;
                     }
 
                     app.trigger("select:" + feedList.el.id, {
                         action: "new-select",
                         feeds: feedIds,
-                        filter: special
-                            ? Object.assign({}, special.get("filter"))
-                            : null,
+                        filter: special ? Object.assign({}, special.get("filter")) : null,
                         name: special ? special.get("name") : null,
                         multiple: !!(special || folder),
                         unreadOnly: unreadOnly,
@@ -373,10 +333,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                         });
                     } else if (feedIds.length) {
                         bg.sources.forEach((source) => {
-                            if (
-                                source.get("hasNew") &&
-                                feedIds.includes(source.id)
-                            ) {
+                            if (source.get("hasNew") && feedIds.includes(source.id)) {
                                 source.save({ hasNew: false });
                             }
                         });
@@ -387,8 +344,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 title: L.SHOW_AND_FOCUS_ARTICLES,
                 fn: function (event) {
                     event = event || {};
-                    const selectedItems =
-                        require("views/feedList").selectedItems;
+                    const selectedItems = require("views/feedList").selectedItems;
                     if (selectedItems.length) {
                         app.actions.execute("feeds:showArticles", event);
                         app.actions.execute("articles:focus");
@@ -439,10 +395,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                         if (!confirm("Remove selected items permanently?")) {
                             return;
                         }
-                        list.destroyBatch(
-                            list.selectedItems,
-                            list.removeItemCompletely
-                        );
+                        list.destroyBatch(list.selectedItems, list.removeItemCompletely);
                     } else {
                         list.destroyBatch(list.selectedItems, list.removeItem);
                     }
@@ -461,10 +414,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                     ) {
                         return;
                     }
-                    articleList.destroyBatch(
-                        articleList.selectedItems,
-                        articleList.undeleteItem
-                    );
+                    articleList.destroyBatch(articleList.selectedItems, articleList.undeleteItem);
                 },
             },
             selectNext: {
@@ -483,26 +433,21 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 title: L.SEARCH_TIP,
                 fn: function (event) {
                     event = event || {
-                        currentTarget:
-                            document.querySelector("input[type=search]"),
+                        currentTarget: document.querySelector("input[type=search]"),
                     };
                     let query = event.currentTarget.value || "";
                     const list = require("views/articleList");
                     if (query === "") {
-                        [
-                            ...document.querySelectorAll(
-                                ".date-group, .articles-list-item"
-                            ),
-                        ].map((element) => {
-                            element.classList.remove("hidden");
-                        });
-                        return;
-                    } else {
-                        [...document.querySelectorAll(".date-group")].map(
+                        [...document.querySelectorAll(".date-group, .articles-list-item")].map(
                             (element) => {
-                                element.classList.add("hidden");
+                                element.classList.remove("hidden");
                             }
                         );
+                        return;
+                    } else {
+                        [...document.querySelectorAll(".date-group")].map((element) => {
+                            element.classList.add("hidden");
+                        });
                     }
 
                     let searchInContent = false;
@@ -511,10 +456,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                         searchInContent = true;
                     }
                     RegExp.escape = function (text) {
-                        return String(text).replace(
-                            /[-[\]/{}()*+?.\\^$|]/g,
-                            "\\$&"
-                        );
+                        return String(text).replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
                     };
                     const expression = new RegExp(RegExp.escape(query), "i");
                     const selectedSpecial = document.querySelector(
@@ -525,15 +467,12 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                             return false;
                         }
                         const sourceId = view.model.get("sourceID");
-                        const sourceItem = document.querySelector(
-                            '[data-id="' + sourceId + '"]'
-                        );
+                        const sourceItem = document.querySelector('[data-id="' + sourceId + '"]');
                         if (!sourceItem) {
                             return false;
                         }
                         if (!sourceItem.classList.contains("selected")) {
-                            const folderId =
-                                sourceItem.view.model.get("folderID");
+                            const folderId = sourceItem.view.model.get("folderID");
                             const folderItem = document.querySelector(
                                 '[data-id="' + folderId + '"]'
                             );
@@ -557,14 +496,11 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                                   .replace(/[\u0300-\u036f]/g, "")
                             : "";
 
-                        if (
-                            !(
-                                expression.test(cleanedTitle) ||
-                                expression.test(cleanedAuthor) ||
-                                (searchInContent &&
-                                    expression.test(cleanedContent))
-                            )
-                        ) {
+                        if (!(
+                            expression.test(cleanedTitle) ||
+                            expression.test(cleanedAuthor) ||
+                            (searchInContent && expression.test(cleanedContent))
+                        )) {
                             view.el.classList.add("hidden");
                         } else {
                             view.el.classList.remove("hidden");
@@ -589,16 +525,10 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 icon: "full_article.png",
                 fn: function (event) {
                     const articleList = app.articles.articleList;
-                    if (
-                        !articleList.selectedItems ||
-                        !articleList.selectedItems.length
-                    ) {
+                    if (!articleList.selectedItems || !articleList.selectedItems.length) {
                         return;
                     }
-                    if (
-                        articleList.selectedItems.length > 10 &&
-                        bg.getBoolean("askOnOpening")
-                    ) {
+                    if (articleList.selectedItems.length > 10 && bg.getBoolean("askOnOpening")) {
                         if (
                             !confirm(
                                 "Do you really want to open " +
@@ -610,10 +540,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                         }
                     }
                     const openNewTab = bg.settings.get("openNewTab");
-                    const active =
-                        openNewTab === "background"
-                            ? !!event.shiftKey
-                            : !event.shiftKey;
+                    const active = openNewTab === "background" ? !!event.shiftKey : !event.shiftKey;
                     articleList.selectedItems.forEach(function (item) {
                         browser.tabs.create({
                             url: stripTags(item.model.get("url")),
@@ -631,10 +558,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                     if ("currentTarget" in event) {
                         view = event.currentTarget.view;
                     } else {
-                        if (
-                            !articleList.selectedItems ||
-                            !articleList.selectedItems.length
-                        ) {
+                        if (!articleList.selectedItems || !articleList.selectedItems.length) {
                             return;
                         }
                         view = articleList.selectedItems[0];
@@ -642,9 +566,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                     if (view.model) {
                         const openNewTab = bg.settings.get("openNewTab");
                         const active =
-                            openNewTab === "background"
-                                ? !!event.shiftKey
-                                : !event.shiftKey;
+                            openNewTab === "background" ? !!event.shiftKey : !event.shiftKey;
 
                         browser.tabs.create({
                             url: stripTags(view.model.get("url")),
@@ -701,7 +623,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 fn: function () {
                     const articleList = require("views/articleList");
                     const feeds = articleList.currentData.feeds;
-                    var filter = articleList.currentData.filter;
+                    const filter = articleList.currentData.filter;
                     if (feeds.length) {
                         (filter
                             ? bg.items.where(articleList.currentData.filter)
@@ -723,11 +645,9 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                             });
                         }
                     } else if (articleList.currentData.filter) {
-                        bg.items
-                            .where(articleList.specialFilter)
-                            .forEach(function (item) {
-                                item.save({ unread: false, visited: true });
-                            });
+                        bg.items.where(articleList.specialFilter).forEach(function (item) {
+                            item.save({ unread: false, visited: true });
+                        });
                     }
                 },
             },
@@ -735,25 +655,20 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 title: L.SELECT_ALL_ARTICLES,
                 fn: function () {
                     const articleList = require("views/articleList");
-                    [...articleList.el.querySelectorAll(".selected")].forEach(
-                        (element) => {
-                            element.classList.remove("selected");
-                        }
-                    );
+                    [...articleList.el.querySelectorAll(".selected")].forEach((element) => {
+                        element.classList.remove("selected");
+                    });
 
                     articleList.selectedItems = [];
 
                     [
-                        ...articleList.el.querySelectorAll(
-                            ".articles-list-item:not(.hidden)"
-                        ),
+                        ...articleList.el.querySelectorAll(".articles-list-item:not(.hidden)"),
                     ].forEach((element) => {
                         element.view.el.classList.add("selected");
                         articleList.selectedItems.push(element.view);
                     });
 
-                    const lastSelected =
-                        articleList.el.querySelector(".last-selected");
+                    const lastSelected = articleList.el.querySelector(".last-selected");
                     if (lastSelected) {
                         lastSelected.classList.remove("last-selected");
                     }
@@ -771,14 +686,10 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 icon: "pinsource_context.png",
                 fn: function () {
                     const articleList = require("views/articleList");
-                    if (
-                        !articleList.selectedItems ||
-                        !articleList.selectedItems.length
-                    ) {
+                    if (!articleList.selectedItems || !articleList.selectedItems.length) {
                         return;
                     }
-                    const isPinned =
-                        !articleList.selectedItems[0].model.get("pinned");
+                    const isPinned = !articleList.selectedItems[0].model.get("pinned");
                     articleList.selectedItems.forEach(function (item) {
                         item.model.save({ pinned: isPinned });
                     });
@@ -788,10 +699,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 title: "Space Through",
                 fn: function () {
                     const articleList = require("views/articleList");
-                    if (
-                        !articleList.selectedItems ||
-                        !articleList.selectedItems.length
-                    ) {
+                    if (!articleList.selectedItems || !articleList.selectedItems.length) {
                         return;
                     }
                     app.trigger("space-pressed");
@@ -800,28 +708,28 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
             pageUp: {
                 title: L.PAGE_UP,
                 fn: function () {
-                    var el = require("views/articleList").el;
+                    const el = require("views/articleList").el;
                     el.scrollByPages(-1);
                 },
             },
             pageDown: {
                 title: L.PAGE_DOWN,
                 fn: function () {
-                    var el = require("views/articleList").el;
+                    const el = require("views/articleList").el;
                     el.scrollByPages(1);
                 },
             },
             scrollToBottom: {
                 title: L.SCROLL_TO_BOTTOM,
                 fn: function () {
-                    var el = require("views/articleList").el;
+                    const el = require("views/articleList").el;
                     el.scrollTop = el.scrollHeight;
                 },
             },
             scrollToTop: {
                 title: L.SCROLL_TO_TOP,
                 fn: function () {
-                    var el = require("views/articleList").el;
+                    const el = require("views/articleList").el;
                     el.scrollTop = 0;
                 },
             },
@@ -835,8 +743,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                     if (!contentView.model) {
                         return;
                     }
-                    const view =
-                        contentView.view === "feed" ? "mozilla" : "feed";
+                    const view = contentView.view === "feed" ? "mozilla" : "feed";
                     contentView.render(view);
                 },
             },
@@ -844,7 +751,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 title: L.MARK_AS_READ,
                 icon: "read.png",
                 fn: function () {
-                    var contentView = require("views/contentView");
+                    const contentView = require("views/contentView");
                     if (!contentView.model) {
                         return;
                     }
@@ -871,7 +778,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                             askRmPinned &&
                             askRmPinned !== "none"
                         ) {
-                            let conf = confirm(
+                            const conf = confirm(
                                 L.PIN_QUESTION_A +
                                     contentView.model.escape("title") +
                                     L.PIN_QUESTION_B
@@ -882,11 +789,8 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                         }
                         contentView.model.markAsDeleted();
                     } else {
-                        if (
-                            contentView.model.get("pinned") &&
-                            askRmPinned === "all"
-                        ) {
-                            let conf = confirm(
+                        if (contentView.model.get("pinned") && askRmPinned === "all") {
+                            const conf = confirm(
                                 L.PIN_QUESTION_A +
                                     contentView.model.escape("title") +
                                     L.PIN_QUESTION_B
@@ -904,7 +808,7 @@ define(["helpers/stripTags", "modules/Locale", "controllers/comm"], function (
                 title: L.SETTINGS,
                 icon: "config.png",
                 fn: function () {
-                    let url = browser.runtime.getURL("options.html");
+                    const url = browser.runtime.getURL("options.html");
                     browser.tabs.query(
                         {
                             url: url,

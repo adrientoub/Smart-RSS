@@ -8,8 +8,8 @@
 define(function () {
     return function (str) {
         if (!str) {
-            return '';
+            return "";
         }
-        return String(str).replace(/<\/?[^>]+>/g, '');
+        return String(str).replace(/<\/?[^>]+>/g, "");
     };
 });

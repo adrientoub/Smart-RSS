@@ -30,11 +30,9 @@ define(function (require) {
             this.maxSources = 0;
             const fragment = document
                 .createRange()
-                .createContextualFragment(
-                    require("text!templates/indicatorView.html")
-                );
+                .createContextualFragment(require("text!templates/indicatorView.html"));
             this.el.appendChild(fragment);
-            let port = browser.runtime.connect({ name: "port-from-cs" });
+            const port = browser.runtime.connect({ name: "port-from-cs" });
             port.onMessage.addListener((m) => {
                 if (m.key === "loading") {
                     this.loading = m.value;
@@ -87,11 +85,7 @@ define(function (require) {
             }
             const percentage = Math.round((loaded * 100) / maxSources);
             this.el.querySelector("#indicator-progress").style.background =
-                "linear-gradient(to right,  #c5c5c5 " +
-                percentage +
-                "%, #eee " +
-                percentage +
-                "%)";
+                "linear-gradient(to right,  #c5c5c5 " + percentage + "%, #eee " + percentage + "%)";
             this.el.querySelector("#indicator-progress").textContent =
                 Locale.UPDATING_FEEDS + " (" + loaded + "/" + maxSources + ")";
             this.el.classList.remove("indicator-invisible");

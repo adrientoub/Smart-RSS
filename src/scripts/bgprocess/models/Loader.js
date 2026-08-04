@@ -108,9 +108,7 @@ define([
             this.sourcesToLoad = [];
             this.loaders.forEach((loader) => {
                 loader.request.abort();
-                loader.request = null;
                 delete loader.request;
-                loader = null;
             });
             this.loaders = [];
             this.sourcesLoading = [];
@@ -147,16 +145,14 @@ define([
         downloadAll(force) {
             let sourcesArr = sources.toArray();
             if (!force) {
-                let globalUpdateFrequency = settings.get("updateFrequency");
+                const globalUpdateFrequency = settings.get("updateFrequency");
                 sourcesArr = sourcesArr.filter(function (source) {
-                    let sourceUpdateFrequency = source.get("updateEvery");
+                    const sourceUpdateFrequency = source.get("updateEvery");
                     if (sourceUpdateFrequency === 0) {
                         return false;
                     }
-                    let updateFrequency =
-                        sourceUpdateFrequency > 0
-                            ? sourceUpdateFrequency
-                            : globalUpdateFrequency;
+                    const updateFrequency =
+                        sourceUpdateFrequency > 0 ? sourceUpdateFrequency : globalUpdateFrequency;
                     if (updateFrequency === 0) {
                         return false;
                     }
@@ -203,17 +199,12 @@ define([
 
         playNotificationSound() {
             let audio;
-            if (
-                !settings.get("useSound") ||
-                settings.get("useSound") === ":user"
-            ) {
+            if (!settings.get("useSound") || settings.get("useSound") === ":user") {
                 audio = new Audio(settings.get("defaultSound"));
             } else if (settings.get("useSound") === ":none") {
                 audio = false;
             } else {
-                audio = new Audio(
-                    "/sounds/" + settings.get("useSound") + ".ogg"
-                );
+                audio = new Audio("/sounds/" + settings.get("useSound") + ".ogg");
             }
             if (audio) {
                 audio.volume = parseFloat(settings.get("soundVolume"));

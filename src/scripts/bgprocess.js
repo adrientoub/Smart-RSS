@@ -1,35 +1,33 @@
 require.config({
-
-    baseUrl: 'scripts/bgprocess',
+    baseUrl: "scripts/bgprocess",
     waitSeconds: 0,
 
     paths: {
-        jquery: '../libs/jquery.min',
-        underscore: '../libs/underscore.min',
-        backbone: '../libs/backbone.min',
-        backboneDB: '../libs/backbone.indexDB',
-        he: '../libs/he',
-        favicon: '../libs/favicon'
+        jquery: "../libs/jquery.min",
+        underscore: "../libs/underscore.min",
+        backbone: "../libs/backbone.min",
+        backboneDB: "../libs/backbone.indexDB",
+        he: "../libs/he",
+        favicon: "../libs/favicon",
     },
 
     shim: {
         jquery: {
-            exports: '$'
+            exports: "$",
         },
         backbone: {
-            deps: ['underscore'],
-            exports: 'Backbone'
+            deps: ["underscore"],
+            exports: "Backbone",
         },
         backboneDB: {
-            deps: ['backbone']
+            deps: ["backbone"],
         },
         underscore: {
-            exports: '_'
-        }
-    }
+            exports: "_",
+        },
+    },
 });
 
-requirejs(['bg'], function () {
+requirejs(["bg"], function () {
     // bg started
 });
-

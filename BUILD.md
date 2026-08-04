@@ -8,8 +8,8 @@ The build system has been simplified from a Grunt-based system to a plain Node.j
 
 ## Requirements
 
--   Node.js (v12 or higher recommended)
--   npm
+- Node.js (v12 or higher recommended)
+- npm
 
 ## Installation
 
@@ -67,11 +67,11 @@ node build.js bump-version [patch|minor|major]
 
 ## Features
 
--   **prepare**: Copies files from src to dist and strips comments from JS files
--   **package**: Prepares files and creates a zip package
--   **release**: Bumps version, commits changes, prepares files, and creates a zip package
--   **watch**: Watches for changes in the src directory and automatically runs prepare
--   **bump-version**: Bumps the version number in manifest.json
+- **prepare**: Copies files from src to dist and strips comments from JS files
+- **package**: Prepares files and creates a zip package
+- **release**: Bumps version, commits changes, prepares files, and creates a zip package
+- **watch**: Watches for changes in the src directory and automatically runs prepare
+- **bump-version**: Bumps the version number in manifest.json
 
 ## Migrating from Grunt
 

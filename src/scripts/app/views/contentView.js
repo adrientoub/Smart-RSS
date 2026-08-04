@@ -12,7 +12,7 @@ define(function (require) {
      * @constructor
      * @extends Backbone.View
      */
-    let ContentView = BB.View.extend({
+    const ContentView = BB.View.extend({
         /**
          * Tag name of content view element
          * @property tagName
@@ -66,9 +66,7 @@ define(function (require) {
             app.on(
                 "select:article-list",
                 function (data) {
-                    this.handleNewSelected(
-                        bg.items.findWhere({ id: data.value })
-                    );
+                    this.handleNewSelected(bg.items.findWhere({ id: data.value }));
                 },
                 this
             );
@@ -150,18 +148,11 @@ define(function (require) {
                 us: "MM/DD/YYYY",
             };
             const pickedFormat =
-                dateFormats[bg.settings.get("dateType") || "normal"] ||
-                dateFormats["normal"];
+                dateFormats[bg.settings.get("dateType") || "normal"] || dateFormats["normal"];
 
-            const timeFormat =
-                bg.settings.get("hoursFormat") === "12h"
-                    ? "H:mm:ss a"
-                    : "hh:mm:ss";
+            const timeFormat = bg.settings.get("hoursFormat") === "12h" ? "H:mm:ss a" : "hh:mm:ss";
 
-            return dateUtils.formatDate(
-                unixtime,
-                pickedFormat + " " + timeFormat
-            );
+            return dateUtils.formatDate(unixtime, pickedFormat + " " + timeFormat);
         },
 
         /**
@@ -189,10 +180,7 @@ define(function (require) {
 
                 this.show();
                 const source = this.model.getSource();
-                const openEnclosure = bg.getElementBoolean(
-                    source,
-                    "openEnclosure"
-                );
+                const openEnclosure = bg.getElementBoolean(source, "openEnclosure");
                 const defaultView = bg.getElementSetting(source, "defaultView");
 
                 const data = Object.create(this.model.attributes);
@@ -224,16 +212,12 @@ define(function (require) {
                         const websiteContent = await response.text();
 
                         const parser = new DOMParser();
-                        const websiteDocument = parser.parseFromString(
-                            websiteContent,
-                            "text/html"
-                        );
+                        const websiteDocument = parser.parseFromString(websiteContent, "text/html");
                         const Readability = require("../../libs/readability");
                         if (this.model.get("url") !== modelUrl) {
                             return;
                         }
-                        content = new Readability(websiteDocument).parse()
-                            .content;
+                        content = new Readability(websiteDocument).parse().content;
                     }
                     // }
                     // if (bg.settings.get('cacheParsedArticles') === 'true' && !(this.view in parsedContent)) {
@@ -251,15 +235,11 @@ define(function (require) {
 
                 const fragment = document
                     .createRange()
-                    .createContextualFragment(
-                        require("text!templates/contentView.html")
-                    );
+                    .createContextualFragment(require("text!templates/contentView.html"));
                 fragment.querySelector(".author").textContent = data.author;
                 fragment.querySelector(".date").textContent = data.date;
                 if (data.pinned) {
-                    fragment
-                        .querySelector(".pin-button")
-                        .classList.add("pinned");
+                    fragment.querySelector(".pin-button").classList.add("pinned");
                 }
 
                 function createEnclosure(enclosureData) {
@@ -284,10 +264,8 @@ define(function (require) {
                                     require("text!templates/enclosureVideo.html")
                                 );
                             const video = newEnclosure.querySelector("video");
-                            video.querySelector("source").src =
-                                enclosureData.url;
-                            video.querySelector("source").type =
-                                enclosureData.type;
+                            video.querySelector("source").src = enclosureData.url;
+                            video.querySelector("source").type = enclosureData.type;
                             break;
                         }
                         case "audio": {
@@ -297,8 +275,7 @@ define(function (require) {
                                     require("text!templates/enclosureAudio.html")
                                 );
                             const audio = newEnclosure.querySelector("audio");
-                            audio.querySelector("source").src =
-                                enclosureData.url;
+                            audio.querySelector("source").src = enclosureData.url;
                             break;
                         }
                         case "youtube": {
@@ -307,14 +284,11 @@ define(function (require) {
                                 .createContextualFragment(
                                     require("text!templates/enclosureYoutubeCover.html")
                                 );
-                            const videoId = /^.*\/(.*)\?(.*)$/.exec(
-                                enclosureData.url
-                            )[1];
+                            const videoId = /^.*\/(.*)\?(.*)$/.exec(enclosureData.url)[1];
 
                             const posterUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
                             const videoUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
-                            const cover =
-                                newEnclosure.querySelector(".youtube-cover");
+                            const cover = newEnclosure.querySelector(".youtube-cover");
                             cover.style.backgroundImage = `url("${posterUrl}")`;
 
                             cover.addEventListener("click", () => {
@@ -323,8 +297,7 @@ define(function (require) {
                                     .createContextualFragment(
                                         require("text!templates/enclosureYoutube.html")
                                     );
-                                const iframe =
-                                    iframeEnclosure.querySelector("iframe");
+                                const iframe = iframeEnclosure.querySelector("iframe");
                                 iframe.src = videoUrl;
                                 cover.replaceWith(iframeEnclosure);
                                 iframeEnclosure.focus();
@@ -342,8 +315,7 @@ define(function (require) {
                     }
 
                     newEnclosure.querySelector("a").href = enclosureData.url;
-                    newEnclosure.querySelector("a").textContent =
-                        enclosureData.name;
+                    newEnclosure.querySelector("a").textContent = enclosureData.name;
 
                     return newEnclosure;
                 }
@@ -354,14 +326,10 @@ define(function (require) {
                         : [data.enclosure];
                     enclosures.forEach((enclosureData) => {
                         const enclosure = createEnclosure(enclosureData);
-                        fragment
-                            .querySelector("#below-h1")
-                            .appendChild(enclosure);
+                        fragment.querySelector("#below-h1").appendChild(enclosure);
                     });
                     if (data.open && enclosures.length === 1) {
-                        fragment
-                            .querySelector(".enclosure")
-                            .setAttribute("open", "open");
+                        fragment.querySelector(".enclosure").setAttribute("open", "open");
                     }
                 }
                 this.el.appendChild(fragment);
@@ -384,8 +352,7 @@ define(function (require) {
                 frame.setAttribute("scrolling", "no");
 
                 const resizeFrame = () => {
-                    const scrollHeight =
-                        frame.contentDocument.body.scrollHeight;
+                    const scrollHeight = frame.contentDocument.body.scrollHeight;
                     frame.style.minHeight = "10px";
                     frame.style.minHeight = "70%";
                     frame.style.minHeight = `${scrollHeight}px`;
@@ -400,7 +367,7 @@ define(function (require) {
                     const articleUrl = this.model.get("url");
                     const articleDomain = new URL(articleUrl).origin;
 
-                    let base = frame.contentDocument.querySelector("base");
+                    const base = frame.contentDocument.querySelector("base");
                     base.href = articleDomain;
                     const shouldInvertColors = bg.getBoolean("invertColors");
                     if (shouldInvertColors) {
@@ -415,9 +382,7 @@ define(function (require) {
                         bg.settings.get("articleFontSize") + "%";
 
                     const contentElement =
-                        frame.contentDocument.querySelector(
-                            "#smart-rss-content"
-                        );
+                        frame.contentDocument.querySelector("#smart-rss-content");
 
                     while (contentElement.firstChild) {
                         contentElement.removeChild(contentElement.firstChild);
@@ -428,22 +393,16 @@ define(function (require) {
                         case "youtube":
                             fragment = document
                                 .createRange()
-                                .createContextualFragment(
-                                    content.replace(/\r/g, "<br>")
-                                );
+                                .createContextualFragment(content.replace(/\r/g, "<br>"));
                             break;
                         default:
-                            fragment = document
-                                .createRange()
-                                .createContextualFragment(content);
+                            fragment = document.createRange().createContextualFragment(content);
                     }
                     contentElement.appendChild(fragment);
 
-                    frame.contentDocument.querySelector("#smart-rss-url").href =
+                    frame.contentDocument.querySelector("#smart-rss-url").href = articleUrl;
+                    frame.contentDocument.querySelector("#full-article-url").textContent =
                         articleUrl;
-                    frame.contentDocument.querySelector(
-                        "#full-article-url"
-                    ).textContent = articleUrl;
 
                     const clickHandler = (event) => {
                         if (event.target.matches("a")) {
@@ -454,12 +413,10 @@ define(function (require) {
                             }
                             event.preventDefault();
                             const name = href.substring(1);
-                            const nameElement =
-                                frame.contentDocument.querySelector(
-                                    '[name="' + name + ']"'
-                                );
-                            const idElement =
-                                frame.contentDocument.getElementById(name);
+                            const nameElement = frame.contentDocument.querySelector(
+                                '[name="' + name + ']"'
+                            );
+                            const idElement = frame.contentDocument.getElementById(name);
                             let element = null;
                             if (nameElement) {
                                 element = nameElement;
@@ -474,40 +431,26 @@ define(function (require) {
                                         top:
                                             box.top +
                                             frame.contentWindow.pageYOffset -
-                                            frame.contentDocument
-                                                .documentElement.clientTop,
+                                            frame.contentDocument.documentElement.clientTop,
                                         left:
                                             box.left +
                                             frame.contentWindow.pageXOffset -
-                                            frame.contentDocument
-                                                .documentElement.clientLeft,
+                                            frame.contentDocument.documentElement.clientLeft,
                                     };
                                 };
 
                                 const offset = getOffset(element);
-                                frame.contentWindow.scrollTo(
-                                    offset.left,
-                                    offset.top
-                                );
+                                frame.contentWindow.scrollTo(offset.left, offset.top);
                             }
 
                             return false;
                         }
                     };
 
-                    frame.contentDocument.removeEventListener(
-                        "click",
-                        clickHandler
-                    );
-                    frame.contentDocument.addEventListener(
-                        "click",
-                        clickHandler
-                    );
+                    frame.contentDocument.removeEventListener("click", clickHandler);
+                    frame.contentDocument.addEventListener("click", clickHandler);
 
-                    frame.contentDocument.removeEventListener(
-                        "load",
-                        resizeFrame
-                    );
+                    frame.contentDocument.removeEventListener("load", resizeFrame);
                     frame.contentDocument.addEventListener("load", resizeFrame);
 
                     if (typeof ResizeObserver !== "undefined") {
@@ -520,11 +463,7 @@ define(function (require) {
                             "img, picture, iframe, video, audio"
                         ),
                     ].forEach((element) => {
-                        if (
-                            element.src.startsWith(
-                                "https://www.youtube.com/watch?"
-                            )
-                        ) {
+                        if (element.src.startsWith("https://www.youtube.com/watch?")) {
                             element.src = element.src.replace(
                                 "https://www.youtube.com/watch?v=",
                                 "https://www.youtube-nocookie.com/embed/"
@@ -532,10 +471,7 @@ define(function (require) {
                             element.removeAttribute("allowfullscreen");
                             element.removeAttribute("height");
                             element.removeAttribute("width");
-                            element.setAttribute(
-                                "allowfullscreen",
-                                "allowfullscreen"
-                            );
+                            element.setAttribute("allowfullscreen", "allowfullscreen");
                         }
                         element.onload = resizeFrame;
                     });
@@ -575,11 +511,9 @@ define(function (require) {
          * @method hide
          */
         hide: function () {
-            [...document.querySelectorAll("header,iframe")].forEach(
-                (element) => {
-                    element.hidden = true;
-                }
-            );
+            [...document.querySelectorAll("header,iframe")].forEach((element) => {
+                element.hidden = true;
+            });
         },
 
         /**
@@ -587,11 +521,9 @@ define(function (require) {
          * @method hide
          */
         show: function () {
-            [...document.querySelectorAll("header,iframe")].forEach(
-                (element) => {
-                    element.hidden = false;
-                }
-            );
+            [...document.querySelectorAll("header,iframe")].forEach((element) => {
+                element.hidden = false;
+            });
         },
     });
 

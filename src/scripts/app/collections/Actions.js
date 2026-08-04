@@ -3,9 +3,9 @@
  * @submodule collections/Actions
  */
 define(function (require) {
-    const BB = require('backbone');
-    const Action = require('models/Action');
-    const actions = require('staticdb/actions');
+    const BB = require("backbone");
+    const Action = require("models/Action");
+    const actions = require("staticdb/actions");
 
     /**
      * Collection of executable actions. Actions are usually executed by shortcuts, buttons or context menus.
@@ -23,7 +23,14 @@ define(function (require) {
             Object.keys(actions).forEach((region) => {
                 Object.keys(actions[region]).forEach((name) => {
                     const c = actions[region][name];
-                    this.add({name: region + ':' + name, fn: c.fn, icon: c.icon, title: c.title, state: c.state, glyph: c.glyph});
+                    this.add({
+                        name: region + ":" + name,
+                        fn: c.fn,
+                        icon: c.icon,
+                        title: c.title,
+                        state: c.state,
+                        glyph: c.glyph,
+                    });
                 });
             });
         },
@@ -34,7 +41,7 @@ define(function (require) {
          * @param action {string|models/Action}
          */
         execute: function (action) {
-            if (typeof action === 'string') {
+            if (typeof action === "string") {
                 action = this.get(action);
             }
             if (!action) {
@@ -42,9 +49,9 @@ define(function (require) {
             }
             const args = [].slice.call(arguments);
             args.shift();
-            action.get('fn').apply(app, args);
+            action.get("fn").apply(app, args);
             return true;
-        }
+        },
     });
 
     return Actions;

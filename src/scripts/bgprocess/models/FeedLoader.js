@@ -21,9 +21,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
         parseProxyResponse() {
             const response = JSON.parse(this.request.responseText);
             return response.items.map((item) => {
-                const canonical = item.canonical
-                    ? item.canonical[0]
-                    : item.alternate[0];
+                const canonical = item.canonical ? item.canonical[0] : item.alternate[0];
                 return {
                     id: item.originId,
                     title: item.title,
@@ -31,12 +29,10 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
                     date: item.updated
                         ? item.updated
                         : item.published
-                        ? item.published
-                        : Date.now(),
+                          ? item.published
+                          : Date.now(),
                     author: item.author ? item.author : "",
-                    content: item.content
-                        ? item.content.content
-                        : item.summary.content,
+                    content: item.content ? item.content.content : item.summary.content,
                     sourceID: this.model.get("id"),
                     dateCreated: Date.now(),
                 };
@@ -50,7 +46,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
         }
 
         onLoad() {
-            let parsedData = [];
+            let parsedData;
             const queries = settings.get("queries");
             let modelUrl = this.model.get("url");
             const proxy = this.model.get("proxyThroughFeedly");
@@ -58,9 +54,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
             let lastArticle = this.model.get("lastArticle");
 
             try {
-                parsedData = proxy
-                    ? this.parseProxyResponse()
-                    : this.parseResponse();
+                parsedData = proxy ? this.parseProxyResponse() : this.parseResponse();
             } catch (e) {
                 console.log(`Couldn't parse`, modelUrl, e);
                 return this.onFeedProcessed({ success: false });
@@ -84,8 +78,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
             const insert = [];
 
             parsedData.forEach((item) => {
-                const existingItem =
-                    items.get(item.id) || items.get(item.oldId);
+                const existingItem = items.get(item.id) || items.get(item.oldId);
 
                 if (existingItem) {
                     if (existingItem.get("deleted")) {
@@ -108,33 +101,23 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
                                 return true;
                             }
                             let existingContentText = "";
-                            [...existingContentFragment.children].forEach(
-                                (child) => {
-                                    existingContentText += child.innerText;
-                                }
-                            );
+                            [...existingContentFragment.children].forEach((child) => {
+                                existingContentText += child.innerText;
+                            });
 
                             let newContentText = "";
-                            [...newContentFragment.children].forEach(
-                                (child) => {
-                                    newContentText += child.innerText;
-                                }
-                            );
+                            [...newContentFragment.children].forEach((child) => {
+                                newContentText += child.innerText;
+                            });
 
                             if (!existingContentText) {
                                 return true;
                             }
-                            if (
-                                existingContentText.trim() !==
-                                newContentText.trim()
-                            ) {
+                            if (existingContentText.trim() !== newContentText.trim()) {
                                 return true;
                             }
                         }
-                        return (
-                            existingItem.get("title").trim() !==
-                            newItem.title.trim()
-                        );
+                        return existingItem.get("title").trim() !== newItem.title.trim();
                     };
 
                     if (areDifferent(item, existingItem)) {
@@ -192,9 +175,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
                         .normalize("NFD")
                         .replace(/[\u0300-\u036f]/g, "");
                     const cleanedContent = searchInContent
-                        ? item.content
-                              .normalize("NFD")
-                              .replace(/[\u0300-\u036f]/g, "")
+                        ? item.content.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                         : "";
                     return (
                         expression.test(cleanedTitle) ||
@@ -277,10 +258,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
             });
 
             function isFaviconExpired(model) {
-                return (
-                    model.get("faviconExpires") <
-                    Math.round(new Date().getTime() / 1000)
-                );
+                return model.get("faviconExpires") < Math.round(new Date().getTime() / 1000);
             }
 
             if (isFaviconExpired(this.model)) {
@@ -288,18 +266,12 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
                     .then(
                         (response) => {
                             modelUpdate.favicon = response.favicon;
-                            modelUpdate.faviconExpires =
-                                response.faviconExpires;
+                            modelUpdate.faviconExpires = response.faviconExpires;
                         },
                         (err) => {
                             modelUpdate.faviconExpires =
-                                Math.round(new Date().getTime() / 1000) +
-                                60 * 60 * 24 * 7;
-                            console.warn(
-                                `Couldn't load favicon for:`,
-                                modelUrl,
-                                err
-                            );
+                                Math.round(new Date().getTime() / 1000) + 60 * 60 * 24 * 7;
+                            console.warn(`Couldn't load favicon for:`, modelUrl, err);
                         }
                     )
                     .finally(() => {
@@ -358,8 +330,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
             const now = Date.now();
             items.where(itemsFilter).forEach((item) => {
                 const date = item.get("dateCreated") || item.get("date");
-                const removalDelayInMs =
-                    this.getAutoRemoveTime(this.model) * 24 * 60 * 60 * 1000;
+                const removalDelayInMs = this.getAutoRemoveTime(this.model) * 24 * 60 * 60 * 1000;
                 if (now - date > removalDelayInMs) {
                     item.markAsDeleted();
                 }
@@ -371,9 +342,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
             const isOnline =
                 `isOnline` in result
                     ? result.isOnline &&
-                      (typeof navigator.onLine !== "undefined"
-                          ? navigator.onLine
-                          : true)
+                      (typeof navigator.onLine !== "undefined" ? navigator.onLine : true)
                     : true;
             if (success && isOnline) {
                 this.removeOldItems(this.model);
@@ -385,12 +354,9 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
                 errorCount: success
                     ? 0
                     : isOnline
-                    ? this.model.get("errorCount") + 1
-                    : this.model.get("errorCount"),
-                folderID:
-                    this.model.get("folderID") === ""
-                        ? "0"
-                        : this.model.get("folderID"),
+                      ? this.model.get("errorCount") + 1
+                      : this.model.get("errorCount"),
+                folderID: this.model.get("folderID") === "" ? "0" : this.model.get("folderID"),
             });
 
             this.model.save(data);
@@ -414,8 +380,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
             navigator.locks
                 .request(origin, () => {
                     if (
-                        Date.now() <
-                            (this.loader.timestamps[origin] || 0) + 1000 * 1 &&
+                        Date.now() < (this.loader.timestamps[origin] || 0) + 1000 * 1 &&
                         origin.includes("openrss.org")
                     ) {
                         return false;
@@ -433,8 +398,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
                     if (settings.get("showSpinner")) {
                         this.model.set("isLoading", true);
                     }
-                    const shouldUseFeedlyCache =
-                        this.model.get("proxyThroughFeedly");
+                    const shouldUseFeedlyCache = this.model.get("proxyThroughFeedly");
                     if (shouldUseFeedlyCache) {
                         const itemsArray = items.where({
                             sourceID: this.model.get("sourceID"),
@@ -461,8 +425,7 @@ define(["modules/RSSParser", "favicon"], function (RSSParser, Favicon) {
                     }
                     if (
                         !shouldUseFeedlyCache &&
-                        (this.model.get("username") ||
-                            this.model.get("password"))
+                        (this.model.get("username") || this.model.get("password"))
                     ) {
                         const username = this.model.get("username") || "";
                         const password = this.model.getPass() || "";

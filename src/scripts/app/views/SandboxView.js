@@ -16,13 +16,9 @@ define(["backbone", "modules/Locale"], function (BB, Locale) {
         },
         handleLoad: function () {
             this.loaded = true;
-            this.el.contentDocument.querySelector(
-                "#smart-rss-url"
-            ).textContent = Locale.translate("FULL_ARTICLE");
-            this.el.contentDocument.addEventListener(
-                "keydown",
-                app.handleKeyDown
-            );
+            this.el.contentDocument.querySelector("#smart-rss-url").textContent =
+                Locale.translate("FULL_ARTICLE");
+            this.el.contentDocument.addEventListener("keydown", app.handleKeyDown);
 
             const baseStylePath = browser.runtime.getURL("styles/main.css");
             this.el.contentDocument
@@ -33,9 +29,8 @@ define(["backbone", "modules/Locale"], function (BB, Locale) {
             this.el.contentDocument
                 .querySelector("[data-dark-style]")
                 .setAttribute("href", darkStylePath);
-            this.el.contentDocument.querySelector(
-                "[data-custom-style]"
-            ).innerHTML = bg.settings.get("userStyle");
+            this.el.contentDocument.querySelector("[data-custom-style]").innerHTML =
+                bg.settings.get("userStyle");
             this.trigger("load");
         },
     });

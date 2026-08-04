@@ -3,8 +3,8 @@
  * @submodule collections/ToolbarItems
  */
 define(function (require) {
-    const BB = require('backbone');
-    const ToolbarButton = require('models/ToolbarButton');
+    const BB = require("backbone");
+    const ToolbarButton = require("models/ToolbarButton");
     /**
      * Each ToolbarView has its own ToolbarItems instance
      * @class ToolbarItems
@@ -22,7 +22,7 @@ define(function (require) {
             const secondRectangle = secondItem.view.el.getBoundingClientRect();
 
             return firstRectangle.left > secondRectangle.left ? 1 : -1;
-        }
+        },
     });
 
     return ToolbarItems;

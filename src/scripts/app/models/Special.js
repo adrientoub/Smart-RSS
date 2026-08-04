@@ -3,14 +3,14 @@
  * @submodule models/Special
  */
 define(function (require) {
-    const BB = require('backbone');
+    const BB = require("backbone");
     /**
      * Model for special items in feed list like all-feeds, pinned and trash
      * @class Special
      * @constructor
      * @extends Backbone.Model
      */
-    let Special = BB.Model.extend({
+    const Special = BB.Model.extend({
         defaults: {
             /**
              * Visible title of special. Chnages with localization.
@@ -18,14 +18,14 @@ define(function (require) {
              * @type String
              * @default All feeds
              */
-            title: 'All feeds',
+            title: "All feeds",
 
             /**
              * @attribute icon
              * @type String
              * @default icon16_v2.png
              */
-            icon: 'icon16_v2.png',
+            icon: "icon16_v2.png",
 
             /**
              * Name of the special. It is always the same for one special.
@@ -33,7 +33,7 @@ define(function (require) {
              * @type String
              * @default ''
              */
-            name: '',
+            name: "",
 
             /**
              * Filter used in 'where' function of items collection
@@ -50,7 +50,7 @@ define(function (require) {
              * @type String
              * @default top
              */
-            position: 'top',
+            position: "top",
 
             /**
              * Function to be called when specials view is initialized
@@ -58,8 +58,8 @@ define(function (require) {
              * @type function
              * @default null
              */
-            onReady: null
-        }
+            onReady: null,
+        },
     });
 
     return Special;

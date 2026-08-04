@@ -1,5 +1,6 @@
 import actions from "./staticdb/actions.js";
 import shortcuts from "./staticdb/shortcuts.js";
+import { sendMessage } from "../shared/messages.ts";
 
 const entityMap = {
     "&": "&amp;",
@@ -301,7 +302,7 @@ function handleResetStyle() {
     }
     document.querySelector("#userStyle").value = "";
     bg.settings.save("userStyle", "");
-    browser.runtime.sendMessage({ action: "changeUserStyle" });
+    sendMessage("user-style-changed");
 }
 
 function handleSuggestStyle() {
@@ -313,7 +314,7 @@ function handleSuggestStyle() {
     const defaultStyle = bg.settings.get("defaultStyle");
     document.querySelector("#userStyle").value = defaultStyle;
     bg.settings.save("userStyle", defaultStyle);
-    browser.runtime.sendMessage({ action: "changeUserStyle" });
+    sendMessage("user-style-changed");
 }
 
 function handleChange(event) {
@@ -327,10 +328,10 @@ function handleChange(event) {
     }
     bg.settings.save(target.id, v);
     if (target.id === "userStyle") {
-        browser.runtime.sendMessage({ action: "changeUserStyle" });
+        sendMessage("user-style-changed");
     }
     if (target.id === "invertColors") {
-        browser.runtime.sendMessage({ action: "changeInvertColors" });
+        sendMessage("invert-colors-changed");
     }
 }
 
@@ -479,7 +480,7 @@ function handleImportSettings(event) {
                     }
                     bg.info.refreshSpecialCounters();
                     settingsImportStatus.textContent = "Import fully completed!";
-                    bg.loader.downloadAll(true);
+                    sendMessage("load-all");
                 });
             } else if (message.data.action === "message-settings") {
                 settingsImportStatus.textContent = message.data.value;
@@ -538,7 +539,7 @@ function handleImportSmart(event) {
                     }
                     bg.info.refreshSpecialCounters();
                     smartImportStatus.textContent = "Import fully completed!";
-                    bg.loader.downloadAll(true);
+                    sendMessage("load-all");
                 });
             } else if (message.data.action === "message") {
                 smartImportStatus.textContent = message.data.value;
@@ -652,7 +653,7 @@ function handleImportOPML(event) {
         opmlImportStatus.textContent = "Import completed!";
 
         setTimeout(function () {
-            bg.loader.downloadAll(true);
+            sendMessage("load-all");
         }, 10);
     };
 

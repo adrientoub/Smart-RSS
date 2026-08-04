@@ -58,10 +58,10 @@ function changeInvertColors() {
 }
 
 function onMessage(message) {
-    if (message.action === "changeUserStyle") {
+    if (message.action === "user-style-changed") {
         changeUserStyle();
     }
-    if (message.action === "changeInvertColors") {
+    if (message.action === "invert-colors-changed") {
         changeInvertColors();
     }
 }

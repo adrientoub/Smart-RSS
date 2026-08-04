@@ -14,6 +14,7 @@ import Loader from "./models/Loader.js";
 import Folder from "./models/Folder.js";
 import Toolbars from "./collections/Toolbars.js";
 import actionApi from "./modules/actionApi.js";
+import { handleMessages } from "../shared/messages.ts";
 
 const { action } = actionApi;
 
@@ -61,40 +62,32 @@ browser.contextMenus.onClicked.addListener((info) => {
     }
 });
 
-function onMessage(message) {
-    if (!Object.hasOwn(message, "action")) {
-        return;
-    }
-
-    if (message.action === "load-all") {
+handleMessages({
+    "load-all": () => {
         loader.downloadAll(true);
-        return;
-    }
-
-    if (message.action === "new-rss" && message.value) {
-        addSource(message.value);
-        return;
-    }
-    if (message.action === "get-setting") {
-        return new Promise((resolve) => {
-            resolve(settings.get(message.key));
-        });
-    }
-    if (message.action === "save-setting") {
-        return new Promise((resolve) => {
-            settings.save(message.key, message.value);
-            resolve(settings.get(message.key));
-        });
-    }
-
-    if (message.action === "get-settings") {
-        return new Promise((resolve) => {
-            resolve(settings.attributes);
-        });
-    }
-}
-
-browser.runtime.onMessage.addListener(onMessage);
+    },
+    "new-rss": ({ url }) => {
+        if (url) {
+            addSource(url);
+        }
+    },
+    // Sources cross the boundary as ids, since Backbone models are not cloneable.
+    "download-sources": ({ ids }) => {
+        const models = ids
+            .map((id) => sources.get(id) ?? folders.get(id))
+            .filter((model) => Boolean(model));
+        loader.download(models);
+    },
+    "abort-downloads": () => {
+        loader.abortDownloading();
+    },
+    "get-setting": ({ key }) => settings.get(key),
+    "save-setting": ({ key, value }) => {
+        settings.save(key, value);
+        return settings.get(key);
+    },
+    "get-settings": () => settings.attributes,
+});
 
 function openRSS(closeIfActive, focusSource) {
     const url = browser.runtime.getURL("rss.html");

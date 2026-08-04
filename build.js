@@ -54,12 +54,22 @@ const ensureDirectoryExists = (dirPath) => {
 // Main functions
 const bumpVersion = (level = "patch") => {
     console.log(`Bumping version (${level})...`);
-    const manifestPath = join(__dirname, "src/manifest.json");
+    const manifestPath = join(SRC, "manifest.json");
+    const packagePath = join(__dirname, "package.json");
+
     const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
-    manifest.version = semver.inc(manifest.version, level);
-    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
-    console.log(`Version bumped to ${manifest.version}`);
-    return manifest.version;
+    const version = semver.inc(manifest.version, level);
+
+    manifest.version = version;
+    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+
+    // package.json is kept in step with the manifest; the two had drifted apart.
+    const pkg = JSON.parse(readFileSync(packagePath, "utf8"));
+    pkg.version = version;
+    writeFileSync(packagePath, JSON.stringify(pkg, null, 2) + "\n");
+
+    console.log(`Version bumped to ${version}`);
+    return version;
 };
 
 const commit = (level = "patch") => {

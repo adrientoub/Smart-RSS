@@ -25,12 +25,12 @@ function guid() {
 // with a meaningful name, like the name you'd give a table.
 // window.Store is deprecated, use Backbone.IndexedDB instead
 Backbone.IndexedDB = function (name) {
-    if (!window.indexedDB) {
+    if (!self.indexedDB) {
         throw "Backbone.indexedDB: Environment does not support IndexedDB.";
     }
     this.name = name;
     this.db = null;
-    const request = window.indexedDB.open("backbone-indexeddb", Backbone.IndexedDB.version);
+    const request = self.indexedDB.open("backbone-indexeddb", Backbone.IndexedDB.version);
     this.dbRequest = request;
     const that = this;
 
@@ -138,12 +138,6 @@ Backbone.IndexedDB.prototype = Object.assign(Backbone.IndexedDB.prototype, {
     indexedDB: (function () {
         let tx;
 
-        window.addEventListener("message", function (e) {
-            if (e.data.action === "clear-tx") {
-                tx = null;
-            }
-        });
-
         return function (type) {
             if (tx && !type) {
                 try {
@@ -162,8 +156,12 @@ Backbone.IndexedDB.prototype = Object.assign(Backbone.IndexedDB.prototype, {
             const tmpStore = tmpTx.objectStore(this.name);
             if (!type) {
                 tx = tmpTx;
-                // setImmidiate polyfill , doesn't work very wll tho.
-                window.postMessage({ action: "clear-tx" }, "*");
+                // Drop the cached transaction on the next task. An IndexedDB
+                // transaction is only usable within the task that created it, so
+                // reuse is confined to the current one.
+                setTimeout(() => {
+                    tx = null;
+                }, 0);
             }
 
             return tmpStore;

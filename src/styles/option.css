@@ -71,18 +71,6 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-.valspan {
-    vertical-align: middle;
-    font-size: 0.8rem;
-    color: #666;
-}
-
-.valspan input[type="range"] {
-    padding: 0;
-    margin: 0;
-    vertical-align: middle;
-}
-
 select {
     cursor: pointer;
     min-width: 110px;

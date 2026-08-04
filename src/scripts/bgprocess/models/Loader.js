@@ -174,9 +174,6 @@ export default class Loader {
     }
 
     handleNotifications() {
-        if (settings.get("soundNotifications")) {
-            this.playNotificationSound();
-        }
         if (settings.get("systemNotifications")) {
             this.displaySystemNotification();
         }
@@ -188,21 +185,6 @@ export default class Loader {
             title: "Smart RSS",
             message: "New articles found",
         });
-    }
-
-    playNotificationSound() {
-        let audio;
-        if (!settings.get("useSound") || settings.get("useSound") === ":user") {
-            audio = new Audio(settings.get("defaultSound"));
-        } else if (settings.get("useSound") === ":none") {
-            audio = false;
-        } else {
-            audio = new Audio("/sounds/" + settings.get("useSound") + ".ogg");
-        }
-        if (audio) {
-            audio.volume = parseFloat(settings.get("soundVolume"));
-            audio.play();
-        }
     }
 
     workerFinished(worker) {

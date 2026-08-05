@@ -54,7 +54,6 @@ export default tseslint.config(
         files: ["src/scripts/bgprocess/**/*.js"],
         languageOptions: {
             globals: {
-                settings: "readonly",
                 sources: "readonly",
                 items: "readonly",
                 folders: "readonly",
@@ -63,9 +62,6 @@ export default tseslint.config(
                 info: "readonly",
                 Source: "readonly",
                 Folder: "readonly",
-                getBoolean: "readonly",
-                valueToBoolean: "readonly",
-                getElementSetting: "readonly",
             },
         },
     },

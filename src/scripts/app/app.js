@@ -9,8 +9,11 @@ import FeedsLayout from "./layouts/FeedsLayout.js";
 import ArticlesLayout from "./layouts/ArticlesLayout.js";
 import ContentLayout from "./layouts/ContentLayout.js";
 import shortcuts from "./staticdb/shortcuts.js";
+import { settingsStore } from "../shared/settings.ts";
 
-document.documentElement.style.fontSize = bg.settings.get("uiFontSize") + "%";
+const settings = settingsStore();
+
+document.documentElement.style.fontSize = settings.get("uiFontSize") + "%";
 
 document.addEventListener("contextmenu", function (event) {
     if (!event.target.matches("#content header, #content header *, input")) {
@@ -21,7 +24,7 @@ document.addEventListener("contextmenu", function (event) {
 browser.runtime.onMessage.addListener(onMessage);
 
 function changeUserStyle() {
-    const userStyle = bg.settings.get("userStyle");
+    const userStyle = settings.get("userStyle");
     document.querySelector("[data-custom-style]").textContent = userStyle;
     const frame = document.querySelector('[name="sandbox"]');
     if (!frame) {
@@ -35,7 +38,7 @@ function changeUserStyle() {
 }
 
 function changeInvertColors() {
-    const shouldInvertColors = bg.getBoolean("invertColors");
+    const shouldInvertColors = settings.get("invertColors");
     const body = document.querySelector("body");
     if (shouldInvertColors) {
         body.classList.add("dark-theme");
@@ -104,22 +107,22 @@ const app = (window.app = new (Layout.extend({
             }
         });
 
-        bg.settings.on("change:layout", this.handleLayoutChange, this);
+        settings.on("change:layout", this.handleLayoutChange, this);
         bg.sources.on("clear-events", this.handleClearEvents, this);
     },
     handleClearEvents: function (id) {
         if (!window || id === tabID) {
-            bg.settings.off("change:layout", this.handleLayoutChange, this);
+            settings.off("change:layout", this.handleLayoutChange, this);
             bg.sources.off("clear-events", this.handleClearEvents, this);
         }
     },
     handleLayoutChange: function () {
-        if (bg.settings.get("layout") === "vertical") {
+        if (settings.get("layout") === "vertical") {
             this.layoutToVertical();
-            this.articles.enableResizing(bg.settings.get("layout"), bg.settings.get("posC"));
+            this.articles.enableResizing(settings.get("layout"), settings.get("posC"));
         } else {
             this.layoutToHorizontal();
-            this.articles.enableResizing(bg.settings.get("layout"), bg.settings.get("posB"));
+            this.articles.enableResizing(settings.get("layout"), settings.get("posB"));
         }
     },
     layoutToVertical: function () {
@@ -144,8 +147,8 @@ const app = (window.app = new (Layout.extend({
                 this.attach("articles", new ArticlesLayout());
                 this.attach("content", new ContentLayout());
 
-                this.feeds.enableResizing("horizontal", bg.settings.get("posA"));
-                this.articles.enableResizing("horizontal", bg.settings.get("posB"));
+                this.feeds.enableResizing("horizontal", settings.get("posA"));
+                this.articles.enableResizing("horizontal", settings.get("posB"));
                 applyStylesToSandbox();
                 changeUserStyle();
                 changeInvertColors();
@@ -159,7 +162,7 @@ const app = (window.app = new (Layout.extend({
     },
     handleKeyDown: (event) => {
         const activeElement = document.activeElement;
-        const hotkeys = bg.settings.get("hotkeys");
+        const hotkeys = settings.get("hotkeys");
 
         if (
             activeElement &&

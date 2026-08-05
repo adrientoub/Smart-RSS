@@ -4,8 +4,10 @@
  */
 
 import actionApi from "./actionApi.js";
+import { settingsStore } from "../../shared/settings.ts";
 
 const { action } = actionApi;
+const settings = settingsStore();
 
 /**
  * Handles animation of browser action button icon

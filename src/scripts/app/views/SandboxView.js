@@ -1,5 +1,8 @@
 import BB from "backbone";
 import Locale from "../modules/Locale.js";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 export default BB.View.extend({
     tagName: "iframe",
@@ -32,7 +35,7 @@ export default BB.View.extend({
             .querySelector("[data-dark-style]")
             .setAttribute("href", darkStylePath);
         this.el.contentDocument.querySelector("[data-custom-style]").innerHTML =
-            bg.settings.get("userStyle");
+            settings.get("userStyle");
         this.trigger("load");
     },
 });

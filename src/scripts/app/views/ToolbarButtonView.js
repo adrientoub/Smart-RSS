@@ -1,4 +1,7 @@
 import BB from "backbone";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 export default BB.View.extend({
     tagName: "div",
@@ -7,8 +10,8 @@ export default BB.View.extend({
         const updateButtonState = () => {
             this.el.classList.remove("active");
             if (action.get("state")) {
-                if (bg.getBoolean(action.get("state"))) {
-                    console.log(action.get("state"), bg.getBoolean(action.get("state")));
+                if (settings.get(action.get("state"))) {
+                    console.log(action.get("state"), settings.get(action.get("state")));
                     this.el.classList.add("active");
                 }
             }
@@ -28,6 +31,6 @@ export default BB.View.extend({
         updateButtonState();
         this.el.view = this;
 
-        bg.settings.on("change", updateButtonState);
+        settings.on("change", updateButtonState);
     },
 });

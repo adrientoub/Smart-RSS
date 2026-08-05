@@ -8,6 +8,9 @@ import "../modules/RSSParser.js";
 import animation from "../modules/Animation.js";
 import "../modules/favicon.ts";
 import FeedLoader from "./FeedLoader.js";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 /**
  * Updates feeds and keeps info about progress

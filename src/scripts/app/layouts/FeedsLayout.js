@@ -10,6 +10,9 @@ import contextMenus from "../instances/contextMenus.js";
 import Properties from "../views/Properties.js";
 import resizable from "../mixins/resizable.js";
 import IndicatorView from "../views/IndicatorView.js";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 const toolbar = bg.toolbars.findWhere({ region: "feeds" });
 
@@ -44,7 +47,7 @@ let FeedsLayout = Layout.extend({
         this.on("resize:after", this.handleResize);
         window.addEventListener("resize", this.handleResize.bind(this));
 
-        this.enableResizing("horizontal", bg.settings.get("posA"));
+        this.enableResizing("horizontal", settings.get("posA"));
     },
 
     /**
@@ -53,7 +56,7 @@ let FeedsLayout = Layout.extend({
      */
     handleResize: function () {
         const width = this.el.offsetWidth;
-        bg.settings.save({ posA: width });
+        settings.save({ posA: width });
     },
 });
 

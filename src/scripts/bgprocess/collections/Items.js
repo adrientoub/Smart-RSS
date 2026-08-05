@@ -6,6 +6,9 @@
 import BB from "backbone";
 import Item from "../models/Item.js";
 import "../preps/indexeddb.js";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 function getS(val) {
     return String(val).toLowerCase();

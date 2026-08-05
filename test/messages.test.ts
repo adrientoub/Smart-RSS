@@ -16,22 +16,21 @@ describe("createMessageListener", () => {
     });
 
     it("resolves with the handler's return value", async () => {
+        // No message declares a response today, so the router's value plumbing
+        // is exercised through a stand-in handler.
         const listen = createMessageListener({
-            "get-setting": ({ key }) => `value-of-${key}`,
+            "load-all": (() => "a value") as () => void,
         });
 
-        assert.equal(
-            await listen({ action: "get-setting", payload: { key: "layout" } }),
-            "value-of-layout"
-        );
+        assert.equal(await listen({ action: "load-all" }), "a value");
     });
 
     it("awaits an async handler", async () => {
         const listen = createMessageListener({
-            "get-settings": async () => ({ layout: "horizontal" }),
+            "load-all": (async () => ({ layout: "horizontal" })) as unknown as () => Promise<void>,
         });
 
-        assert.deepEqual(await listen({ action: "get-settings" }), { layout: "horizontal" });
+        assert.deepEqual(await listen({ action: "load-all" }), { layout: "horizontal" });
     });
 
     // Several contexts listen on the same channel, so answering a message meant

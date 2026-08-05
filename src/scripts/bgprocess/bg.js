@@ -45,7 +45,7 @@ function addSource(address) {
 const SUBSCRIBE_LINK_MENU_ID = "smart-rss-subscribe-link";
 
 function createLinksMenu() {
-    if (!getBoolean("displaySubscribeToLink")) {
+    if (!settings.get("displaySubscribeToLink")) {
         return;
     }
     browser.contextMenus.create({
@@ -82,12 +82,6 @@ handleMessages({
     "abort-downloads": () => {
         loader.abortDownloading();
     },
-    "get-setting": ({ key }) => settings.get(key),
-    "save-setting": ({ key, value }) => {
-        settings.save(key, value);
-        return settings.get(key);
-    },
-    "get-settings": () => settings.attributes,
 });
 
 function openRSS(closeIfActive, focusSource) {
@@ -156,7 +150,7 @@ window.Folder = Folder;
 /**
  * DB models
  */
-window.settings = settingsStore();
+const settings = settingsStore();
 window.info = new Info();
 window.sources = new Sources();
 window.items = new Items();
@@ -171,51 +165,6 @@ window.sourceToFocus = null;
 window.toolbars = new Toolbars();
 
 window.loader = new Loader();
-
-window.valueToBoolean = function (value) {
-    if (
-        value === 1 ||
-        value === "1" ||
-        value === "on" ||
-        value === "yes" ||
-        value === "true" ||
-        value === true
-    ) {
-        return true;
-    }
-    if (
-        value === 0 ||
-        value === "0" ||
-        value === "off" ||
-        value === "no" ||
-        value === "false" ||
-        value === false
-    ) {
-        return false;
-    }
-    return value;
-};
-
-// Settings are typed now, but per-source overrides are still stored as loose
-// strings, so element helpers keep coercing.
-window.getBoolean = function (name) {
-    return settings.get(name);
-};
-
-window.getElementBoolean = function (element, setting) {
-    const elementValue = element.get(setting);
-    if (elementValue === "global") {
-        return getBoolean(setting);
-    }
-    return valueToBoolean(elementValue);
-};
-
-window.getElementSetting = function (element, setting) {
-    const elementSetting = element.get(setting);
-    return elementSetting === "global" || elementSetting === "USE_GLOBAL"
-        ? settings.get(setting)
-        : elementSetting;
-};
 
 function fetchOne(tasks) {
     return new Promise((resolve) => {

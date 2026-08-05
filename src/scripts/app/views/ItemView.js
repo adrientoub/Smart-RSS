@@ -8,6 +8,9 @@ import dateUtils from "../helpers/dateUtils.js";
 import contextMenus from "../instances/contextMenus.js";
 import stripTags from "../helpers/stripTags.js";
 import itemTemplate from "../templates/itemView.html";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 /**
  * View of one article item in article list
@@ -109,7 +112,7 @@ const ItemView = BB.View.extend({
         if (this.model.get("pinned")) {
             classList.add("pinned");
         }
-        if (bg.settings.get("lines") === "1") {
+        if (settings.get("lines") === "1") {
             classList.add("one-line");
         }
 
@@ -133,7 +136,7 @@ const ItemView = BB.View.extend({
         if (this.multiple) {
             const source = bg.sources.find({ id: this.model.get("sourceID") });
             article.sourceTitle = source.get("title");
-            if (bg.getBoolean("displayFaviconInsteadOfPin")) {
+            if (settings.get("displayFaviconInsteadOfPin")) {
                 article.favicon = source.get("favicon");
             }
             article.author =
@@ -142,7 +145,7 @@ const ItemView = BB.View.extend({
                     : article.author;
         }
         this.el.setAttribute("href", article.url);
-        if (bg.getBoolean("showFullHeadline")) {
+        if (settings.get("showFullHeadline")) {
             this.el.classList.add("full-headline");
         } else {
             this.el.setAttribute("title", article.title);
@@ -179,12 +182,12 @@ const ItemView = BB.View.extend({
     getItemDate: function (date) {
         const dateFormats = { normal: "DD.MM.YYYY", iso: "YYYY-MM-DD", us: "MM/DD/YYYY" };
         const pickedFormat =
-            dateFormats[bg.settings.get("dateType") || "normal"] || dateFormats["normal"];
+            dateFormats[settings.get("dateType") || "normal"] || dateFormats["normal"];
 
-        const timeFormat = bg.settings.get("hoursFormat") === "12h" ? "H:mm a" : "hh:mm";
+        const timeFormat = settings.get("hoursFormat") === "12h" ? "H:mm a" : "hh:mm";
 
         if (date) {
-            if (bg.getBoolean("fullDate")) {
+            if (settings.get("fullDate")) {
                 date = dateUtils.formatDate(date, pickedFormat + " " + timeFormat);
             } else if (
                 Math.floor(dateUtils.formatDate(date, "T") / 86400000) >=

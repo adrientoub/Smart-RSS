@@ -172,12 +172,6 @@ const documentReady = () => {
         resetHotkeysButton.textContent = "Reset hotkeys";
         hotkeysElement.insertAdjacentElement("beforeend", resetHotkeysButton);
         const hotkeys = settings.get("hotkeys");
-        const actionsMap = {};
-        Object.entries(actions).forEach((obj) => {
-            Object.entries(obj[1]).forEach((action) => {
-                actionsMap[obj[0] + ":" + action[0]] = action[1]["title"];
-            });
-        });
 
         for (const region in hotkeys) {
             if (Object.hasOwn(hotkeys, region)) {
@@ -443,8 +437,8 @@ function handleExportOPML() {
             }
         });
 
-        const folders = body.querySelectorAll("[id]");
-        [...folders].forEach((folder) => {
+        const elementsWithId = body.querySelectorAll("[id]");
+        [...elementsWithId].forEach((folder) => {
             folder.removeAttribute("id");
         });
 

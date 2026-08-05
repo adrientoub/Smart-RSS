@@ -387,17 +387,19 @@ const ContentView = BB.View.extend({
                     contentElement.removeChild(contentElement.firstChild);
                 }
 
-                let fragment;
+                let enclosureFragment;
                 switch (data.enclosure.medium) {
                     case "youtube":
-                        fragment = document
+                        enclosureFragment = document
                             .createRange()
                             .createContextualFragment(content.replace(/\r/g, "<br>"));
                         break;
                     default:
-                        fragment = document.createRange().createContextualFragment(content);
+                        enclosureFragment = document
+                            .createRange()
+                            .createContextualFragment(content);
                 }
-                contentElement.appendChild(fragment);
+                contentElement.appendChild(enclosureFragment);
 
                 frame.contentDocument.querySelector("#smart-rss-url").href = articleUrl;
                 frame.contentDocument.querySelector("#full-article-url").textContent = articleUrl;

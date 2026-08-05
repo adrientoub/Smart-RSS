@@ -3,7 +3,7 @@ import Locale from "../modules/Locale.js";
 import propertiesTemplate from "../templates/propertiesView.html";
 import propertiesDetails from "../templates/propertiesDetails.html";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
-import { sources } from "../modules/data.js";
+import { sources, folders } from "../modules/data.js";
 import Source, { encodePassword } from "../../shared/models/Source.js";
 import Folder from "../../shared/models/Folder.js";
 
@@ -101,7 +101,6 @@ export default BB.View.extend({
 
         this.el.appendChild(fragment);
 
-        const folders = folders;
         const parentSelect = document.querySelector("#prop-parent");
         folders.forEach((folder) => {
             const option = document.createElement("option");
@@ -179,7 +178,6 @@ export default BB.View.extend({
             fragment.removeChild(labelUrl);
         }
 
-        const folders = folders;
         const parentSelect = fragment.querySelector("#prop-parent");
         folders.forEach((folder) => {
             const option = document.createElement("option");

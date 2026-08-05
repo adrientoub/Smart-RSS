@@ -111,9 +111,9 @@ export default {
                         sibling = sibling.nextElementSibling;
                     }
                 }
-                siblings.forEach((element) => {
-                    element.classList.add("selected");
-                    this.selectedItems.push(element.view);
+                siblings.forEach((sibling) => {
+                    sibling.classList.add("selected");
+                    this.selectedItems.push(sibling.view);
                 });
             }
 

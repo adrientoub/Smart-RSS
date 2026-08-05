@@ -404,10 +404,10 @@ let ArticleListView = BB.View.extend({
     /**
      * Removes everything from lists and adds new collection of articles
      * @method setItemHeight
-     * @param items {Backbone.Collection} items
+     * @param models {Backbone.Collection} items
      * @param multiple
      */
-    addItems: function (items, multiple = false) {
+    addItems: function (models, multiple = false) {
         groups.reset();
         /**
          * Select removal
@@ -419,7 +419,7 @@ let ArticleListView = BB.View.extend({
 
         this.selectPivot = null;
 
-        const length = items.length;
+        const length = models.length;
         if (length === 0) {
             return;
         }
@@ -431,7 +431,7 @@ let ArticleListView = BB.View.extend({
 
             let internalCounter = 0;
             while (internalCounter !== 100 && startingPoint + internalCounter !== length) {
-                const item = items[startingPoint + internalCounter];
+                const item = models[startingPoint + internalCounter];
                 if (!item) {
                     break;
                 }
@@ -490,13 +490,13 @@ let ArticleListView = BB.View.extend({
             app.articles.toolbar.hideItems("articles:update").showItems("articles:undelete");
             document.querySelector("#context-undelete").hidden = false;
         }
-        const items = searchIn.filter((item) => {
+        const visible = searchIn.filter((item) => {
             if (!item.get("unread") && this.unreadOnly) {
                 return false;
             }
             return data.name || data.feeds.includes(item.get("sourceID"));
         }, this);
-        this.addItems(items, data.multiple);
+        this.addItems(visible, data.multiple);
     },
 
     /**

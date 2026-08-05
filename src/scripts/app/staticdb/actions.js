@@ -133,20 +133,20 @@ export default {
                 }
 
                 const feeds = feedList.getSelectedFeeds();
-                const folders = feedList.getSelectedFolders();
+                const selectedFolders = feedList.getSelectedFolders();
 
                 destroyRecords("sources", idsOf(feeds));
-                destroyRecords("folders", idsOf(folders));
+                destroyRecords("folders", idsOf(selectedFolders));
             },
         },
         scrollIntoView: {
             icon: "back.png",
             title: L.SCROLL_INTO_VIEW,
             fn: function () {
-                const folders = feedList.getSelectedFolders();
+                const selectedFolders = feedList.getSelectedFolders();
 
-                if (folders.length > 0) {
-                    const id = folders[0].get("id");
+                if (selectedFolders.length > 0) {
+                    const id = selectedFolders[0].get("id");
                     const sourceElement = document.querySelector(`[data-id="${id}"]`);
                     sourceElement.scrollIntoView();
                     return;
@@ -166,11 +166,11 @@ export default {
             fn: function () {
                 const properties = app.feeds.properties;
                 const feeds = feedList.getSelectedFeeds();
-                const folders = feedList.getSelectedFolders();
+                const selectedFolders = feedList.getSelectedFolders();
 
-                if (feedList.selectedItems.length === 1 && folders.length === 1) {
-                    properties.show(folders[0]);
-                } else if (!folders.length && feeds.length === 1) {
+                if (feedList.selectedItems.length === 1 && selectedFolders.length === 1) {
+                    properties.show(selectedFolders[0]);
+                } else if (!selectedFolders.length && feeds.length === 1) {
                     properties.show(feeds[0]);
                 } else if (feeds.length > 0) {
                     properties.show(feeds);
@@ -250,11 +250,11 @@ export default {
         closeFolders: {
             title: L.CLOSE_FOLDERS,
             fn: function (event) {
-                const folders = Array.from(document.querySelectorAll(".folder.opened"));
-                if (!folders.length) {
+                const openFolders = Array.from(document.querySelectorAll(".folder.opened"));
+                if (!openFolders.length) {
                     return;
                 }
-                folders.forEach((folder) => {
+                openFolders.forEach((folder) => {
                     if (folder.view) {
                         folder.view.handleClickArrow(event);
                     }
@@ -264,8 +264,8 @@ export default {
         openFolders: {
             title: L.OPEN_FOLDERS,
             fn: function (event) {
-                const folders = Array.from(document.querySelectorAll(".folder:not(.opened)"));
-                folders.forEach((folder) => {
+                const closedFolders = Array.from(document.querySelectorAll(".folder:not(.opened)"));
+                closedFolders.forEach((folder) => {
                     if (folder.view) {
                         folder.view.handleClickArrow(event);
                     }
@@ -508,16 +508,14 @@ export default {
             title: L.FULL_ARTICLE,
             icon: "full_article.png",
             fn: function (event) {
-                const articleList = app.articles.articleList;
-                if (!articleList.selectedItems || !articleList.selectedItems.length) {
+                const list = app.articles.articleList;
+                if (!list.selectedItems || !list.selectedItems.length) {
                     return;
                 }
-                if (articleList.selectedItems.length > 10 && settings.get("askOnOpening")) {
+                if (list.selectedItems.length > 10 && settings.get("askOnOpening")) {
                     if (
                         !confirm(
-                            "Do you really want to open " +
-                                articleList.selectedItems.length +
-                                " articles?"
+                            "Do you really want to open " + list.selectedItems.length + " articles?"
                         )
                     ) {
                         return;
@@ -525,7 +523,7 @@ export default {
                 }
                 const openNewTab = settings.get("openNewTab");
                 const active = openNewTab === "background" ? !!event.shiftKey : !event.shiftKey;
-                articleList.selectedItems.forEach(function (item) {
+                list.selectedItems.forEach(function (item) {
                     browser.tabs.create({
                         url: stripTags(item.model.get("url")),
                         active: active,
@@ -537,15 +535,15 @@ export default {
             title: L.FULL_ARTICLE_SINGLE,
             fn: function (event) {
                 event = event || {};
-                const articleList = app.articles.articleList;
+                const list = app.articles.articleList;
                 let view;
                 if ("currentTarget" in event) {
                     view = event.currentTarget.view;
                 } else {
-                    if (!articleList.selectedItems || !articleList.selectedItems.length) {
+                    if (!list.selectedItems || !list.selectedItems.length) {
                         return;
                     }
-                    view = articleList.selectedItems[0];
+                    view = list.selectedItems[0];
                 }
                 if (view.model) {
                     const openNewTab = settings.get("openNewTab");

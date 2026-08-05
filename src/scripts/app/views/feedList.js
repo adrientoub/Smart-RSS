@@ -244,7 +244,7 @@ let FeedListView = BB.View.extend({
      * @method addFolders
      * @param folders {Array} Array of folder models to add
      */
-    addFolders: function (folders) {
+    addFolders: function (models) {
         const existingFolders = [...document.querySelectorAll(".folder")];
         if (existingFolders.length > 0) {
             existingFolders.forEach((folder) => {
@@ -255,7 +255,7 @@ let FeedListView = BB.View.extend({
             });
         }
 
-        folders.forEach((folder) => {
+        models.forEach((folder) => {
             this.addFolder(folder);
         });
     },
@@ -375,14 +375,14 @@ let FeedListView = BB.View.extend({
      * @method addSources
      * @param sources {Array} Array of source models to add
      */
-    addSources: function (sources) {
+    addSources: function (models) {
         [...document.querySelectorAll(".source")].forEach((source) => {
             if (!source.view || !(source instanceof SourceView)) {
                 return;
             }
             this.destroySource(source.view);
         });
-        sources.forEach((source) => {
+        models.forEach((source) => {
             this.addSource(source, true);
         });
     },

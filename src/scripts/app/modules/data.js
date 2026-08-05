@@ -55,10 +55,17 @@ export function startApplyingChanges() {
     incoming.start();
 }
 
-export async function loadData() {
+/**
+ * `live` is off for the options page. It imports the reader's views through the
+ * actions table, and those bind to these collections on evaluation, so applying
+ * a change there drives views that were never rendered.
+ */
+export async function loadData({ live = true } = {}) {
     // Registered before the fetch so a write during it is not missed. Fetch
     // merges rather than resets, so an early change is not clobbered.
-    handleMessages({ "data-changed": (change) => incoming.push(change) });
+    if (live) {
+        handleMessages({ "data-changed": (change) => incoming.push(change) });
+    }
     await fetchCollections(collections);
     refreshCounts();
 }

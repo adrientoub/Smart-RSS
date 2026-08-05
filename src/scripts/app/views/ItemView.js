@@ -136,15 +136,19 @@ const ItemView = BB.View.extend({
         article.datetime = new Date(article.date).toISOString();
         article.date = this.getItemDate(article.date);
         if (this.multiple) {
+            // The feed can be missing briefly: articles and sources reach this
+            // context as separate messages. Throwing here would leave a blank row.
             const source = sources.find({ id: this.model.get("sourceID") });
-            article.sourceTitle = source.get("title");
-            if (settings.get("displayFaviconInsteadOfPin")) {
-                article.favicon = source.get("favicon");
+            if (source) {
+                article.sourceTitle = source.get("title");
+                if (settings.get("displayFaviconInsteadOfPin")) {
+                    article.favicon = source.get("favicon");
+                }
+                article.author =
+                    article.sourceTitle !== article.author
+                        ? article.sourceTitle + " - " + article.author
+                        : article.author;
             }
-            article.author =
-                article.sourceTitle !== article.author
-                    ? article.sourceTitle + " - " + article.author
-                    : article.author;
         }
         this.el.setAttribute("href", article.url);
         if (settings.get("showFullHeadline")) {

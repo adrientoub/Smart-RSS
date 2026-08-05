@@ -38,10 +38,15 @@ export function valueToBoolean(value: unknown): unknown {
 }
 
 export function getElementBoolean(
-    element: AttributeSource,
+    element: AttributeSource | null | undefined,
     setting: SettingKey,
     settings: SettingsStore = settingsStore()
 ): unknown {
+    // A source can be missing briefly: it and its articles arrive as separate
+    // messages. No override is available, so the global value applies.
+    if (!element) {
+        return settings.get(setting);
+    }
     const elementValue = element.get(setting);
     if (elementValue === "global") {
         return settings.get(setting);
@@ -52,10 +57,13 @@ export function getElementBoolean(
 // Unlike getElementBoolean this also treats "USE_GLOBAL" as global. Kept as-is:
 // existing profiles hold both spellings.
 export function getElementSetting(
-    element: AttributeSource,
+    element: AttributeSource | null | undefined,
     setting: SettingKey,
     settings: SettingsStore = settingsStore()
 ): unknown {
+    if (!element) {
+        return settings.get(setting);
+    }
     const elementSetting = element.get(setting);
     return elementSetting === "global" || elementSetting === "USE_GLOBAL"
         ? settings.get(setting)

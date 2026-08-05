@@ -9,6 +9,21 @@ import { broadcast } from "../../shared/messages.ts";
 
 const STORES = ["sources", "items", "folders", "toolbars"];
 
+/**
+ * An added record carries the whole article, content included, and a mass
+ * refresh coalesces many feeds into one batch. Unbounded, that message grows to
+ * megabytes and fails to send, which looks exactly like articles going missing.
+ */
+export const MAX_RECORDS_PER_MESSAGE = 20;
+
+export function chunk(list, size = MAX_RECORDS_PER_MESSAGE) {
+    const chunks = [];
+    for (let i = 0; i < list.length; i += size) {
+        chunks.push(list.slice(i, i + size));
+    }
+    return chunks;
+}
+
 export function startDataBroadcast(collections) {
     for (const store of STORES) {
         watch(store, collections[store]);
@@ -21,7 +36,10 @@ function watch(store, collection) {
     const flush = () => {
         const batch = pending;
         pending = null;
-        broadcast("data-changed", { store, ...batch });
+
+        chunk(batch.added).forEach((added) => broadcast("data-changed", { store, added }));
+        chunk(batch.changed).forEach((changed) => broadcast("data-changed", { store, changed }));
+        chunk(batch.removed).forEach((removed) => broadcast("data-changed", { store, removed }));
     };
 
     const queue = () => {

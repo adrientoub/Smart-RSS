@@ -6,6 +6,7 @@ import articleList from "../views/articleList.js";
 import contentView from "../views/contentView.js";
 import { sendMessage } from "../../shared/messages.ts";
 import { settingsStore } from "../../shared/settings.ts";
+import { sources, items, folders } from "../modules/data.js";
 import {
     createRecord,
     updateRecords,
@@ -84,7 +85,7 @@ export default {
                     return;
                 }
 
-                const unread = bg.items.filter(
+                const unread = items.filter(
                     (item) =>
                         item.get("unread") === true && selectedFeeds.indexOf(item.getSource()) >= 0
                 );
@@ -118,7 +119,7 @@ export default {
                     return;
                 }
                 const sourceIds = selectedFeeds.map((source) => source.get("id"));
-                const stale = bg.items.filter((item) => sourceIds.includes(item.get("sourceID")));
+                const stale = items.filter((item) => sourceIds.includes(item.get("sourceID")));
                 await destroyRecords("items", idsOf(stale));
                 app.actions.execute("feeds:update");
             },
@@ -194,14 +195,14 @@ export default {
                 ) {
                     const fid = list.selectedItems[0].model.get("id");
                     // make sure source is not added to folder which is not in db
-                    if (bg.folders.get(fid)) {
+                    if (folders.get(fid)) {
                         folderID = fid;
                     }
                 }
 
                 url = app.fixURL(url);
                 const uid = url.replace(/^(.*:)?(\/\/)?(www*?\.)?/, "").replace(/\/$/, "");
-                const duplicate = bg.sources.findWhere({ uid: uid });
+                const duplicate = sources.findWhere({ uid: uid });
 
                 if (!duplicate) {
                     const { id } = await createRecord("sources", {
@@ -318,10 +319,10 @@ export default {
                 });
 
                 if (special && special.get("name") === "all-feeds") {
-                    const flagged = bg.sources.filter((source) => source.get("hasNew"));
+                    const flagged = sources.filter((source) => source.get("hasNew"));
                     updateRecords("sources", idsOf(flagged), { hasNew: false });
                 } else if (feedIds.length) {
-                    const flagged = bg.sources.filter(
+                    const flagged = sources.filter(
                         (source) => source.get("hasNew") && feedIds.includes(source.id)
                     );
                     updateRecords("sources", idsOf(flagged), { hasNew: false });
@@ -608,7 +609,7 @@ export default {
                 const read = { unread: false, visited: true };
 
                 if (feeds.length) {
-                    const scope = filter ? bg.items.where(filter) : bg.items.toArray();
+                    const scope = filter ? items.where(filter) : items.toArray();
                     const unread = scope.filter(
                         (item) =>
                             item.get("unread") === true && feeds.indexOf(item.get("sourceID")) >= 0
@@ -616,11 +617,11 @@ export default {
                     updateRecords("items", idsOf(unread), read);
                 } else if (articleList.currentData.name === "all-feeds") {
                     if (confirm(L.MARK_ALL_QUESTION)) {
-                        const unread = bg.items.filter((item) => item.get("unread") === true);
+                        const unread = items.filter((item) => item.get("unread") === true);
                         updateRecords("items", idsOf(unread), read);
                     }
                 } else if (articleList.currentData.filter) {
-                    updateRecords("items", idsOf(bg.items.where(articleList.specialFilter)), read);
+                    updateRecords("items", idsOf(items.where(articleList.specialFilter)), read);
                 }
             },
         },

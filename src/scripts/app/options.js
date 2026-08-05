@@ -3,6 +3,7 @@ import shortcuts from "./staticdb/shortcuts.js";
 import { sendMessage } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
 import { createRecord, updateRecords, destroyRecords, idsOf } from "../shared/dataClient.ts";
+import { sources, items, folders, reloadData } from "./modules/data.js";
 
 const settings = settingsStore();
 
@@ -347,9 +348,9 @@ function handleCheck(event) {
 function handleExportSmart() {
     const smartExportStatus = document.querySelector("#smart-exported");
     const data = {
-        folders: bg.folders.toJSON(),
-        sources: bg.sources.toJSON(),
-        items: bg.items.toJSON(),
+        folders: folders.toJSON(),
+        sources: sources.toJSON(),
+        items: items.toJSON(),
     };
 
     smartExportStatus.setAttribute("href", "#");
@@ -421,12 +422,12 @@ function handleExportOPML() {
     setTimeout(() => {
         const body = doc.querySelector("body");
 
-        bg.folders.forEach((folder) => {
+        folders.forEach((folder) => {
             addLine(doc, body);
             body.appendChild(addFolder(doc, folder.get("title"), folder.get("id")));
         });
 
-        bg.sources.forEach((source) => {
+        sources.forEach((source) => {
             if (source.get("folderID")) {
                 const folder = body.querySelector('[id="' + source.get("folderID") + '"]');
                 if (folder) {
@@ -531,7 +532,7 @@ function handleImportSmart(event) {
                     if (typeof browser !== "undefined") {
                         browser.runtime.reload();
                     }
-                    bg.info.refreshSpecialCounters();
+                    reloadData();
                     smartImportStatus.textContent = "Import fully completed!";
                     sendMessage("load-all");
                 });
@@ -592,7 +593,7 @@ function handleImportOPML(event) {
                     feed.getAttribute("title") || feed.getAttribute("text")
                 );
 
-                const duplicate = bg.folders.findWhere({
+                const duplicate = folders.findWhere({
                     title: folderTitle,
                 });
 
@@ -602,7 +603,7 @@ function handleImportOPML(event) {
 
                 for (const subFeed of [...subFeeds]) {
                     if (
-                        bg.sources.findWhere({
+                        sources.findWhere({
                             url: decodeHTML(subFeed.getAttribute("xmlUrl")),
                         })
                     ) {
@@ -619,7 +620,7 @@ function handleImportOPML(event) {
                 }
             } else {
                 if (
-                    bg.sources.findWhere({
+                    sources.findWhere({
                         url: decodeHTML(feed.getAttribute("xmlUrl")),
                     })
                 ) {
@@ -673,7 +674,7 @@ async function handleClearDeletedStorage() {
         return;
     }
 
-    await destroyRecords("items", idsOf(bg.items.where({ deleted: true })));
+    await destroyRecords("items", idsOf(items.where({ deleted: true })));
     alert("Done,extension will reboot now");
     browser.runtime.reload();
 }
@@ -683,7 +684,7 @@ function handleClearFavicons() {
         return;
     }
 
-    updateRecords("sources", idsOf(bg.sources.toArray()), {
+    updateRecords("sources", idsOf(sources.toArray()), {
         favicon: "/images/feed.png",
         faviconExpires: 0,
     });

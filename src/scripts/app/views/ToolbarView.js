@@ -1,6 +1,7 @@
 import BB from "backbone";
 import ToolbarItems from "../collections/ToolbarItems.js";
 import ToolbarItemsFactory from "../factories/ToolbarItemsFactory.js";
+import { sources } from "../modules/data.js";
 
 export default BB.View.extend({
     tagName: "div",
@@ -17,7 +18,7 @@ export default BB.View.extend({
 
         this.listenTo(this.items, "add", this.addToolbarItem);
         this.listenTo(this.model, "change", this.handleChange);
-        bg.sources.on("clear-events", this.handleClearEvents, this);
+        sources.on("clear-events", this.handleClearEvents, this);
 
         this.model.get("actions").forEach(this.createToolbarItem, this);
         this.hideItems("articles:undelete");
@@ -32,7 +33,7 @@ export default BB.View.extend({
     handleClearEvents: function (id) {
         if (!window || id === tabID) {
             this.stopListening();
-            bg.sources.off("clear-events", this.handleClearEvents, this);
+            sources.off("clear-events", this.handleClearEvents, this);
         }
     },
 

@@ -10,6 +10,7 @@ import stripTags from "../helpers/stripTags.js";
 import itemTemplate from "../templates/itemView.html";
 import { settingsStore } from "../../shared/settings.ts";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
+import { sources } from "../modules/data.js";
 
 const settings = settingsStore();
 
@@ -65,7 +66,7 @@ const ItemView = BB.View.extend({
     setEvents: function () {
         this.model.on("change", this.handleModelChange, this);
         this.model.on("destroy", this.handleModelDestroy, this);
-        bg.sources.on("clear-events", this.handleClearEvents, this);
+        sources.on("clear-events", this.handleClearEvents, this);
     },
 
     /**
@@ -89,7 +90,7 @@ const ItemView = BB.View.extend({
             this.model.off("change", this.handleModelChange, this);
             this.model.off("destroy", this.handleModelDestroy, this);
         }
-        bg.sources.off("clear-events", this.handleClearEvents, this);
+        sources.off("clear-events", this.handleClearEvents, this);
     },
 
     /**
@@ -135,7 +136,7 @@ const ItemView = BB.View.extend({
         article.datetime = new Date(article.date).toISOString();
         article.date = this.getItemDate(article.date);
         if (this.multiple) {
-            const source = bg.sources.find({ id: this.model.get("sourceID") });
+            const source = sources.find({ id: this.model.get("sourceID") });
             article.sourceTitle = source.get("title");
             if (settings.get("displayFaviconInsteadOfPin")) {
                 article.favicon = source.get("favicon");

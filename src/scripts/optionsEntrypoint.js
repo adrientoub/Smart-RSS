@@ -4,14 +4,16 @@
  */
 import "./shared/polyfill.js";
 import { settingsStore } from "./shared/settings.ts";
-import { sendMessage } from "./shared/messages.ts";
+import { waitForBackground } from "./shared/messages.ts";
 
 (async () => {
-    await sendMessage("background-ready");
+    await waitForBackground();
     await settingsStore().load();
 
     const { loadData } = await import("./app/modules/data.js");
     await loadData({ live: false });
 
     await import("./app/options.js");
-})();
+})().catch((error) => {
+    console.error("Smart RSS options failed to start", error);
+});

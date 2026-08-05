@@ -163,7 +163,7 @@ async function fetchAll() {
     await fetchCollections(collections);
 }
 
-const appStarted = new Promise((resolve) => {
+const appStarted = new Promise((resolve, reject) => {
     /**
      * Init
      */
@@ -257,5 +257,12 @@ const appStarted = new Promise((resolve) => {
              */
             Animation.stop();
             resolve(true);
+        })
+        // Without this the promise stays pending, and every page waiting on
+        // "background-ready" hangs on a blank screen instead of failing.
+        .catch((error) => {
+            console.error("Smart RSS background failed to start", error);
+            Animation.stop();
+            reject(error);
         });
 });

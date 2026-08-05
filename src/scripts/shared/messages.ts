@@ -133,6 +133,71 @@ export function sendMessage<K extends MessageName>(
     return browser.runtime.sendMessage({ action, payload }) as Promise<Response<K>>;
 }
 
+/** Nobody was listening. The runtime rejects rather than queueing the message. */
+export function isNoReceiverError(error: unknown): boolean {
+    if (error instanceof NoReceiverError) {
+        return true;
+    }
+    const reason = String((error as Error)?.message ?? error);
+    return (
+        reason.includes("Receiving end does not exist") ||
+        reason.includes("Could not establish connection")
+    );
+}
+
+/** Raised for a receiver that answered without being the one we asked for. */
+export class NoReceiverError extends Error {}
+
+export interface RetryOptions {
+    timeoutMs?: number;
+    sleep?: (ms: number) => Promise<void>;
+    now?: () => number;
+}
+
+/**
+ * Retries while nothing is listening yet.
+ *
+ * An extension page restored at browser startup can send its first message
+ * before the background page has registered its listener, and that rejects
+ * immediately instead of waiting. Anything else is a real failure and is
+ * rethrown.
+ */
+export async function retryWhileNoReceiver<T>(
+    attempt: () => Promise<T>,
+    { timeoutMs = 30_000, sleep = defaultSleep, now = Date.now }: RetryOptions = {}
+): Promise<T> {
+    const deadline = now() + timeoutMs;
+    let delay = 50;
+    for (;;) {
+        try {
+            return await attempt();
+        } catch (error) {
+            if (!isNoReceiverError(error) || now() >= deadline) {
+                throw error;
+            }
+        }
+        await sleep(delay);
+        delay = Math.min(delay * 2, 1000);
+    }
+}
+
+function defaultSleep(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/** Resolves once the background has started, however late it starts. */
+export function waitForBackground(options?: RetryOptions): Promise<true> {
+    return retryWhileNoReceiver(async () => {
+        const ready = await sendMessage("background-ready");
+        // Another extension page listening on the same channel answers with
+        // undefined, which would otherwise pass for a started background.
+        if (ready !== true) {
+            throw new NoReceiverError("The background has not answered yet");
+        }
+        return ready;
+    }, options);
+}
+
 /**
  * Fire-and-forget notification.
  *
@@ -145,11 +210,7 @@ export function broadcast<K extends MessageName>(
     ...[payload]: Request<K> extends void ? [] : [Request<K>]
 ): void {
     void browser.runtime.sendMessage({ action, payload }).catch((error) => {
-        const reason = String((error as Error)?.message ?? error);
-        if (
-            reason.includes("Receiving end does not exist") ||
-            reason.includes("Could not establish connection")
-        ) {
+        if (isNoReceiverError(error)) {
             return;
         }
         console.error(`Failed to broadcast ${action}`, error);

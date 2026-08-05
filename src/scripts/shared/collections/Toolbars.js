@@ -1,5 +1,4 @@
 /**
- * @module BgProcess
  * @submodule collections/Toolbars
  */
 

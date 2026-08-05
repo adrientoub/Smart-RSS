@@ -1,6 +1,6 @@
 // Opened without an explicit version on purpose: this worker only reads and writes
 // existing stores, so it must attach to whatever version the app already created
-// (see BB.IndexedDB.version in bgprocess/preps/indexeddb.js) and never trigger an upgrade.
+// (see BB.IndexedDB.version in shared/preps/indexeddb.js) and never trigger an upgrade.
 const request = indexedDB.open("backbone-indexeddb");
 
 let db;

@@ -1,9 +1,9 @@
 /**
- * @module BgProcess
  * @submodule models/Item
  */
 
 import BB from "backbone";
+import { collections } from "../collectionRegistry.ts";
 
 /**
  * Module for each article
@@ -55,7 +55,7 @@ const Item = BB.Model.extend({
     _source: null,
     getSource: function () {
         if (!this._source) {
-            this._source = sources.findWhere({ id: this.get("sourceID") });
+            this._source = collections.sources.findWhere({ id: this.get("sourceID") });
         }
         return this._source;
     },

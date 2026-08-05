@@ -1,24 +1,23 @@
 /**
- * @module BgProcess
- * @submodule collections/Folders
+ * @submodule collections/Sources
  */
 
 import BB from "backbone";
-import Folder from "../models/Folder.js";
+import Source from "../models/Source.js";
 import "../preps/indexeddb.js";
 
 /**
- * Collection of feed folders
- * @class Folders
+ * Collection of feed modules
+ * @class Sources
  * @constructor
  * @extends Backbone.Collection
  */
 export default BB.Collection.extend({
-    model: Folder,
-    indexedDB: new BB.IndexedDB("folders-backbone"),
+    model: Source,
+    indexedDB: new BB.IndexedDB("sources-backbone"),
     comparator: function (a, b) {
         const t1 = (a.get("title") || "").trim().toLowerCase();
         const t2 = (b.get("title") || "").trim().toLowerCase();
-        return t1 < t2 ? -1 : 1;
+        return t1.localeCompare(t2);
     },
 });

@@ -7,6 +7,9 @@ import Layout from "./Layout.js";
 import ToolbarView from "../views/ToolbarView.js";
 import articleList from "../views/articleList.js";
 import resizable from "../mixins/resizable.js";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 const toolbar = bg.toolbars.findWhere({ region: "articles" });
 
@@ -38,12 +41,12 @@ let ArticlesLayout = Layout.extend({
      * @method handleResizeAfter
      */
     handleResizeAfter: function () {
-        if (bg.settings.get("layout") === "horizontal") {
+        if (settings.get("layout") === "horizontal") {
             const width = this.el.offsetWidth;
-            bg.settings.save({ posB: width });
+            settings.save({ posB: width });
         } else {
             const height = this.el.offsetHeight;
-            bg.settings.save({ posC: height });
+            settings.save({ posC: height });
         }
     },
 });

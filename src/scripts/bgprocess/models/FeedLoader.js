@@ -6,6 +6,10 @@
 import RSSParser from "../modules/RSSParser.ts";
 import { getFavicon } from "../modules/favicon.ts";
 import { articlesDiffer } from "../modules/articleDiff.ts";
+import { getElementSetting } from "../../shared/elementSettings.ts";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 const REQUEST_TIMEOUT_MS = 1000 * 15; // TODO: make configurable
 

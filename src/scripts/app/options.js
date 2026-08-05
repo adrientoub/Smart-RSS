@@ -1,6 +1,9 @@
 import actions from "./staticdb/actions.js";
 import shortcuts from "./staticdb/shortcuts.js";
 import { sendMessage } from "../shared/messages.ts";
+import { settingsStore } from "../shared/settings.ts";
+
+const settings = settingsStore();
 
 const entityMap = {
     "&": "&amp;",
@@ -59,7 +62,7 @@ const documentReady = () => {
     [
         ...document.querySelectorAll("select[id], input[type=number], input[type=range], textarea"),
     ].forEach((item) => {
-        const v = bg.settings.get(item.id);
+        const v = settings.get(item.id);
         if (item.querySelector('option[value="true"]')) {
             item.value = v ? "true" : "false";
         } else {
@@ -73,7 +76,7 @@ const documentReady = () => {
     });
 
     [...document.querySelectorAll("input[type=checkbox]")].forEach((item) => {
-        item.checked = bg.getBoolean(item.id);
+        item.checked = settings.get(item.id);
         item.addEventListener("change", handleCheck);
     });
 
@@ -91,13 +94,13 @@ const documentReady = () => {
     document.querySelector("#import-settings").addEventListener("change", handleImportSettings);
     document.querySelector("#import-smart").addEventListener("change", handleImportSmart);
     document.querySelector("#import-opml").addEventListener("change", handleImportOPML);
-    document.querySelector('[name="queries"]').value = bg.settings.get("queries").join(",");
+    document.querySelector('[name="queries"]').value = settings.get("queries").join(",");
 
     document.querySelector('[name="queries"]').addEventListener("change", handleChangeQueries);
 
     function handleChangeQueries(event) {
         const queries = event.target.value.split(",");
-        bg.settings.save("queries", queries);
+        settings.save("queries", queries);
     }
 
     [...document.querySelectorAll("input[type=image]")].forEach((element) => {
@@ -151,7 +154,7 @@ const documentReady = () => {
             });
             hotkeysSettings[sectionName] = sectionSettings;
         });
-        bg.settings.save("hotkeys", hotkeysSettings);
+        settings.save("hotkeys", hotkeysSettings);
     };
     const actionsMap = {};
     Object.entries(actions).forEach((obj) => {
@@ -166,7 +169,7 @@ const documentReady = () => {
         resetHotkeysButton.classList.add("resetHotkeysButton");
         resetHotkeysButton.textContent = "Reset hotkeys";
         hotkeysElement.insertAdjacentElement("beforeend", resetHotkeysButton);
-        const hotkeys = bg.settings.get("hotkeys");
+        const hotkeys = settings.get("hotkeys");
         const actionsMap = {};
         Object.entries(actions).forEach((obj) => {
             Object.entries(obj[1]).forEach((action) => {
@@ -224,7 +227,7 @@ const documentReady = () => {
                 typeof browser === "undefined" ||
                 confirm("Resetting hotkeys will require extension reload, do you want to continue?")
             ) {
-                bg.settings.save("hotkeys", bg.settings.defaults.hotkeys);
+                settings.save("hotkeys", settings.defaults.hotkeys);
                 if (typeof browser === "undefined") {
                     renderHotkeysBlock();
                     return true;
@@ -263,7 +266,7 @@ const documentReady = () => {
     };
 
     renderHotkeysBlock();
-    handleLayoutChange(bg.settings.get("layout"));
+    handleLayoutChange(settings.get("layout"));
 };
 
 if (document.readyState !== "loading") {
@@ -275,7 +278,7 @@ if (document.readyState !== "loading") {
 function handleLayoutChangeClick(event) {
     const layout = event.currentTarget.value;
     handleLayoutChange(layout);
-    bg.settings.save("layout", layout);
+    settings.save("layout", layout);
 }
 
 function handleLayoutChange(layout) {
@@ -301,7 +304,7 @@ function handleResetStyle() {
         return;
     }
     document.querySelector("#userStyle").value = "";
-    bg.settings.save("userStyle", "");
+    settings.save("userStyle", "");
     sendMessage("user-style-changed");
 }
 
@@ -311,9 +314,9 @@ function handleSuggestStyle() {
             return;
         }
     }
-    const defaultStyle = bg.settings.get("defaultStyle");
+    const defaultStyle = settings.get("defaultStyle");
     document.querySelector("#userStyle").value = defaultStyle;
-    bg.settings.save("userStyle", defaultStyle);
+    settings.save("userStyle", defaultStyle);
     sendMessage("user-style-changed");
 }
 
@@ -326,7 +329,7 @@ function handleChange(event) {
     if (target.value === "false") {
         v = false;
     }
-    bg.settings.save(target.id, v);
+    settings.save(target.id, v);
     if (target.id === "userStyle") {
         sendMessage("user-style-changed");
     }
@@ -337,7 +340,7 @@ function handleChange(event) {
 
 function handleCheck(event) {
     const target = event.target;
-    bg.settings.save(target.id, target.checked);
+    settings.save(target.id, target.checked);
 }
 
 function handleExportSmart() {
@@ -363,7 +366,7 @@ function handleExportSmart() {
 function handleExportSettings() {
     const settingsExportStatus = document.querySelector("#settings-exported");
     const data = {
-        settings: bg.settings.toJSON(),
+        settings: settings.toJSON(),
     };
 
     settingsExportStatus.setAttribute("href", "#");
@@ -473,7 +476,7 @@ function handleImportSettings(event) {
         // Settings live in storage.local now, so this no longer goes through the
         // IndexedDB import worker. Every extension context is notified by
         // storage.onChanged, so nothing needs reloading afterwards.
-        bg.settings
+        settings
             .setMany(data.settings)
             .then(() => {
                 settingsImportStatus.textContent = "Import fully completed!";
@@ -654,7 +657,7 @@ function handleClearSettings() {
     if (!confirm("Do you really want to remove all extension settings?")) {
         return;
     }
-    bg.settings.clear().then(() => {
+    settings.clear().then(() => {
         browser.alarms.clearAll();
         browser.runtime.reload();
     });

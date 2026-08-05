@@ -11,6 +11,9 @@ import "../models/Special.js";
 import "../instances/contextMenus.js";
 import selectable from "../mixins/selectable.js";
 import specials from "../instances/specials.js";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 /**
  * List of feeds (in left column)
@@ -64,7 +67,7 @@ let FeedListView = BB.View.extend({
         bg.sources.on("change:folderID", this.handleChangeFolder, this);
         bg.folders.on("add", this.addFolder, this);
         bg.sources.on("clear-events", this.handleClearEvents, this);
-        bg.settings.on("change:showOnlyUnreadSources", this.insertFeeds, this);
+        settings.on("change:showOnlyUnreadSources", this.insertFeeds, this);
 
         this.on("pick", this.handlePick);
     },
@@ -114,10 +117,10 @@ let FeedListView = BB.View.extend({
             this.el.removeChild(this.el.lastChild);
         }
         this.addFolders(bg.folders);
-        if (bg.getBoolean("showPinned")) {
+        if (settings.get("showPinned")) {
             this.addSpecial(specials.pinned);
         }
-        if (bg.getBoolean("showAllFeeds")) {
+        if (settings.get("showAllFeeds")) {
             this.addSpecial(specials.allFeeds);
         }
 
@@ -215,7 +218,7 @@ let FeedListView = BB.View.extend({
      * @param folder {models/Folder} Folder model to add
      */
     addFolder: function (folder) {
-        if (folder.get("count") === 0 && bg.getBoolean("showOnlyUnreadSources")) {
+        if (folder.get("count") === 0 && settings.get("showOnlyUnreadSources")) {
             return;
         }
         const view = new FolderView({ model: folder }, this);
@@ -273,7 +276,7 @@ let FeedListView = BB.View.extend({
         let sourceViews;
         const source = view.model;
 
-        if (source.get("count") === 0 && bg.getBoolean("showOnlyUnreadSources")) {
+        if (source.get("count") === 0 && settings.get("showOnlyUnreadSources")) {
             return;
         }
 

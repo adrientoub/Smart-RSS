@@ -13,6 +13,10 @@ import enclosureAudio from "../templates/enclosureAudio.html";
 import enclosureYoutubeCover from "../templates/enclosureYoutubeCover.html";
 import enclosureYoutube from "../templates/enclosureYoutube.html";
 import enclosureGeneral from "../templates/enclosureGeneral.html";
+import { settingsStore } from "../../shared/settings.ts";
+import { getElementBoolean, getElementSetting } from "../../shared/elementSettings.ts";
+
+const settings = settingsStore();
 
 /**
  * Full view of one article (right column)
@@ -156,9 +160,9 @@ const ContentView = BB.View.extend({
             us: "MM/DD/YYYY",
         };
         const pickedFormat =
-            dateFormats[bg.settings.get("dateType") || "normal"] || dateFormats["normal"];
+            dateFormats[settings.get("dateType") || "normal"] || dateFormats["normal"];
 
-        const timeFormat = bg.settings.get("hoursFormat") === "12h" ? "H:mm:ss a" : "hh:mm:ss";
+        const timeFormat = settings.get("hoursFormat") === "12h" ? "H:mm:ss a" : "hh:mm:ss";
 
         return dateUtils.formatDate(unixtime, pickedFormat + " " + timeFormat);
     },
@@ -188,12 +192,12 @@ const ContentView = BB.View.extend({
 
             this.show();
             const source = this.model.getSource();
-            const openEnclosure = bg.getElementBoolean(source, "openEnclosure");
-            const defaultView = bg.getElementSetting(source, "defaultView");
+            const openEnclosure = getElementBoolean(source, "openEnclosure");
+            const defaultView = getElementSetting(source, "defaultView");
 
             const data = Object.create(this.model.attributes);
             data.date = this.getFormattedDate(this.model.get("date"));
-            data.titleIsLink = bg.getBoolean("titleIsLink");
+            data.titleIsLink = settings.get("titleIsLink");
             data.open = openEnclosure;
 
             let content = "";
@@ -228,7 +232,7 @@ const ContentView = BB.View.extend({
                     content = new Readability(websiteDocument).parse().content;
                 }
                 // }
-                // if (bg.settings.get('cacheParsedArticles') === 'true' && !(this.view in parsedContent)) {
+                // if (settings.get('cacheParsedArticles') === 'true' && !(this.view in parsedContent)) {
                 //     parsedContent[this.view] = content;
                 //     this.model.set('parsedContent', parsedContent);
                 // }
@@ -363,7 +367,7 @@ const ContentView = BB.View.extend({
 
                 const base = frame.contentDocument.querySelector("base");
                 base.href = articleDomain;
-                const shouldInvertColors = bg.getBoolean("invertColors");
+                const shouldInvertColors = settings.get("invertColors");
                 if (shouldInvertColors) {
                     body.classList.add("dark-theme");
                 } else {
@@ -373,7 +377,7 @@ const ContentView = BB.View.extend({
                 frame.contentWindow.scrollTo(0, 0);
                 document.querySelector("#content").scrollTo(0, 0);
                 frame.contentDocument.documentElement.style.fontSize =
-                    bg.settings.get("articleFontSize") + "%";
+                    settings.get("articleFontSize") + "%";
 
                 const contentElement = frame.contentDocument.querySelector("#smart-rss-content");
 

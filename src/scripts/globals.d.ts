@@ -28,7 +28,6 @@ interface LegacyBackbone {
 }
 
 interface BackgroundPage {
-    settings: LegacyBackbone;
     sources: LegacyBackbone;
     items: LegacyBackbone;
     folders: LegacyBackbone;
@@ -41,10 +40,6 @@ interface BackgroundPage {
     sourceToFocus: string | null;
 
     openRSS(closeIfActive?: boolean, focusSource?: string): void;
-    getBoolean(name: string): any;
-    valueToBoolean(value: unknown): any;
-    getElementBoolean(element: LegacyBackbone, setting: string): any;
-    getElementSetting(element: LegacyBackbone, setting: string): any;
 
     [key: string]: any;
 }
@@ -58,7 +53,6 @@ declare const app: any;
 /** Id of the tab hosting the reader UI. */
 declare const tabID: number;
 
-declare const settings: LegacyBackbone;
 declare const info: LegacyBackbone;
 declare const items: LegacyBackbone;
 declare const sources: LegacyBackbone;
@@ -69,8 +63,3 @@ declare const loader: LegacyBackbone;
 declare const Item: any;
 declare const Source: any;
 declare const Folder: any;
-
-/** Returns the input unchanged when it is not a recognised boolean spelling. */
-declare function valueToBoolean(value: unknown): any;
-declare function getBoolean(name: string): any;
-declare function getElementSetting(element: LegacyBackbone, setting: string): any;

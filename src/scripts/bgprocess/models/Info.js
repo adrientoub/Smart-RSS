@@ -6,6 +6,9 @@
 import BB from "backbone";
 import animation from "../modules/Animation.js";
 import actionApi from "../modules/actionApi.js";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 const { action } = actionApi;
 

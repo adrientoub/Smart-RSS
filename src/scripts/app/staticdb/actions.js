@@ -5,6 +5,9 @@ import feedList from "../views/feedList.js";
 import articleList from "../views/articleList.js";
 import contentView from "../views/contentView.js";
 import { sendMessage } from "../../shared/messages.ts";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 export default {
     global: {
@@ -35,8 +38,8 @@ export default {
             state: "showOnlyUnreadSources",
             title: L.TOGGLE_SHOW_ONLY_UNREAD,
             fn: function () {
-                const currentUnread = bg.getBoolean("showOnlyUnreadSources");
-                bg.settings.save("showOnlyUnreadSources", !currentUnread);
+                const currentUnread = settings.get("showOnlyUnreadSources");
+                settings.save("showOnlyUnreadSources", !currentUnread);
             },
         },
         updateAll: {
@@ -307,11 +310,11 @@ export default {
                 const folder = Array.from(document.querySelectorAll(".folder.selected"))[0];
 
                 let unreadOnly = false;
-                if (bg.getBoolean("defaultToUnreadOnly")) {
+                if (settings.get("defaultToUnreadOnly")) {
                     unreadOnly = true;
                 }
 
-                if (bg.getBoolean("showOnlyUnreadSources")) {
+                if (settings.get("showOnlyUnreadSources")) {
                     unreadOnly = true;
                 }
 
@@ -369,8 +372,8 @@ export default {
             state: "defaultToUnreadOnly",
             title: L.DEFAULT_TO_UNREAD_ONLY,
             fn: function () {
-                const currentUnread = bg.getBoolean("defaultToUnreadOnly");
-                bg.settings.save("defaultToUnreadOnly", !currentUnread);
+                const currentUnread = settings.get("defaultToUnreadOnly");
+                settings.save("defaultToUnreadOnly", !currentUnread);
             },
         },
         update: {
@@ -526,7 +529,7 @@ export default {
                 if (!articleList.selectedItems || !articleList.selectedItems.length) {
                     return;
                 }
-                if (articleList.selectedItems.length > 10 && bg.getBoolean("askOnOpening")) {
+                if (articleList.selectedItems.length > 10 && settings.get("askOnOpening")) {
                     if (
                         !confirm(
                             "Do you really want to open " +
@@ -537,7 +540,7 @@ export default {
                         return;
                     }
                 }
-                const openNewTab = bg.settings.get("openNewTab");
+                const openNewTab = settings.get("openNewTab");
                 const active = openNewTab === "background" ? !!event.shiftKey : !event.shiftKey;
                 articleList.selectedItems.forEach(function (item) {
                     browser.tabs.create({
@@ -562,7 +565,7 @@ export default {
                     view = articleList.selectedItems[0];
                 }
                 if (view.model) {
-                    const openNewTab = bg.settings.get("openNewTab");
+                    const openNewTab = settings.get("openNewTab");
                     const active = openNewTab === "background" ? !!event.shiftKey : !event.shiftKey;
 
                     browser.tabs.create({
@@ -759,7 +762,7 @@ export default {
                     return;
                 }
 
-                const askRmPinned = bg.settings.get("askRmPinned");
+                const askRmPinned = settings.get("askRmPinned");
 
                 if (e.shiftKey) {
                     if (contentView.model.get("pinned") && askRmPinned && askRmPinned !== "none") {

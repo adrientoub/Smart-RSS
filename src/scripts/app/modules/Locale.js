@@ -3,8 +3,11 @@
  * @submodule modules/Locale
  */
 import { locales } from "../../nls/index.js";
+import { settingsStore } from "../../shared/settings.ts";
 
-const requested = bg.settings.get("lang") || "en";
+const settings = settingsStore();
+
+const requested = settings.get("lang") || "en";
 const en = locales.en;
 const lang = locales[requested] || en;
 

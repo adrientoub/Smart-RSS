@@ -1,3 +1,7 @@
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
+
 export default {
     selectedItems: [],
     selectPivot: null,
@@ -22,7 +26,7 @@ export default {
             siblingElement = siblingElement[sibling];
         }
 
-        if (bg.settings.get("circularNavigation") && !e.ctrlKey && !e.shiftKey && !siblingElement) {
+        if (settings.get("circularNavigation") && !e.ctrlKey && !e.shiftKey && !siblingElement) {
             siblingElement = this.el.querySelector(selector + ":nth-of-type(1)");
             if (
                 e.currentIsRemoved &&

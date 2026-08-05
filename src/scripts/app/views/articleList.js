@@ -10,6 +10,9 @@ import GroupView from "./GroupView.js";
 import ItemView from "./ItemView.js";
 import selectable from "../mixins/selectable.js";
 import Locale from "../modules/Locale.js";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 const groups = new Groups();
 
@@ -152,7 +155,7 @@ let ArticleListView = BB.View.extend({
         bg.items.on("search", this.handleSearch, this);
         bg.sources.on("destroy", this.handleSourcesDestroy, this);
         bg.sources.on("clear-events", this.handleClearEvents, this);
-        bg.settings.on("change", this.onSettingsChange, this);
+        settings.on("change", this.onSettingsChange, this);
 
         groups.on("add", this.addGroup, this);
 
@@ -161,7 +164,7 @@ let ArticleListView = BB.View.extend({
     },
 
     onSettingsChange: function () {
-        this.unreadOnly = bg.getBoolean("defaultToUnreadOnly");
+        this.unreadOnly = settings.get("defaultToUnreadOnly");
         this.handleNewSelected(this.currentData);
     },
 
@@ -179,7 +182,7 @@ let ArticleListView = BB.View.extend({
         }
         app.trigger("select:" + this.el.id, { action: "new-select", value: view.model.id });
 
-        if (view.model.get("unread") && bg.getBoolean("readOnVisit")) {
+        if (view.model.get("unread") && settings.get("readOnVisit")) {
             view.model.save({
                 visited: true,
                 unread: false,
@@ -199,7 +202,7 @@ let ArticleListView = BB.View.extend({
             "select:feed-list",
             function (data) {
                 this.el.scrollTop = 0;
-                this.unreadOnly = bg.getBoolean("defaultToUnreadOnly");
+                this.unreadOnly = settings.get("defaultToUnreadOnly");
 
                 if (data.action === "new-select") {
                     this.handleNewSelected(data);
@@ -227,7 +230,7 @@ let ArticleListView = BB.View.extend({
             }, 0);
             return;
         }
-        if (bg.getBoolean("selectAllFeeds") && bg.getBoolean("showAllFeeds")) {
+        if (settings.get("selectAllFeeds") && settings.get("showAllFeeds")) {
             this.loadAllFeeds();
         }
     },
@@ -364,7 +367,7 @@ let ArticleListView = BB.View.extend({
             view.render();
             this.views.push(view);
             this.el.insertAdjacentElement("beforeend", view.el);
-            if (this.selectedItems.length === 0 && bg.getBoolean("selectFirstArticle")) {
+            if (this.selectedItems.length === 0 && settings.get("selectFirstArticle")) {
                 this.select(view);
             }
         } else {
@@ -375,7 +378,7 @@ let ArticleListView = BB.View.extend({
             this.views.splice(index, 0, view);
         }
 
-        if (!bg.getBoolean("disableDateGroups") && bg.settings.get("sortBy") === "date") {
+        if (!settings.get("disableDateGroups") && settings.get("sortBy") === "date") {
             const group = Group.getGroup(item.get("date"));
             if (!groups.findWhere({ title: group.title })) {
                 groups.add(new Group(group), { before: view.el });
@@ -545,7 +548,7 @@ let ArticleListView = BB.View.extend({
      * @param view {views/ItemView} Removed article view
      */
     removeItem: function (view) {
-        const askRmPinned = bg.settings.get("askRmPinned");
+        const askRmPinned = settings.get("askRmPinned");
         if (view.model.get("pinned") && askRmPinned === "all") {
             const confirmation = confirm(
                 Locale.PIN_QUESTION_A + view.model.escape("title") + Locale.PIN_QUESTION_B
@@ -565,7 +568,7 @@ let ArticleListView = BB.View.extend({
      * @param view {views/ItemView} Removed article view
      */
     removeItemCompletely: function (view) {
-        const askRmPinned = bg.settings.get("askRmPinned");
+        const askRmPinned = settings.get("askRmPinned");
         if (view.model.get("pinned") && askRmPinned && askRmPinned !== "none") {
             const confirmation = confirm(
                 Locale.PIN_QUESTION_A + view.model.escape("title") + Locale.PIN_QUESTION_B

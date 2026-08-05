@@ -21,10 +21,6 @@ export interface MessageMap {
     /** Cancel any in-flight feed downloads. */
     "abort-downloads": { request: void; response: void };
 
-    "get-setting": { request: { key: string }; response: unknown };
-    "save-setting": { request: { key: string; value: unknown }; response: unknown };
-    "get-settings": { request: void; response: Record<string, unknown> };
-
     /** Reader page should re-read the user stylesheet. */
     "user-style-changed": { request: void; response: void };
     /** Reader page should re-apply colour inversion. */

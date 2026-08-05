@@ -52,23 +52,6 @@ export default tseslint.config(
         },
     },
 
-    // Background process attaches its collections to `window`.
-    {
-        files: ["src/scripts/bgprocess/**/*.js"],
-        languageOptions: {
-            globals: {
-                sources: "readonly",
-                items: "readonly",
-                folders: "readonly",
-                toolbars: "readonly",
-                loader: "readonly",
-                info: "readonly",
-                Source: "readonly",
-                Folder: "readonly",
-            },
-        },
-    },
-
     // Web worker context.
     {
         files: ["src/scripts/options/worker.js"],

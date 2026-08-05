@@ -8,6 +8,8 @@ import { getFavicon } from "../modules/favicon.ts";
 import { articlesDiffer } from "../modules/articleDiff.ts";
 import { getElementSetting } from "../../shared/elementSettings.ts";
 import { settingsStore } from "../../shared/settings.ts";
+import { collections } from "../../shared/collectionRegistry.ts";
+import info from "./Info.js";
 
 const settings = settingsStore();
 
@@ -78,7 +80,7 @@ export default class FeedLoader {
 
         let foundNewArticles = false;
         let createdNo = 0;
-        const currentItems = items.where({
+        const currentItems = collections.items.where({
             sourceID: modelId,
         });
         const earliestDate = Math.min(
@@ -94,7 +96,8 @@ export default class FeedLoader {
         const insert = [];
 
         parsedData.forEach((item) => {
-            const existingItem = items.get(item.id) || items.get(item.oldId);
+            const existingItem =
+                collections.items.get(item.id) || collections.items.get(item.oldId);
 
             if (existingItem) {
                 if (existingItem.get("deleted")) {
@@ -173,30 +176,30 @@ export default class FeedLoader {
             lastArticle = Math.max(lastArticle, item.date);
             createdNo++;
         });
-        items.add(insert, { sort: false, merge: true });
+        collections.items.add(insert, { sort: false, merge: true });
 
         // Explicitly save each new item to ensure persistence
         if (insert.length > 0) {
             insert.forEach((item) => {
-                const model = items.get(item.id);
+                const model = collections.items.get(item.id);
                 if (model) {
                     model.save();
                 }
             });
         }
 
-        items.sort({
+        collections.items.sort({
             silent: true,
         });
         if (foundNewArticles) {
-            items.trigger("search");
-            loader.itemsDownloaded = true;
+            collections.items.trigger("search");
+            this.loader.itemsDownloaded = true;
             // remove old deleted content
             const fetchedIDs = parsedData.map((item) => {
                 return item.id;
             });
             if (fetchedIDs.length > 0) {
-                items
+                collections.items
                     .where({
                         sourceID: modelId,
                         deleted: true,
@@ -213,12 +216,12 @@ export default class FeedLoader {
             }
         }
 
-        const articlesCount = items.where({
+        const articlesCount = collections.items.where({
             sourceID: modelId,
             trashed: false,
         }).length;
 
-        const unreadArticlesCount = items.where({
+        const unreadArticlesCount = collections.items.where({
             sourceID: this.model.get("id"),
             unread: true,
             trashed: false,
@@ -313,7 +316,7 @@ export default class FeedLoader {
         }
 
         const now = Date.now();
-        items.where(itemsFilter).forEach((item) => {
+        collections.items.where(itemsFilter).forEach((item) => {
             const date = item.get("dateCreated") || item.get("date");
             const removalDelayInMs = this.getAutoRemoveTime(this.model) * 24 * 60 * 60 * 1000;
             if (now - date > removalDelayInMs) {
@@ -355,7 +358,7 @@ export default class FeedLoader {
         if (!this.model) {
             return this.loader.workerFinished(this);
         }
-        if (loader.sourcesLoading.includes(this.model)) {
+        if (this.loader.sourcesLoading.includes(this.model)) {
             // may happen if source is still loading after last attempt
             return this.downloadNext();
         }
@@ -385,7 +388,7 @@ export default class FeedLoader {
                 }
                 const shouldUseFeedlyCache = this.model.get("proxyThroughFeedly");
                 if (shouldUseFeedlyCache) {
-                    const itemsArray = items.where({
+                    const itemsArray = collections.items.where({
                         sourceID: this.model.get("sourceID"),
                     });
                     let date = 0;

@@ -4,6 +4,7 @@ import comm from "../controllers/comm.js";
 import feedList from "../views/feedList.js";
 import articleList from "../views/articleList.js";
 import contentView from "../views/contentView.js";
+import { sendMessage } from "../../shared/messages.ts";
 
 export default {
     global: {
@@ -42,7 +43,7 @@ export default {
             icon: "reload.png",
             title: L.UPDATE_ALL,
             fn: function () {
-                browser.runtime.sendMessage({ action: "load-all" });
+                sendMessage("load-all");
             },
         },
         update: {
@@ -51,10 +52,8 @@ export default {
             fn: function () {
                 const selectedItems = feedList.selectedItems;
                 if (selectedItems.length) {
-                    const models = selectedItems.map((item) => {
-                        return item.model;
-                    });
-                    bg.loader.download(models);
+                    const ids = selectedItems.map((item) => item.model.id);
+                    sendMessage("download-sources", { ids });
                 }
             },
         },
@@ -62,7 +61,7 @@ export default {
             icon: "stop.png",
             title: L.STOP_UPDATE,
             fn: function () {
-                bg.loader.abortDownloading();
+                sendMessage("abort-downloads");
             },
         },
         mark: {
@@ -380,11 +379,9 @@ export default {
             fn: function () {
                 const list = articleList;
                 if (list.currentData.feeds.length) {
-                    list.currentData.feeds.forEach((id) => {
-                        bg.loader.download(bg.sources.get(id));
-                    });
+                    sendMessage("download-sources", { ids: list.currentData.feeds });
                 } else {
-                    browser.runtime.sendMessage({ action: "load-all" });
+                    sendMessage("load-all");
                 }
             },
         },

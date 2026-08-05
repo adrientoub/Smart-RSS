@@ -13,6 +13,7 @@ import Locale from "../modules/Locale.js";
 import { settingsStore } from "../../shared/settings.ts";
 import { updateRecords, trashItems, markItemsDeleted, idsOf } from "../../shared/dataClient.ts";
 import { pendingFocus, takePendingFocus } from "../modules/focus.js";
+import { findInsertionIndex } from "../helpers/insertionIndex.js";
 import { sources, items } from "../modules/data.js";
 
 const settings = settingsStore();
@@ -332,40 +333,58 @@ let ArticleListView = BB.View.extend({
             return false;
         }
 
-        let after = null;
-        [
-            ...document.querySelectorAll(
-                "#article-list .articles-list-item, #article-list .date-group"
-            ),
-        ].some((itemEl) => {
-            if (items.comparator(itemEl.view.model, item) === 1) {
-                after = itemEl;
-                return true;
-            }
-        });
-
         const view = new ItemView({ model: item }, this);
+        view.render();
 
-        if (!after) {
-            view.render();
-            this.views.push(view);
-            this.el.insertAdjacentElement("beforeend", view.el);
-            if (this.selectedItems.length === 0 && settings.get("selectFirstArticle")) {
-                this.select(view);
-            }
+        const index = findInsertionIndex(this.views, item, items.comparator.bind(items));
+        if (index === this.views.length) {
+            this.el.appendChild(view.el);
         } else {
-            // is this block even executed?
-            after.insertAdjacentElement("afterend", view.render().el);
-            const indexElement = after.view instanceof ItemView ? after : after.nextElementSibling;
-            const index = indexElement ? this.views.indexOf(indexElement.view) : -1;
-            this.views.splice(index, 0, view);
+            this.views[index].el.insertAdjacentElement("beforebegin", view.el);
+        }
+        this.views.splice(index, 0, view);
+
+        this.addDateGroup(item, view);
+
+        if (this.selectedItems.length === 0 && settings.get("selectFirstArticle")) {
+            this.select(view);
+        }
+    },
+
+    /**
+     * Renders an item into a parent that is not in the document yet.
+     * @method appendItem
+     * @param item {Item} Item
+     * @param parent {Node} fragment collecting this batch
+     */
+    appendItem: function (item, parent) {
+        if (!this.inCurrentData(item)) {
+            return null;
         }
 
-        if (!settings.get("disableDateGroups") && settings.get("sortBy") === "date") {
-            const group = Group.getGroup(item.get("date"));
-            if (!groups.findWhere({ title: group.title })) {
-                groups.add(new Group(group), { before: view.el });
-            }
+        const view = new ItemView({ model: item }, this);
+        view.render();
+        this.views.push(view);
+        parent.appendChild(view.el);
+
+        this.addDateGroup(item, view);
+
+        return view;
+    },
+
+    /**
+     * Inserts the date header this item starts, if it is the first of its day.
+     * @method addDateGroup
+     * @param item {Item} Item
+     * @param view {views/ItemView} the item's rendered view
+     */
+    addDateGroup: function (item, view) {
+        if (settings.get("disableDateGroups") || settings.get("sortBy") !== "date") {
+            return;
+        }
+        const group = Group.getGroup(item.get("date"));
+        if (!groups.findWhere({ title: group.title })) {
+            groups.add(new Group(group), { before: view.el });
         }
     },
 
@@ -394,6 +413,9 @@ let ArticleListView = BB.View.extend({
          * Select removal
          */
         this.selectedItems = [];
+        // Cleared with the DOM: these views described the previous feed, and the
+        // insertion search below trusts this list to mirror what is rendered.
+        this.views = [];
         while (this.el.firstChild) {
             this.el.removeChild(this.el.firstChild);
         }
@@ -410,16 +432,33 @@ let ArticleListView = BB.View.extend({
                 return;
             }
 
+            // Built off-document and attached once: the list is already in
+            // comparator order, so every row belongs at the end.
+            const fragment = document.createDocumentFragment();
             let internalCounter = 0;
+            let firstView = null;
             while (internalCounter !== 100 && startingPoint + internalCounter !== length) {
                 const item = models[startingPoint + internalCounter];
                 if (!item) {
                     break;
                 }
                 item.multiple = multiple;
-                this.addItem(item, true);
+                const view = this.appendItem(item, fragment);
+                if (view && !firstView) {
+                    firstView = view;
+                }
                 internalCounter++;
             }
+            this.el.appendChild(fragment);
+
+            if (
+                firstView &&
+                this.selectedItems.length === 0 &&
+                settings.get("selectFirstArticle")
+            ) {
+                this.select(firstView);
+            }
+
             if (startingPoint + internalCounter === length) {
                 if (document.querySelector('input[type="search"]').value !== "") {
                     app.actions.execute("articles:search");

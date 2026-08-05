@@ -9,9 +9,14 @@ import { settingsStore } from "../settings.ts";
 
 const settings = settingsStore();
 
-function getS(val) {
-    return String(val).toLowerCase();
-}
+/**
+ * Built once. `localeCompare` without a cached collator can rebuild collation
+ * data on every call, and this runs O(N log N) times per sort.
+ *
+ * "base" sensitivity makes case and accents equivalent, which is why the values
+ * no longer need lowercasing first; "numeric" orders Episode 9 before Episode 10.
+ */
+const collator = new Intl.Collator(undefined, { sensitivity: "base", numeric: true });
 
 /**
  * Collection of feed modules
@@ -28,7 +33,7 @@ const Items = BB.Collection.extend({
             return null;
         }
         if (typeof val1 === "string") {
-            return val1.localeCompare(val2);
+            return collator.compare(val1, val2);
         } else {
             if (val1 > val2) {
                 return 1;
@@ -42,10 +47,7 @@ const Items = BB.Collection.extend({
         const sortBy = sorting ? settings.get("sortBy2") : settings.get("sortBy");
         const sortOrder = sorting ? settings.get("sortOrder2") : settings.get("sortOrder");
 
-        const aVal = getS(a.get(sortBy));
-        const bVal = getS(b.get(sortBy));
-
-        const val = this.spaceship(aVal, bVal);
+        const val = this.spaceship(String(a.get(sortBy)), String(b.get(sortBy)));
 
         if (val === 0) {
             return sorting ? 0 : this.comparator(a, b, true);

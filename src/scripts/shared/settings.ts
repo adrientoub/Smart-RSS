@@ -30,6 +30,12 @@ export interface StorageChange {
 
 type Listener = (key: SettingKey, value: unknown) => void;
 
+/** Backbone's `on(event, listener, context)` is still used by the view layer. */
+interface Binding {
+    fn: Listener;
+    context?: unknown;
+}
+
 const storageKey = (key: SettingKey) => PREFIX + key;
 const settingKey = (key: string): SettingKey | null =>
     key.startsWith(PREFIX) ? (key.slice(PREFIX.length) as SettingKey) : null;
@@ -37,10 +43,17 @@ const settingKey = (key: string): SettingKey | null =>
 export function createSettingsStore(area: StorageArea, navigatorLanguage = "en") {
     const defaults = createDefaults(navigatorLanguage);
     let values: Settings = { ...defaults };
-    const listeners = new Map<string, Set<Listener>>();
+    const listeners = new Map<string, Set<Binding>>();
 
     function emit(event: string, key: SettingKey, value: unknown) {
-        listeners.get(event)?.forEach((listener) => listener(key, value));
+        const bindings = listeners.get(event);
+        if (!bindings) {
+            return;
+        }
+        // Copied because handlers are allowed to unbind themselves.
+        for (const { fn, context } of [...bindings]) {
+            fn.call(context, key, value);
+        }
     }
 
     function announce(key: SettingKey, value: unknown) {
@@ -94,9 +107,17 @@ export function createSettingsStore(area: StorageArea, navigatorLanguage = "en")
             await area.set(items);
         },
 
-        /** Backbone-compatible alias; callers do not await it. */
-        save<K extends SettingKey>(key: K, value: Settings[K]): void {
-            void this.set(key, value);
+        /**
+         * Backbone-compatible alias; callers do not await it. Accepts both
+         * `save("layout", "vertical")` and `save({ posB: 300 })`.
+         */
+        save(keyOrValues: SettingKey | Partial<Settings>, value?: unknown): void {
+            const done =
+                typeof keyOrValues === "string"
+                    ? this.set(keyOrValues, value as Settings[SettingKey])
+                    : this.setMany(keyOrValues);
+            // Nothing awaits this, so a rejection would otherwise vanish.
+            void done.catch((error) => console.error("Failed to save setting", error));
         },
 
         async clear(): Promise<void> {
@@ -114,18 +135,29 @@ export function createSettingsStore(area: StorageArea, navigatorLanguage = "en")
             return { ...values };
         },
 
-        on(event: string, listener: Listener): void {
-            const existing = listeners.get(event) ?? new Set<Listener>();
-            existing.add(listener);
+        on(event: string, listener: Listener, context?: unknown): void {
+            const existing = listeners.get(event) ?? new Set<Binding>();
+            existing.add({ fn: listener, context });
             listeners.set(event, existing);
         },
 
-        off(event: string, listener?: Listener): void {
+        off(event: string, listener?: Listener, context?: unknown): void {
             if (!listener) {
                 listeners.delete(event);
                 return;
             }
-            listeners.get(event)?.delete(listener);
+            const bindings = listeners.get(event);
+            if (!bindings) {
+                return;
+            }
+            for (const binding of [...bindings]) {
+                if (
+                    binding.fn === listener &&
+                    (context === undefined || binding.context === context)
+                ) {
+                    bindings.delete(binding);
+                }
+            }
         },
 
         /**

@@ -163,9 +163,11 @@ export function createDefaults(navigatorLanguage = "en") {
         dateType: "normal", // normal = DD.MM.YYYY, ISO = YYYY-MM-DD, US = MM/DD/YYYY
         layout: "horizontal", // or vertical
         lines: "2", // one-line, two-lines
-        posA: "250,*",
-        posB: "350,*",
-        posC: "50%,*",
+        // Panel sizes. The defaults are the original Opera-era "size,rest"
+        // syntax, but resizing writes a plain pixel number.
+        posA: "250,*" as string | number,
+        posB: "350,*" as string | number,
+        posC: "50%,*" as string | number,
         sortOrder: "desc",
         sortOrder2: "asc",
         icon: "orange",

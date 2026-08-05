@@ -12,6 +12,7 @@ import selectable from "../mixins/selectable.js";
 import Locale from "../modules/Locale.js";
 import { settingsStore } from "../../shared/settings.ts";
 import { updateRecords, trashItems, markItemsDeleted, idsOf } from "../../shared/dataClient.ts";
+import { sources, items } from "../modules/data.js";
 
 const settings = settingsStore();
 
@@ -150,12 +151,12 @@ let ArticleListView = BB.View.extend({
             document.head.appendChild(this.prefetcher);
         }
 
-        bg.items.on("reset", this.addItems, this);
-        bg.items.on("add", this.addItem, this);
-        bg.items.on("sort", this.handleSort, this);
-        bg.items.on("search", this.handleSearch, this);
-        bg.sources.on("destroy", this.handleSourcesDestroy, this);
-        bg.sources.on("clear-events", this.handleClearEvents, this);
+        items.on("reset", this.addItems, this);
+        items.on("add", this.addItem, this);
+        items.on("sort", this.handleSort, this);
+        items.on("search", this.handleSearch, this);
+        sources.on("destroy", this.handleSourcesDestroy, this);
+        sources.on("clear-events", this.handleClearEvents, this);
         settings.on("change", this.onSettingsChange, this);
 
         groups.on("add", this.addGroup, this);
@@ -243,12 +244,12 @@ let ArticleListView = BB.View.extend({
      */
     loadAllFeeds: function () {
         setTimeout(() => {
-            const unread = bg.items.where({ trashed: false, unread: true });
+            const unread = items.where({ trashed: false, unread: true });
 
             if (unread.length) {
                 this.addItems(unread);
             } else {
-                this.addItems(bg.items.where({ trashed: false }));
+                this.addItems(items.where({ trashed: false }));
             }
             const event = new MouseEvent("mousedown", {
                 view: window,
@@ -282,13 +283,13 @@ let ArticleListView = BB.View.extend({
      */
     handleClearEvents: function (id) {
         if (window === null || id === tabID) {
-            bg.items.off("reset", this.addItems, this);
-            bg.items.off("add", this.addItem, this);
-            bg.items.off("sort", this.handleSort, this);
-            bg.items.off("search", this.handleSearch, this);
+            items.off("reset", this.addItems, this);
+            items.off("add", this.addItem, this);
+            items.off("sort", this.handleSort, this);
+            items.off("search", this.handleSearch, this);
 
-            bg.sources.off("destroy", this.handleSourcesDestroy, this);
-            bg.sources.off("clear-events", this.handleClearEvents, this);
+            sources.off("destroy", this.handleSourcesDestroy, this);
+            sources.off("clear-events", this.handleClearEvents, this);
         }
     },
 
@@ -322,7 +323,7 @@ let ArticleListView = BB.View.extend({
      * (If the item's feed is selected)
      * @method inCurrentData
      * @return Boolean
-     * @param item {Item} bg.Item
+     * @param item {Item} Item
      */
     inCurrentData: function (item) {
         const feeds = this.currentData.feeds;
@@ -342,7 +343,7 @@ let ArticleListView = BB.View.extend({
     /**
      * Adds new article item to the list
      * @method addItem
-     * @param item {Item} bg.Item
+     * @param item {Item} Item
      */
     addItem: function (item) {
         //Don't add newly fetched items to middle column, when they shouldn't be
@@ -356,7 +357,7 @@ let ArticleListView = BB.View.extend({
                 "#article-list .articles-list-item, #article-list .date-group"
             ),
         ].some((itemEl) => {
-            if (bg.items.comparator(itemEl.view.model, item) === 1) {
+            if (items.comparator(itemEl.view.model, item) === 1) {
                 after = itemEl;
                 return true;
             }
@@ -403,10 +404,10 @@ let ArticleListView = BB.View.extend({
     /**
      * Removes everything from lists and adds new collection of articles
      * @method setItemHeight
-     * @param items {Backbone.Collection} bg.Items
+     * @param models {Backbone.Collection} items
      * @param multiple
      */
-    addItems: function (items, multiple = false) {
+    addItems: function (models, multiple = false) {
         groups.reset();
         /**
          * Select removal
@@ -418,7 +419,7 @@ let ArticleListView = BB.View.extend({
 
         this.selectPivot = null;
 
-        const length = items.length;
+        const length = models.length;
         if (length === 0) {
             return;
         }
@@ -430,7 +431,7 @@ let ArticleListView = BB.View.extend({
 
             let internalCounter = 0;
             while (internalCounter !== 100 && startingPoint + internalCounter !== length) {
-                const item = items[startingPoint + internalCounter];
+                const item = models[startingPoint + internalCounter];
                 if (!item) {
                     break;
                 }
@@ -482,22 +483,20 @@ let ArticleListView = BB.View.extend({
         this.clearOnSelect();
         this.currentData = data;
 
-        const searchIn = data.filter
-            ? bg.items.where(data.filter)
-            : bg.items.where({ trashed: false });
+        const searchIn = data.filter ? items.where(data.filter) : items.where({ trashed: false });
 
         // if newly selected is trash
         if (this.currentData.name === "trash") {
             app.articles.toolbar.hideItems("articles:update").showItems("articles:undelete");
             document.querySelector("#context-undelete").hidden = false;
         }
-        const items = searchIn.filter((item) => {
+        const visible = searchIn.filter((item) => {
             if (!item.get("unread") && this.unreadOnly) {
                 return false;
             }
             return data.name || data.feeds.includes(item.get("sourceID"));
         }, this);
-        this.addItems(items, data.multiple);
+        this.addItems(visible, data.multiple);
     },
 
     /**

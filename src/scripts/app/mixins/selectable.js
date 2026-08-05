@@ -1,4 +1,5 @@
 import { settingsStore } from "../../shared/settings.ts";
+import { sources } from "../modules/data.js";
 
 const settings = settingsStore();
 
@@ -62,7 +63,7 @@ export default {
 
             if (!window || !window.frames) {
                 bg.logs.add({ message: "Event duplication bug! Clearing events now..." });
-                bg.sources.trigger("clear-events", -1);
+                sources.trigger("clear-events", -1);
                 return;
             }
 
@@ -110,9 +111,9 @@ export default {
                         sibling = sibling.nextElementSibling;
                     }
                 }
-                siblings.forEach((element) => {
-                    element.classList.add("selected");
-                    this.selectedItems.push(element.view);
+                siblings.forEach((sibling) => {
+                    sibling.classList.add("selected");
+                    this.selectedItems.push(sibling.view);
                 });
             }
 

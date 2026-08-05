@@ -8,10 +8,11 @@ import ToolbarView from "../views/ToolbarView.js";
 import articleList from "../views/articleList.js";
 import resizable from "../mixins/resizable.js";
 import { settingsStore } from "../../shared/settings.ts";
+import { toolbars } from "../modules/data.js";
 
 const settings = settingsStore();
 
-const toolbar = bg.toolbars.findWhere({ region: "articles" });
+const toolbar = toolbars.findWhere({ region: "articles" });
 
 /**
  * Articles layout view

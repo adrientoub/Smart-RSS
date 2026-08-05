@@ -11,6 +11,7 @@ import Source from "../shared/models/Source.js";
 import Item from "../shared/models/Item.js";
 import Folder from "../shared/models/Folder.js";
 import { createCollections, fetchCollections } from "../shared/dataStore.ts";
+import { startDataBroadcast } from "./modules/dataBroadcast.js";
 import { handleMessages } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
 import { migrateSettings } from "../shared/settingsMigration.ts";
@@ -184,6 +185,10 @@ window.appStarted = new Promise((resolve) => {
     migrateSettings(settings, browser.storage.local)
         .then(fetchAll)
         .then(function () {
+            // After the first load, so the whole fetch is not replayed record by
+            // record, and outside fetchAll, which runs again on settings import.
+            startDataBroadcast(collections);
+
             window.items.sort();
             /**
              * Load counters for specials

@@ -13,6 +13,9 @@ import selectable from "../mixins/selectable.js";
 import specials from "../instances/specials.js";
 import { settingsStore } from "../../shared/settings.ts";
 import { destroyRecords, idsOf } from "../../shared/dataClient.ts";
+import { sources, folders } from "../modules/data.js";
+import Source from "../../shared/models/Source.js";
+import Folder from "../../shared/models/Folder.js";
 
 const settings = settingsStore();
 
@@ -63,11 +66,11 @@ let FeedListView = BB.View.extend({
 
         this.on("attach", this.handleAttach);
 
-        bg.sources.on("reset", this.addSources, this);
-        bg.sources.on("add", this.addSource, this);
-        bg.sources.on("change:folderID", this.handleChangeFolder, this);
-        bg.folders.on("add", this.addFolder, this);
-        bg.sources.on("clear-events", this.handleClearEvents, this);
+        sources.on("reset", this.addSources, this);
+        sources.on("add", this.addSource, this);
+        sources.on("change:folderID", this.handleChangeFolder, this);
+        folders.on("add", this.addFolder, this);
+        sources.on("clear-events", this.handleClearEvents, this);
         settings.on("change:showOnlyUnreadSources", this.insertFeeds, this);
 
         this.on("pick", this.handlePick);
@@ -117,7 +120,7 @@ let FeedListView = BB.View.extend({
         while (this.el.firstChild) {
             this.el.removeChild(this.el.lastChild);
         }
-        this.addFolders(bg.folders);
+        this.addFolders(folders);
         if (settings.get("showPinned")) {
             this.addSpecial(specials.pinned);
         }
@@ -125,7 +128,7 @@ let FeedListView = BB.View.extend({
             this.addSpecial(specials.allFeeds);
         }
 
-        this.addSources(bg.sources);
+        this.addSources(sources);
 
         this.addSpecial(specials.trash);
 
@@ -188,11 +191,11 @@ let FeedListView = BB.View.extend({
      */
     handleClearEvents: function (id) {
         if (!window || id === tabID) {
-            bg.sources.off("reset", this.addSources, this);
-            bg.sources.off("add", this.addSource, this);
-            bg.sources.off("change:folderID", this.handleChangeFolder, this);
-            bg.folders.off("add", this.addFolder, this);
-            bg.sources.off("clear-events", this.handleClearEvents, this);
+            sources.off("reset", this.addSources, this);
+            sources.off("add", this.addSource, this);
+            sources.off("change:folderID", this.handleChangeFolder, this);
+            folders.off("add", this.addFolder, this);
+            sources.off("clear-events", this.handleClearEvents, this);
         }
     },
 
@@ -241,7 +244,7 @@ let FeedListView = BB.View.extend({
      * @method addFolders
      * @param folders {Array} Array of folder models to add
      */
-    addFolders: function (folders) {
+    addFolders: function (models) {
         const existingFolders = [...document.querySelectorAll(".folder")];
         if (existingFolders.length > 0) {
             existingFolders.forEach((folder) => {
@@ -252,7 +255,7 @@ let FeedListView = BB.View.extend({
             });
         }
 
-        folders.forEach((folder) => {
+        models.forEach((folder) => {
             this.addFolder(folder);
         });
     },
@@ -345,7 +348,7 @@ let FeedListView = BB.View.extend({
         where.some(function (el) {
             if (
                 el.view.model !== what.model &&
-                bg.sources.comparator(el.view.model, what.model) === 1
+                sources.comparator(el.view.model, what.model) === 1
             ) {
                 return (before = el);
             }
@@ -372,14 +375,14 @@ let FeedListView = BB.View.extend({
      * @method addSources
      * @param sources {Array} Array of source models to add
      */
-    addSources: function (sources) {
+    addSources: function (models) {
         [...document.querySelectorAll(".source")].forEach((source) => {
             if (!source.view || !(source instanceof SourceView)) {
                 return;
             }
             this.destroySource(source.view);
         });
-        sources.forEach((source) => {
+        models.forEach((source) => {
             this.addSource(source, true);
         });
     },
@@ -423,12 +426,12 @@ let FeedListView = BB.View.extend({
                   });
         const selectedFeeds = [];
         selectedItems.forEach((item) => {
-            if (item instanceof bg.Source) {
+            if (item instanceof Source) {
                 selectedFeeds.push(item);
                 return;
             }
-            if (item instanceof bg.Folder) {
-                const folderFeeds = bg.sources.toArray().filter((source) => {
+            if (item instanceof Folder) {
+                const folderFeeds = sources.toArray().filter((source) => {
                     return source.get("folderID") === item.id;
                 });
                 if (folderFeeds.length > 0) {
@@ -452,7 +455,7 @@ let FeedListView = BB.View.extend({
             });
         const selectedFolders = [];
         currentlySelectedItems.forEach((folder) => {
-            if (folder instanceof bg.Folder) {
+            if (folder instanceof Folder) {
                 selectedFolders.push(folder);
             }
         });

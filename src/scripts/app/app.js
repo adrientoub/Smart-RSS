@@ -10,6 +10,7 @@ import ArticlesLayout from "./layouts/ArticlesLayout.js";
 import ContentLayout from "./layouts/ContentLayout.js";
 import shortcuts from "./staticdb/shortcuts.js";
 import { settingsStore } from "../shared/settings.ts";
+import { sources } from "./modules/data.js";
 
 const settings = settingsStore();
 
@@ -108,12 +109,12 @@ const app = (window.app = new (Layout.extend({
         });
 
         settings.on("change:layout", this.handleLayoutChange, this);
-        bg.sources.on("clear-events", this.handleClearEvents, this);
+        sources.on("clear-events", this.handleClearEvents, this);
     },
     handleClearEvents: function (id) {
         if (!window || id === tabID) {
             settings.off("change:layout", this.handleLayoutChange, this);
-            bg.sources.off("clear-events", this.handleClearEvents, this);
+            sources.off("clear-events", this.handleClearEvents, this);
         }
     },
     handleLayoutChange: function () {

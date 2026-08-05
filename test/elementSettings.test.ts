@@ -82,6 +82,12 @@ describe("getElementBoolean", () => {
             "USE_GLOBAL"
         );
     });
+
+    it("falls back to the global setting when there is no element", async () => {
+        const settings = await storeWith({ readOnVisit: true });
+        assert.equal(getElementBoolean(undefined, "readOnVisit", settings), true);
+        assert.equal(getElementBoolean(null, "readOnVisit", settings), true);
+    });
 });
 
 describe("getElementSetting", () => {
@@ -103,5 +109,11 @@ describe("getElementSetting", () => {
             getElementSetting(element({ defaultView: "website" }), "defaultView", settings),
             "website"
         );
+    });
+
+    it("falls back to the global setting when there is no element", async () => {
+        const settings = await storeWith({ defaultView: "content" });
+        assert.equal(getElementSetting(undefined, "defaultView", settings), "content");
+        assert.equal(getElementSetting(null, "defaultView", settings), "content");
     });
 });

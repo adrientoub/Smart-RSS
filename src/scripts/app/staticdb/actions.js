@@ -6,6 +6,7 @@ import articleList from "../views/articleList.js";
 import contentView from "../views/contentView.js";
 import { sendMessage } from "../../shared/messages.ts";
 import { settingsStore } from "../../shared/settings.ts";
+import { sources, items, folders } from "../modules/data.js";
 import {
     createRecord,
     updateRecords,
@@ -84,7 +85,7 @@ export default {
                     return;
                 }
 
-                const unread = bg.items.filter(
+                const unread = items.filter(
                     (item) =>
                         item.get("unread") === true && selectedFeeds.indexOf(item.getSource()) >= 0
                 );
@@ -118,7 +119,7 @@ export default {
                     return;
                 }
                 const sourceIds = selectedFeeds.map((source) => source.get("id"));
-                const stale = bg.items.filter((item) => sourceIds.includes(item.get("sourceID")));
+                const stale = items.filter((item) => sourceIds.includes(item.get("sourceID")));
                 await destroyRecords("items", idsOf(stale));
                 app.actions.execute("feeds:update");
             },
@@ -132,20 +133,20 @@ export default {
                 }
 
                 const feeds = feedList.getSelectedFeeds();
-                const folders = feedList.getSelectedFolders();
+                const selectedFolders = feedList.getSelectedFolders();
 
                 destroyRecords("sources", idsOf(feeds));
-                destroyRecords("folders", idsOf(folders));
+                destroyRecords("folders", idsOf(selectedFolders));
             },
         },
         scrollIntoView: {
             icon: "back.png",
             title: L.SCROLL_INTO_VIEW,
             fn: function () {
-                const folders = feedList.getSelectedFolders();
+                const selectedFolders = feedList.getSelectedFolders();
 
-                if (folders.length > 0) {
-                    const id = folders[0].get("id");
+                if (selectedFolders.length > 0) {
+                    const id = selectedFolders[0].get("id");
                     const sourceElement = document.querySelector(`[data-id="${id}"]`);
                     sourceElement.scrollIntoView();
                     return;
@@ -165,11 +166,11 @@ export default {
             fn: function () {
                 const properties = app.feeds.properties;
                 const feeds = feedList.getSelectedFeeds();
-                const folders = feedList.getSelectedFolders();
+                const selectedFolders = feedList.getSelectedFolders();
 
-                if (feedList.selectedItems.length === 1 && folders.length === 1) {
-                    properties.show(folders[0]);
-                } else if (!folders.length && feeds.length === 1) {
+                if (feedList.selectedItems.length === 1 && selectedFolders.length === 1) {
+                    properties.show(selectedFolders[0]);
+                } else if (!selectedFolders.length && feeds.length === 1) {
                     properties.show(feeds[0]);
                 } else if (feeds.length > 0) {
                     properties.show(feeds);
@@ -194,14 +195,14 @@ export default {
                 ) {
                     const fid = list.selectedItems[0].model.get("id");
                     // make sure source is not added to folder which is not in db
-                    if (bg.folders.get(fid)) {
+                    if (folders.get(fid)) {
                         folderID = fid;
                     }
                 }
 
                 url = app.fixURL(url);
                 const uid = url.replace(/^(.*:)?(\/\/)?(www*?\.)?/, "").replace(/\/$/, "");
-                const duplicate = bg.sources.findWhere({ uid: uid });
+                const duplicate = sources.findWhere({ uid: uid });
 
                 if (!duplicate) {
                     const { id } = await createRecord("sources", {
@@ -249,11 +250,11 @@ export default {
         closeFolders: {
             title: L.CLOSE_FOLDERS,
             fn: function (event) {
-                const folders = Array.from(document.querySelectorAll(".folder.opened"));
-                if (!folders.length) {
+                const openFolders = Array.from(document.querySelectorAll(".folder.opened"));
+                if (!openFolders.length) {
                     return;
                 }
-                folders.forEach((folder) => {
+                openFolders.forEach((folder) => {
                     if (folder.view) {
                         folder.view.handleClickArrow(event);
                     }
@@ -263,8 +264,8 @@ export default {
         openFolders: {
             title: L.OPEN_FOLDERS,
             fn: function (event) {
-                const folders = Array.from(document.querySelectorAll(".folder:not(.opened)"));
-                folders.forEach((folder) => {
+                const closedFolders = Array.from(document.querySelectorAll(".folder:not(.opened)"));
+                closedFolders.forEach((folder) => {
                     if (folder.view) {
                         folder.view.handleClickArrow(event);
                     }
@@ -318,10 +319,10 @@ export default {
                 });
 
                 if (special && special.get("name") === "all-feeds") {
-                    const flagged = bg.sources.filter((source) => source.get("hasNew"));
+                    const flagged = sources.filter((source) => source.get("hasNew"));
                     updateRecords("sources", idsOf(flagged), { hasNew: false });
                 } else if (feedIds.length) {
-                    const flagged = bg.sources.filter(
+                    const flagged = sources.filter(
                         (source) => source.get("hasNew") && feedIds.includes(source.id)
                     );
                     updateRecords("sources", idsOf(flagged), { hasNew: false });
@@ -507,16 +508,14 @@ export default {
             title: L.FULL_ARTICLE,
             icon: "full_article.png",
             fn: function (event) {
-                const articleList = app.articles.articleList;
-                if (!articleList.selectedItems || !articleList.selectedItems.length) {
+                const list = app.articles.articleList;
+                if (!list.selectedItems || !list.selectedItems.length) {
                     return;
                 }
-                if (articleList.selectedItems.length > 10 && settings.get("askOnOpening")) {
+                if (list.selectedItems.length > 10 && settings.get("askOnOpening")) {
                     if (
                         !confirm(
-                            "Do you really want to open " +
-                                articleList.selectedItems.length +
-                                " articles?"
+                            "Do you really want to open " + list.selectedItems.length + " articles?"
                         )
                     ) {
                         return;
@@ -524,7 +523,7 @@ export default {
                 }
                 const openNewTab = settings.get("openNewTab");
                 const active = openNewTab === "background" ? !!event.shiftKey : !event.shiftKey;
-                articleList.selectedItems.forEach(function (item) {
+                list.selectedItems.forEach(function (item) {
                     browser.tabs.create({
                         url: stripTags(item.model.get("url")),
                         active: active,
@@ -536,15 +535,15 @@ export default {
             title: L.FULL_ARTICLE_SINGLE,
             fn: function (event) {
                 event = event || {};
-                const articleList = app.articles.articleList;
+                const list = app.articles.articleList;
                 let view;
                 if ("currentTarget" in event) {
                     view = event.currentTarget.view;
                 } else {
-                    if (!articleList.selectedItems || !articleList.selectedItems.length) {
+                    if (!list.selectedItems || !list.selectedItems.length) {
                         return;
                     }
-                    view = articleList.selectedItems[0];
+                    view = list.selectedItems[0];
                 }
                 if (view.model) {
                     const openNewTab = settings.get("openNewTab");
@@ -608,7 +607,7 @@ export default {
                 const read = { unread: false, visited: true };
 
                 if (feeds.length) {
-                    const scope = filter ? bg.items.where(filter) : bg.items.toArray();
+                    const scope = filter ? items.where(filter) : items.toArray();
                     const unread = scope.filter(
                         (item) =>
                             item.get("unread") === true && feeds.indexOf(item.get("sourceID")) >= 0
@@ -616,11 +615,11 @@ export default {
                     updateRecords("items", idsOf(unread), read);
                 } else if (articleList.currentData.name === "all-feeds") {
                     if (confirm(L.MARK_ALL_QUESTION)) {
-                        const unread = bg.items.filter((item) => item.get("unread") === true);
+                        const unread = items.filter((item) => item.get("unread") === true);
                         updateRecords("items", idsOf(unread), read);
                     }
                 } else if (articleList.currentData.filter) {
-                    updateRecords("items", idsOf(bg.items.where(articleList.specialFilter)), read);
+                    updateRecords("items", idsOf(items.where(articleList.specialFilter)), read);
                 }
             },
         },

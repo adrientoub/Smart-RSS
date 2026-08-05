@@ -11,10 +11,11 @@ import Properties from "../views/Properties.js";
 import resizable from "../mixins/resizable.js";
 import IndicatorView from "../views/IndicatorView.js";
 import { settingsStore } from "../../shared/settings.ts";
+import { toolbars } from "../modules/data.js";
 
 const settings = settingsStore();
 
-const toolbar = bg.toolbars.findWhere({ region: "feeds" });
+const toolbar = toolbars.findWhere({ region: "feeds" });
 
 /**
  * Feeds layout view

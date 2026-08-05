@@ -7,8 +7,9 @@ import Layout from "./Layout.js";
 import ToolbarView from "../views/ToolbarView.js";
 import contentView from "../views/contentView.js";
 import SandboxView from "../views/SandboxView.js";
+import { toolbars } from "../modules/data.js";
 
-const toolbar = bg.toolbars.findWhere({ region: "content" });
+const toolbar = toolbars.findWhere({ region: "content" });
 
 /**
  * Content layout view

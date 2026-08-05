@@ -28,6 +28,10 @@ export default tseslint.config(
             "no-empty": ["error", { allowEmptyCatch: true }],
             "no-var": "error",
             "prefer-const": "error",
+            // A local shadowing an imported collection reads as the collection
+            // but is not one, and only fails at runtime.
+            "no-shadow": "off",
+            "@typescript-eslint/no-shadow": "error",
             "no-unused-vars": "off",
             "@typescript-eslint/no-unused-vars": [
                 "warn",

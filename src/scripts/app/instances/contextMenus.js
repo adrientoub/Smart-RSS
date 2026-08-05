@@ -2,6 +2,7 @@ import BB from "backbone";
 import ContextMenu from "../views/ContextMenu.js";
 import Locale from "../modules/Locale.js";
 import { updateRecords, markItemsDeleted, idsOf } from "../../shared/dataClient.ts";
+import { items } from "../modules/data.js";
 
 const sourceContextMenu = new ContextMenu([
     {
@@ -52,7 +53,7 @@ const trashContextMenu = new ContextMenu([
         title: Locale.MARK_ALL_AS_READ,
         icon: "read.png",
         action: function () {
-            const unread = bg.items
+            const unread = items
                 .where({ trashed: true, deleted: false })
                 .filter((item) => item.get("unread") === true);
             updateRecords("items", idsOf(unread), { unread: false, visited: true });
@@ -63,7 +64,7 @@ const trashContextMenu = new ContextMenu([
         icon: "delete.png",
         action: function () {
             if (confirm(Locale.REALLY_EMPTY_TRASH)) {
-                markItemsDeleted(idsOf(bg.items.where({ trashed: true, deleted: false })));
+                markItemsDeleted(idsOf(items.where({ trashed: true, deleted: false })));
             }
         },
     },
@@ -82,7 +83,7 @@ const allFeedsContextMenu = new ContextMenu([
         icon: "read.png",
         action: function () {
             if (confirm(Locale.MARK_ALL_QUESTION)) {
-                updateRecords("items", idsOf(bg.items.toArray()), {
+                updateRecords("items", idsOf(items.toArray()), {
                     unread: false,
                     visited: true,
                 });
@@ -94,7 +95,7 @@ const allFeedsContextMenu = new ContextMenu([
         icon: "delete.png",
         action: function () {
             if (confirm(Locale.DELETE_ALL_Q)) {
-                const alive = bg.items.filter((item) => item.get("deleted") !== true);
+                const alive = items.filter((item) => item.get("deleted") !== true);
                 markItemsDeleted(idsOf(alive));
             }
         },

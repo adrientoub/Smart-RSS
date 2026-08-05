@@ -43,6 +43,21 @@ export interface MessageMap {
     /** Item.markAsDeleted(): drops the content but keeps a tombstone. */
     "items-mark-deleted": { request: { ids: string[] }; response: void };
 
+    /**
+     * Broadcast after the background writes, so other contexts can update their
+     * own copy of a collection. Only the changed attributes are sent: articles
+     * carry their full content, and most changes are a single read flag.
+     */
+    "data-changed": {
+        request: {
+            store: StoreName;
+            added?: Record<string, unknown>[];
+            changed?: { id: string; attrs: Record<string, unknown> }[];
+            removed?: string[];
+        };
+        response: void;
+    };
+
     /** Reader page should re-read the user stylesheet. */
     "user-style-changed": { request: void; response: void };
     /** Reader page should re-apply colour inversion. */
@@ -106,4 +121,27 @@ export function sendMessage<K extends MessageName>(
     ...[payload]: Request<K> extends void ? [] : [Request<K>]
 ): Promise<Response<K>> {
     return browser.runtime.sendMessage({ action, payload }) as Promise<Response<K>>;
+}
+
+/**
+ * Fire-and-forget notification.
+ *
+ * Having no listener is normal — the reader may simply not be open — but any
+ * other failure is a real one and must not be swallowed. An oversized payload
+ * fails here, and silently losing it looks like data going missing.
+ */
+export function broadcast<K extends MessageName>(
+    action: K,
+    ...[payload]: Request<K> extends void ? [] : [Request<K>]
+): void {
+    void browser.runtime.sendMessage({ action, payload }).catch((error) => {
+        const reason = String((error as Error)?.message ?? error);
+        if (
+            reason.includes("Receiving end does not exist") ||
+            reason.includes("Could not establish connection")
+        ) {
+            return;
+        }
+        console.error(`Failed to broadcast ${action}`, error);
+    });
 }

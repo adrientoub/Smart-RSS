@@ -16,6 +16,7 @@ import enclosureGeneral from "../templates/enclosureGeneral.html";
 import { settingsStore } from "../../shared/settings.ts";
 import { getElementBoolean, getElementSetting } from "../../shared/elementSettings.ts";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
+import { sources, items } from "../modules/data.js";
 
 const settings = settingsStore();
 
@@ -66,8 +67,8 @@ const ContentView = BB.View.extend({
     initialize: function () {
         this.on("attach", this.handleAttached);
 
-        bg.items.on("change:pinned", this.handleItemsPin, this);
-        bg.sources.on("clear-events", this.handleClearEvents, this);
+        items.on("change:pinned", this.handleItemsPin, this);
+        sources.on("clear-events", this.handleClearEvents, this);
     },
 
     /**
@@ -79,7 +80,7 @@ const ContentView = BB.View.extend({
         app.on(
             "select:article-list",
             function (data) {
-                this.handleNewSelected(bg.items.findWhere({ id: data.value }));
+                this.handleNewSelected(items.findWhere({ id: data.value }));
             },
             this
         );
@@ -127,8 +128,8 @@ const ContentView = BB.View.extend({
      */
     handleClearEvents: function (id) {
         if (!window || id === tabID) {
-            bg.items.off("change:pinned", this.handleItemsPin, this);
-            bg.sources.off("clear-events", this.handleClearEvents, this);
+            items.off("change:pinned", this.handleItemsPin, this);
+            sources.off("clear-events", this.handleClearEvents, this);
         }
     },
 
@@ -386,17 +387,19 @@ const ContentView = BB.View.extend({
                     contentElement.removeChild(contentElement.firstChild);
                 }
 
-                let fragment;
+                let enclosureFragment;
                 switch (data.enclosure.medium) {
                     case "youtube":
-                        fragment = document
+                        enclosureFragment = document
                             .createRange()
                             .createContextualFragment(content.replace(/\r/g, "<br>"));
                         break;
                     default:
-                        fragment = document.createRange().createContextualFragment(content);
+                        enclosureFragment = document
+                            .createRange()
+                            .createContextualFragment(content);
                 }
-                contentElement.appendChild(fragment);
+                contentElement.appendChild(enclosureFragment);
 
                 frame.contentDocument.querySelector("#smart-rss-url").href = articleUrl;
                 frame.contentDocument.querySelector("#full-article-url").textContent = articleUrl;

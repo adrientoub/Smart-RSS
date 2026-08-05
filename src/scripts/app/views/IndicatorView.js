@@ -6,6 +6,7 @@
 import BB from "backbone";
 import Locale from "../modules/Locale.js";
 import indicatorView from "../templates/indicatorView.html";
+import { sources } from "../modules/data.js";
 
 /**
  * Feeds update indicator view
@@ -45,7 +46,7 @@ const IndicatorView = BB.View.extend({
             }
             this.render();
         });
-        bg.sources.on("clear-events", this.handleClearEvents, this);
+        sources.on("clear-events", this.handleClearEvents, this);
 
         this.render();
     },
@@ -57,7 +58,7 @@ const IndicatorView = BB.View.extend({
      */
     handleClearEvents: function (id) {
         if (!window || id === tabID) {
-            bg.sources.off("clear-events", this.handleClearEvents, this);
+            sources.off("clear-events", this.handleClearEvents, this);
         }
     },
 

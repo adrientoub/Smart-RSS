@@ -3,7 +3,9 @@ import Locale from "../modules/Locale.js";
 import propertiesTemplate from "../templates/propertiesView.html";
 import propertiesDetails from "../templates/propertiesDetails.html";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
-import { encodePassword } from "../../shared/models/Source.js";
+import { sources, folders } from "../modules/data.js";
+import Source, { encodePassword } from "../../shared/models/Source.js";
+import Folder from "../../shared/models/Folder.js";
 
 export default BB.View.extend({
     id: "properties",
@@ -30,7 +32,7 @@ export default BB.View.extend({
         const autoRemove = parseInt(document.querySelector("#prop-autoremove").value);
         const folderId = document.querySelector("#prop-parent").value;
 
-        if (this.current instanceof bg.Source) {
+        if (this.current instanceof Source) {
             const defaultView = document.querySelector("#defaultView").value;
 
             updateRecords("sources", idsOf(this.current), {
@@ -47,8 +49,8 @@ export default BB.View.extend({
             });
         } else {
             let iterator = [];
-            if (this.current instanceof bg.Folder) {
-                iterator = bg.sources.where({ folderID: this.current.id });
+            if (this.current instanceof Folder) {
+                iterator = sources.where({ folderID: this.current.id });
                 updateRecords("folders", idsOf(this.current), {
                     title: document.querySelector("#prop-title").value,
                 });
@@ -99,7 +101,6 @@ export default BB.View.extend({
 
         this.el.appendChild(fragment);
 
-        const folders = bg.folders;
         const parentSelect = document.querySelector("#prop-parent");
         folders.forEach((folder) => {
             const option = document.createElement("option");
@@ -118,9 +119,9 @@ export default BB.View.extend({
         document.querySelector("#prop-proxy").checked = !!this.current.get("proxyThroughFeedly");
     },
     renderGroup: function () {
-        const isFolder = this.current instanceof bg.Folder;
+        const isFolder = this.current instanceof Folder;
         const listOfSources = isFolder
-            ? bg.sources.where({ folderID: this.current.id })
+            ? sources.where({ folderID: this.current.id })
             : this.current;
 
         const params = {
@@ -177,7 +178,6 @@ export default BB.View.extend({
             fragment.removeChild(labelUrl);
         }
 
-        const folders = bg.folders;
         const parentSelect = fragment.querySelector("#prop-parent");
         folders.forEach((folder) => {
             const option = document.createElement("option");
@@ -230,7 +230,7 @@ export default BB.View.extend({
             this.el.removeChild(this.el.firstChild);
         }
 
-        if (this.current instanceof bg.Source) {
+        if (this.current instanceof Source) {
             this.renderSource();
         } else {
             this.renderGroup();

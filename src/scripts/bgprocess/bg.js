@@ -8,11 +8,10 @@ import Loader from "./models/Loader.js";
 import actionApi from "./modules/actionApi.js";
 import { dataHandlers } from "./modules/dataApi.js";
 import Source from "../shared/models/Source.js";
-import Item from "../shared/models/Item.js";
 import Folder from "../shared/models/Folder.js";
 import { createCollections, fetchCollections } from "../shared/dataStore.ts";
 import { startDataBroadcast } from "./modules/dataBroadcast.js";
-import { handleMessages } from "../shared/messages.ts";
+import { handleMessages, broadcast } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
 import { migrateSettings } from "../shared/settingsMigration.ts";
 
@@ -81,6 +80,14 @@ handleMessages({
     "abort-downloads": () => {
         loader.abortDownloading();
     },
+    // The UI waits on this instead of reaching for the background page.
+    "background-ready": () => appStarted,
+    "reload-background-data": () => fetchAll(),
+    "take-source-to-focus": () => {
+        const id = sourceToFocus;
+        sourceToFocus = null;
+        return { id };
+    },
     ...dataHandlers,
 });
 
@@ -96,11 +103,13 @@ function openRSS(closeIfActive, focusSource) {
                 active: true,
             });
             if (focusSource) {
-                window.sourceToFocus = focusSource;
+                // The reader is already running, so it can be told directly.
+                broadcast("focus-source", { id: focusSource });
             }
             return;
         }
-        window.sourceToFocus = focusSource;
+        // No reader yet; it collects this once it starts.
+        sourceToFocus = focusSource;
         if (settings.get("openInNewTab")) {
             browser.tabs.create(
                 {
@@ -133,8 +142,6 @@ action.onClicked.addListener(function (tab, onClickData) {
     openRSS(true);
 });
 
-window.openRSS = openRSS;
-
 /**
  * Update animations
  */
@@ -143,8 +150,8 @@ Animation.start();
 /**
  * Items
  */
+// Loader tests instances against these.
 window.Source = Source;
-window.Item = Item;
 window.Folder = Folder;
 
 /**
@@ -157,12 +164,11 @@ window.sources = collections.sources;
 window.items = collections.items;
 window.folders = collections.folders;
 window.toolbars = collections.toolbars;
-window.loaded = false;
 
 /**
  * This is used for when new feed is subscribed and smart rss tab is opened to focus the newly added feed
  */
-window.sourceToFocus = null;
+let sourceToFocus = null;
 
 window.loader = new Loader();
 
@@ -171,12 +177,7 @@ async function fetchAll() {
     await fetchCollections(collections);
 }
 
-window.fetchAll = fetchAll;
-window.reloadExt = function () {
-    browser.runtime.reload();
-};
-
-window.appStarted = new Promise((resolve) => {
+const appStarted = new Promise((resolve) => {
     /**
      * Init
      */
@@ -269,7 +270,6 @@ window.appStarted = new Promise((resolve) => {
              * Set icon
              */
             Animation.stop();
-            window.loaded = true;
             resolve(true);
         });
 });

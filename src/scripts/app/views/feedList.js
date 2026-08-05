@@ -70,7 +70,6 @@ let FeedListView = BB.View.extend({
         sources.on("add", this.addSource, this);
         sources.on("change:folderID", this.handleChangeFolder, this);
         folders.on("add", this.addFolder, this);
-        sources.on("clear-events", this.handleClearEvents, this);
         settings.on("change:showOnlyUnreadSources", this.insertFeeds, this);
 
         this.on("pick", this.handlePick);
@@ -181,22 +180,6 @@ let FeedListView = BB.View.extend({
         }
 
         this.placeSource(source.view);
-    },
-
-    /**
-     * Unbinds all listeners to bg process
-     * @method handleClearEvents
-     * @triggered when tab is closed/refershed
-     * @param id {Number} id of the closed tab
-     */
-    handleClearEvents: function (id) {
-        if (!window || id === tabID) {
-            sources.off("reset", this.addSources, this);
-            sources.off("add", this.addSource, this);
-            sources.off("change:folderID", this.handleChangeFolder, this);
-            folders.off("add", this.addFolder, this);
-            sources.off("clear-events", this.handleClearEvents, this);
-        }
     },
 
     /**

@@ -6,7 +6,6 @@
 import BB from "backbone";
 import Locale from "../modules/Locale.js";
 import indicatorView from "../templates/indicatorView.html";
-import { sources } from "../modules/data.js";
 
 /**
  * Feeds update indicator view
@@ -46,20 +45,8 @@ const IndicatorView = BB.View.extend({
             }
             this.render();
         });
-        sources.on("clear-events", this.handleClearEvents, this);
 
         this.render();
-    },
-
-    /**
-     * Clears bg events it listens to
-     * @method handleClearEvents
-     * @param id {Integer} ID of the closed tab
-     */
-    handleClearEvents: function (id) {
-        if (!window || id === tabID) {
-            sources.off("clear-events", this.handleClearEvents, this);
-        }
     },
 
     /**

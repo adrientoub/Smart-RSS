@@ -1,15 +1,16 @@
 /**
- * See appEntrypoint.js: `window.bg` must exist and the settings cache must be
- * seeded before the options modules evaluate, so the import has to be deferred.
+ * See appEntrypoint.js: the caches must be seeded before the options modules
+ * evaluate, so the import has to be deferred.
  */
 import { settingsStore } from "./shared/settings.ts";
+import { sendMessage } from "./shared/messages.ts";
 
-browser.runtime.getBackgroundPage(function (bg) {
-    window.bg = bg;
-    bg.appStarted.then(async () => {
-        await settingsStore().load();
-        const { loadData } = await import("./app/modules/data.js");
-        await loadData({ live: false });
-        await import("./app/options.js");
-    });
-});
+(async () => {
+    await sendMessage("background-ready");
+    await settingsStore().load();
+
+    const { loadData } = await import("./app/modules/data.js");
+    await loadData({ live: false });
+
+    await import("./app/options.js");
+})();

@@ -16,7 +16,7 @@ import enclosureGeneral from "../templates/enclosureGeneral.html";
 import { settingsStore } from "../../shared/settings.ts";
 import { getElementBoolean, getElementSetting } from "../../shared/elementSettings.ts";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
-import { sources, items } from "../modules/data.js";
+import { items } from "../modules/data.js";
 
 const settings = settingsStore();
 
@@ -68,7 +68,6 @@ const ContentView = BB.View.extend({
         this.on("attach", this.handleAttached);
 
         items.on("change:pinned", this.handleItemsPin, this);
-        sources.on("clear-events", this.handleClearEvents, this);
     },
 
     /**
@@ -117,19 +116,6 @@ const ContentView = BB.View.extend({
             app.trigger("give-me-next");
         } else {
             cw.scrollBy(0, cw.offsetHeight * 0.85);
-        }
-    },
-
-    /**
-     * Unbinds all listeners to bg process
-     * @method handleClearEvents
-     * @triggered when tab is closed/refreshed
-     * @param id {Number} id of the closed tab
-     */
-    handleClearEvents: function (id) {
-        if (!window || id === tabID) {
-            items.off("change:pinned", this.handleItemsPin, this);
-            sources.off("clear-events", this.handleClearEvents, this);
         }
     },
 

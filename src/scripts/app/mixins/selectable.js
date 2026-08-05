@@ -1,5 +1,4 @@
 import { settingsStore } from "../../shared/settings.ts";
-import { sources } from "../modules/data.js";
 
 const settings = settingsStore();
 
@@ -60,12 +59,6 @@ export default {
             Array.from(selectedItems).forEach((element) => {
                 element.classList.remove("selected");
             });
-
-            if (!window || !window.frames) {
-                bg.logs.add({ message: "Event duplication bug! Clearing events now..." });
-                sources.trigger("clear-events", -1);
-                return;
-            }
 
             setTimeout(() => {
                 this.trigger("pick", view, e);

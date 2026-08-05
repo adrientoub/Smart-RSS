@@ -1,10 +1,10 @@
 /**
- * Ambient globals from the MV2 background page.
+ * Ambient globals the MV2 background page still assigns onto `window`.
  *
- * `bgprocess/bg.js` assigns these onto `window`, and the UI pages reach them
- * through `browser.runtime.getBackgroundPage()`. They are legacy: the MV3
- * migration replaces them with message passing, at which point this file goes
- * away. Do not add new entries.
+ * The UI no longer reads any of these — it owns its own collections and talks to
+ * the background by message. What is left is internal to `bgprocess/`, and goes
+ * away when the background becomes a service worker, which has no `window`.
+ * Do not add new entries.
  */
 
 /** Legacy YUIDoc annotation still present in older comments. */
@@ -27,31 +27,8 @@ interface LegacyBackbone {
     [key: string]: any;
 }
 
-interface BackgroundPage {
-    sources: LegacyBackbone;
-    items: LegacyBackbone;
-    folders: LegacyBackbone;
-    toolbars: LegacyBackbone;
-    info: LegacyBackbone;
-    loader: LegacyBackbone;
-
-    appStarted: Promise<boolean>;
-    loaded: boolean;
-    sourceToFocus: string | null;
-
-    openRSS(closeIfActive?: boolean, focusSource?: string): void;
-
-    [key: string]: any;
-}
-
-/** The background page, assigned to `window.bg` by the UI entry points. */
-declare const bg: BackgroundPage;
-
 /** The running app instance, assigned by `app/app.js`. */
 declare const app: any;
-
-/** Id of the tab hosting the reader UI. */
-declare const tabID: number;
 
 declare const info: LegacyBackbone;
 declare const items: LegacyBackbone;
@@ -60,6 +37,5 @@ declare const folders: LegacyBackbone;
 declare const toolbars: LegacyBackbone;
 declare const loader: LegacyBackbone;
 
-declare const Item: any;
 declare const Source: any;
 declare const Folder: any;

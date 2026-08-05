@@ -12,6 +12,7 @@ import selectable from "../mixins/selectable.js";
 import Locale from "../modules/Locale.js";
 import { settingsStore } from "../../shared/settings.ts";
 import { updateRecords, trashItems, markItemsDeleted, idsOf } from "../../shared/dataClient.ts";
+import { pendingFocus, takePendingFocus } from "../modules/focus.js";
 import { sources, items } from "../modules/data.js";
 
 const settings = settingsStore();
@@ -156,7 +157,6 @@ let ArticleListView = BB.View.extend({
         items.on("sort", this.handleSort, this);
         items.on("search", this.handleSearch, this);
         sources.on("destroy", this.handleSourcesDestroy, this);
-        sources.on("clear-events", this.handleClearEvents, this);
         settings.on("change", this.onSettingsChange, this);
 
         groups.on("add", this.addGroup, this);
@@ -225,10 +225,9 @@ let ArticleListView = BB.View.extend({
             this
         );
 
-        if (bg.sourceToFocus) {
+        if (pendingFocus()) {
             setTimeout(function () {
-                app.trigger("focus-feed", bg.sourceToFocus);
-                bg.sourceToFocus = null;
+                app.trigger("focus-feed", takePendingFocus());
             }, 0);
             return;
         }
@@ -272,24 +271,6 @@ let ArticleListView = BB.View.extend({
     handleSearch: function () {
         if (document.querySelector('input[type="search"]').value.trim() !== "") {
             app.actions.execute("articles:search");
-        }
-    },
-
-    /**
-     * Unbinds all listeners to bg process
-     * @method handleClearEvents
-     * @triggered when tab is closed/refreshed
-     * @param id {Number} id of the closed tab
-     */
-    handleClearEvents: function (id) {
-        if (window === null || id === tabID) {
-            items.off("reset", this.addItems, this);
-            items.off("add", this.addItem, this);
-            items.off("sort", this.handleSort, this);
-            items.off("search", this.handleSearch, this);
-
-            sources.off("destroy", this.handleSourcesDestroy, this);
-            sources.off("clear-events", this.handleClearEvents, this);
         }
     },
 

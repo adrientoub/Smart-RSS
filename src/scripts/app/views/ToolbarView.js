@@ -1,7 +1,6 @@
 import BB from "backbone";
 import ToolbarItems from "../collections/ToolbarItems.js";
 import ToolbarItemsFactory from "../factories/ToolbarItemsFactory.js";
-import { sources } from "../modules/data.js";
 
 export default BB.View.extend({
     tagName: "div",
@@ -18,23 +17,9 @@ export default BB.View.extend({
 
         this.listenTo(this.items, "add", this.addToolbarItem);
         this.listenTo(this.model, "change", this.handleChange);
-        sources.on("clear-events", this.handleClearEvents, this);
 
         this.model.get("actions").forEach(this.createToolbarItem, this);
         this.hideItems("articles:undelete");
-    },
-
-    /**
-     * If the tab is closed, it will remove all events bound to bgprocess
-     * @method handleClearEvents
-     * @triggered when bgprocesses triggers clear-events event
-     * @param id {Number} ID of closed tab
-     */
-    handleClearEvents: function (id) {
-        if (!window || id === tabID) {
-            this.stopListening();
-            sources.off("clear-events", this.handleClearEvents, this);
-        }
     },
 
     /**

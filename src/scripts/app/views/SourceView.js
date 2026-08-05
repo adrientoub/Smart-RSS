@@ -1,7 +1,7 @@
 import "backbone";
 import TopView from "./TopView.js";
 import contextMenus from "../instances/contextMenus.js";
-import { sources } from "../modules/data.js";
+import { pendingFocus, takePendingFocus } from "../modules/focus.js";
 
 export default TopView.extend({
     className: "sources-list-item source",
@@ -11,20 +11,13 @@ export default TopView.extend({
         this.model.on("change", this.render, this);
         this.model.on("destroy", this.handleModelDestroy, this);
         this.model.on("change:title", this.handleChangeTitle, this);
-        sources.on("clear-events", this.handleClearEvents, this);
         this.el.dataset.id = this.model.get("id");
         this.el.view = this;
-    },
-    handleClearEvents: function (id) {
-        if (!window || id === tabID) {
-            this.clearEvents();
-        }
     },
     clearEvents: function () {
         this.model.off("change", this.render, this);
         this.model.off("destroy", this.handleModelDestroy, this);
         this.model.off("change:title", this.handleChangeTitle, this);
-        sources.off("clear-events", this.handleClearEvents, this);
     },
     showContextMenu: function (e) {
         if (!this.el.classList.contains("selected")) {
@@ -76,10 +69,9 @@ export default TopView.extend({
         this.el.appendChild(fragment);
         this.el.href = data.base;
 
-        if (bg.sourceToFocus === this.model.get("id")) {
+        if (pendingFocus() === this.model.get("id")) {
             setTimeout(function () {
-                app.trigger("focus-feed", bg.sourceToFocus);
-                bg.sourceToFocus = null;
+                app.trigger("focus-feed", takePendingFocus());
             }, 0);
         }
 

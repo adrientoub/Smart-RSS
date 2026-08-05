@@ -1,20 +1,20 @@
 /**
  * Typed messaging between the extension's contexts.
  *
- * Today the UI reaches into the background page directly through
- * `getBackgroundPage()`. That disappears under Manifest V3, where the background
- * is a service worker, so anything crossing the boundary has to be a message.
- * This module is the contract: adding a message means adding an entry to
- * `MessageMap`, and both ends are then checked against it.
+ * This is the only channel between the UI and the background. Adding a message
+ * means adding an entry to `MessageMap`, and both ends are then checked against
+ * it.
  *
  * Only structured-cloneable data crosses the boundary. Backbone models cannot,
- * which is why source commands take ids rather than model instances.
+ * which is why everything here travels as ids and plain attributes.
  */
 
 /** The persisted Backbone collections. The background is their only writer. */
 export type StoreName = "sources" | "items" | "folders" | "toolbars";
 
 export interface MessageMap {
+    /** Resolves once the background has finished starting up. */
+    "background-ready": { request: void; response: true };
     /** Refresh every feed, ignoring per-feed update frequency. */
     "load-all": { request: void; response: void };
     /** Subscribe to a feed url. */
@@ -23,6 +23,16 @@ export interface MessageMap {
     "download-sources": { request: { ids: string[] }; response: void };
     /** Cancel any in-flight feed downloads. */
     "abort-downloads": { request: void; response: void };
+    /** Re-read the collections, after something wrote to IndexedDB directly. */
+    "reload-background-data": { request: void; response: void };
+
+    /**
+     * The feed a newly opened reader should focus, consumed once. The reader may
+     * not exist yet when a feed is subscribed, so it asks on startup.
+     */
+    "take-source-to-focus": { request: void; response: { id: string | null } };
+    /** Same, for a reader that is already open. */
+    "focus-source": { request: { id: string }; response: void };
 
     /**
      * Writes. The background owns persistence because the feed loader writes

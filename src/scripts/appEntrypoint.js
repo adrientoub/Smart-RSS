@@ -1,22 +1,23 @@
 /**
- * The app modules read `window.bg` while they evaluate, so the background page
- * has to be attached before they are imported. Static imports would run too
- * early, hence the dynamic import.
- *
- * Settings are read synchronously during that evaluation too (Locale.js), so the
- * cache has to be seeded first. It comes from `storage.local`, not the
- * background page.
+ * Settings and collections are read synchronously while the app modules
+ * evaluate (Locale.js, the views), so both caches are seeded first. Static
+ * imports would run too early, hence the dynamic imports.
  */
 import { settingsStore } from "./shared/settings.ts";
+import { sendMessage } from "./shared/messages.ts";
 
-browser.runtime.getBackgroundPage(function (bg) {
-    window.bg = bg;
-    bg.appStarted.then(async () => {
-        await settingsStore().load();
-        const { loadData, startApplyingChanges } = await import("./app/modules/data.js");
-        await loadData();
-        const { default: app } = await import("./app/app.js");
-        app.start();
-        startApplyingChanges();
-    });
-});
+(async () => {
+    // The background still owns writing and feed downloads.
+    await sendMessage("background-ready");
+    await settingsStore().load();
+
+    const { loadData, startApplyingChanges } = await import("./app/modules/data.js");
+    await loadData();
+
+    const { loadPendingFocus } = await import("./app/modules/focus.js");
+    await loadPendingFocus();
+
+    const { default: app } = await import("./app/app.js");
+    app.start();
+    startApplyingChanges();
+})();

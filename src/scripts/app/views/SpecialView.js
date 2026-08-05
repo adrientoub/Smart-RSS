@@ -1,6 +1,6 @@
 import TopView from "./TopView.js";
 import specialView from "../templates/specialView.html";
-import { sources, info } from "../modules/data.js";
+import { info } from "../modules/data.js";
 
 export default TopView.extend({
     className: "sources-list-item special",
@@ -25,16 +25,9 @@ export default TopView.extend({
             this.model.get("onReady").call(this);
         }
         info.on("change", this.changeInfo, this);
-        sources.on("clear-events", this.handleClearEvents, this);
-    },
-    handleClearEvents: function (id) {
-        if (window === null || id === tabID) {
-            this.clearEvents();
-        }
     },
     clearEvents: function () {
         info.off("change", this.changeInfo, this);
-        sources.off("clear-events", this.handleClearEvents, this);
     },
     changeInfo: function () {
         if (this.model.get("name") === "all-feeds") {

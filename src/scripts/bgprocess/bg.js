@@ -3,12 +3,10 @@
  */
 
 import Animation from "./modules/Animation.js";
-import Info from "./models/Info.js";
+import info from "./models/Info.js";
 import Loader from "./models/Loader.js";
 import actionApi from "./modules/actionApi.js";
 import { dataHandlers } from "./modules/dataApi.js";
-import Source from "../shared/models/Source.js";
-import Folder from "../shared/models/Folder.js";
 import { createCollections, fetchCollections } from "../shared/dataStore.ts";
 import { startDataBroadcast } from "./modules/dataBroadcast.js";
 import { handleMessages, broadcast } from "../shared/messages.ts";
@@ -23,14 +21,14 @@ const { action } = actionApi;
 function addSource(address) {
     address = address.replace(/^feed:/i, "https:");
 
-    const duplicate = sources.findWhere({ url: address });
+    const duplicate = collections.sources.findWhere({ url: address });
 
     if (duplicate) {
         duplicate.trigger("change");
         openRSS(false, duplicate.get("id"));
         return;
     }
-    const source = sources.create(
+    const source = collections.sources.create(
         {
             title: address,
             url: address,
@@ -55,9 +53,9 @@ function createLinksMenu() {
 }
 
 // MV3 removed the per-item `onclick` property, so menu clicks are routed here.
-browser.contextMenus.onClicked.addListener((info) => {
-    if (info.menuItemId === SUBSCRIBE_LINK_MENU_ID) {
-        addSource(info.linkUrl);
+browser.contextMenus.onClicked.addListener((menuInfo) => {
+    if (menuInfo.menuItemId === SUBSCRIBE_LINK_MENU_ID) {
+        addSource(menuInfo.linkUrl);
     }
 });
 
@@ -73,7 +71,7 @@ handleMessages({
     // Sources cross the boundary as ids, since Backbone models are not cloneable.
     "download-sources": ({ ids }) => {
         const models = ids
-            .map((id) => sources.get(id) ?? folders.get(id))
+            .map((id) => collections.sources.get(id) ?? collections.folders.get(id))
             .filter((model) => Boolean(model));
         loader.download(models);
     },
@@ -148,29 +146,17 @@ action.onClicked.addListener(function (tab, onClickData) {
 Animation.start();
 
 /**
- * Items
- */
-// Loader tests instances against these.
-window.Source = Source;
-window.Folder = Folder;
-
-/**
  * DB models
  */
 const settings = settingsStore();
 const collections = createCollections();
-window.info = new Info();
-window.sources = collections.sources;
-window.items = collections.items;
-window.folders = collections.folders;
-window.toolbars = collections.toolbars;
 
 /**
  * This is used for when new feed is subscribed and smart rss tab is opened to focus the newly added feed
  */
 let sourceToFocus = null;
 
-window.loader = new Loader();
+const loader = new Loader();
 
 async function fetchAll() {
     await settings.load();
@@ -190,7 +176,7 @@ const appStarted = new Promise((resolve) => {
             // record, and outside fetchAll, which runs again on settings import.
             startDataBroadcast(collections);
 
-            window.items.sort();
+            collections.items.sort();
             /**
              * Load counters for specials
              */
@@ -200,25 +186,25 @@ const appStarted = new Promise((resolve) => {
              * Set events
              */
 
-            sources.on("add", function (source) {
+            collections.sources.on("add", function (source) {
                 loader.download(source);
             });
 
-            sources.on("change:url", function (source) {
+            collections.sources.on("change:url", function (source) {
                 loader.download(source);
             });
 
-            sources.on("change:title", function (source) {
+            collections.sources.on("change:title", function (source) {
                 if (!source.get("title")) {
                     loader.download(source);
                 }
-                sources.sort();
+                collections.sources.sort();
             });
 
-            sources.on("change:hasNew", Animation.handleIconChange);
+            collections.sources.on("change:hasNew", Animation.handleIconChange);
             settings.on("change:icon", Animation.handleIconChange);
 
-            info.setEvents(sources);
+            info.setEvents();
 
             /**
              * Init
@@ -226,7 +212,7 @@ const appStarted = new Promise((resolve) => {
 
             const version = settings.get("version") || 0;
             if (version < 1) {
-                items.forEach((item) => {
+                collections.items.forEach((item) => {
                     item.save("id", item.get("id") + item.get("sourceID"));
                 });
                 settings.save("version", 1);
@@ -247,7 +233,7 @@ const appStarted = new Promise((resolve) => {
                     }
                     const now = Date.now();
                     const trashCleaningDelayInMs = trashCleaningDelay * 1000 * 60 * 60 * 24;
-                    items.where({ trashed: true, deleted: false }).forEach((item) => {
+                    collections.items.where({ trashed: true, deleted: false }).forEach((item) => {
                         if (now - item.get("trashedOn") > trashCleaningDelayInMs) {
                             item.markAsDeleted();
                         }

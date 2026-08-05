@@ -5,6 +5,7 @@
 
 import actionApi from "./actionApi.js";
 import { settingsStore } from "../../shared/settings.ts";
+import { collections } from "../../shared/collectionRegistry.ts";
 
 const { action } = actionApi;
 const settings = settingsStore();
@@ -47,7 +48,7 @@ const Animation = {
             return;
         }
         const icon = settings.get("icon");
-        if (sources.findWhere({ hasNew: true }) && icon !== "disabled") {
+        if (collections.sources.findWhere({ hasNew: true }) && icon !== "disabled") {
             action.setIcon({
                 path: "/images/icon19-" + icon + ".png",
             });

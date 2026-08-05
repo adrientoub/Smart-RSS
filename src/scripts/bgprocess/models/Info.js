@@ -80,13 +80,13 @@ const Info = BB.Model.extend({
         }
         handleAllCountChange();
 
-        sources.on("destroy", function (source) {
+        collections.sources.on("destroy", function (source) {
             let trashUnread = 0;
             let trashAll = 0;
             let allUnvisited = 0;
             let pinnedAll = 0;
             let pinnedUnread = 0;
-            items.where({ sourceID: source.get("id") }).forEach(function (item) {
+            collections.items.where({ sourceID: source.get("id") }).forEach(function (item) {
                 if (!item.get("deleted")) {
                     if (!item.get("visited")) {
                         allUnvisited++;
@@ -118,7 +118,7 @@ const Info = BB.Model.extend({
             });
 
             if (source.get("folderID")) {
-                const folder = folders.findWhere({
+                const folder = collections.folders.findWhere({
                     id: source.get("folderID"),
                 });
                 if (folder) {
@@ -134,7 +134,7 @@ const Info = BB.Model.extend({
             }
         });
 
-        items.on("change:unread", function (model) {
+        collections.items.on("change:unread", function (model) {
             const source = model.getSource();
             if (!model.previous("trashed")) {
                 if (model.get("unread") === true) {
@@ -157,7 +157,7 @@ const Info = BB.Model.extend({
             }
         });
 
-        items.on("change:trashed", function (model) {
+        collections.items.on("change:trashed", function (model) {
             const source = model.getSource();
             if (model.get("unread") === true) {
                 if (model.get("trashed") === true) {
@@ -209,7 +209,7 @@ const Info = BB.Model.extend({
             }
         });
 
-        items.on("change:deleted", function (model) {
+        collections.items.on("change:deleted", function (model) {
             if (model.previous("trashed") === true) {
                 info.set({
                     trashCountTotal: info.get("trashCountTotal") - 1,
@@ -220,7 +220,7 @@ const Info = BB.Model.extend({
             }
         });
 
-        items.on("change:pinned", function (model) {
+        collections.items.on("change:pinned", function (model) {
             const change = model.previous("pinned") ? -1 : 1;
             info.set({
                 pinnedCountTotal: info.get("pinnedCountTotal") + change,
@@ -230,13 +230,13 @@ const Info = BB.Model.extend({
             });
         });
 
-        items.on("change:visited", function (model) {
+        collections.items.on("change:visited", function (model) {
             info.set({
                 allCountUnvisited: info.get("allCountUnvisited") + (model.get("visited") ? -1 : 1),
             });
         });
 
-        sources.on("change:count", function (source) {
+        collections.sources.on("change:count", function (source) {
             // SPECIALS
             info.set({
                 allCountUnread:
@@ -248,7 +248,7 @@ const Info = BB.Model.extend({
                 return;
             }
 
-            const folder = folders.findWhere({
+            const folder = collections.folders.findWhere({
                 id: source.get("folderID"),
             });
             if (!folder) {
@@ -260,7 +260,7 @@ const Info = BB.Model.extend({
             });
         });
 
-        sources.on("change:countAll", function (source) {
+        collections.sources.on("change:countAll", function (source) {
             // SPECIALS
             info.set({
                 allCountTotal:
@@ -274,7 +274,7 @@ const Info = BB.Model.extend({
                 return;
             }
 
-            const folder = folders.findWhere({
+            const folder = collections.folders.findWhere({
                 id: source.get("folderID"),
             });
             if (!folder) {
@@ -287,10 +287,10 @@ const Info = BB.Model.extend({
             });
         });
 
-        sources.on("change:folderID", function (source) {
+        collections.sources.on("change:folderID", function (source) {
             let folder;
             if (source.get("folderID")) {
-                folder = folders.findWhere({ id: source.get("folderID") });
+                folder = collections.folders.findWhere({ id: source.get("folderID") });
                 if (!folder) {
                     return;
                 }
@@ -302,7 +302,7 @@ const Info = BB.Model.extend({
             }
 
             if (source.previous("folderID")) {
-                folder = folders.findWhere({
+                folder = collections.folders.findWhere({
                     id: source.previous("folderID"),
                 });
                 if (!folder) {
@@ -318,4 +318,7 @@ const Info = BB.Model.extend({
     },
 });
 
-export default Info;
+// Singleton: the module-level helpers above close over this instance.
+const info = new Info();
+
+export default info;

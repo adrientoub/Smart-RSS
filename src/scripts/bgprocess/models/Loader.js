@@ -9,6 +9,10 @@ import animation from "../modules/Animation.js";
 import "../modules/favicon.ts";
 import FeedLoader from "./FeedLoader.js";
 import { settingsStore } from "../../shared/settings.ts";
+import { collections } from "../../shared/collectionRegistry.ts";
+import Source from "../../shared/models/Source.js";
+import Folder from "../../shared/models/Folder.js";
+import info from "./Info.js";
 
 const settings = settingsStore();
 
@@ -85,7 +89,7 @@ export default class Loader {
     addSources(source) {
         if (source instanceof Folder) {
             this.addSources(
-                sources.where({
+                collections.sources.where({
                     folderID: source.id,
                 })
             );
@@ -142,7 +146,7 @@ export default class Loader {
     }
 
     downloadAll(force) {
-        let sourcesArr = sources.toArray();
+        let sourcesArr = collections.sources.toArray();
         if (!force) {
             const globalUpdateFrequency = settings.get("updateFrequency");
             sourcesArr = sourcesArr.filter(function (source) {
@@ -204,9 +208,9 @@ export default class Loader {
 
     workersFinished() {
         // IF DOWNLOADING FINISHED, DELETE ITEMS WITH DELETED SOURCE (should not really happen)
-        const sourceIDs = sources.pluck("id");
+        const sourceIDs = collections.sources.pluck("id");
         let foundSome = false;
-        items.toArray().forEach((item) => {
+        collections.items.toArray().forEach((item) => {
             if (sourceIDs.indexOf(item.get("sourceID")) === -1) {
                 item.destroy();
                 foundSome = true;

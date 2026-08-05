@@ -1,11 +1,10 @@
 /**
  * Prepare IndexedDB stores
- * @module BgProcess
  * @submodule preps/indexeddb
  */
 
 import BB from "backbone";
-import "../modules/backboneIndexedDB.js";
+import "../backboneIndexedDB.js";
 
 /**
  * IndexedDB preps.

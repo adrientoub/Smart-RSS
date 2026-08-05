@@ -4,15 +4,16 @@
 
 import Animation from "./modules/Animation.js";
 import Info from "./models/Info.js";
-import Source from "./models/Source.js";
-import Sources from "./collections/Sources.js";
-import Item from "./models/Item.js";
-import Items from "./collections/Items.js";
-import Folders from "./collections/Folders.js";
 import Loader from "./models/Loader.js";
-import Folder from "./models/Folder.js";
-import Toolbars from "./collections/Toolbars.js";
 import actionApi from "./modules/actionApi.js";
+import Source from "../shared/models/Source.js";
+import Sources from "../shared/collections/Sources.js";
+import Item from "../shared/models/Item.js";
+import Items from "../shared/collections/Items.js";
+import Folder from "../shared/models/Folder.js";
+import Folders from "../shared/collections/Folders.js";
+import Toolbars from "../shared/collections/Toolbars.js";
+import { registerCollections } from "../shared/collectionRegistry.ts";
 import { handleMessages } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
 import { migrateSettings } from "../shared/settingsMigration.ts";
@@ -165,6 +166,14 @@ window.sourceToFocus = null;
 window.toolbars = new Toolbars();
 
 window.loader = new Loader();
+
+// Item.getSource() reaches the sources collection through this.
+registerCollections({
+    sources: window.sources,
+    items: window.items,
+    folders: window.folders,
+    toolbars: window.toolbars,
+});
 
 function fetchOne(tasks) {
     return new Promise((resolve) => {

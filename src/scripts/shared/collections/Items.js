@@ -1,12 +1,11 @@
 /**
- * @module BgProcess
  * @submodule collections/Items
  */
 
 import BB from "backbone";
 import Item from "../models/Item.js";
 import "../preps/indexeddb.js";
-import { settingsStore } from "../../shared/settings.ts";
+import { settingsStore } from "../settings.ts";
 
 const settings = settingsStore();
 

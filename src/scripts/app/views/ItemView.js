@@ -8,6 +8,7 @@ import dateUtils from "../helpers/dateUtils.js";
 import contextMenus from "../instances/contextMenus.js";
 import stripTags from "../helpers/stripTags.js";
 import itemTemplate from "../templates/itemView.html";
+import { isReadStateOnlyChange } from "../helpers/itemRender.js";
 import { settingsStore } from "../../shared/settings.ts";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
 import { sources } from "../modules/data.js";
@@ -54,6 +55,7 @@ const ItemView = BB.View.extend({
     initialize: function (opt, list) {
         this.multiple = opt.model.multiple;
         this.list = list;
+        this.contentRendered = false;
         // this.el.setAttribute('draggable', 'true');
         this.el.view = this;
         this.setEvents();
@@ -118,18 +120,9 @@ const ItemView = BB.View.extend({
             classList.add("one-line");
         }
 
-        const changedAttributes = this.model.changedAttributes();
-        if (changedAttributes) {
-            const caKeys = Object.keys(changedAttributes);
-            if (
-                (("unread" in changedAttributes || "visited" in changedAttributes) &&
-                    caKeys.length === 1) ||
-                ("unread" in changedAttributes &&
-                    "visited" in changedAttributes &&
-                    caKeys.length === 2)
-            ) {
-                return this;
-            }
+        // Only once there is content to keep: see isReadStateOnlyChange.
+        if (this.contentRendered && isReadStateOnlyChange(this.model.changedAttributes())) {
+            return this;
         }
 
         const article = this.model.toJSON();
@@ -175,6 +168,7 @@ const ItemView = BB.View.extend({
         fragment.querySelector(".item-date").setAttribute("datetime", article.datetime);
 
         this.el.appendChild(fragment);
+        this.contentRendered = true;
 
         return this;
     },

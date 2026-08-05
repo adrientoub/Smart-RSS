@@ -12,6 +12,7 @@ import "../instances/contextMenus.js";
 import selectable from "../mixins/selectable.js";
 import specials from "../instances/specials.js";
 import { settingsStore } from "../../shared/settings.ts";
+import { destroyRecords, idsOf } from "../../shared/dataClient.ts";
 
 const settings = settingsStore();
 
@@ -389,7 +390,7 @@ let FeedListView = BB.View.extend({
      * @param view {views/SourceView} View containing the model to be destroyed
      */
     removeSource: function (view) {
-        view.model.destroy();
+        destroyRecords("sources", idsOf(view.model));
     },
 
     /**

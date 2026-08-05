@@ -2,6 +2,7 @@ import actions from "./staticdb/actions.js";
 import shortcuts from "./staticdb/shortcuts.js";
 import { sendMessage } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
+import { createRecord, updateRecords, destroyRecords, idsOf } from "../shared/dataClient.ts";
 
 const settings = settingsStore();
 
@@ -572,7 +573,7 @@ function handleImportOPML(event) {
     opmlImportStatus.textContent = "Importing, please wait!";
 
     const reader = new FileReader();
-    reader.onload = function () {
+    reader.onload = async function () {
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.result, "application/xml");
 
@@ -583,7 +584,8 @@ function handleImportOPML(event) {
 
         const feeds = doc.querySelectorAll("body > outline[text], body > outline[title]");
 
-        [...feeds].forEach((feed) => {
+        // Sequential: a folder's id is needed before its feeds can reference it.
+        for (const feed of [...feeds]) {
             if (!feed.hasAttribute("xmlUrl")) {
                 const subFeeds = feed.querySelectorAll("outline[xmlUrl]");
                 const folderTitle = decodeHTML(
@@ -594,54 +596,42 @@ function handleImportOPML(event) {
                     title: folderTitle,
                 });
 
-                const folder =
-                    duplicate ||
-                    bg.folders.create(
-                        {
-                            title: folderTitle,
-                        },
-                        { wait: true }
-                    );
-                const folderId = folder.get("id");
+                const folderId = duplicate
+                    ? duplicate.get("id")
+                    : (await createRecord("folders", { title: folderTitle })).id;
 
-                [...subFeeds].forEach((subFeed) => {
+                for (const subFeed of [...subFeeds]) {
                     if (
                         bg.sources.findWhere({
                             url: decodeHTML(subFeed.getAttribute("xmlUrl")),
                         })
                     ) {
-                        return;
+                        continue;
                     }
-                    bg.sources.create(
-                        {
-                            title: decodeHTML(
-                                subFeed.getAttribute("title") || subFeed.getAttribute("text")
-                            ),
-                            url: decodeHTML(subFeed.getAttribute("xmlUrl")),
-                            updateEvery: -1,
-                            folderID: folderId,
-                        },
-                        { wait: true }
-                    );
-                });
+                    await createRecord("sources", {
+                        title: decodeHTML(
+                            subFeed.getAttribute("title") || subFeed.getAttribute("text")
+                        ),
+                        url: decodeHTML(subFeed.getAttribute("xmlUrl")),
+                        updateEvery: -1,
+                        folderID: folderId,
+                    });
+                }
             } else {
                 if (
                     bg.sources.findWhere({
                         url: decodeHTML(feed.getAttribute("xmlUrl")),
                     })
                 ) {
-                    return;
+                    continue;
                 }
-                bg.sources.create(
-                    {
-                        title: decodeHTML(feed.getAttribute("title") || feed.getAttribute("text")),
-                        url: decodeHTML(feed.getAttribute("xmlUrl")),
-                        updateEvery: -1,
-                    },
-                    { wait: true }
-                );
+                await createRecord("sources", {
+                    title: decodeHTML(feed.getAttribute("title") || feed.getAttribute("text")),
+                    url: decodeHTML(feed.getAttribute("xmlUrl")),
+                    updateEvery: -1,
+                });
             }
-        });
+        }
 
         opmlImportStatus.textContent = "Import completed!";
 
@@ -674,7 +664,7 @@ function handleClearData() {
     browser.runtime.reload();
 }
 
-function handleClearDeletedStorage() {
+async function handleClearDeletedStorage() {
     if (
         !confirm(
             "Do you really want to remove deleted articles metadata? This may cause some of them to appear again"
@@ -683,13 +673,7 @@ function handleClearDeletedStorage() {
         return;
     }
 
-    bg.items
-        .where({
-            deleted: true,
-        })
-        .forEach((item) => {
-            item.destroy();
-        });
+    await destroyRecords("items", idsOf(bg.items.where({ deleted: true })));
     alert("Done,extension will reboot now");
     browser.runtime.reload();
 }
@@ -699,11 +683,9 @@ function handleClearFavicons() {
         return;
     }
 
-    bg.sources.toArray().forEach((source) => {
-        source.save({
-            favicon: "/images/feed.png",
-            faviconExpires: 0,
-        });
+    updateRecords("sources", idsOf(bg.sources.toArray()), {
+        favicon: "/images/feed.png",
+        faviconExpires: 0,
     });
     alert("Done");
 }

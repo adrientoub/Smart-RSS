@@ -2,6 +2,8 @@ import BB from "backbone";
 import Locale from "../modules/Locale.js";
 import propertiesTemplate from "../templates/propertiesView.html";
 import propertiesDetails from "../templates/propertiesDetails.html";
+import { updateRecords, idsOf } from "../../shared/dataClient.ts";
+import { encodePassword } from "../../shared/models/Source.js";
 
 export default BB.View.extend({
     id: "properties",
@@ -29,14 +31,13 @@ export default BB.View.extend({
         const folderId = document.querySelector("#prop-parent").value;
 
         if (this.current instanceof bg.Source) {
-            /* encrypt the password */
-            this.current.setPass(document.querySelector("#prop-password").value);
             const defaultView = document.querySelector("#defaultView").value;
 
-            this.current.save({
+            updateRecords("sources", idsOf(this.current), {
                 title: document.querySelector("#prop-title").value,
                 url: app.fixURL(document.querySelector("#prop-url").value),
                 username: document.querySelector("#prop-username").value,
+                password: encodePassword(document.querySelector("#prop-password").value),
                 folderID: folderId,
                 updateEvery: updateEvery,
                 autoremove: autoRemove,
@@ -44,39 +45,26 @@ export default BB.View.extend({
                 openEnclosure: document.querySelector("#openEnclosure").value,
                 defaultView: defaultView,
             });
-            if (folderId === "0") {
-                this.current.unset("folderID");
-            }
-            // this.render();
         } else {
             let iterator = [];
             if (this.current instanceof bg.Folder) {
                 iterator = bg.sources.where({ folderID: this.current.id });
-                this.current.save({
+                updateRecords("folders", idsOf(this.current), {
                     title: document.querySelector("#prop-title").value,
                 });
             } else if (Array.isArray(this.current)) {
                 iterator = this.current;
             }
+
+            const ids = idsOf(iterator);
             if (updateEvery >= -1) {
-                iterator.forEach(function (source) {
-                    source.save({ updateEvery: updateEvery });
-                });
+                updateRecords("sources", ids, { updateEvery: updateEvery });
             }
             if (autoRemove >= -1) {
-                iterator.forEach(function (source) {
-                    source.save({ autoremove: autoRemove });
-                });
+                updateRecords("sources", ids, { autoremove: autoRemove });
             }
-
             if (folderId >= 0) {
-                iterator.forEach(function (source) {
-                    if (folderId === "0") {
-                        source.unset("folderID");
-                    } else {
-                        source.save({ folderID: folderId });
-                    }
-                });
+                updateRecords("sources", ids, { folderID: folderId });
             }
         }
         this.hide();

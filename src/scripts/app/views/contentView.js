@@ -15,6 +15,7 @@ import enclosureYoutube from "../templates/enclosureYoutube.html";
 import enclosureGeneral from "../templates/enclosureGeneral.html";
 import { settingsStore } from "../../shared/settings.ts";
 import { getElementBoolean, getElementSetting } from "../../shared/elementSettings.ts";
+import { updateRecords, idsOf } from "../../shared/dataClient.ts";
 
 const settings = settingsStore();
 
@@ -53,7 +54,7 @@ const ContentView = BB.View.extend({
         } else {
             target.classList.add("pinned");
         }
-        this.model.save({
+        updateRecords("items", idsOf(this.model), {
             pinned: target.classList.contains("pinned"),
         });
     },

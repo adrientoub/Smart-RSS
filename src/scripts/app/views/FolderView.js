@@ -6,6 +6,7 @@
 import BB from "backbone";
 import TopView from "./TopView.js";
 import contextMenus from "../instances/contextMenus.js";
+import { updateRecords, idsOf } from "../../shared/dataClient.ts";
 
 /**
  * View for Folder in feed list
@@ -146,7 +147,7 @@ const FolderView = TopView.extend({
      */
     handleClickArrow: function (event) {
         const opened = !this.model.get("opened");
-        this.model.save("opened", opened);
+        updateRecords("folders", idsOf(this.model), { opened: opened });
         const items = document.querySelectorAll(
             '.source[data-in-folder="' + this.model.get("id") + '"]'
         );

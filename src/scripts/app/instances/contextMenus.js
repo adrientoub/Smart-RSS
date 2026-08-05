@@ -1,6 +1,7 @@
 import BB from "backbone";
 import ContextMenu from "../views/ContextMenu.js";
 import Locale from "../modules/Locale.js";
+import { updateRecords, markItemsDeleted, idsOf } from "../../shared/dataClient.ts";
 
 const sourceContextMenu = new ContextMenu([
     {
@@ -51,14 +52,10 @@ const trashContextMenu = new ContextMenu([
         title: Locale.MARK_ALL_AS_READ,
         icon: "read.png",
         action: function () {
-            bg.items.where({ trashed: true, deleted: false }).forEach(function (item) {
-                if (item.get("unread") === true) {
-                    item.save({
-                        unread: false,
-                        visited: true,
-                    });
-                }
-            });
+            const unread = bg.items
+                .where({ trashed: true, deleted: false })
+                .filter((item) => item.get("unread") === true);
+            updateRecords("items", idsOf(unread), { unread: false, visited: true });
         },
     },
     {
@@ -66,9 +63,7 @@ const trashContextMenu = new ContextMenu([
         icon: "delete.png",
         action: function () {
             if (confirm(Locale.REALLY_EMPTY_TRASH)) {
-                bg.items.where({ trashed: true, deleted: false }).forEach(function (item) {
-                    item.markAsDeleted();
-                });
+                markItemsDeleted(idsOf(bg.items.where({ trashed: true, deleted: false })));
             }
         },
     },
@@ -87,8 +82,9 @@ const allFeedsContextMenu = new ContextMenu([
         icon: "read.png",
         action: function () {
             if (confirm(Locale.MARK_ALL_QUESTION)) {
-                bg.items.forEach(function (item) {
-                    item.save({ unread: false, visited: true });
+                updateRecords("items", idsOf(bg.items.toArray()), {
+                    unread: false,
+                    visited: true,
                 });
             }
         },
@@ -98,12 +94,8 @@ const allFeedsContextMenu = new ContextMenu([
         icon: "delete.png",
         action: function () {
             if (confirm(Locale.DELETE_ALL_Q)) {
-                bg.items.forEach(function (item) {
-                    if (item.get("deleted") === true) {
-                        return;
-                    }
-                    item.markAsDeleted();
-                });
+                const alive = bg.items.filter((item) => item.get("deleted") !== true);
+                markItemsDeleted(idsOf(alive));
             }
         },
     },

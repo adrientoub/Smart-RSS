@@ -10,6 +10,29 @@ import BB from "backbone";
  * @constructor
  * @extends Backbone.Model
  */
+/** Obfuscation, not encryption. Exported so the UI can build the stored value. */
+export function encodePassword(str) {
+    if (!str) {
+        return "";
+    }
+    let enc = "enc:";
+    for (let i = 0; i < str.length; i++) {
+        enc += String.fromCharCode(str.charCodeAt(i) + 13);
+    }
+    return enc;
+}
+
+export function decodePassword(str) {
+    if (!str || str.indexOf("enc:") !== 0) {
+        return str;
+    }
+    let dec = "";
+    for (let i = 4; i < str.length; i++) {
+        dec += String.fromCharCode(str.charCodeAt(i) - 13);
+    }
+    return dec;
+}
+
 const Source = BB.Model.extend({
     defaults: {
         title: "",
@@ -43,28 +66,10 @@ const Source = BB.Model.extend({
     },
 
     getPass: function () {
-        const str = this.get("password");
-        if (str.indexOf("enc:") !== 0) {
-            return str;
-        }
-
-        let dec = "";
-        for (let i = 4; i < str.length; i++) {
-            dec += String.fromCharCode(str.charCodeAt(i) - 13);
-        }
-        return dec;
+        return decodePassword(this.get("password"));
     },
     setPass: function (str) {
-        if (!str) {
-            this.save("password", "");
-            return;
-        }
-
-        let enc = "enc:";
-        for (let i = 0; i < str.length; i++) {
-            enc += String.fromCharCode(str.charCodeAt(i) + 13);
-        }
-        this.set("password", enc);
+        this.set("password", encodePassword(str));
     },
 });
 

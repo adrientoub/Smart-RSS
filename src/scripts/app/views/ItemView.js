@@ -9,6 +9,7 @@ import contextMenus from "../instances/contextMenus.js";
 import stripTags from "../helpers/stripTags.js";
 import itemTemplate from "../templates/itemView.html";
 import { settingsStore } from "../../shared/settings.ts";
+import { updateRecords, idsOf } from "../../shared/dataClient.ts";
 
 const settings = settingsStore();
 
@@ -261,7 +262,7 @@ const ItemView = BB.View.extend({
      */
     handleClickPin: function (event) {
         event.stopPropagation();
-        this.model.save({ pinned: !this.model.get("pinned") });
+        updateRecords("items", idsOf(this.model), { pinned: !this.model.get("pinned") });
     },
 });
 

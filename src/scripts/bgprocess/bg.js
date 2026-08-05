@@ -3,7 +3,6 @@
  */
 
 import Animation from "./modules/Animation.js";
-import Settings from "./models/Settings.js";
 import Info from "./models/Info.js";
 import Source from "./models/Source.js";
 import Sources from "./collections/Sources.js";
@@ -15,6 +14,8 @@ import Folder from "./models/Folder.js";
 import Toolbars from "./collections/Toolbars.js";
 import actionApi from "./modules/actionApi.js";
 import { handleMessages } from "../shared/messages.ts";
+import { settingsStore } from "../shared/settings.ts";
+import { migrateSettings } from "../shared/settingsMigration.ts";
 
 const { action } = actionApi;
 
@@ -155,7 +156,7 @@ window.Folder = Folder;
 /**
  * DB models
  */
-window.settings = new Settings();
+window.settings = settingsStore();
 window.info = new Info();
 window.sources = new Sources();
 window.items = new Items();
@@ -195,8 +196,10 @@ window.valueToBoolean = function (value) {
     return value;
 };
 
+// Settings are typed now, but per-source overrides are still stored as loose
+// strings, so element helpers keep coercing.
 window.getBoolean = function (name) {
-    return valueToBoolean(settings.get(name));
+    return settings.get(name);
 };
 
 window.getElementBoolean = function (element, setting) {
@@ -227,7 +230,7 @@ function fetchOne(tasks) {
 
 function fetchAll() {
     const tasks = [];
-    tasks.push(settings.fetch({ silent: true }));
+    tasks.push(settings.load());
     tasks.push(folders.fetch({ silent: true }));
     tasks.push(sources.fetch({ silent: true }));
     tasks.push(toolbars.fetch({ silent: true }));
@@ -247,88 +250,91 @@ window.appStarted = new Promise((resolve) => {
      * Init
      */
 
-    fetchAll().then(function () {
-        window.items.sort();
-        /**
-         * Load counters for specials
-         */
-        info.refreshSpecialCounters();
+    // Settings move out of IndexedDB before anything reads them.
+    migrateSettings(settings, browser.storage.local)
+        .then(fetchAll)
+        .then(function () {
+            window.items.sort();
+            /**
+             * Load counters for specials
+             */
+            info.refreshSpecialCounters();
 
-        /**
-         * Set events
-         */
+            /**
+             * Set events
+             */
 
-        sources.on("add", function (source) {
-            loader.download(source);
-        });
-
-        sources.on("change:url", function (source) {
-            loader.download(source);
-        });
-
-        sources.on("change:title", function (source) {
-            if (!source.get("title")) {
+            sources.on("add", function (source) {
                 loader.download(source);
-            }
-            sources.sort();
-        });
-
-        sources.on("change:hasNew", Animation.handleIconChange);
-        settings.on("change:icon", Animation.handleIconChange);
-
-        info.setEvents(sources);
-
-        /**
-         * Init
-         */
-
-        const version = settings.get("version") || 0;
-        if (version < 1) {
-            items.forEach((item) => {
-                item.save("id", item.get("id") + item.get("sourceID"));
             });
-            settings.save("version", 1);
-        }
 
-        browser.alarms.create("scheduler", {
-            periodInMinutes: 1,
-        });
+            sources.on("change:url", function (source) {
+                loader.download(source);
+            });
 
-        browser.alarms.onAlarm.addListener((alarm) => {
-            if (alarm.name === "scheduler") {
-                if (!settings.get("disableAutoUpdate")) {
-                    loader.downloadAll();
+            sources.on("change:title", function (source) {
+                if (!source.get("title")) {
+                    loader.download(source);
                 }
-                const trashCleaningDelay = settings.get("autoremovetrash");
-                if (trashCleaningDelay === 0) {
-                    return;
-                }
-                const now = Date.now();
-                const trashCleaningDelayInMs = trashCleaningDelay * 1000 * 60 * 60 * 24;
-                items.where({ trashed: true, deleted: false }).forEach((item) => {
-                    if (now - item.get("trashedOn") > trashCleaningDelayInMs) {
-                        item.markAsDeleted();
-                    }
+                sources.sort();
+            });
+
+            sources.on("change:hasNew", Animation.handleIconChange);
+            settings.on("change:icon", Animation.handleIconChange);
+
+            info.setEvents(sources);
+
+            /**
+             * Init
+             */
+
+            const version = settings.get("version") || 0;
+            if (version < 1) {
+                items.forEach((item) => {
+                    item.save("id", item.get("id") + item.get("sourceID"));
                 });
+                settings.save("version", 1);
             }
+
+            browser.alarms.create("scheduler", {
+                periodInMinutes: 1,
+            });
+
+            browser.alarms.onAlarm.addListener((alarm) => {
+                if (alarm.name === "scheduler") {
+                    if (!settings.get("disableAutoUpdate")) {
+                        loader.downloadAll();
+                    }
+                    const trashCleaningDelay = settings.get("autoremovetrash");
+                    if (trashCleaningDelay === 0) {
+                        return;
+                    }
+                    const now = Date.now();
+                    const trashCleaningDelayInMs = trashCleaningDelay * 1000 * 60 * 60 * 24;
+                    items.where({ trashed: true, deleted: false }).forEach((item) => {
+                        if (now - item.get("trashedOn") > trashCleaningDelayInMs) {
+                            item.markAsDeleted();
+                        }
+                    });
+                }
+            });
+
+            /**
+             * onclick:button -> open RSS
+             */
+            createLinksMenu();
+
+            // The menu used to be rebuilt on every page visit as a side effect of feed
+            // detection, which is how toggling this setting took effect. Rebuild explicitly.
+            settings.on("change:displaySubscribeToLink", () => {
+                Promise.resolve(browser.contextMenus.removeAll()).then(createLinksMenu);
+            });
+
+            /**
+             * Set icon
+             */
+            Animation.stop();
+            window.loaded = true;
+            resolve(true);
         });
-
-        /**
-         * onclick:button -> open RSS
-         */
-        createLinksMenu();
-
-        // The menu used to be rebuilt on every page visit as a side effect of feed
-        // detection, which is how toggling this setting took effect. Rebuild explicitly.
-        settings.on("change:displaySubscribeToLink", () => {
-            Promise.resolve(browser.contextMenus.removeAll()).then(createLinksMenu);
-        });
-
-        /**
-         * Set icon
-         */
-        Animation.stop();
-        window.loaded = true;
-        resolve(true);
-    });
 });

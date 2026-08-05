@@ -470,27 +470,17 @@ function handleImportSettings(event) {
 
         settingsImportStatus.textContent = "Importing, please wait!";
 
-        const worker = new Worker("scripts/options/worker.js");
-        worker.onmessage = function (message) {
-            if (message.data.action === "finished-settings") {
-                settingsImportStatus.textContent = "Loading data to memory!";
-                bg.fetchAll().then(function () {
-                    if (typeof browser !== "undefined") {
-                        browser.runtime.reload();
-                    }
-                    bg.info.refreshSpecialCounters();
-                    settingsImportStatus.textContent = "Import fully completed!";
-                    sendMessage("load-all");
-                });
-            } else if (message.data.action === "message-settings") {
-                settingsImportStatus.textContent = message.data.value;
-            }
-        };
-        worker.postMessage({ action: "settings", value: data });
-
-        worker.onerror = function (error) {
-            alert("Importing error: " + error.message);
-        };
+        // Settings live in storage.local now, so this no longer goes through the
+        // IndexedDB import worker. Every extension context is notified by
+        // storage.onChanged, so nothing needs reloading afterwards.
+        bg.settings
+            .setMany(data.settings)
+            .then(() => {
+                settingsImportStatus.textContent = "Import fully completed!";
+            })
+            .catch((error) => {
+                settingsImportStatus.textContent = "Importing error: " + error.message;
+            });
     };
     if (typeof browser !== "undefined") {
         reader.readAsText(file);
@@ -664,12 +654,7 @@ function handleClearSettings() {
     if (!confirm("Do you really want to remove all extension settings?")) {
         return;
     }
-    const request = indexedDB.open("backbone-indexeddb", 4);
-    request.addEventListener("success", function () {
-        const db = this.result;
-        const transaction = db.transaction(["settings-backbone"], "readwrite");
-        const settings = transaction.objectStore("settings-backbone");
-        settings.clear();
+    bg.settings.clear().then(() => {
         browser.alarms.clearAll();
         browser.runtime.reload();
     });

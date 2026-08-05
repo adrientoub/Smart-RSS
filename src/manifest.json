@@ -10,6 +10,7 @@
     "page": "index.html"
   },
   "permissions": [
+    "storage",
     "unlimitedStorage",
     "alarms",
     "tabs",

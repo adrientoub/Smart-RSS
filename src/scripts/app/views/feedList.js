@@ -90,7 +90,7 @@ let FeedListView = BB.View.extend({
         });
 
         app.on("select-folder", (id) => {
-            const folder = document.querySelector('.folder[data-id="' + id + '"]');
+            const folder = document.querySelector('.folder[data-id="' + CSS.escape(id) + '"]');
             if (!folder) {
                 return;
             }
@@ -98,7 +98,9 @@ let FeedListView = BB.View.extend({
         });
 
         app.on("focus-feed", (id) => {
-            const feed = document.querySelector('.sources-list-item[data-id="' + id + '"]');
+            const feed = document.querySelector(
+                '.sources-list-item[data-id="' + CSS.escape(id) + '"]'
+            );
             if (!feed) {
                 return;
             }
@@ -174,7 +176,7 @@ let FeedListView = BB.View.extend({
      * @param source {Source} Source tha has its folderID changed
      */
     handleChangeFolder: function (source) {
-        source = document.querySelector('.source[data-id="' + source.get("id") + '"]');
+        source = document.querySelector('.source[data-id="' + CSS.escape(source.get("id")) + '"]');
         if (!source) {
             return;
         }
@@ -343,7 +345,9 @@ let FeedListView = BB.View.extend({
         if (what instanceof FolderView) {
             const folderSources = [
                 ...document.querySelectorAll(
-                    '[data-in-folder="' + where[where.length - 1].view.model.get("id") + '"]'
+                    '[data-in-folder="' +
+                        CSS.escape(where[where.length - 1].view.model.get("id")) +
+                        '"]'
                 ),
             ];
             if (folderSources.length) {

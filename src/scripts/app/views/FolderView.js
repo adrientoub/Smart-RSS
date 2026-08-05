@@ -94,7 +94,9 @@ const FolderView = TopView.extend({
         this.list.insertBefore(this.render(), folderViews);
 
         const feedsInFolder = [
-            ...document.querySelectorAll('[data-in-folder="' + this.model.get("id") + '"'),
+            ...document.querySelectorAll(
+                '[data-in-folder="' + CSS.escape(this.model.get("id")) + '"]'
+            ),
         ];
 
         feedsInFolder.forEach((element) => {

@@ -9,6 +9,11 @@ import contextMenus from "../instances/contextMenus.js";
 import stripTags from "../helpers/stripTags.js";
 import itemTemplate from "../templates/itemView.html";
 import { isReadStateOnlyChange } from "../helpers/itemRender.js";
+
+// Parsed once. Cloning a parsed subtree is far cheaper than re-parsing HTML for
+// every row, and <template> cannot execute what it holds.
+const rowTemplate = document.createElement("template");
+rowTemplate.innerHTML = itemTemplate;
 import { settingsStore } from "../../shared/settings.ts";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
 import { sources } from "../modules/data.js";
@@ -117,7 +122,7 @@ const ItemView = BB.View.extend({
         if (this.multiple) {
             // The feed can be missing briefly: articles and sources reach this
             // context as separate messages. Throwing here would leave a blank row.
-            const source = sources.find({ id: this.model.get("sourceID") });
+            const source = sources.get(this.model.get("sourceID"));
             if (source) {
                 article.sourceTitle = source.get("title");
                 if (settings.get("displayFaviconInsteadOfPin")) {
@@ -140,7 +145,7 @@ const ItemView = BB.View.extend({
             this.el.removeChild(this.el.firstChild);
         }
 
-        const fragment = document.createRange().createContextualFragment(itemTemplate);
+        const fragment = rowTemplate.content.cloneNode(true);
         const itemPin = fragment.querySelector(".item-pin");
         const icon = itemPin.querySelector(".icon");
         if (typeof article.favicon !== "undefined") {

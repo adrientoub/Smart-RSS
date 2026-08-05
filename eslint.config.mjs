@@ -44,12 +44,11 @@ export default tseslint.config(
         },
     },
 
-    // UI pages reach into the background page via `window.bg`. Removed once the
-    // background exposes a real message-passing API instead of shared globals.
+    // UI pages still assign the running app instance onto `window`.
     {
         files: ["src/scripts/app/**/*.js", "src/scripts/appEntrypoint.js"],
         languageOptions: {
-            globals: { bg: "readonly", app: "readonly", tabID: "readonly" },
+            globals: { app: "readonly" },
         },
     },
 

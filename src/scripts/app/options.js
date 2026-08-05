@@ -522,7 +522,7 @@ function handleImportSmart(event) {
         worker.onmessage = function (message) {
             if (message.data.action === "finished") {
                 smartImportStatus.textContent = "Loading data to memory!";
-                bg.fetchAll().then(function () {
+                sendMessage("reload-background-data").then(function () {
                     if (typeof browser !== "undefined") {
                         browser.runtime.reload();
                     }
@@ -653,7 +653,7 @@ function handleClearData() {
         return;
     }
 
-    bg.indexedDB.deleteDatabase("backbone-indexeddb");
+    indexedDB.deleteDatabase("backbone-indexeddb");
     localStorage.clear();
     browser.alarms.clearAll();
     browser.runtime.reload();

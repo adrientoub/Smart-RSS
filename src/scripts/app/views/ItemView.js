@@ -68,19 +68,6 @@ const ItemView = BB.View.extend({
     setEvents: function () {
         this.model.on("change", this.handleModelChange, this);
         this.model.on("destroy", this.handleModelDestroy, this);
-        sources.on("clear-events", this.handleClearEvents, this);
-    },
-
-    /**
-     * If the tab is closed, it will remove all events bound to bgprocess
-     * @method handleClearEvents
-     * @triggered when bgprocesses triggers clear-events event
-     * @param id {Number} ID of closed tab
-     */
-    handleClearEvents: function (id) {
-        if (!window || id === tabID) {
-            this.clearEvents();
-        }
     },
 
     /**
@@ -92,7 +79,6 @@ const ItemView = BB.View.extend({
             this.model.off("change", this.handleModelChange, this);
             this.model.off("destroy", this.handleModelDestroy, this);
         }
-        sources.off("clear-events", this.handleClearEvents, this);
     },
 
     /**

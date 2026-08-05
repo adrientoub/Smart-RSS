@@ -10,7 +10,6 @@ import ArticlesLayout from "./layouts/ArticlesLayout.js";
 import ContentLayout from "./layouts/ContentLayout.js";
 import shortcuts from "./staticdb/shortcuts.js";
 import { settingsStore } from "../shared/settings.ts";
-import { sources } from "./modules/data.js";
 
 const settings = settingsStore();
 
@@ -109,13 +108,6 @@ const app = (window.app = new (Layout.extend({
         });
 
         settings.on("change:layout", this.handleLayoutChange, this);
-        sources.on("clear-events", this.handleClearEvents, this);
-    },
-    handleClearEvents: function (id) {
-        if (!window || id === tabID) {
-            settings.off("change:layout", this.handleLayoutChange, this);
-            sources.off("clear-events", this.handleClearEvents, this);
-        }
     },
     handleLayoutChange: function () {
         if (settings.get("layout") === "vertical") {
@@ -142,24 +134,17 @@ const app = (window.app = new (Layout.extend({
         comm.trigger("hide-overlays", { blur: true });
     },
     start: function () {
-        const isLoaded = () => {
-            if (bg.loaded) {
-                this.attach("feeds", new FeedsLayout());
-                this.attach("articles", new ArticlesLayout());
-                this.attach("content", new ContentLayout());
+        this.attach("feeds", new FeedsLayout());
+        this.attach("articles", new ArticlesLayout());
+        this.attach("content", new ContentLayout());
 
-                this.feeds.enableResizing("horizontal", settings.get("posA"));
-                this.articles.enableResizing("horizontal", settings.get("posB"));
-                applyStylesToSandbox();
-                changeUserStyle();
-                changeInvertColors();
-                this.handleLayoutChange();
-                document.querySelector("body").classList.remove("loading");
-            } else {
-                setTimeout(isLoaded, 150);
-            }
-        };
-        isLoaded();
+        this.feeds.enableResizing("horizontal", settings.get("posA"));
+        this.articles.enableResizing("horizontal", settings.get("posB"));
+        applyStylesToSandbox();
+        changeUserStyle();
+        changeInvertColors();
+        this.handleLayoutChange();
+        document.querySelector("body").classList.remove("loading");
     },
     handleKeyDown: (event) => {
         const activeElement = document.activeElement;
@@ -211,7 +196,7 @@ const app = (window.app = new (Layout.extend({
 }))());
 if (typeof browser !== "undefined") {
     window.addEventListener("unload", () => {
-        bg.reloadExt();
+        browser.runtime.reload();
     });
 }
 

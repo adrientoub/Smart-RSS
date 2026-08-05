@@ -7,7 +7,6 @@ import BB from "backbone";
 import TopView from "./TopView.js";
 import contextMenus from "../instances/contextMenus.js";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
-import { sources } from "../modules/data.js";
 
 /**
  * View for Folder in feed list
@@ -81,7 +80,6 @@ const FolderView = TopView.extend({
         this.model.on("destroy", this.handleModelDestroy, this);
         this.model.on("change", this.render, this);
         this.model.on("change:title", this.handleChangeTitle, this);
-        sources.on("clear-events", this.handleClearEvents, this);
 
         this.el.dataset.id = this.model.get("id");
     },
@@ -108,18 +106,6 @@ const FolderView = TopView.extend({
     },
 
     /**
-     * If the tab is closed, it will remove all events bound to bgprocess
-     * @method handleClearEvents
-     * @triggered when bgprocesses triggers clear-events event
-     * @param id {Number} ID of closed tab
-     */
-    handleClearEvents: function (id) {
-        if (!window || id === tabID) {
-            this.clearEvents();
-        }
-    },
-
-    /**
      * Removes all events bound to bgprocess
      * @method clearEvents
      */
@@ -127,7 +113,6 @@ const FolderView = TopView.extend({
         this.model.off("destroy", this.handleModelDestroy, this);
         this.model.off("change", this.render, this);
         this.model.off("change:title", this.handleChangeTitle, this);
-        sources.off("clear-events", this.handleClearEvents, this);
     },
 
     /**

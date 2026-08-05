@@ -11,7 +11,6 @@ export default BB.View.extend({
             this.el.classList.remove("active");
             if (action.get("state")) {
                 if (settings.get(action.get("state"))) {
-                    console.log(action.get("state"), settings.get(action.get("state")));
                     this.el.classList.add("active");
                 }
             }

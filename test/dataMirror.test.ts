@@ -92,3 +92,70 @@ describe("applyDataChange", () => {
         );
     });
 });
+
+describe("applyDataChange / a sorted collection", () => {
+    const Sorted = BB.Collection.extend({
+        comparator: (model: { get(key: string): number }) => model.get("date"),
+    });
+
+    // The article list rebuilds its whole DOM on "sort", so a feed refresh used
+    // to make it flicker once per incoming article.
+    it("adds a batch without announcing a re-sort", () => {
+        const items = new Sorted([{ id: "b", date: 2 }]);
+        let sorts = 0;
+        items.on("sort", () => (sorts += 1));
+
+        applyDataChange(
+            { items },
+            {
+                store: "items",
+                added: [
+                    { id: "c", date: 3 },
+                    { id: "a", date: 1 },
+                ],
+            }
+        );
+
+        assert.equal(sorts, 0);
+    });
+
+    it("still leaves the collection in comparator order", () => {
+        const items = new Sorted([{ id: "b", date: 2 }]);
+        applyDataChange(
+            { items },
+            {
+                store: "items",
+                added: [
+                    { id: "c", date: 3 },
+                    { id: "a", date: 1 },
+                ],
+            }
+        );
+
+        assert.deepEqual(
+            items.map((model: { id: string }) => model.id),
+            ["a", "b", "c"]
+        );
+    });
+
+    // The list inserts each new row itself, and it needs one event per article.
+    it("still fires add for every new record", () => {
+        const items = new Sorted([{ id: "b", date: 2 }]);
+        const added: string[] = [];
+        items.on("add", (model: { id: string }) => added.push(model.id));
+
+        applyDataChange(
+            { items },
+            {
+                store: "items",
+                added: [
+                    { id: "c", date: 3 },
+                    { id: "a", date: 1 },
+                    { id: "b", date: 2 },
+                ],
+            }
+        );
+
+        assert.deepEqual(added.sort(), ["a", "c"]);
+    });
+});

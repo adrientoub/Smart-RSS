@@ -98,11 +98,21 @@ There is no CI. The `check` and `build` scripts are the only gate.
 
 ## Manifest V3 migration
 
-The target is a single build running on both Firefox and Chromium. Remaining blockers,
-roughly in order:
+The target is a single build running on both Firefox and Chromium.
+`getBackgroundPage()` is gone: the UI owns its own collections over the same
+IndexedDB, the background is the only writer, and the two talk through
+`shared/messages.ts`. Remaining work:
 
-1. `browser.runtime.getBackgroundPage()` — replace with typed message passing
-2. The `manifest_version: 3` flip, `host_permissions`, `webextension-polyfill`, `_locales`
+1. The `manifest_version: 3` flip — `host_permissions`, `action`, the CSP object
+   form, `background.service_worker`
+2. Service worker lifecycle. The background still holds every article in memory
+   and a worker is terminated when idle, so it would reload the whole database on
+   each wake. This is a design decision, not a mechanical change.
+
+`browser` comes from `webextension-polyfill`, loaded for its side effect by
+`shared/polyfill.js`, which every entry point imports **first**. Chrome has no
+native `browser`; Firefox does, and the polyfill defers to it. Do not import the
+package anywhere else — it throws outside an extension, which breaks the tests.
 
 The background process no longer parses with the DOM: `RSSParser.ts` uses
 `@rgrove/parse-xml`, favicons come from `/favicon.ico` directly, and article diffing

@@ -292,3 +292,69 @@ describe("settings migration", () => {
         assert.deepEqual(picked, { layout: "vertical" });
     });
 });
+
+/**
+ * The view layer still calls the store the way it called the Backbone model it
+ * replaced, so both Backbone spellings have to keep working.
+ */
+describe("settings store / Backbone call shapes", () => {
+    it("save() accepts the object form used by the resizable layouts", async () => {
+        const area = fakeStorage();
+        const store = createSettingsStore(area);
+        await store.load();
+
+        store.save({ posB: 300, posC: 120 });
+        await Promise.resolve();
+
+        assert.equal(store.get("posB"), 300);
+        assert.equal(store.get("posC"), 120);
+        assert.equal(area.data["setting.posB"], 300);
+    });
+
+    it("save() still accepts the key/value form", async () => {
+        const area = fakeStorage();
+        const store = createSettingsStore(area);
+        await store.load();
+
+        store.save("layout", "vertical");
+        await Promise.resolve();
+
+        assert.equal(store.get("layout"), "vertical");
+        assert.equal(area.data["setting.layout"], "vertical");
+    });
+
+    it("on() binds the context argument", async () => {
+        const area = fakeStorage();
+        const store = createSettingsStore(area);
+        await store.load();
+
+        const view = {
+            seen: [] as string[],
+            handler(this: { seen: string[] }, key: string) {
+                this.seen.push(key);
+            },
+        };
+        store.on("change:layout", view.handler, view);
+        await store.set("layout", "vertical");
+
+        assert.deepEqual(view.seen, ["layout"]);
+    });
+
+    it("off() removes a listener registered with a context", async () => {
+        const area = fakeStorage();
+        const store = createSettingsStore(area);
+        await store.load();
+
+        const view = {
+            calls: 0,
+            handler(this: { calls: number }) {
+                this.calls += 1;
+            },
+        };
+        store.on("change:layout", view.handler, view);
+        store.off("change:layout", view.handler, view);
+        await store.set("layout", "vertical");
+
+        assert.equal(view.calls, 0);
+    });
+});

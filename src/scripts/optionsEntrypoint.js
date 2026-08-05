@@ -2,6 +2,7 @@
  * See appEntrypoint.js: the caches must be seeded before the options modules
  * evaluate, so the import has to be deferred.
  */
+import "./shared/polyfill.js";
 import { settingsStore } from "./shared/settings.ts";
 import { sendMessage } from "./shared/messages.ts";
 

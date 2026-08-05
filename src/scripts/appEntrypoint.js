@@ -3,6 +3,7 @@
  * evaluate (Locale.js, the views), so both caches are seeded first. Static
  * imports would run too early, hence the dynamic imports.
  */
+import "./shared/polyfill.js";
 import { settingsStore } from "./shared/settings.ts";
 import { sendMessage } from "./shared/messages.ts";
 

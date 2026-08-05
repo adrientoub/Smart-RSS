@@ -133,14 +133,15 @@ const bundle = async ({ minify = false } = {}) => {
         legalComments: "eof",
     };
 
-    // Extension pages load ES modules; splitting keeps shared code in one chunk.
+    // One self-contained file per entry point. Splitting emitted content-hashed
+    // chunks, and a page that dynamically imported one after a rebuild had
+    // renamed it hung forever: Firefox never settles a failed import().
     await esbuild.build({
         ...shared,
         entryPoints: BUNDLE_ENTRIES.map((e) => join(SRC, e)),
         outdir: join(DIST, "scripts"),
         format: "esm",
-        splitting: true,
-        chunkNames: "chunks/[name]-[hash]",
+        splitting: false,
     });
 
     // Web Workers cannot be ES modules here, so this one is a classic script.

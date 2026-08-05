@@ -8,13 +8,9 @@ import Loader from "./models/Loader.js";
 import actionApi from "./modules/actionApi.js";
 import { dataHandlers } from "./modules/dataApi.js";
 import Source from "../shared/models/Source.js";
-import Sources from "../shared/collections/Sources.js";
 import Item from "../shared/models/Item.js";
-import Items from "../shared/collections/Items.js";
 import Folder from "../shared/models/Folder.js";
-import Folders from "../shared/collections/Folders.js";
-import Toolbars from "../shared/collections/Toolbars.js";
-import { registerCollections } from "../shared/collectionRegistry.ts";
+import { createCollections, fetchCollections } from "../shared/dataStore.ts";
 import { handleMessages } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
 import { migrateSettings } from "../shared/settingsMigration.ts";
@@ -154,10 +150,12 @@ window.Folder = Folder;
  * DB models
  */
 const settings = settingsStore();
+const collections = createCollections();
 window.info = new Info();
-window.sources = new Sources();
-window.items = new Items();
-window.folders = new Folders();
+window.sources = collections.sources;
+window.items = collections.items;
+window.folders = collections.folders;
+window.toolbars = collections.toolbars;
 window.loaded = false;
 
 /**
@@ -165,42 +163,14 @@ window.loaded = false;
  */
 window.sourceToFocus = null;
 
-window.toolbars = new Toolbars();
-
 window.loader = new Loader();
 
-// Item.getSource() reaches the sources collection through this.
-registerCollections({
-    sources: window.sources,
-    items: window.items,
-    folders: window.folders,
-    toolbars: window.toolbars,
-});
-
-function fetchOne(tasks) {
-    return new Promise((resolve) => {
-        if (tasks.length === 0) {
-            resolve(true);
-            return;
-        }
-        const oneTask = tasks.shift();
-        oneTask.then(() => resolve(fetchOne(tasks))).catch(() => resolve(fetchOne(tasks)));
-    });
-}
-
-function fetchAll() {
-    const tasks = [];
-    tasks.push(settings.load());
-    tasks.push(folders.fetch({ silent: true }));
-    tasks.push(sources.fetch({ silent: true }));
-    tasks.push(toolbars.fetch({ silent: true }));
-    tasks.push(items.fetch({ silent: true }));
-
-    return fetchOne(tasks);
+async function fetchAll() {
+    await settings.load();
+    await fetchCollections(collections);
 }
 
 window.fetchAll = fetchAll;
-window.fetchOne = fetchOne;
 window.reloadExt = function () {
     browser.runtime.reload();
 };

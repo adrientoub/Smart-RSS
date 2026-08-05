@@ -7,6 +7,8 @@ import BB from "backbone";
 import animation from "../modules/Animation.js";
 import actionApi from "../modules/actionApi.js";
 import { settingsStore } from "../../shared/settings.ts";
+import { collections } from "../../shared/collectionRegistry.ts";
+import { applyCounts } from "../../shared/counters.ts";
 
 const settings = settingsStore();
 
@@ -67,59 +69,7 @@ const Info = BB.Model.extend({
     },
     badgeTimeout: null,
     refreshSpecialCounters: function () {
-        this.set({
-            allCountUnread: items.where({
-                trashed: false,
-                deleted: false,
-                unread: true,
-            }).length,
-            allCountTotal: items.where({ trashed: false, deleted: false }).length,
-            allCountUnvisited: items.where({
-                visited: false,
-                trashed: false,
-            }).length,
-            trashCountUnread: items.where({
-                trashed: true,
-                deleted: false,
-                unread: true,
-            }).length,
-            trashCountTotal: items.where({ trashed: true, deleted: false }).length,
-            pinnedCountUnread: items.where({
-                trashed: false,
-                deleted: false,
-                unread: true,
-                pinned: true,
-            }).length,
-            pinnedCountTotal: items.where({
-                trashed: false,
-                deleted: false,
-                pinned: true,
-            }).length,
-        });
-
-        sources.forEach(function (source) {
-            source.set({
-                count: items.where({
-                    trashed: false,
-                    sourceID: source.id,
-                    unread: true,
-                }).length,
-                countAll: items.where({
-                    trashed: false,
-                    sourceID: source.id,
-                }).length,
-            });
-        });
-
-        folders.forEach(function (folder) {
-            let count = 0;
-            let countAll = 0;
-            sources.where({ folderID: folder.id }).forEach(function (source) {
-                count += source.get("count");
-                countAll += source.get("countAll");
-            });
-            folder.set({ count: count, countAll: countAll });
-        });
+        this.set(applyCounts(collections));
     },
     setEvents: function () {
         settings.on("change:badgeMode", handleAllCountChange);

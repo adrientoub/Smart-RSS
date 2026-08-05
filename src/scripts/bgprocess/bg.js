@@ -6,6 +6,7 @@ import Animation from "./modules/Animation.js";
 import Info from "./models/Info.js";
 import Loader from "./models/Loader.js";
 import actionApi from "./modules/actionApi.js";
+import { dataHandlers } from "./modules/dataApi.js";
 import Source from "../shared/models/Source.js";
 import Sources from "../shared/collections/Sources.js";
 import Item from "../shared/models/Item.js";
@@ -83,6 +84,7 @@ handleMessages({
     "abort-downloads": () => {
         loader.abortDownloading();
     },
+    ...dataHandlers,
 });
 
 function openRSS(closeIfActive, focusSource) {

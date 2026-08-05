@@ -11,6 +11,9 @@
  * which is why source commands take ids rather than model instances.
  */
 
+/** The persisted Backbone collections. The background is their only writer. */
+export type StoreName = "sources" | "items" | "folders" | "toolbars";
+
 export interface MessageMap {
     /** Refresh every feed, ignoring per-feed update frequency. */
     "load-all": { request: void; response: void };
@@ -20,6 +23,25 @@ export interface MessageMap {
     "download-sources": { request: { ids: string[] }; response: void };
     /** Cancel any in-flight feed downloads. */
     "abort-downloads": { request: void; response: void };
+
+    /**
+     * Writes. The background owns persistence because the feed loader writes
+     * sources and items continuously, so the UI asks rather than writing itself.
+     * Updates take a list of ids: marking a whole feed read is one message.
+     */
+    "data-create": {
+        request: { store: StoreName; attrs: Record<string, unknown> };
+        response: { id: string };
+    };
+    "data-update": {
+        request: { store: StoreName; ids: string[]; attrs: Record<string, unknown> };
+        response: void;
+    };
+    "data-destroy": { request: { store: StoreName; ids: string[] }; response: void };
+    /** Item.trash(): soft delete, keeps the record. */
+    "items-trash": { request: { ids: string[] }; response: void };
+    /** Item.markAsDeleted(): drops the content but keeps a tombstone. */
+    "items-mark-deleted": { request: { ids: string[] }; response: void };
 
     /** Reader page should re-read the user stylesheet. */
     "user-style-changed": { request: void; response: void };

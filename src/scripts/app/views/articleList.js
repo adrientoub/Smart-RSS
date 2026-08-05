@@ -11,6 +11,7 @@ import ItemView from "./ItemView.js";
 import selectable from "../mixins/selectable.js";
 import Locale from "../modules/Locale.js";
 import { settingsStore } from "../../shared/settings.ts";
+import { updateRecords, trashItems, markItemsDeleted, idsOf } from "../../shared/dataClient.ts";
 
 const settings = settingsStore();
 
@@ -183,12 +184,12 @@ let ArticleListView = BB.View.extend({
         app.trigger("select:" + this.el.id, { action: "new-select", value: view.model.id });
 
         if (view.model.get("unread") && settings.get("readOnVisit")) {
-            view.model.save({
+            updateRecords("items", idsOf(view.model), {
                 visited: true,
                 unread: false,
             });
         } else if (!view.model.get("visited")) {
-            view.model.save("visited", true);
+            updateRecords("items", idsOf(view.model), { visited: true });
         }
     },
 
@@ -215,7 +216,7 @@ let ArticleListView = BB.View.extend({
             "give-me-next",
             function () {
                 if (this.selectedItems[0] && this.selectedItems[0].model.get("unread") === true) {
-                    this.selectedItems[0].model.save({ unread: false });
+                    updateRecords("items", idsOf(this.selectedItems[0].model), { unread: false });
                 }
                 this.selectNextSelectable({ selectUnread: true });
                 app.actions.execute("content:focus");
@@ -536,9 +537,7 @@ let ArticleListView = BB.View.extend({
      * @param view {views/ItemView} Undeleted article view
      */
     undeleteItem: function (view) {
-        view.model.save({
-            trashed: false,
-        });
+        updateRecords("items", idsOf(view.model), { trashed: false });
         this.destroyItem(view);
     },
 
@@ -557,7 +556,7 @@ let ArticleListView = BB.View.extend({
                 return;
             }
         }
-        view.model.trash();
+        trashItems(idsOf(view.model));
         this.destroyItem(view);
         this.trigger("items-destroyed");
     },
@@ -577,7 +576,7 @@ let ArticleListView = BB.View.extend({
                 return;
             }
         }
-        view.model.markAsDeleted();
+        markItemsDeleted(idsOf(view.model));
     },
 
     /**
@@ -671,11 +670,10 @@ let ArticleListView = BB.View.extend({
             this.selectedItems.length && !options.onlyToRead
                 ? !this.selectedItems[0].model.get("unread")
                 : false;
-        this.selectedItems.forEach(function (item) {
-            if (!options.onlyToRead || item.model.get("unread") === true) {
-                item.model.save({ unread: unread, visited: true });
-            }
-        }, this);
+        const targets = this.selectedItems
+            .filter((item) => !options.onlyToRead || item.model.get("unread") === true)
+            .map((item) => item.model);
+        updateRecords("items", idsOf(targets), { unread: unread, visited: true });
     },
 });
 

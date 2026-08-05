@@ -7,9 +7,14 @@
 import type { StoreName } from "./messages.ts";
 
 export interface MirrorCollection {
+    comparator?: unknown;
     get(id: string): { set(attrs: Record<string, unknown>): void } | undefined;
-    add(record: Record<string, unknown>, options?: { merge?: boolean }): unknown;
+    add(
+        records: Record<string, unknown>[],
+        options?: { merge?: boolean; sort?: boolean }
+    ): unknown;
     remove(model: unknown): unknown;
+    sort(options?: { silent?: boolean }): unknown;
 }
 
 export interface DataChange {
@@ -28,7 +33,14 @@ export function applyDataChange(
         return false;
     }
 
-    change.added?.forEach((record) => collection.add(record, { merge: true }));
+    if (change.added?.length) {
+        // Backbone fires "sort" for every add that reorders, and the article
+        // list rebuilds itself from scratch on it. One add, one silent sort.
+        collection.add(change.added, { merge: true, sort: false });
+        if (collection.comparator) {
+            collection.sort({ silent: true });
+        }
+    }
     change.changed?.forEach(({ id, attrs }) => collection.get(id)?.set(attrs));
     change.removed?.forEach((id) => {
         const model = collection.get(id);

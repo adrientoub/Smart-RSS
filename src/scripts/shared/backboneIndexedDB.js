@@ -34,20 +34,33 @@ Backbone.IndexedDB = function (name) {
     this.dbRequest = request;
     const that = this;
 
-    request.addEventListener("error", function (e) {
-        // user probably disallowed idb
-        throw "Error code: " + this.errorCode;
-        // what are the possible codes???
+    // Settled once, and every sync waits on it. Attaching listeners at sync time
+    // instead means a request that has already failed is waited on forever.
+    this.ready = new Promise((resolve, reject) => {
+        request.addEventListener("success", function () {
+            that.db = this.result;
+            resolve(this.result);
+        });
+
+        request.addEventListener("error", function () {
+            // user probably disallowed idb
+            reject(this.error || new Error(`Could not open IndexedDB for ${name}`));
+        });
+
+        // Another context still holds a connection at the older version. The
+        // open resumes once it closes, so this is a warning, not a failure.
+        request.addEventListener("blocked", function () {
+            console.warn(`IndexedDB upgrade for ${name} is waiting on another tab`);
+        });
+
+        request.addEventListener("upgradeneeded", function () {
+            Backbone.IndexedDB.prepare(this.result);
+        });
     });
 
-    request.addEventListener("success", function (e) {
-        that.db = this.result;
-    });
-
-    request.addEventListener("upgradeneeded", function (e) {
-        const db = this.result;
-        Backbone.IndexedDB.prepare(db);
-    });
+    // Also marks the rejection handled, so it is reported once rather than as an
+    // unhandled rejection for every store.
+    this.ready.catch((error) => console.error(`Failed to open IndexedDB for ${name}`, error));
 };
 
 Backbone.IndexedDB.prototype = Object.assign(Backbone.IndexedDB.prototype, {
@@ -202,14 +215,9 @@ Backbone.IndexedDB.sync = function (method, model, options) {
     // Use only native Promise
     return new Promise((resolve, reject) => {
         if (!store.db) {
-            store.dbRequest.addEventListener("success", function (e) {
-                store.db = this.result;
-                // Call sync again and pass the promise handlers
-                Backbone.IndexedDB.sync
-                    .call(that, method, model, options)
-                    .then(resolve)
-                    .catch(reject);
-            });
+            store.ready
+                .then(() => Backbone.IndexedDB.sync.call(that, method, model, options))
+                .then(resolve, reject);
         } else {
             try {
                 switch (method) {

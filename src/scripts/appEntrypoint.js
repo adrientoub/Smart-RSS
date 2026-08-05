@@ -5,11 +5,11 @@
  */
 import "./shared/polyfill.js";
 import { settingsStore } from "./shared/settings.ts";
-import { sendMessage } from "./shared/messages.ts";
+import { waitForBackground } from "./shared/messages.ts";
 
 (async () => {
     // The background still owns writing and feed downloads.
-    await sendMessage("background-ready");
+    await waitForBackground();
     await settingsStore().load();
 
     const { loadData, startApplyingChanges } = await import("./app/modules/data.js");
@@ -21,4 +21,7 @@ import { sendMessage } from "./shared/messages.ts";
     const { default: app } = await import("./app/app.js");
     app.start();
     startApplyingChanges();
-})();
+})().catch((error) => {
+    // Nothing renders if this rejects, so the page would just sit there loading.
+    console.error("Smart RSS failed to start", error);
+});

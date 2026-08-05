@@ -1,6 +1,11 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { createMessageListener } from "../src/scripts/shared/messages.ts";
+import {
+    createMessageListener,
+    isNoReceiverError,
+    NoReceiverError,
+    retryWhileNoReceiver,
+} from "../src/scripts/shared/messages.ts";
 
 describe("createMessageListener", () => {
     it("dispatches to the handler for the action", async () => {
@@ -70,5 +75,87 @@ describe("createMessageListener", () => {
 
         await listen({ action: "abort-downloads" });
         assert.ok(called);
+    });
+});
+
+describe("retryWhileNoReceiver", () => {
+    const noReceiver = () =>
+        Promise.reject(new Error("Could not establish connection. Receiving end does not exist."));
+
+    it("returns the first successful value without waiting", async () => {
+        const slept: number[] = [];
+        const value = await retryWhileNoReceiver(async () => "up", {
+            sleep: async (ms) => {
+                slept.push(ms);
+            },
+        });
+
+        assert.equal(value, "up");
+        assert.deepEqual(slept, []);
+    });
+
+    // The background page may not have registered its listener yet when a
+    // restored tab sends its first message.
+    it("retries with a growing delay until someone listens", async () => {
+        const slept: number[] = [];
+        let attempts = 0;
+        const value = await retryWhileNoReceiver(
+            () => {
+                attempts += 1;
+                return attempts < 4 ? noReceiver() : Promise.resolve("up");
+            },
+            {
+                sleep: async (ms) => {
+                    slept.push(ms);
+                },
+            }
+        );
+
+        assert.equal(value, "up");
+        assert.deepEqual(slept, [50, 100, 200]);
+    });
+
+    it("rethrows anything that is not a missing receiver", async () => {
+        let attempts = 0;
+        await assert.rejects(
+            () =>
+                retryWhileNoReceiver(
+                    () => {
+                        attempts += 1;
+                        return Promise.reject(new Error("boom"));
+                    },
+                    { sleep: async () => {} }
+                ),
+            /boom/
+        );
+        assert.equal(attempts, 1);
+    });
+
+    it("gives up once the timeout has passed", async () => {
+        let clock = 0;
+        await assert.rejects(
+            () =>
+                retryWhileNoReceiver(noReceiver, {
+                    timeoutMs: 100,
+                    now: () => clock,
+                    sleep: async (ms) => {
+                        clock += ms;
+                    },
+                }),
+            /Receiving end does not exist/
+        );
+    });
+});
+
+describe("isNoReceiverError", () => {
+    it("recognises both runtimes' wording", () => {
+        assert.ok(isNoReceiverError(new Error("Could not establish connection.")));
+        assert.ok(isNoReceiverError(new Error("Receiving end does not exist.")));
+        assert.ok(isNoReceiverError(new NoReceiverError("not answered yet")));
+    });
+
+    it("does not swallow other failures", () => {
+        assert.equal(isNoReceiverError(new Error("Message length exceeded")), false);
+        assert.equal(isNoReceiverError(undefined), false);
     });
 });

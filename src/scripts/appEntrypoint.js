@@ -13,9 +13,10 @@ browser.runtime.getBackgroundPage(function (bg) {
     window.bg = bg;
     bg.appStarted.then(async () => {
         await settingsStore().load();
-        const { loadData } = await import("./app/modules/data.js");
+        const { loadData, startApplyingChanges } = await import("./app/modules/data.js");
         await loadData();
         const { default: app } = await import("./app/app.js");
         app.start();
+        startApplyingChanges();
     });
 });

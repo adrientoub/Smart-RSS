@@ -10,6 +10,7 @@ import BB from "backbone";
 import { createCollections, fetchCollections } from "../../shared/dataStore.ts";
 import { applyCounts } from "../../shared/counters.ts";
 import { applyDataChange } from "../../shared/dataMirror.ts";
+import { createChangeBuffer } from "../../shared/changeBuffer.ts";
 import { handleMessages } from "../../shared/messages.ts";
 
 export const collections = createCollections();
@@ -44,10 +45,20 @@ function applyChange(change) {
     }
 }
 
+/**
+ * Applying a change runs view code, and the views do not exist until
+ * `app.start()`. Until then changes are held rather than dropped.
+ */
+const incoming = createChangeBuffer(applyChange);
+
+export function startApplyingChanges() {
+    incoming.start();
+}
+
 export async function loadData() {
     // Registered before the fetch so a write during it is not missed. Fetch
     // merges rather than resets, so an early change is not clobbered.
-    handleMessages({ "data-changed": applyChange });
+    handleMessages({ "data-changed": (change) => incoming.push(change) });
     await fetchCollections(collections);
     refreshCounts();
 }

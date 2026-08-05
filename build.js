@@ -9,6 +9,7 @@ const {
     existsSync,
     readFileSync,
     writeFileSync,
+    rmSync,
 } = require("fs");
 const { execSync } = require("child_process");
 const semver = require("semver");
@@ -90,6 +91,9 @@ const commit = (level = "patch") => {
 const copyFiles = () => {
     console.log("Copying static files from src to dist...");
 
+    // Bundle chunk names carry a content hash, so leftovers from an earlier build
+    // would linger forever and be packaged.
+    rmSync(DIST, { recursive: true, force: true });
     ensureDirectoryExists(DIST);
 
     const srcFiles = scan(SRC);
@@ -161,6 +165,10 @@ const zipPackage = () => {
     const zipFile = new AdmZip();
 
     filesList.forEach((file) => {
+        // A zip from a previous run lives in dist too; packaging it would nest releases.
+        if (file.endsWith(".zip")) {
+            return;
+        }
         // Get the directory relative to the root, or empty string if it's at the root
         const relativePath = dirname(file) === root ? "" : relative(root, dirname(file));
         zipFile.addLocalFile(file, relativePath);

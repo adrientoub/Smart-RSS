@@ -26,13 +26,14 @@ export default [
         ],
     },
     {
-        version: 2,
+        version: 3,
         region: "content",
         actions: [
             "content:mark",
             "content:delete",
             "!dynamicSpace",
             "content:changeView",
+            "content:toggleTheme",
             "content:showConfig",
         ],
     },

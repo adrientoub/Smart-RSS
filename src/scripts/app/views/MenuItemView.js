@@ -1,4 +1,5 @@
 import BB from "backbone";
+import { createIcon } from "../staticdb/icons.ts";
 
 export default BB.View.extend({
     tagName: "div",
@@ -13,20 +14,16 @@ export default BB.View.extend({
         }
     },
     render: function () {
-        while (this.el.firstChild) {
-            this.el.removeChild(this.el.firstChild);
-        }
+        // Items without an icon keep an empty slot so every label lines up.
+        const icon =
+            createIcon(this.model.get("icon"), "context-menu-icon") ||
+            Object.assign(document.createElement("span"), { className: "context-menu-icon" });
 
-        const fragment = document
-            .createRange()
-            .createContextualFragment(
-                '<img class="context-menu-icon" alt="" src=""/>' + this.model.get("title")
-            );
-        this.el.appendChild(fragment);
+        const label = document.createElement("span");
+        label.className = "context-menu-label";
+        label.textContent = this.model.get("title");
 
-        if (this.model.get("icon")) {
-            this.el.querySelector("img").setAttribute("src", "/images/" + this.model.get("icon"));
-        }
+        this.el.replaceChildren(icon, label);
         return this;
     },
     handleClick: function (e) {

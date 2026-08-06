@@ -1,6 +1,7 @@
 import BB from "backbone";
 import Locale from "../modules/Locale.js";
 import { settingsStore } from "../../shared/settings.ts";
+import { applyTheme } from "../../shared/theme.ts";
 
 const settings = settingsStore();
 
@@ -30,12 +31,7 @@ export default BB.View.extend({
             .querySelector("[data-base-style]")
             .setAttribute("href", baseStylePath);
 
-        const darkStylePath = browser.runtime.getURL("styles/dark.css");
-        this.el.contentDocument
-            .querySelector("[data-dark-style]")
-            .setAttribute("href", darkStylePath);
-        this.el.contentDocument.querySelector("[data-custom-style]").innerHTML =
-            settings.get("userStyle");
+        applyTheme(this.el.contentDocument, settings.get("theme"));
         this.trigger("load");
     },
 });

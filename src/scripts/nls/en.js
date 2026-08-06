@@ -115,6 +115,7 @@ export default {
 
     HIDE_OVERLAYS: "Hide overlays",
     TOGGLE_SHOW_ONLY_UNREAD: "Toggle show only unread",
+    TOGGLE_THEME: "Toggle dark mode",
     STOP_UPDATE: "Stop updating feeds",
     OPEN_HOME: "Open feed homepage",
     SCROLL_INTO_VIEW: "Scroll into view",

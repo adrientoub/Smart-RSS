@@ -1,10 +1,13 @@
 import BB from "backbone";
 import Locale from "../modules/Locale.js";
 import topViewTemplate from "../templates/topView.html";
+import { iconMarkup } from "../staticdb/icons.ts";
 
 export default BB.View.extend({
     tagName: "a",
-    template: topViewTemplate,
+    template: topViewTemplate
+        .replace("{{LOADING_ICON}}", iconMarkup("loader", "source-icon loading"))
+        .replace("{{BROKEN_ICON}}", iconMarkup("alert-triangle", "source-icon broken")),
     className: "sources-list-item",
     handleMouseUp: function (e) {
         if (e.button === 2) {

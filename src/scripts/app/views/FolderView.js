@@ -6,6 +6,7 @@
 import BB from "backbone";
 import TopView from "./TopView.js";
 import contextMenus from "../instances/contextMenus.js";
+import { iconMarkup } from "../staticdb/icons.ts";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
 
 /**
@@ -24,10 +25,10 @@ const FolderView = TopView.extend({
     className: "sources-list-item folder",
 
     template: `<div class="folder-arrow"></div>
-            <img src="/images/folder.png" class="source-icon closed"/>
-            <img src="/images/folder_opened.png" class="source-icon opened"/>
-            <div class="source-title"><%- title %></div>
-            <div class="source-counter"><%- count %></div>`,
+            ${iconMarkup("folder", "source-icon closed")}
+            ${iconMarkup("folder-open", "source-icon opened")}
+            <div class="source-title"></div>
+            <div class="source-counter"></div>`,
 
     /**
      * Reference to view/feedList instance. It should be replaced with require('views/feedList')

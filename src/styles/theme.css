@@ -1,0 +1,71 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/**
+ * Design tokens, shared by the reader, the article sandbox and the options page.
+ *
+ * Both palettes live in one place through `light-dark()`, which picks a value
+ * from the used `color-scheme`. That means "auto" needs no class, no attribute
+ * and no script: the default `color-scheme: light dark` already follows the
+ * browser. `data-theme` only has to pin the two explicit overrides, so there is
+ * no flash of the wrong palette before the settings have loaded.
+ */
+
+:root {
+    color-scheme: light dark;
+
+    /* Surfaces, from the page background up to floating overlays. */
+    --surface: light-dark(#ffffff, #1c1b22);
+    --surface-sunken: light-dark(#f2f2f5, #17161c);
+    --surface-raised: light-dark(#f8f8fa, #26252d);
+    --surface-floating: light-dark(#ffffff, #2b2a33);
+    --surface-hover: light-dark(rgba(0, 0, 0, 0.055), rgba(255, 255, 255, 0.07));
+    --surface-active: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.13));
+
+    /* Text. */
+    --text: light-dark(#1c1b22, #ebebf0);
+    --text-muted: light-dark(#5b5b66, #a8a8b3);
+    --text-faint: light-dark(#87878f, #7c7c88);
+
+    /* Lines. `--border` is a whole shorthand: `border: var(--border)`. */
+    --line: light-dark(#e3e3e8, #3a3944);
+    --line-strong: light-dark(#c8c8d0, #4d4c58);
+    --border: 1px solid var(--line);
+    --border-strong: 1px solid var(--line-strong);
+
+    /* Accent, used for selection and focus. */
+    --accent: light-dark(#2a6ee0, #3f7fdd);
+    --accent-hover: light-dark(#1f5fca, #5590e8);
+    --accent-text: #ffffff;
+    --accent-soft: light-dark(#e8f0fd, #2a3345);
+    --link: light-dark(#0b57d0, #8ab4f8);
+    --focus-ring: light-dark(rgba(42, 110, 224, 0.45), rgba(63, 127, 221, 0.55));
+
+    /* Status. */
+    --unread: light-dark(#2a6ee0, #6fa0ea);
+    --unseen: light-dark(#8250df, #b18cf0);
+    --pinned: light-dark(#e07a0c, #f0a54a);
+    --danger: light-dark(#c02c2c, #f16b6b);
+
+    /* Depth. */
+    --shadow-color: light-dark(rgba(15, 15, 20, 0.18), rgba(0, 0, 0, 0.55));
+    --shadow-1: 0 1px 2px var(--shadow-color);
+    --shadow-2: 0 4px 14px var(--shadow-color);
+
+    /* Shape. */
+    --radius-sm: 4px;
+    --radius: 6px;
+    --radius-lg: 10px;
+
+    /* Type. */
+    --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+}

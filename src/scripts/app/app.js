@@ -10,6 +10,7 @@ import ArticlesLayout from "./layouts/ArticlesLayout.js";
 import ContentLayout from "./layouts/ContentLayout.js";
 import shortcuts from "./staticdb/shortcuts.js";
 import { settingsStore } from "../shared/settings.ts";
+import { applyTheme } from "../shared/theme.ts";
 
 const settings = settingsStore();
 
@@ -21,53 +22,15 @@ document.addEventListener("contextmenu", function (event) {
     }
 });
 
-browser.runtime.onMessage.addListener(onMessage);
-
-function changeUserStyle() {
-    const userStyle = settings.get("userStyle");
-    document.querySelector("[data-custom-style]").textContent = userStyle;
-    const frame = document.querySelector('[name="sandbox"]');
-    if (!frame) {
-        return;
-    }
-    const customStyleTag = frame.contentDocument.querySelector("[data-custom-style]");
-    if (!customStyleTag) {
-        return;
-    }
-    customStyleTag.textContent = userStyle;
+/** The sandbox is a separate document, so it needs the attribute of its own. */
+function changeTheme() {
+    const theme = settings.get("theme");
+    applyTheme(document, theme);
+    applyTheme(document.querySelector('[name="sandbox"]')?.contentDocument, theme);
 }
 
-function changeInvertColors() {
-    const shouldInvertColors = settings.get("invertColors");
-    const body = document.querySelector("body");
-    if (shouldInvertColors) {
-        body.classList.add("dark-theme");
-    } else {
-        body.classList.remove("dark-theme");
-    }
-    const frame = document.querySelector('[name="sandbox"]');
-    if (!frame) {
-        return;
-    }
-    const frameBody = frame.contentDocument.querySelector("body");
-    if (!frameBody) {
-        return;
-    }
-    if (shouldInvertColors) {
-        frameBody.classList.add("dark-theme");
-    } else {
-        frameBody.classList.remove("dark-theme");
-    }
-}
-
-function onMessage(message) {
-    if (message.action === "user-style-changed") {
-        changeUserStyle();
-    }
-    if (message.action === "invert-colors-changed") {
-        changeInvertColors();
-    }
-}
+settings.on("change:theme", changeTheme);
+changeTheme();
 
 function applyStylesToSandbox() {
     const baseStylePath = browser.runtime.getURL("styles/main.css");
@@ -80,12 +43,6 @@ function applyStylesToSandbox() {
     const baseStyleTag = frame.contentDocument.querySelector("[data-base-style]");
     if (baseStyleTag) {
         baseStyleTag.setAttribute("href", baseStylePath);
-    }
-
-    const darkStylePath = browser.runtime.getURL("styles/dark.css");
-    const darkStyleTag = frame.contentDocument.querySelector("[data-dark-style]");
-    if (darkStyleTag) {
-        darkStyleTag.setAttribute("href", darkStylePath);
     }
 }
 
@@ -141,8 +98,7 @@ const app = (window.app = new (Layout.extend({
         this.feeds.enableResizing("horizontal", settings.get("posA"));
         this.articles.enableResizing("horizontal", settings.get("posB"));
         applyStylesToSandbox();
-        changeUserStyle();
-        changeInvertColors();
+        changeTheme();
         this.handleLayoutChange();
         document.querySelector("body").classList.remove("loading");
     },

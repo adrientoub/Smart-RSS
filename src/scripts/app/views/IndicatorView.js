@@ -6,6 +6,9 @@
 import BB from "backbone";
 import Locale from "../modules/Locale.js";
 import indicatorView from "../templates/indicatorView.html";
+import { iconMarkup } from "../staticdb/icons.ts";
+
+const template = indicatorView.replace("{{STOP_ICON}}", iconMarkup("stop", "button-icon"));
 
 /**
  * Feeds update indicator view
@@ -30,7 +33,7 @@ const IndicatorView = BB.View.extend({
     initialize: function () {
         this.loaded = 0;
         this.maxSources = 0;
-        const fragment = document.createRange().createContextualFragment(indicatorView);
+        const fragment = document.createRange().createContextualFragment(template);
         this.el.appendChild(fragment);
         const port = browser.runtime.connect({ name: "port-from-cs" });
         port.onMessage.addListener((m) => {

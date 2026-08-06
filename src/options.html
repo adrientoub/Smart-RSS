@@ -62,20 +62,27 @@
             <details>
                 <summary class="section-header">Appearance</summary>
                 <section>
-                    <label class="web-content-select-label">
+                    <label
+                        class="web-content-select-label"
+                        title="Follow the browser theme, or force light or dark."
+                    >
+                        <span class="selectLabel">Theme:</span>
+                        <select id="theme">
+                            <option value="auto">Match browser</option>
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </label>
+
+                    <label
+                        class="web-content-select-label"
+                        title="Horizontal puts the three panes side by side; vertical stacks the article below the list."
+                    >
                         <span class="selectLabel">Layout:</span>
-                        <input
-                            alt="horizontal"
-                            src="images/layout_horizontal.png"
-                            type="image"
-                            value="horizontal"
-                        />
-                        <input
-                            alt="vertical"
-                            src="images/layout_vertical.png"
-                            type="image"
-                            value="vertical"
-                        />
+                        <select id="layout">
+                            <option value="horizontal">Horizontal</option>
+                            <option value="vertical">Vertical</option>
+                        </select>
                     </label>
 
                     <label class="web-content-select-label" for="sortBy">
@@ -230,29 +237,6 @@
                     >
                         <span class="selectLabel">Link context menu:</span>
                         <select id="displaySubscribeToLink">
-                            <option value="true">Yes</option>
-                            <option value="false">No</option>
-                        </select>
-                    </label>
-
-                    <label class="web-content-select-label">
-                        <span class="selectLabel">User CSS:</span>
-                        <textarea id="userStyle" rows="10" cols="45"></textarea>
-                    </label>
-                    <label class="web-content-select-label">
-                        <span class="selectLabel"></span>
-                        <span>
-                            <button id="suggest-style">Colors template</button>
-                            <button id="reset-style">Reset style</button>
-                        </span>
-                    </label>
-
-                    <label
-                        class="web-content-select-label"
-                        title="Controls whether interface colors should be inverted, works as most basic dark theme"
-                    >
-                        <span class="selectLabel">Invert colors:</span>
-                        <select id="invertColors">
                             <option value="true">Yes</option>
                             <option value="false">No</option>
                         </select>

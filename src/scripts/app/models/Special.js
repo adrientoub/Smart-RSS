@@ -24,9 +24,9 @@ const Special = BB.Model.extend({
         /**
          * @attribute icon
          * @type String
-         * @default icon16_v2.png
+         * @default rss
          */
-        icon: "icon16_v2.png",
+        icon: "rss",
 
         /**
          * Name of the special. It is always the same for one special.

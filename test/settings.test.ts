@@ -62,7 +62,7 @@ describe("settings store", () => {
     it("reads defaults before anything is stored", () => {
         assert.equal(store.get("updateFrequency"), 15);
         assert.equal(store.get("layout"), "horizontal");
-        assert.equal(store.get("invertColors"), false);
+        assert.equal(store.get("theme"), "auto");
     });
 
     it("reads back what it wrote, synchronously", async () => {
@@ -213,7 +213,7 @@ describe("settings migration", () => {
         id: "settings-id",
         layout: "vertical",
         updateFrequency: 45,
-        userStyle: "body { color: red }",
+        uiFontSize: "120",
         someRemovedSetting: "ignore me",
     };
 
@@ -228,7 +228,7 @@ describe("settings migration", () => {
         assert.equal(result.count, 3);
         assert.equal(store.get("layout"), "vertical");
         assert.equal(store.get("updateFrequency"), 45);
-        assert.equal(store.get("userStyle"), "body { color: red }");
+        assert.equal(store.get("uiFontSize"), "120");
     });
 
     it("does not carry over settings that no longer exist", async () => {
@@ -287,7 +287,7 @@ describe("settings migration", () => {
         const picked = pickKnownSettings({
             layout: "vertical",
             unknownThing: 1,
-            userStyle: undefined,
+            uiFontSize: undefined,
         });
         assert.deepEqual(picked, { layout: "vertical" });
     });

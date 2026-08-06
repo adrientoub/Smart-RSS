@@ -349,18 +349,11 @@ const ContentView = BB.View.extend({
             };
 
             const loadContent = () => {
-                const body = frame.contentDocument.querySelector("body");
                 const articleUrl = this.model.get("url");
                 const articleDomain = new URL(articleUrl).origin;
 
                 const base = frame.contentDocument.querySelector("base");
                 base.href = articleDomain;
-                const shouldInvertColors = settings.get("invertColors");
-                if (shouldInvertColors) {
-                    body.classList.add("dark-theme");
-                } else {
-                    body.classList.remove("dark-theme");
-                }
 
                 frame.contentWindow.scrollTo(0, 0);
                 document.querySelector("#content").scrollTo(0, 0);

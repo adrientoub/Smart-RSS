@@ -29,7 +29,6 @@ const Actions = BB.Collection.extend({
                     icon: c.icon,
                     title: c.title,
                     state: c.state,
-                    glyph: c.glyph,
                 });
             });
         });

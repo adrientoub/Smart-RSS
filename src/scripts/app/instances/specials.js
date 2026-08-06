@@ -5,7 +5,7 @@ import Locale from "../modules/Locale.js";
 export default {
     trash: new Special({
         title: Locale.TRASH,
-        icon: "trashsource.png",
+        icon: "trash",
         filter: { trashed: true, deleted: false },
         position: "bottom",
         name: "trash",
@@ -15,7 +15,7 @@ export default {
     }),
     allFeeds: new Special({
         title: Locale.ALL_FEEDS,
-        icon: "icon16_v2.png",
+        icon: "rss",
         filter: { trashed: false },
         position: "top",
         name: "all-feeds",
@@ -25,7 +25,7 @@ export default {
     }),
     pinned: new Special({
         title: Locale.PINNED,
-        icon: "pinsource.png",
+        icon: "pin",
         filter: { trashed: false, pinned: true },
         position: "bottom",
         name: "pinned",

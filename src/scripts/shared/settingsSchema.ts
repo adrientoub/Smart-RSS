@@ -7,6 +7,8 @@
  * back. Declaring types here removes that whole class of problem.
  */
 
+import type { ThemePreference } from "./theme.ts";
+
 export interface Hotkeys {
     [region: string]: { [combination: string]: string };
 }
@@ -31,29 +33,6 @@ export function defaultLanguage(navigatorLanguage: string): string {
     const language = String(navigatorLanguage).split("-")[0];
     return (AVAILABLE_LANGUAGES as readonly string[]).includes(language) ? language : "en";
 }
-
-const DEFAULT_STYLE = `:root {
-
-  --blue-40: #45a1ff;
-  --blue-50: #0a84ff;
-  --blue-50-a30: rgba(10, 132, 255, 0.3);
-  --blue-60: #0060df;
-  --blue-70: #003eaa;
-  --blue-80: #002275;
-  --blue-90: #000f40;
-
-  --grey-10: #f9f9fa;
-  --grey-20: #ededf0;
-  --grey-30: #d7d7db;
-  --grey-40: #b1b1b3;
-  --grey-50: #737373;
-  --grey-60: #4a4a4f;
-  --grey-70: #38383d;
-  --grey-80: #2a2a2e;
-  --grey-90: #0c0c0d;
-
-  --white: #fff;
-}`;
 
 const DEFAULT_HOTKEYS: Hotkeys = {
     feeds: {
@@ -197,8 +176,6 @@ export function createDefaults(navigatorLanguage = "en") {
         autoremovesetting: "KEEP_UNREAD",
         autoremovetrash: 0,
         openNewTab: "background",
-        userStyle: "",
-        defaultStyle: DEFAULT_STYLE,
         hotkeys: DEFAULT_HOTKEYS as Hotkeys,
         version: 1,
         showAllFeeds: true,
@@ -206,7 +183,7 @@ export function createDefaults(navigatorLanguage = "en") {
         showOnlyUnreadSources: false,
         displayFaviconInsteadOfPin: false,
         queries: [] as string[],
-        invertColors: false,
+        theme: "auto" as ThemePreference,
         defaultView: "feed",
         cacheParsedArticles: false,
         defaultToUnreadOnly: false,

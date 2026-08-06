@@ -7,28 +7,28 @@ import { items } from "../modules/data.js";
 const sourceContextMenu = new ContextMenu([
     {
         title: Locale.UPDATE,
-        icon: "reload.png",
+        icon: "refresh",
         action: function () {
             app.actions.execute("feeds:update");
         },
     },
     {
         title: Locale.MARK_ALL_AS_READ,
-        icon: "read.png",
+        icon: "check-all",
         action: function () {
             app.actions.execute("feeds:mark");
         },
     },
     {
         title: Locale.DELETE,
-        icon: "delete.png",
+        icon: "trash",
         action: function () {
             app.actions.execute("feeds:delete");
         },
     },
     {
         title: Locale.REFETCH /**** Localization needed****/,
-        icon: "save.png",
+        icon: "download",
         action: function () {
             app.actions.execute("feeds:refetch");
         },
@@ -41,7 +41,7 @@ const sourceContextMenu = new ContextMenu([
     },
     {
         title: Locale.PROPERTIES,
-        icon: "properties.png",
+        icon: "info",
         action: function () {
             app.actions.execute("feeds:showProperties");
         },
@@ -51,7 +51,7 @@ const sourceContextMenu = new ContextMenu([
 const trashContextMenu = new ContextMenu([
     {
         title: Locale.MARK_ALL_AS_READ,
-        icon: "read.png",
+        icon: "check-all",
         action: function () {
             const unread = items
                 .where({ trashed: true, deleted: false })
@@ -61,7 +61,7 @@ const trashContextMenu = new ContextMenu([
     },
     {
         title: Locale.EMPTY_TRASH,
-        icon: "delete.png",
+        icon: "trash",
         action: function () {
             if (confirm(Locale.REALLY_EMPTY_TRASH)) {
                 markItemsDeleted(idsOf(items.where({ trashed: true, deleted: false })));
@@ -73,14 +73,14 @@ const trashContextMenu = new ContextMenu([
 const allFeedsContextMenu = new ContextMenu([
     {
         title: Locale.UPDATE_ALL,
-        icon: "reload.png",
+        icon: "refresh",
         action: function () {
             app.actions.execute("feeds:updateAll");
         },
     },
     {
         title: Locale.MARK_ALL_AS_READ,
-        icon: "read.png",
+        icon: "check-all",
         action: function () {
             if (confirm(Locale.MARK_ALL_QUESTION)) {
                 updateRecords("items", idsOf(items.toArray()), {
@@ -92,7 +92,7 @@ const allFeedsContextMenu = new ContextMenu([
     },
     {
         title: Locale.DELETE_ALL_ARTICLES,
-        icon: "delete.png",
+        icon: "trash",
         action: function () {
             if (confirm(Locale.DELETE_ALL_Q)) {
                 const alive = items.filter((item) => item.get("deleted") !== true);
@@ -105,28 +105,28 @@ const allFeedsContextMenu = new ContextMenu([
 const folderContextMenu = new ContextMenu([
     {
         title: Locale.UPDATE,
-        icon: "reload.png",
+        icon: "refresh",
         action: function () {
             app.actions.execute("feeds:update");
         },
     },
     {
         title: Locale.MARK_ALL_AS_READ,
-        icon: "read.png",
+        icon: "check-all",
         action: function () {
             app.actions.execute("feeds:mark");
         },
     },
     {
         title: Locale.DELETE,
-        icon: "delete.png",
+        icon: "trash",
         action: function () {
             app.actions.execute("feeds:delete");
         },
     },
     {
         title: Locale.PROPERTIES,
-        icon: "properties.png",
+        icon: "info",
         action: function () {
             app.actions.execute("feeds:showProperties");
         },
@@ -136,56 +136,56 @@ const folderContextMenu = new ContextMenu([
 const itemsContextMenu = new ContextMenu([
     {
         title: Locale.NEXT_UNREAD + " (H)",
-        icon: "forward.png",
+        icon: "chevron-down",
         action: function () {
             app.actions.execute("articles:nextUnread");
         },
     },
     {
         title: Locale.PREV_UNREAD + " (Y)",
-        icon: "back.png",
+        icon: "chevron-up",
         action: function () {
             app.actions.execute("articles:prevUnread");
         },
     },
     {
         title: Locale.MARK_AS_READ + " (K)",
-        icon: "read.png",
+        icon: "circle-check",
         action: function () {
             app.actions.execute("articles:mark");
         },
     },
     {
         title: Locale.MARK_AND_NEXT_UNREAD + " (G)",
-        icon: "find_next.png",
+        icon: "check-down",
         action: function () {
             app.actions.execute("articles:markAndNextUnread");
         },
     },
     {
         title: Locale.MARK_AND_PREV_UNREAD + " (T)",
-        icon: "find_previous.png",
+        icon: "check-up",
         action: function () {
             app.actions.execute("articles:markAndPrevUnread");
         },
     },
     {
         title: Locale.FULL_ARTICLE,
-        icon: "full_article.png",
+        icon: "external-link",
         action: function (e) {
             app.actions.execute("articles:fullArticle", e);
         },
     },
     {
         title: Locale.PIN + " (P)",
-        icon: "pinsource_context.png",
+        icon: "pin",
         action: function () {
             app.actions.execute("articles:pin");
         },
     },
     {
         title: Locale.DELETE + " (D)",
-        icon: "delete.png",
+        icon: "trash",
         action: function (e) {
             app.actions.execute("articles:delete", e);
         },
@@ -193,7 +193,7 @@ const itemsContextMenu = new ContextMenu([
     {
         title: Locale.UNDELETE + " (N)",
         id: "context-undelete",
-        icon: "undelete.png",
+        icon: "undo",
         action: function () {
             app.actions.execute("articles:undelete");
         },

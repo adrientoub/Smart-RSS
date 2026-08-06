@@ -1,7 +1,15 @@
+@import url("theme.css");
+
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
-    background-color: rgb(237, 237, 237);
-    font: menu;
+    background-color: var(--surface-sunken);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 14px;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -11,46 +19,85 @@ body {
     padding-left: calc(100vw - 100%);
 }
 
-span.selectLabel {
-    display: inline-block;
-    min-width: 200px;
-    max-width: 200px;
-}
-
 article {
-    bottom: 0;
-    left: 0;
     margin: 0 auto;
     min-width: 700px;
     max-width: 1000px;
-    right: 0;
-    top: 0;
-    background: white;
-    border-left: 1px solid rgba(0, 0, 0, 0.25);
-    border-right: 1px solid rgba(0, 0, 0, 0.25);
-    box-sizing: border-box;
+    background: var(--surface);
+    border-left: var(--border);
+    border-right: var(--border);
     min-height: 100%;
-    padding: 30px;
+    padding: 32px 40px 48px;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 20px;
+    border-bottom: var(--border);
+    margin-bottom: 8px;
+}
+
+#logo h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
 }
 
 #logo-icon {
     display: block;
-    width: 52px;
+    flex: 0 0 48px;
+    width: 48px;
     height: 48px;
     background-repeat: no-repeat;
+    background-size: contain;
     background-image: url("../images/48-inverted-round.png");
 }
 
 a {
-    color: rgb(17, 85, 204);
+    color: var(--link);
+}
+
+details {
+    border-bottom: var(--border);
+}
+
+details[open] {
+    padding-bottom: 12px;
+}
+
+summary.section-header {
+    cursor: pointer;
+    list-style-position: outside;
+    border-radius: var(--radius);
+    padding: 10px 8px;
+    transition: background-color 0.12s ease;
+}
+
+summary.section-header:hover {
+    background: var(--surface-hover);
+}
+
+summary.section-header:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
 }
 
 .section-header {
-    color: rgb(95, 95, 95);
-    font-size: 1.17rem;
-    font-weight: normal;
-    line-height: 2rem;
-    margin: 20px 0 12px 0;
+    color: var(--text);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin: 18px 0 10px;
+}
+
+h2.section-header {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
 }
 
 section div {
@@ -65,62 +112,125 @@ section div {
     display: none !important;
 }
 
+label {
+    margin: 2px 0;
+    padding: 5px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    border-radius: var(--radius);
+}
+
+label:hover {
+    background: var(--surface-hover);
+}
+
+span.selectLabel {
+    display: inline-block;
+    flex: 0 0 280px;
+    max-width: 280px;
+    color: var(--text-muted);
+}
+
 .checkbox span,
 input[type="button"],
 input[type="checkbox"] {
     cursor: pointer;
 }
 
+input,
+select,
+button,
+textarea {
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: inherit;
+    background: var(--surface);
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    padding: 4px 8px;
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible,
+textarea:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
 select {
     cursor: pointer;
-    min-width: 110px;
+    min-width: 150px;
 }
 
 input[type="number"] {
     min-width: 110px;
-    box-sizing: border-box;
-    padding: 1px 3px;
 }
 
-button {
-    padding: 2px 12px;
+input[type="file"] {
+    border: none;
+    background: none;
+    padding: 0;
 }
 
 input[type="checkbox"] {
     vertical-align: sub;
 }
 
-/* --- */
+button {
+    min-width: 150px;
+    padding: 5px 14px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.12s ease;
+}
 
-label {
-    margin: 5px 20px;
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min-content;
+button:hover {
+    background: var(--surface-hover);
 }
 
 div[class$="warning"] {
-    color: red;
-    margin: 15px 20px 20px 20px;
+    color: var(--danger);
+    margin: 12px 8px 16px;
+    padding: 10px 12px;
+    border: 1px solid currentcolor;
+    border-radius: var(--radius);
+    background: var(--surface-raised);
 }
 
-#reset-style {
-    position: absolute;
-    align-self: end;
+#hotkeys > section {
+    margin-bottom: 18px;
 }
 
-#version {
-    margin: 10px 20px;
+#hotkeys h3 {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 12px 8px 4px;
 }
 
-#hotkeys > label > input {
-    width: 200px;
+#hotkeys > section > label > input {
+    flex: 0 0 200px;
+    min-width: 200px;
 }
 
-#hotkeys > label > input:first-child {
-    width: 150px;
+#hotkeys button.addHotkeyButton,
+#hotkeys button.removeHotkeyButton {
+    min-width: 32px;
+    padding: 4px 0;
 }
 
-button {
-    width: 150px;
+footer {
+    margin-top: 24px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+#version,
+#browser-info {
+    margin: 6px 8px;
 }

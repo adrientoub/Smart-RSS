@@ -36,9 +36,9 @@ const Action = BB.Model.extend({
         },
 
         /**
+         * Name in the icon set, or a function returning one.
          * @attribute icon
-         * @type String
-         * @default unknown.png
+         * @type String|Function
          */
         icon: null,
 
@@ -49,7 +49,6 @@ const Action = BB.Model.extend({
          */
         title: "",
         state: null,
-        glyph: null,
     },
 });
 

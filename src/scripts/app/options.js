@@ -2,10 +2,15 @@ import actions from "./staticdb/actions.js";
 import shortcuts from "./staticdb/shortcuts.js";
 import { sendMessage } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
+import { applyTheme } from "../shared/theme.ts";
 import { createRecord, updateRecords, destroyRecords, idsOf } from "../shared/dataClient.ts";
 import { sources, items, folders, reloadData } from "./modules/data.js";
 
 const settings = settingsStore();
+
+const changeTheme = () => applyTheme(document, settings.get("theme"));
+settings.on("change:theme", changeTheme);
+changeTheme();
 
 const entityMap = {
     "&": "&amp;",
@@ -82,8 +87,6 @@ const documentReady = () => {
         item.addEventListener("change", handleCheck);
     });
 
-    document.querySelector("#suggest-style").addEventListener("click", handleSuggestStyle);
-    document.querySelector("#reset-style").addEventListener("click", handleResetStyle);
     document.querySelector("#export-settings").addEventListener("click", handleExportSettings);
     document.querySelector("#export-smart").addEventListener("click", handleExportSmart);
     document.querySelector("#export-opml").addEventListener("click", handleExportOPML);
@@ -104,10 +107,6 @@ const documentReady = () => {
         const queries = event.target.value.split(",");
         settings.save("queries", queries);
     }
-
-    [...document.querySelectorAll("input[type=image]")].forEach((element) => {
-        element.addEventListener("click", handleLayoutChangeClick);
-    });
 
     const hotkeysElement = document.querySelector("#hotkeys");
     hotkeysElement.addEventListener("keydown", (event) => {
@@ -257,58 +256,12 @@ const documentReady = () => {
     };
 
     renderHotkeysBlock();
-    handleLayoutChange(settings.get("layout"));
 };
 
 if (document.readyState !== "loading") {
     documentReady();
 } else {
     document.addEventListener("DOMContentLoaded", documentReady);
-}
-
-function handleLayoutChangeClick(event) {
-    const layout = event.currentTarget.value;
-    handleLayoutChange(layout);
-    settings.save("layout", layout);
-}
-
-function handleLayoutChange(layout) {
-    if (layout === "vertical") {
-        document
-            .querySelector("input[value=horizontal]")
-            .setAttribute("src", "/images/layout_horizontal.png");
-        document
-            .querySelector("input[value=vertical]")
-            .setAttribute("src", "/images/layout_vertical_selected.png");
-    } else {
-        document
-            .querySelector("input[value=horizontal]")
-            .setAttribute("src", "/images/layout_horizontal_selected.png");
-        document
-            .querySelector("input[value=vertical]")
-            .setAttribute("src", "/images/layout_vertical.png");
-    }
-}
-
-function handleResetStyle() {
-    if (!confirm("Do you really want to reset style to default?")) {
-        return;
-    }
-    document.querySelector("#userStyle").value = "";
-    settings.save("userStyle", "");
-    sendMessage("user-style-changed");
-}
-
-function handleSuggestStyle() {
-    if (document.querySelector("#userStyle").value !== "") {
-        if (!confirm("Do you really want to replace your current style with colors template?")) {
-            return;
-        }
-    }
-    const defaultStyle = settings.get("defaultStyle");
-    document.querySelector("#userStyle").value = defaultStyle;
-    settings.save("userStyle", defaultStyle);
-    sendMessage("user-style-changed");
 }
 
 function handleChange(event) {
@@ -321,12 +274,6 @@ function handleChange(event) {
         v = false;
     }
     settings.save(target.id, v);
-    if (target.id === "userStyle") {
-        sendMessage("user-style-changed");
-    }
-    if (target.id === "invertColors") {
-        sendMessage("invert-colors-changed");
-    }
 }
 
 function handleCheck(event) {

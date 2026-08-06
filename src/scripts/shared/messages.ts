@@ -67,11 +67,6 @@ export interface MessageMap {
         };
         response: void;
     };
-
-    /** Reader page should re-read the user stylesheet. */
-    "user-style-changed": { request: void; response: void };
-    /** Reader page should re-apply colour inversion. */
-    "invert-colors-changed": { request: void; response: void };
 }
 
 export type MessageName = keyof MessageMap;

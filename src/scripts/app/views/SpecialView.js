@@ -1,5 +1,6 @@
 import TopView from "./TopView.js";
 import specialView from "../templates/specialView.html";
+import { createIcon } from "../staticdb/icons.ts";
 import { info } from "../modules/data.js";
 
 export default TopView.extend({
@@ -53,14 +54,14 @@ export default TopView.extend({
             /**
              * Change trash icon (0, 1-99, 100+)
              */
-            if (tot <= 0 && this.model.get("icon") !== "trashsource.png") {
-                this.model.set("icon", "trashsource.png");
+            if (tot <= 0 && this.model.get("icon") !== "trash") {
+                this.model.set("icon", "trash");
                 this.render(true);
-            } else if (tot > 0 && tot < 100 && this.model.get("icon") !== "trash_full.png") {
-                this.model.set("icon", "trash_full.png");
+            } else if (tot > 0 && tot < 100 && this.model.get("icon") !== "trash-full") {
+                this.model.set("icon", "trash-full");
                 this.render(true);
-            } else if (tot >= 100 && this.model.get("icon") !== "trash_really_full.png") {
-                this.model.set("icon", "trash_really_full.png");
+            } else if (tot >= 100 && this.model.get("icon") !== "trash-overflow") {
+                this.model.set("icon", "trash-overflow");
                 this.render(true);
             }
         }
@@ -85,7 +86,7 @@ export default TopView.extend({
         }
 
         const fragment = document.createRange().createContextualFragment(specialView);
-        fragment.querySelector(".source-icon").src = "/images/" + data.icon;
+        fragment.querySelector(".source-icon").replaceWith(createIcon(data.icon, "source-icon"));
         fragment.querySelector(".source-title").textContent = data.title;
         fragment.querySelector(".source-counter").textContent = data.count;
         this.el.appendChild(fragment);

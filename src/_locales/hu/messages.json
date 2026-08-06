@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Csak olvasatlanok megjelenítésének váltása"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Csak az olvasatlan cikkek megjelenítése"
+  },
   "TOGGLE_THEME": {
     "message": "Sötét mód váltása"
   },

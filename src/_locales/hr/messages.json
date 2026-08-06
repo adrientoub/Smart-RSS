@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Uključi ili isključi prikaz samo nepročitanih"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Prikaži samo nepročitane članke"
+  },
   "TOGGLE_THEME": {
     "message": "Uključi ili isključi tamni način rada"
   },

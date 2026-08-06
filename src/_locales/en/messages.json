@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Toggle show only unread"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Show only unread articles"
+  },
   "TOGGLE_THEME": {
     "message": "Toggle dark mode"
   },

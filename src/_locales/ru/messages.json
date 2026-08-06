@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Переключить показ только непрочитанных"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Показывать только непрочитанные статьи"
+  },
   "TOGGLE_THEME": {
     "message": "Переключить тёмный режим"
   },

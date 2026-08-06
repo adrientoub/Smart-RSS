@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Afficher ou masquer les articles lus"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Afficher uniquement les articles non lus"
+  },
   "TOGGLE_THEME": {
     "message": "Activer ou désactiver le mode sombre"
   },

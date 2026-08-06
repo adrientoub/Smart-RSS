@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Yalnızca okunmamışları göstermeyi aç veya kapat"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Yalnızca okunmamış makaleleri göster"
+  },
   "TOGGLE_THEME": {
     "message": "Karanlık modu aç veya kapat"
   },

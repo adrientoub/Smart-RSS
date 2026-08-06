@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Nur Ungelesene anzeigen ein-/ausschalten"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Nur ungelesene Artikel anzeigen"
+  },
   "TOGGLE_THEME": {
     "message": "Dunkelmodus umschalten"
   },

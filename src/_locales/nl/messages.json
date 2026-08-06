@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Alleen ongelezen tonen in-/uitschakelen"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Alleen ongelezen artikelen tonen"
+  },
   "TOGGLE_THEME": {
     "message": "Donkere modus omschakelen"
   },

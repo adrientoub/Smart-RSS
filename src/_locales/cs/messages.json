@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Přepnout zobrazení pouze nepřečtených"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Zobrazit pouze nepřečtené články"
+  },
   "TOGGLE_THEME": {
     "message": "Přepnout tmavý režim"
   },

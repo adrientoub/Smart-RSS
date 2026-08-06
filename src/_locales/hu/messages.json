@@ -90,7 +90,7 @@
     "message": "Teljes cikk"
   },
   "FULL_ARTICLE_SINGLE": {
-    "message": "Full article (only when single selected)"
+    "message": "Teljes cikk (csak egy elem kijelölésekor)"
   },
   "REALLY_DELETE": {
     "message": "Biztos, hogy törölni akarod ezt a hírcsatornát?"
@@ -111,10 +111,10 @@
     "message": "Tulajdonságok"
   },
   "REFETCH": {
-    "message": "Refetch"
+    "message": "Újra lekérés"
   },
   "OPENHOME": {
-    "message": "Open feed homepage"
+    "message": "Hírcsatorna honlapjának megnyitása"
   },
   "UNDELETE": {
     "message": "Törlés visszavonása"
@@ -159,7 +159,7 @@
     "message": "Cím"
   },
   "PARENT": {
-    "message": "Parent folder"
+    "message": "Szülőmappa"
   },
   "JANUARY": {
     "message": "Január"
@@ -291,316 +291,316 @@
     "message": "Az idősebb, mint két hónap"
   },
   "AUTOREMOVE_SETTING": {
-    "message": "Automatically remove"
+    "message": "Automatikus eltávolítás"
   },
   "USE_GLOBAL_SETTING": {
-    "message": "Use global setting"
+    "message": "Globális beállítás használata"
   },
   "REMOVE_ALL": {
-    "message": "Remove all"
+    "message": "Összes eltávolítása"
   },
   "KEEP_UNVISITED": {
-    "message": "Keep unvisited"
+    "message": "Nem megtekintettek megtartása"
   },
   "KEEP_UNREAD": {
-    "message": "Keep unread"
+    "message": "Olvasatlanok megtartása"
   },
   "SORT_BY": {
-    "message": "Sort By"
+    "message": "Rendezés alapja"
   },
   "DATE": {
-    "message": "Date"
+    "message": "Dátum"
   },
   "TITLE": {
-    "message": "Title"
+    "message": "Cím"
   },
   "AUTHOR": {
-    "message": "Author"
+    "message": "Szerző"
   },
   "SORTING": {
-    "message": "Sorting"
+    "message": "Rendezés"
   },
   "SECONDARY_SORTING": {
-    "message": "Secondary sorting"
+    "message": "Másodlagos rendezés"
   },
   "HIDE_OVERLAYS": {
-    "message": "Hide overlays"
+    "message": "Átfedések elrejtése"
   },
   "TOGGLE_SHOW_ONLY_UNREAD": {
-    "message": "Toggle show only unread"
+    "message": "Csak olvasatlanok megjelenítésének váltása"
   },
   "TOGGLE_THEME": {
-    "message": "Toggle dark mode"
+    "message": "Sötét mód váltása"
   },
   "STOP_UPDATE": {
-    "message": "Stop updating feeds"
+    "message": "Hírcsatornák frissítésének leállítása"
   },
   "OPEN_HOME": {
-    "message": "Open feed homepage"
+    "message": "Hírcsatorna honlapjának megnyitása"
   },
   "SCROLL_INTO_VIEW": {
-    "message": "Scroll into view"
+    "message": "Görgetés látható területre"
   },
   "FOCUS_FEEDS": {
-    "message": "Focus feeds"
+    "message": "Hírcsatornák fókuszálása"
   },
   "SELECT_NEXT_FEED": {
-    "message": "Select next feed"
+    "message": "Következő hírcsatorna kijelölése"
   },
   "SELECT_PREVIOUS_FEED": {
-    "message": "Select previous feed"
+    "message": "Előző hírcsatorna kijelölése"
   },
   "CLOSE_FOLDERS": {
-    "message": "Close folders"
+    "message": "Mappák bezárása"
   },
   "OPEN_FOLDERS": {
-    "message": "Open folders"
+    "message": "Mappák megnyitása"
   },
   "TOGGLE_FOLDER": {
-    "message": "Toggle folder"
+    "message": "Mappa nyitása/bezárása"
   },
   "SHOW_ARTICLES": {
-    "message": "Show articles"
+    "message": "Cikkek megjelenítése"
   },
   "SHOW_AND_FOCUS_ARTICLES": {
-    "message": "Show and focus articles"
+    "message": "Cikkek megjelenítése és fókuszálása"
   },
   "SELECT_NEXT_ARTICLE": {
-    "message": "Select next article"
+    "message": "Következő cikk kijelölése"
   },
   "SELECT_PREVIOUS_ARTICLE": {
-    "message": "Select previous article"
+    "message": "Előző cikk kijelölése"
   },
   "FOCUS_SEARCH": {
-    "message": "Focus search"
+    "message": "Keresőmező fókuszálása"
   },
   "FOCUS_ARTICLES": {
-    "message": "Focus articles"
+    "message": "Cikkek fókuszálása"
   },
   "SELECT_ALL_ARTICLES": {
-    "message": "Select All"
+    "message": "Összes kijelölése"
   },
   "PAGE_UP": {
-    "message": "Page up"
+    "message": "Egy oldallal feljebb"
   },
   "PAGE_DOWN": {
-    "message": "Page down"
+    "message": "Egy oldallal lejjebb"
   },
   "SCROLL_TO_TOP": {
-    "message": "Scroll to top"
+    "message": "Görgetés a tetejére"
   },
   "SCROLL_TO_BOTTOM": {
-    "message": "Scroll to bottom"
+    "message": "Görgetés az aljára"
   },
   "FOCUS_CONTENT": {
-    "message": "Focus article content"
+    "message": "Cikk tartalmának fókuszálása"
   },
   "SCROLL_UP": {
-    "message": "Scroll up"
+    "message": "Görgetés felfelé"
   },
   "SCROLL_DOWN": {
-    "message": "Scroll down"
+    "message": "Görgetés lefelé"
   },
   "EXTENSION_NAME": {
     "message": "Smart RSS"
   },
   "EXTENSION_DESCRIPTION": {
-    "message": "RSS Reader"
+    "message": "RSS-olvasó"
   },
   "ROOT_FOLDER": {
-    "message": "Root folder"
+    "message": "Gyökérmappa"
   },
   "SUBSCRIBE_TO_FEED": {
-    "message": "Subscribe to this feed"
+    "message": "Feliratkozás erre a hírcsatornára"
   },
   "REMOVE_SELECTED_PERMANENTLY": {
-    "message": "Remove selected items permanently?"
+    "message": "Véglegesen eltávolítod a kijelölt elemeket?"
   },
   "PINNED_DELETE_CONFIRM": {
     "message": "A(z) \"{title}\" című bejegyzés rögzítve van. Biztos, hogy törölni akarod?"
   },
   "UNKNOWN": {
-    "message": "Unknown"
+    "message": "Ismeretlen"
   },
   "NO_ACTION": {
-    "message": "No action"
+    "message": "Nincs művelet"
   },
   "RESET_HOTKEYS": {
-    "message": "Reset hotkeys"
+    "message": "Gyorsbillentyűk visszaállítása"
   },
   "RESET_HOTKEYS_CONFIRM": {
-    "message": "Resetting hotkeys will require an extension reload. Do you want to continue?"
+    "message": "A gyorsbillentyűk visszaállítása után újra kell tölteni a bővítményt. Folytatod?"
   },
   "EXPORTING_WAIT": {
-    "message": "Exporting, please wait"
+    "message": "Exportálás folyamatban, várj"
   },
   "DOWNLOAD_EXPORTED_DATA": {
-    "message": "Click to download exported data"
+    "message": "Kattints az exportált adatok letöltéséhez"
   },
   "WRONG_FILE": {
-    "message": "Wrong file"
+    "message": "Hibás fájl"
   },
   "LOADING_PARSING_FILE": {
-    "message": "Loading and parsing file"
+    "message": "Fájl betöltése és feldolgozása"
   },
   "IMPORTING_WAIT": {
-    "message": "Importing, please wait!"
+    "message": "Importálás folyamatban, várj!"
   },
   "IMPORT_COMPLETED": {
-    "message": "Import completed!"
+    "message": "Importálás kész!"
   },
   "IMPORT_FULLY_COMPLETED": {
-    "message": "Import fully completed!"
+    "message": "Importálás teljesen befejezve!"
   },
   "LOADING_DATA_MEMORY": {
-    "message": "Loading data into memory!"
+    "message": "Adatok betöltése a memóriába!"
   },
   "IMPORT_ERROR": {
-    "message": "Importing error: {error}"
+    "message": "Importálási hiba: {error}"
   },
   "REMOVE_SETTINGS_CONFIRM": {
-    "message": "Do you really want to remove all extension settings?"
+    "message": "Biztosan eltávolítod a bővítmény összes beállítását?"
   },
   "REMOVE_DATA_CONFIRM": {
-    "message": "Do you really want to remove all extension data?"
+    "message": "Biztosan eltávolítod a bővítmény összes adatát?"
   },
   "REMOVE_DELETED_CONFIRM": {
-    "message": "Do you really want to remove deleted article metadata? This may cause some articles to appear again."
+    "message": "Biztosan eltávolítod a törölt cikkek metaadatait? Emiatt egyes cikkek újra megjelenhetnek."
   },
   "DONE_REBOOT": {
-    "message": "Done. The extension will restart now."
+    "message": "Kész. A bővítmény most újraindul."
   },
   "REMOVE_FAVICONS_CONFIRM": {
-    "message": "Do you really want to remove all favicons?"
+    "message": "Biztosan eltávolítod az összes favicont?"
   },
   "DONE": {
-    "message": "Done"
+    "message": "Kész"
   },
   "SPACE_THROUGH": {
-    "message": "Space through"
+    "message": "Léptetés szóközzel"
   },
   "FOCUS_ARTICLE": {
-    "message": "Focus article"
+    "message": "Cikk fókuszálása"
   },
   "FOLDERS_PROGRESS": {
-    "message": "Folders: {current}/{total}"
+    "message": "Mappák: {current}/{total}"
   },
   "FEEDS_PROGRESS": {
-    "message": "Feeds: {current}/{total}"
+    "message": "Hírcsatornák: {current}/{total}"
   },
   "ARTICLES_PROGRESS": {
-    "message": "Articles: {current}/{total}"
+    "message": "Cikkek: {current}/{total}"
   },
   "WRITING": {
-    "message": "Writing..."
+    "message": "Írás..."
   },
   "NEW_ARTICLES_FOUND": {
-    "message": "New articles found"
+    "message": "Új cikkek találhatók"
   },
   "STATIC_CONTACT_ME_IF_YOU_WANT_TO_MAKE_TRANSLATION_FOR_Y_1GQG8TP": {
-    "message": "Contact me if you want to make translation for your lang."
+    "message": "Lépj kapcsolatba velem, ha fordítást szeretnél készíteni a nyelvedhez."
   },
   "STATIC_NORMAL_DD_MM_YYYY_ISO_YYYY_MM_DD_US_MM_DD_YYYY_1916X78": {
-    "message": "Normal = DD.MM.YYYY, ISO = YYYY-MM-DD, US = MM/DD/YYYY"
+    "message": "Normál = DD.MM.YYYY, ISO = YYYY-MM-DD, US = MM/DD/YYYY"
   },
   "STATIC_TIME_FORMAT_1G1EA3J": {
-    "message": "Time format"
+    "message": "Időformátum"
   },
   "STATIC_FOLLOW_THE_BROWSER_THEME_OR_FORCE_LIGHT_OR_DARK_JZETTF": {
-    "message": "Follow the browser theme, or force light or dark."
+    "message": "A böngésző témájának követése, vagy világos, illetve sötét téma kényszerítése."
   },
   "STATIC_HORIZONTAL_PUTS_THE_THREE_PANES_SIDE_BY_SIDE_VER_W1S7J7": {
-    "message": "Horizontal puts the three panes side by side; vertical stacks the article below the list."
+    "message": "A vízszintes elrendezés egymás mellé helyezi a három panelt; a függőleges a cikket a lista alá teszi."
   },
   "STATIC_COLOR_OF_ICON_THAT_SHOWS_UP_IN_EXTENSION_BUTTON__1ANMHVI": {
-    "message": "Color of icon that shows up in extension button when new articles are downloaded."
+    "message": "A bővítmény gombján új cikkek letöltésekor megjelenő ikon színe."
   },
   "STATIC_CONTROLS_WHETHER_MEDIA_PREVIEW_SHOULD_BE_VISIBLE_1OS59WZ": {
-    "message": "Controls whether media preview should be visible when displaying article contents. Can be overridden per source"
+    "message": "Meghatározza, hogy a média előnézete látható legyen-e a cikk tartalmának megjelenítésekor. Forrásonként felülbírálható"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_SOURCES_WITH_UNREAD_ARTICL_1N3M15U": {
-    "message": "Controls whether only sources with unread articles should be visible"
+    "message": "Meghatározza, hogy csak az olvasatlan cikkeket tartalmazó források legyenek-e láthatók"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_UNREAD_ARTICLES_SHOULD_BE__YR6HJ0": {
-    "message": "Controls whether only unread articles should be visible"
+    "message": "Meghatározza, hogy csak az olvasatlan cikkek legyenek-e láthatók"
   },
   "STATIC_REPLACE_FAVICON_OF_FEED_WITH_SPINNER_ANIMATION_D_PNWD6P": {
-    "message": "Replace favicon of feed with spinner animation during feed update."
+    "message": "A hírcsatorna faviconjának cseréje betöltési animációra frissítés közben."
   },
   "STATIC_DISPLAY_LINK_CONTEXT_MENU_ENTRY_ALLOWING_YOU_TO__PPKZFZ": {
-    "message": "Display link context menu entry allowing you to add given link to subscriptions."
+    "message": "Olyan hivatkozás-helyi menü megjelenítése, amellyel az adott hivatkozás hozzáadható az előfizetésekhez."
   },
   "STATIC_IF_CHECKED_CLICKING_TOOLBAR_BUTTON_WILL_OPEN_NEW_1CVPZXJ": {
-    "message": "If checked clicking toolbar button will open new tab, else it will load reader in the same tab."
+    "message": "Ha be van jelölve, az eszköztár gombja új lapot nyit; egyébként ugyanazon a lapon tölti be az olvasót."
   },
   "STATIC_THIS_OPTION_WILL_IMMEDIATELY_MARK_AS_READ_EVERY__1CY6HIE": {
-    "message": "This option will immediately mark as read every article you visit in the right column."
+    "message": "Ez a beállítás azonnal olvasottnak jelöl minden, a jobb oldali oszlopban megtekintett cikket."
   },
   "STATIC_WHEN_YOU_SELECT_MORE_THAN_10_FEEDS_IN_ARTICLE_LI_X0DDAN": {
-    "message": "When you select more than 10 feeds in article list and choose 'Open article link' options from context menu."
+    "message": "Megerősítés kérése, ha több mint 10 hírcsatornát jelölsz ki, és a helyi menüben a „Cikk hivatkozásának megnyitása” lehetőséget választod."
   },
   "STATIC_EFFECTS_DATE_IN_ARTICLE_LIST_PPWLEU": {
-    "message": "Effects date in article list."
+    "message": "A cikklistában megjelenő dátumot befolyásolja."
   },
   "STATIC_IF_ENABLED_PRESSING_ARROW_UP_IN_A_LIST_WHEN_THE__XJ6J5T": {
-    "message": "If enabled, pressing arrow up in a list when the first item is selected will select the last item and visa-versa."
+    "message": "Ha engedélyezve van, a felfelé nyíl az első listaelemről az utolsóra lép, és fordítva."
   },
   "STATIC_IF_ENABLED_TITLE_OF_ARTICLE_IS_A_LINK_TO_FULL_AR_1T9UQLB": {
-    "message": "If enabled, title of article is a link to full article."
+    "message": "Ha engedélyezve van, a cikk címe a teljes cikkre mutató hivatkozás."
   },
   "STATIC_CONTROLS_HOW_TO_HANDLE_ENTER_PRESS_ON_ARTICLE_LI_MHS6OK": {
-    "message": "Controls how to handle `Enter` press on article list"
+    "message": "Meghatározza az Enter billentyű kezelését a cikklistában"
   },
   "STATIC_ASK_TO_PREVENT_ACCIDENTAL_REMOVAL_OF_PINNED_ITEM_1SB0OQ0": {
-    "message": "Ask to prevent accidental removal of pinned items."
+    "message": "Megerősítés kérése a rögzített elemek véletlen eltávolításának megelőzéséhez."
   },
   "STATIC_COMMA_SEPARATED_LIST_CASE_INSENSITIVE_START_WITH_1CQ7C4W": {
-    "message": "Comma separated list, case insensitive, start with : to search in contents too"
+    "message": "Vesszővel elválasztott, kis- és nagybetűt nem megkülönböztető lista; kezdd :-tal, ha a tartalomban is keresnél"
   },
   "STATIC_VIEW_TO_USE_WHEN_DISPLAYING_ARTICLES_HHTJ23": {
-    "message": "View to use when displaying articles"
+    "message": "A cikkek megjelenítéséhez használt nézet"
   },
   "STATIC_SHOULD_PARSED_ARTICLE_BE_SAVED_IN_LOCAL_STORAGE__92CMR7": {
-    "message": "Should parsed article be saved in local storage after parsing the website?"
+    "message": "A webhely feldolgozása után helyben legyen tárolva a feldolgozott cikk?"
   },
   "STATIC_IF_SELECTED_TO_SEE_ALL_ARTICLES_HOLD_ALT_OR_CLIC_O6IHGE": {
-    "message": "If selected to see all articles hold alt or click on the counter"
+    "message": "Ha be van jelölve, az összes cikk megtekintéséhez tartsd lenyomva az Alt billentyűt, vagy kattints a számlálóra"
   },
   "STATIC_IF_ENABLED_BROWSER_WILL_DISPLAY_A_NOTIFICATION_W_13STSDS": {
-    "message": "If enabled, browser will display a notification when new articles are found."
+    "message": "Ha engedélyezve van, a böngésző értesítést jelenít meg új cikkek találásakor."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_S56NYT": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports both, feeds and feeds's articles."
+    "message": "A SMART a Smart RSS bővítmény különleges formátuma. A hírcsatornákat és azok cikkeit is exportálja/importálja."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_EXPORT_FEEDS_FROM_SMA_1B1P69M": {
-    "message": "You can use OPML format to export feeds from Smart RSS to Opera 12."
+    "message": "Az OPML formátummal hírcsatornákat exportálhatsz a Smart RSS-ből az Opera 12-be."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_HPG76L": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports all feeds, folders and articles."
+    "message": "A SMART a Smart RSS bővítmény különleges formátuma. Minden hírcsatornát, mappát és cikket exportál/importál."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_IMPORT_FEEDS_AND_FOLD_1MKEBH7": {
-    "message": "You can use OPML format to import feeds and folders from Opera 12 to Smart RSS."
+    "message": "Az OPML formátummal hírcsatornákat és mappákat importálhatsz az Opera 12-ből a Smart RSS-be."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_YOURS_FEEDS_AND_ARTICLES_AN_VTXBG9": {
-    "message": "This will remove all yours feeds and articles and settings."
+    "message": "Ez eltávolítja az összes hírcsatornádat, cikkedet és beállításodat."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_REMOVED_ARTICLES_CACHE_IT_M_1P8QIOJ": {
-    "message": "This will remove all removed articles cache. It may cause some removed articles to appear again."
+    "message": "Ez törli az eltávolított cikkek teljes gyorsítótárát. Emiatt egyes eltávolított cikkek újra megjelenhetnek."
   },
   "STATIC_SMART_RSS_OPTIONS_H34A8V": {
-    "message": "Smart RSS - Options"
+    "message": "Smart RSS – Beállítások"
   },
   "STATIC_LOCALIZATION_EUKV6O": {
-    "message": "Localization"
+    "message": "Honosítás"
   },
   "STATIC_LANGUAGE_16US7MJ": {
-    "message": "Language"
+    "message": "Nyelv"
   },
   "STATIC_DATE_FORMAT_P62DDW": {
-    "message": "Date format"
+    "message": "Dátumformátum"
   },
   "STATIC_NORMAL_ONOBJM": {
-    "message": "Normal"
+    "message": "Normál"
   },
   "STATIC_ISO_1Q4DNHQ": {
     "message": "ISO"
@@ -615,202 +615,202 @@
     "message": "12h (AM/PM)"
   },
   "STATIC_APPEARANCE_DLI9WF": {
-    "message": "Appearance"
+    "message": "Megjelenés"
   },
   "STATIC_THEME_LTYTUA": {
-    "message": "Theme"
+    "message": "Téma"
   },
   "STATIC_MATCH_BROWSER_1C0MZBA": {
-    "message": "Match browser"
+    "message": "Böngésző beállítása"
   },
   "STATIC_LIGHT_12IOB7Z": {
-    "message": "Light"
+    "message": "Világos"
   },
   "STATIC_DARK_J8M6W5": {
-    "message": "Dark"
+    "message": "Sötét"
   },
   "STATIC_HORIZONTAL_TYAPAH": {
-    "message": "Horizontal"
+    "message": "Vízszintes"
   },
   "STATIC_VERTICAL_ZSCUHN": {
-    "message": "Vertical"
+    "message": "Függőleges"
   },
   "STATIC_SHOW_FULL_HEADLINE_MV9HBV": {
-    "message": "Show full headline"
+    "message": "Teljes címsor megjelenítése"
   },
   "STATIC_YES_1DUDZCG": {
-    "message": "Yes"
+    "message": "Igen"
   },
   "STATIC_NO_R5WQAI": {
-    "message": "No"
+    "message": "Nem"
   },
   "STATIC_DISPLAY_FAVICON_INSTEAD_OF_PIN_WHEN_MULTIPLE_SOU_3FEC4U": {
-    "message": "Display favicon instead of pin when multiple sources selected"
+    "message": "Favicon megjelenítése gombostű helyett több forrás kijelölésekor"
   },
   "STATIC_ARTICLE_LIST_DISPLAY_MODE_F3I958": {
-    "message": "Article list display mode"
+    "message": "Cikklista megjelenítési módja"
   },
   "STATIC_ONE_LINE_Z5YGNJ": {
-    "message": "One Line"
+    "message": "Egy sor"
   },
   "STATIC_TWO_LINES_1HY5O7Q": {
-    "message": "Two Lines"
+    "message": "Két sor"
   },
   "STATIC_NEW_ARTICLES_NOTIFICATION_ICON_EFT2X4": {
-    "message": "New articles notification icon"
+    "message": "Új cikkek értesítési ikonja"
   },
   "STATIC_ORANGE_VRISQZ": {
-    "message": "Orange"
+    "message": "Narancssárga"
   },
   "STATIC_BLUE_1SVZZZH": {
-    "message": "Blue"
+    "message": "Kék"
   },
   "STATIC_GREEN_1AZD270": {
-    "message": "Green"
+    "message": "Zöld"
   },
   "STATIC_PURPLE_1EN1Q8V": {
-    "message": "Purple"
+    "message": "Lila"
   },
   "STATIC_RED_19D4CCC": {
-    "message": "Red"
+    "message": "Piros"
   },
   "STATIC_ROYAL_BLUE_8NJHF0": {
-    "message": "Royal Blue"
+    "message": "Királykék"
   },
   "STATIC_DISABLED_1H7WNC5": {
-    "message": "Disabled"
+    "message": "Letiltva"
   },
   "STATIC_SHOW_SPECIAL_ALL_FEEDS_ITEM_ON_FEEDS_LIST_V8YX74": {
-    "message": "Show special All Feeds item on feeds list"
+    "message": "A különleges Összes hírcsatorna elem megjelenítése a hírcsatornalistában"
   },
   "STATIC_OPEN_MEDIA_PREVIEW_AUTOMATICALLY_16SZX1O": {
-    "message": "Open media preview automatically"
+    "message": "Média előnézetének automatikus megnyitása"
   },
   "STATIC_SHOW_ONLY_SOURCES_WITH_UNREAD_ARTICLES_1VTNK9E": {
-    "message": "Show only sources with unread articles"
+    "message": "Csak olvasatlan cikkeket tartalmazó források megjelenítése"
   },
   "STATIC_SHOW_ONLY_UNREAD_ARTICLES_A9M1DK": {
-    "message": "Show only unread articles"
+    "message": "Csak olvasatlan cikkek megjelenítése"
   },
   "STATIC_DISABLE_DATE_GROUPS_6ZXR9B": {
-    "message": "Disable date groups"
+    "message": "Dátumcsoportok letiltása"
   },
   "STATIC_ARTICLE_FONT_SIZE_1NO2HGN": {
-    "message": "Article font size"
+    "message": "Cikk betűmérete"
   },
   "STATIC_UI_FONT_SIZE_T1CX8D": {
-    "message": "UI font size"
+    "message": "Kezelőfelület betűmérete"
   },
   "STATIC_SHOW_SPINNER_DURING_UPDATE_16IQC8F": {
-    "message": "Show spinner during update"
+    "message": "Betöltési animáció megjelenítése frissítés közben"
   },
   "STATIC_LINK_CONTEXT_MENU_1MS8FUX": {
-    "message": "Link context menu"
+    "message": "Hivatkozás helyi menüje"
   },
   "STATIC_BEHAVIOR_8MNFIF": {
-    "message": "Behavior"
+    "message": "Működés"
   },
   "STATIC_OPEN_READER_IN_NEW_TAB_17E1W2U": {
-    "message": "Open Reader in new tab"
+    "message": "Olvasó megnyitása új lapon"
   },
   "STATIC_SELECT_FIRST_ARTICLE_ON_FEED_SELECTION_1LTS2ZG": {
-    "message": "Select first article on feed selection"
+    "message": "Első cikk kijelölése hírcsatorna választásakor"
   },
   "STATIC_SELECT_ALL_FEEDS_ON_READER_OPEN_18VDTDH": {
-    "message": "Select all feeds on reader open"
+    "message": "Összes hírcsatorna kijelölése az olvasó megnyitásakor"
   },
   "STATIC_AUTOMATICALLY_MARK_ARTICLES_AS_READ_14DJ9JE": {
-    "message": "Automatically mark articles as read"
+    "message": "Cikkek automatikus megjelölése olvasottként"
   },
   "STATIC_ASK_WHEN_OPENING_10_TABS_1R6R46C": {
-    "message": "Ask when opening 10+ tabs"
+    "message": "Megerősítés kérése 10-nél több lap megnyitásakor"
   },
   "STATIC_ALWAYS_SHOW_FULL_DATE_KMPID6": {
-    "message": "Always show full date"
+    "message": "Mindig teljes dátum megjelenítése"
   },
   "STATIC_CIRCULAR_NAVIGATION_Y2J9IA": {
-    "message": "Circular navigation"
+    "message": "Körkörös navigáció"
   },
   "STATIC_TITLE_IS_LINK_TO_FULL_ARTICLE_6N487X": {
-    "message": "Title is link to full article"
+    "message": "A cím a teljes cikkre mutató hivatkozás"
   },
   "STATIC_ENTER_OPENS_ARTICLES_IN_QIA8MY": {
-    "message": "Enter opens articles in"
+    "message": "Az Enter itt nyitja meg a cikkeket"
   },
   "STATIC_BACKGROUND_1FVQIF1": {
-    "message": "Background"
+    "message": "Háttérben"
   },
   "STATIC_FOREGROUND_1OBQHNK": {
-    "message": "Foreground"
+    "message": "Előtérben"
   },
   "STATIC_ASK_WHEN_REMOVING_PINNED_ITEMS_1KXHKMX": {
-    "message": "Ask when removing pinned items"
+    "message": "Megerősítés kérése rögzített elemek eltávolításakor"
   },
   "STATIC_ON_REMOVAL_FROM_TRASH_X7198Y": {
-    "message": "On removal from trash"
+    "message": "Kukából eltávolításkor"
   },
   "STATIC_ALWAYS_1C30550": {
-    "message": "Always"
+    "message": "Mindig"
   },
   "STATIC_ICON_BADGE_17WQASR": {
-    "message": "Icon badge"
+    "message": "Ikon jelvénye"
   },
   "STATIC_DISABLED_EEX8G5": {
-    "message": "disabled"
+    "message": "letiltva"
   },
   "STATIC_OF_UNREAD_K5BYRM": {
-    "message": "# of unread"
+    "message": "Olvasatlanok száma"
   },
   "STATIC_OF_UNVISITED_156OOQ0": {
-    "message": "# of unvisited"
+    "message": "Nem megtekintettek száma"
   },
   "STATIC_CONCURRENT_DOWNLOADS_1U3U0T1": {
-    "message": "Concurrent downloads"
+    "message": "Egyidejű letöltések"
   },
   "STATIC_DISABLE_AUTO_UPDATE_COMPLETELY_15NTBFL": {
-    "message": "Disable auto update completely"
+    "message": "Automatikus frissítés teljes letiltása"
   },
   "STATIC_DEFAULT_UPDATE_FREQUENCY_MINUTES_18L1XRP": {
-    "message": "Default update frequency (minutes)"
+    "message": "Alapértelmezett frissítési gyakoriság (perc)"
   },
   "STATIC_AUTO_REMOVE_AFTER_6741PK": {
-    "message": "Auto remove after"
+    "message": "Automatikus eltávolítás ennyi idő után"
   },
   "STATIC_AUTO_REMOVE_1H062VA": {
-    "message": "Auto remove"
+    "message": "Automatikus eltávolítás"
   },
   "STATIC_AUTO_REMOVE_FROM_TRASH_5A2WBS": {
-    "message": "Auto remove from trash"
+    "message": "Automatikus eltávolítás a kukából"
   },
   "STATIC_AUTO_PIN_ARTICLES_MATCHING_10MA3NR": {
-    "message": "Auto pin articles matching"
+    "message": "Egyező cikkek automatikus rögzítése"
   },
   "STATIC_DEFAULT_VIEW_1YHRPIR": {
-    "message": "Default view"
+    "message": "Alapértelmezett nézet"
   },
   "STATIC_CONTENT_FROM_FEED_1RU9T9A": {
-    "message": "Content from feed"
+    "message": "Tartalom a hírcsatornából"
   },
   "STATIC_PARSE_WEBSITE_4CUQJ5": {
-    "message": "Parse website"
+    "message": "Webhely feldolgozása"
   },
   "STATIC_CACHE_ARTICLE_AFTER_PARSING_KBFZI9": {
-    "message": "Cache article after parsing"
+    "message": "Cikk gyorsítótárazása feldolgozás után"
   },
   "STATIC_HOTKEYS_1KHCIOW": {
-    "message": "Hotkeys"
+    "message": "Gyorsbillentyűk"
   },
   "STATIC_NOTIFICATIONS_FKI4UN": {
-    "message": "Notifications"
+    "message": "Értesítések"
   },
   "STATIC_ENABLE_SYSTEM_NOTIFICATIONS_1KVIF4Z": {
-    "message": "Enable system notifications"
+    "message": "Rendszerértesítések engedélyezése"
   },
   "STATIC_EXPORT_IMPORT_1KWL5UH": {
-    "message": "Export/Import"
+    "message": "Exportálás/importálás"
   },
   "STATIC_EXPORT_1SH99LF": {
-    "message": "Export"
+    "message": "Exportálás"
   },
   "STATIC_SMART_MQAJW2": {
     "message": "SMART"
@@ -819,42 +819,42 @@
     "message": "OPML"
   },
   "STATIC_IMPORT_O7FTO4": {
-    "message": "Import"
+    "message": "Importálás"
   },
   "STATIC_WARNING_SMART_RSS_WILL_RELOAD_AFTER_FINISHING_TH_1A77IDQ": {
-    "message": "Warning: Smart RSS will reload after finishing the SMART import, it's expected behavior"
+    "message": "Figyelmeztetés: a Smart RSS a SMART-importálás befejezése után újratöltődik; ez a várt működés"
   },
   "STATIC_ADVANCED_FEATURES_MOSTLY_FOR_TROUBLESHOOTING_PUR_120JK38": {
-    "message": "Advanced features. Mostly for troubleshooting purposes"
+    "message": "Speciális funkciók, főként hibaelhárítási célokra"
   },
   "STATIC_CLEAR_FAVICONS_135332F": {
-    "message": "Clear Favicons"
+    "message": "Faviconok törlése"
   },
   "STATIC_REMOVE_FAVICON_DATA_15RZGB": {
-    "message": "Remove Favicon data"
+    "message": "Faviconadatok eltávolítása"
   },
   "STATIC_CLEAR_H65A4E": {
-    "message": "!!Clear!!"
+    "message": "!!Törlés!!"
   },
   "STATIC_CLEAR_REMOVED_ARTICLES_STORE_CKA2F4": {
-    "message": "Clear removed articles store"
+    "message": "Eltávolított cikkek tárának törlése"
   },
   "STATIC_REMOVE_REMOVED_ARTICLES_DATA_1H1FW9O": {
-    "message": "Remove removed articles data"
+    "message": "Eltávolított cikkek adatainak törlése"
   },
   "STATIC_CLEAR_SETTINGS_182PX9V": {
-    "message": "Clear settings"
+    "message": "Beállítások törlése"
   },
   "STATIC_REMOVE_EXTENSION_SETTINGS_15QON31": {
-    "message": "Remove extension settings"
+    "message": "Bővítmény beállításainak eltávolítása"
   },
   "STATIC_CLEAR_DATA_8RGEDI": {
-    "message": "Clear data"
+    "message": "Adatok törlése"
   },
   "STATIC_REMOVE_ALL_EXTENSION_DATA_ES3GNX": {
-    "message": "Remove ALL extension data"
+    "message": "A bővítmény ÖSSZES adatának eltávolítása"
   },
   "STATIC_VERSION_Q0ZD4N": {
-    "message": "Version"
+    "message": "Verzió"
   }
 }

@@ -90,7 +90,7 @@
     "message": "Vollständiger Artikel"
   },
   "FULL_ARTICLE_SINGLE": {
-    "message": "Full article (only when single selected)"
+    "message": "Vollständiger Artikel (nur bei Einzelauswahl)"
   },
   "REALLY_DELETE": {
     "message": "Möchten Sie diesen Feed wirklich löschen?"
@@ -291,313 +291,313 @@
     "message": "Älter als 2 Monate"
   },
   "AUTOREMOVE_SETTING": {
-    "message": "Automatically remove"
+    "message": "Automatisch entfernen"
   },
   "USE_GLOBAL_SETTING": {
-    "message": "Use global setting"
+    "message": "Globale Einstellung verwenden"
   },
   "REMOVE_ALL": {
-    "message": "Remove all"
+    "message": "Alle entfernen"
   },
   "KEEP_UNVISITED": {
-    "message": "Keep unvisited"
+    "message": "Nicht besuchte behalten"
   },
   "KEEP_UNREAD": {
-    "message": "Keep unread"
+    "message": "Ungelesene behalten"
   },
   "SORT_BY": {
-    "message": "Sort By"
+    "message": "Sortieren nach"
   },
   "DATE": {
-    "message": "Date"
+    "message": "Datum"
   },
   "TITLE": {
-    "message": "Title"
+    "message": "Titel"
   },
   "AUTHOR": {
-    "message": "Author"
+    "message": "Autor"
   },
   "SORTING": {
-    "message": "Sorting"
+    "message": "Sortierung"
   },
   "SECONDARY_SORTING": {
-    "message": "Secondary sorting"
+    "message": "Sekundäre Sortierung"
   },
   "HIDE_OVERLAYS": {
-    "message": "Hide overlays"
+    "message": "Einblendungen ausblenden"
   },
   "TOGGLE_SHOW_ONLY_UNREAD": {
-    "message": "Toggle show only unread"
+    "message": "Nur Ungelesene anzeigen ein-/ausschalten"
   },
   "TOGGLE_THEME": {
-    "message": "Toggle dark mode"
+    "message": "Dunkelmodus umschalten"
   },
   "STOP_UPDATE": {
-    "message": "Stop updating feeds"
+    "message": "Feed-Aktualisierung stoppen"
   },
   "OPEN_HOME": {
-    "message": "Open feed homepage"
+    "message": "Feed-Webseite öffnen"
   },
   "SCROLL_INTO_VIEW": {
-    "message": "Scroll into view"
+    "message": "In den sichtbaren Bereich scrollen"
   },
   "FOCUS_FEEDS": {
-    "message": "Focus feeds"
+    "message": "Feeds fokussieren"
   },
   "SELECT_NEXT_FEED": {
-    "message": "Select next feed"
+    "message": "Nächsten Feed auswählen"
   },
   "SELECT_PREVIOUS_FEED": {
-    "message": "Select previous feed"
+    "message": "Vorherigen Feed auswählen"
   },
   "CLOSE_FOLDERS": {
-    "message": "Close folders"
+    "message": "Ordner schließen"
   },
   "OPEN_FOLDERS": {
-    "message": "Open folders"
+    "message": "Ordner öffnen"
   },
   "TOGGLE_FOLDER": {
-    "message": "Toggle folder"
+    "message": "Ordner umschalten"
   },
   "SHOW_ARTICLES": {
-    "message": "Show articles"
+    "message": "Artikel anzeigen"
   },
   "SHOW_AND_FOCUS_ARTICLES": {
-    "message": "Show and focus articles"
+    "message": "Artikel anzeigen und fokussieren"
   },
   "SELECT_NEXT_ARTICLE": {
-    "message": "Select next article"
+    "message": "Nächsten Artikel auswählen"
   },
   "SELECT_PREVIOUS_ARTICLE": {
-    "message": "Select previous article"
+    "message": "Vorherigen Artikel auswählen"
   },
   "FOCUS_SEARCH": {
-    "message": "Focus search"
+    "message": "Suche fokussieren"
   },
   "FOCUS_ARTICLES": {
-    "message": "Focus articles"
+    "message": "Artikel fokussieren"
   },
   "SELECT_ALL_ARTICLES": {
-    "message": "Select All"
+    "message": "Alle auswählen"
   },
   "PAGE_UP": {
-    "message": "Page up"
+    "message": "Seite nach oben"
   },
   "PAGE_DOWN": {
-    "message": "Page down"
+    "message": "Seite nach unten"
   },
   "SCROLL_TO_TOP": {
-    "message": "Scroll to top"
+    "message": "Nach ganz oben scrollen"
   },
   "SCROLL_TO_BOTTOM": {
-    "message": "Scroll to bottom"
+    "message": "Nach ganz unten scrollen"
   },
   "FOCUS_CONTENT": {
-    "message": "Focus article content"
+    "message": "Artikelinhalt fokussieren"
   },
   "SCROLL_UP": {
-    "message": "Scroll up"
+    "message": "Nach oben scrollen"
   },
   "SCROLL_DOWN": {
-    "message": "Scroll down"
+    "message": "Nach unten scrollen"
   },
   "EXTENSION_NAME": {
     "message": "Smart RSS"
   },
   "EXTENSION_DESCRIPTION": {
-    "message": "RSS Reader"
+    "message": "RSS-Reader"
   },
   "ROOT_FOLDER": {
-    "message": "Root folder"
+    "message": "Stammordner"
   },
   "SUBSCRIBE_TO_FEED": {
-    "message": "Subscribe to this feed"
+    "message": "Diesen Feed abonnieren"
   },
   "REMOVE_SELECTED_PERMANENTLY": {
-    "message": "Remove selected items permanently?"
+    "message": "Ausgewählte Elemente endgültig entfernen?"
   },
   "PINNED_DELETE_CONFIRM": {
     "message": "Der Artikel \"{title}\" ist angeheftet. Möchten Sie ihn wirklich löschen?"
   },
   "UNKNOWN": {
-    "message": "Unknown"
+    "message": "Unbekannt"
   },
   "NO_ACTION": {
-    "message": "No action"
+    "message": "Keine Aktion"
   },
   "RESET_HOTKEYS": {
-    "message": "Reset hotkeys"
+    "message": "Tastenkürzel zurücksetzen"
   },
   "RESET_HOTKEYS_CONFIRM": {
-    "message": "Resetting hotkeys will require an extension reload. Do you want to continue?"
+    "message": "Nach dem Zurücksetzen der Tastenkürzel muss die Erweiterung neu geladen werden. Möchten Sie fortfahren?"
   },
   "EXPORTING_WAIT": {
-    "message": "Exporting, please wait"
+    "message": "Export läuft, bitte warten"
   },
   "DOWNLOAD_EXPORTED_DATA": {
-    "message": "Click to download exported data"
+    "message": "Klicken, um die exportierten Daten herunterzuladen"
   },
   "WRONG_FILE": {
-    "message": "Wrong file"
+    "message": "Falsche Datei"
   },
   "LOADING_PARSING_FILE": {
-    "message": "Loading and parsing file"
+    "message": "Datei wird geladen und verarbeitet"
   },
   "IMPORTING_WAIT": {
-    "message": "Importing, please wait!"
+    "message": "Import läuft, bitte warten!"
   },
   "IMPORT_COMPLETED": {
-    "message": "Import completed!"
+    "message": "Import abgeschlossen!"
   },
   "IMPORT_FULLY_COMPLETED": {
-    "message": "Import fully completed!"
+    "message": "Import vollständig abgeschlossen!"
   },
   "LOADING_DATA_MEMORY": {
-    "message": "Loading data into memory!"
+    "message": "Daten werden in den Speicher geladen!"
   },
   "IMPORT_ERROR": {
-    "message": "Importing error: {error}"
+    "message": "Importfehler: {error}"
   },
   "REMOVE_SETTINGS_CONFIRM": {
-    "message": "Do you really want to remove all extension settings?"
+    "message": "Möchten Sie wirklich alle Erweiterungseinstellungen entfernen?"
   },
   "REMOVE_DATA_CONFIRM": {
-    "message": "Do you really want to remove all extension data?"
+    "message": "Möchten Sie wirklich alle Erweiterungsdaten entfernen?"
   },
   "REMOVE_DELETED_CONFIRM": {
-    "message": "Do you really want to remove deleted article metadata? This may cause some articles to appear again."
+    "message": "Möchten Sie wirklich die Metadaten gelöschter Artikel entfernen? Dadurch können einige Artikel erneut erscheinen."
   },
   "DONE_REBOOT": {
-    "message": "Done. The extension will restart now."
+    "message": "Fertig. Die Erweiterung wird jetzt neu gestartet."
   },
   "REMOVE_FAVICONS_CONFIRM": {
-    "message": "Do you really want to remove all favicons?"
+    "message": "Möchten Sie wirklich alle Favicons entfernen?"
   },
   "DONE": {
-    "message": "Done"
+    "message": "Fertig"
   },
   "SPACE_THROUGH": {
-    "message": "Space through"
+    "message": "Mit Leertaste weiterschalten"
   },
   "FOCUS_ARTICLE": {
-    "message": "Focus article"
+    "message": "Artikel fokussieren"
   },
   "FOLDERS_PROGRESS": {
-    "message": "Folders: {current}/{total}"
+    "message": "Ordner: {current}/{total}"
   },
   "FEEDS_PROGRESS": {
     "message": "Feeds: {current}/{total}"
   },
   "ARTICLES_PROGRESS": {
-    "message": "Articles: {current}/{total}"
+    "message": "Artikel: {current}/{total}"
   },
   "WRITING": {
-    "message": "Writing..."
+    "message": "Schreiben..."
   },
   "NEW_ARTICLES_FOUND": {
-    "message": "New articles found"
+    "message": "Neue Artikel gefunden"
   },
   "STATIC_CONTACT_ME_IF_YOU_WANT_TO_MAKE_TRANSLATION_FOR_Y_1GQG8TP": {
-    "message": "Contact me if you want to make translation for your lang."
+    "message": "Kontaktieren Sie mich, wenn Sie eine Übersetzung für Ihre Sprache erstellen möchten."
   },
   "STATIC_NORMAL_DD_MM_YYYY_ISO_YYYY_MM_DD_US_MM_DD_YYYY_1916X78": {
     "message": "Normal = DD.MM.YYYY, ISO = YYYY-MM-DD, US = MM/DD/YYYY"
   },
   "STATIC_TIME_FORMAT_1G1EA3J": {
-    "message": "Time format"
+    "message": "Zeitformat"
   },
   "STATIC_FOLLOW_THE_BROWSER_THEME_OR_FORCE_LIGHT_OR_DARK_JZETTF": {
-    "message": "Follow the browser theme, or force light or dark."
+    "message": "Dem Browser-Design folgen oder ein helles bzw. dunkles Design erzwingen."
   },
   "STATIC_HORIZONTAL_PUTS_THE_THREE_PANES_SIDE_BY_SIDE_VER_W1S7J7": {
-    "message": "Horizontal puts the three panes side by side; vertical stacks the article below the list."
+    "message": "Horizontal ordnet die drei Bereiche nebeneinander an; vertikal wird der Artikel unter der Liste angezeigt."
   },
   "STATIC_COLOR_OF_ICON_THAT_SHOWS_UP_IN_EXTENSION_BUTTON__1ANMHVI": {
-    "message": "Color of icon that shows up in extension button when new articles are downloaded."
+    "message": "Farbe des Symbols, das nach dem Herunterladen neuer Artikel auf der Erweiterungsschaltfläche erscheint."
   },
   "STATIC_CONTROLS_WHETHER_MEDIA_PREVIEW_SHOULD_BE_VISIBLE_1OS59WZ": {
-    "message": "Controls whether media preview should be visible when displaying article contents. Can be overridden per source"
+    "message": "Legt fest, ob beim Anzeigen von Artikelinhalten eine Medienvorschau sichtbar ist. Kann pro Quelle überschrieben werden"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_SOURCES_WITH_UNREAD_ARTICL_1N3M15U": {
-    "message": "Controls whether only sources with unread articles should be visible"
+    "message": "Legt fest, ob nur Quellen mit ungelesenen Artikeln sichtbar sind"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_UNREAD_ARTICLES_SHOULD_BE__YR6HJ0": {
-    "message": "Controls whether only unread articles should be visible"
+    "message": "Legt fest, ob nur ungelesene Artikel sichtbar sind"
   },
   "STATIC_REPLACE_FAVICON_OF_FEED_WITH_SPINNER_ANIMATION_D_PNWD6P": {
-    "message": "Replace favicon of feed with spinner animation during feed update."
+    "message": "Das Favicon des Feeds während der Aktualisierung durch eine Ladeanimation ersetzen."
   },
   "STATIC_DISPLAY_LINK_CONTEXT_MENU_ENTRY_ALLOWING_YOU_TO__PPKZFZ": {
-    "message": "Display link context menu entry allowing you to add given link to subscriptions."
+    "message": "Einen Eintrag im Link-Kontextmenü anzeigen, mit dem der jeweilige Link zu den Abonnements hinzugefügt werden kann."
   },
   "STATIC_IF_CHECKED_CLICKING_TOOLBAR_BUTTON_WILL_OPEN_NEW_1CVPZXJ": {
-    "message": "If checked clicking toolbar button will open new tab, else it will load reader in the same tab."
+    "message": "Wenn aktiviert, öffnet die Symbolleistenschaltfläche einen neuen Tab; andernfalls wird der Reader im selben Tab geladen."
   },
   "STATIC_THIS_OPTION_WILL_IMMEDIATELY_MARK_AS_READ_EVERY__1CY6HIE": {
-    "message": "This option will immediately mark as read every article you visit in the right column."
+    "message": "Diese Option markiert jeden in der rechten Spalte aufgerufenen Artikel sofort als gelesen."
   },
   "STATIC_WHEN_YOU_SELECT_MORE_THAN_10_FEEDS_IN_ARTICLE_LI_X0DDAN": {
-    "message": "When you select more than 10 feeds in article list and choose 'Open article link' options from context menu."
+    "message": "Nachfragen, wenn mehr als 10 Feeds in der Artikelliste ausgewählt sind und im Kontextmenü die Option „Artikellink öffnen“ gewählt wird."
   },
   "STATIC_EFFECTS_DATE_IN_ARTICLE_LIST_PPWLEU": {
-    "message": "Effects date in article list."
+    "message": "Beeinflusst das Datum in der Artikelliste."
   },
   "STATIC_IF_ENABLED_PRESSING_ARROW_UP_IN_A_LIST_WHEN_THE__XJ6J5T": {
-    "message": "If enabled, pressing arrow up in a list when the first item is selected will select the last item and visa-versa."
+    "message": "Wenn aktiviert, wählt die Pfeiltaste nach oben beim ersten Listeneintrag den letzten aus und umgekehrt."
   },
   "STATIC_IF_ENABLED_TITLE_OF_ARTICLE_IS_A_LINK_TO_FULL_AR_1T9UQLB": {
-    "message": "If enabled, title of article is a link to full article."
+    "message": "Wenn aktiviert, ist der Artikeltitel ein Link zum vollständigen Artikel."
   },
   "STATIC_CONTROLS_HOW_TO_HANDLE_ENTER_PRESS_ON_ARTICLE_LI_MHS6OK": {
-    "message": "Controls how to handle `Enter` press on article list"
+    "message": "Legt fest, wie das Drücken der Eingabetaste in der Artikelliste behandelt wird"
   },
   "STATIC_ASK_TO_PREVENT_ACCIDENTAL_REMOVAL_OF_PINNED_ITEM_1SB0OQ0": {
-    "message": "Ask to prevent accidental removal of pinned items."
+    "message": "Nachfragen, um das versehentliche Entfernen angehefteter Elemente zu verhindern."
   },
   "STATIC_COMMA_SEPARATED_LIST_CASE_INSENSITIVE_START_WITH_1CQ7C4W": {
-    "message": "Comma separated list, case insensitive, start with : to search in contents too"
+    "message": "Kommagetrennte Liste, Groß-/Kleinschreibung wird ignoriert; mit : beginnen, um auch Inhalte zu durchsuchen"
   },
   "STATIC_VIEW_TO_USE_WHEN_DISPLAYING_ARTICLES_HHTJ23": {
-    "message": "View to use when displaying articles"
+    "message": "Ansicht zum Anzeigen von Artikeln"
   },
   "STATIC_SHOULD_PARSED_ARTICLE_BE_SAVED_IN_LOCAL_STORAGE__92CMR7": {
-    "message": "Should parsed article be saved in local storage after parsing the website?"
+    "message": "Soll der verarbeitete Artikel nach dem Verarbeiten der Webseite lokal gespeichert werden?"
   },
   "STATIC_IF_SELECTED_TO_SEE_ALL_ARTICLES_HOLD_ALT_OR_CLIC_O6IHGE": {
-    "message": "If selected to see all articles hold alt or click on the counter"
+    "message": "Wenn aktiviert, Alt gedrückt halten oder auf den Zähler klicken, um alle Artikel anzuzeigen"
   },
   "STATIC_IF_ENABLED_BROWSER_WILL_DISPLAY_A_NOTIFICATION_W_13STSDS": {
-    "message": "If enabled, browser will display a notification when new articles are found."
+    "message": "Wenn aktiviert, zeigt der Browser eine Benachrichtigung an, sobald neue Artikel gefunden werden."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_S56NYT": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports both, feeds and feeds's articles."
+    "message": "SMART ist ein spezielles Format der Smart-RSS-Erweiterung. Es exportiert/importiert sowohl Feeds als auch deren Artikel."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_EXPORT_FEEDS_FROM_SMA_1B1P69M": {
-    "message": "You can use OPML format to export feeds from Smart RSS to Opera 12."
+    "message": "Mit dem OPML-Format können Feeds aus Smart RSS nach Opera 12 exportiert werden."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_HPG76L": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports all feeds, folders and articles."
+    "message": "SMART ist ein spezielles Format der Smart-RSS-Erweiterung. Es exportiert/importiert alle Feeds, Ordner und Artikel."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_IMPORT_FEEDS_AND_FOLD_1MKEBH7": {
-    "message": "You can use OPML format to import feeds and folders from Opera 12 to Smart RSS."
+    "message": "Mit dem OPML-Format können Feeds und Ordner aus Opera 12 in Smart RSS importiert werden."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_YOURS_FEEDS_AND_ARTICLES_AN_VTXBG9": {
-    "message": "This will remove all yours feeds and articles and settings."
+    "message": "Dadurch werden alle Ihre Feeds, Artikel und Einstellungen entfernt."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_REMOVED_ARTICLES_CACHE_IT_M_1P8QIOJ": {
-    "message": "This will remove all removed articles cache. It may cause some removed articles to appear again."
+    "message": "Dadurch wird der Cache aller entfernten Artikel gelöscht. Einige entfernte Artikel können danach erneut erscheinen."
   },
   "STATIC_SMART_RSS_OPTIONS_H34A8V": {
-    "message": "Smart RSS - Options"
+    "message": "Smart RSS – Einstellungen"
   },
   "STATIC_LOCALIZATION_EUKV6O": {
-    "message": "Localization"
+    "message": "Lokalisierung"
   },
   "STATIC_LANGUAGE_16US7MJ": {
-    "message": "Language"
+    "message": "Sprache"
   },
   "STATIC_DATE_FORMAT_P62DDW": {
-    "message": "Date format"
+    "message": "Datumsformat"
   },
   "STATIC_NORMAL_ONOBJM": {
     "message": "Normal"
@@ -615,202 +615,202 @@
     "message": "12h (AM/PM)"
   },
   "STATIC_APPEARANCE_DLI9WF": {
-    "message": "Appearance"
+    "message": "Darstellung"
   },
   "STATIC_THEME_LTYTUA": {
-    "message": "Theme"
+    "message": "Design"
   },
   "STATIC_MATCH_BROWSER_1C0MZBA": {
-    "message": "Match browser"
+    "message": "Browser übernehmen"
   },
   "STATIC_LIGHT_12IOB7Z": {
-    "message": "Light"
+    "message": "Hell"
   },
   "STATIC_DARK_J8M6W5": {
-    "message": "Dark"
+    "message": "Dunkel"
   },
   "STATIC_HORIZONTAL_TYAPAH": {
     "message": "Horizontal"
   },
   "STATIC_VERTICAL_ZSCUHN": {
-    "message": "Vertical"
+    "message": "Vertikal"
   },
   "STATIC_SHOW_FULL_HEADLINE_MV9HBV": {
-    "message": "Show full headline"
+    "message": "Vollständige Überschrift anzeigen"
   },
   "STATIC_YES_1DUDZCG": {
-    "message": "Yes"
+    "message": "Ja"
   },
   "STATIC_NO_R5WQAI": {
-    "message": "No"
+    "message": "Nein"
   },
   "STATIC_DISPLAY_FAVICON_INSTEAD_OF_PIN_WHEN_MULTIPLE_SOU_3FEC4U": {
-    "message": "Display favicon instead of pin when multiple sources selected"
+    "message": "Bei Auswahl mehrerer Quellen Favicon statt Pinnadel anzeigen"
   },
   "STATIC_ARTICLE_LIST_DISPLAY_MODE_F3I958": {
-    "message": "Article list display mode"
+    "message": "Anzeigemodus der Artikelliste"
   },
   "STATIC_ONE_LINE_Z5YGNJ": {
-    "message": "One Line"
+    "message": "Eine Zeile"
   },
   "STATIC_TWO_LINES_1HY5O7Q": {
-    "message": "Two Lines"
+    "message": "Zwei Zeilen"
   },
   "STATIC_NEW_ARTICLES_NOTIFICATION_ICON_EFT2X4": {
-    "message": "New articles notification icon"
+    "message": "Benachrichtigungssymbol für neue Artikel"
   },
   "STATIC_ORANGE_VRISQZ": {
     "message": "Orange"
   },
   "STATIC_BLUE_1SVZZZH": {
-    "message": "Blue"
+    "message": "Blau"
   },
   "STATIC_GREEN_1AZD270": {
-    "message": "Green"
+    "message": "Grün"
   },
   "STATIC_PURPLE_1EN1Q8V": {
-    "message": "Purple"
+    "message": "Violett"
   },
   "STATIC_RED_19D4CCC": {
-    "message": "Red"
+    "message": "Rot"
   },
   "STATIC_ROYAL_BLUE_8NJHF0": {
-    "message": "Royal Blue"
+    "message": "Königsblau"
   },
   "STATIC_DISABLED_1H7WNC5": {
-    "message": "Disabled"
+    "message": "Deaktiviert"
   },
   "STATIC_SHOW_SPECIAL_ALL_FEEDS_ITEM_ON_FEEDS_LIST_V8YX74": {
-    "message": "Show special All Feeds item on feeds list"
+    "message": "Sondereintrag „Alle Feeds“ in der Feed-Liste anzeigen"
   },
   "STATIC_OPEN_MEDIA_PREVIEW_AUTOMATICALLY_16SZX1O": {
-    "message": "Open media preview automatically"
+    "message": "Medienvorschau automatisch öffnen"
   },
   "STATIC_SHOW_ONLY_SOURCES_WITH_UNREAD_ARTICLES_1VTNK9E": {
-    "message": "Show only sources with unread articles"
+    "message": "Nur Quellen mit ungelesenen Artikeln anzeigen"
   },
   "STATIC_SHOW_ONLY_UNREAD_ARTICLES_A9M1DK": {
-    "message": "Show only unread articles"
+    "message": "Nur ungelesene Artikel anzeigen"
   },
   "STATIC_DISABLE_DATE_GROUPS_6ZXR9B": {
-    "message": "Disable date groups"
+    "message": "Datumsgruppen deaktivieren"
   },
   "STATIC_ARTICLE_FONT_SIZE_1NO2HGN": {
-    "message": "Article font size"
+    "message": "Artikelschriftgröße"
   },
   "STATIC_UI_FONT_SIZE_T1CX8D": {
-    "message": "UI font size"
+    "message": "Schriftgröße der Benutzeroberfläche"
   },
   "STATIC_SHOW_SPINNER_DURING_UPDATE_16IQC8F": {
-    "message": "Show spinner during update"
+    "message": "Ladeanimation während der Aktualisierung anzeigen"
   },
   "STATIC_LINK_CONTEXT_MENU_1MS8FUX": {
-    "message": "Link context menu"
+    "message": "Link-Kontextmenü"
   },
   "STATIC_BEHAVIOR_8MNFIF": {
-    "message": "Behavior"
+    "message": "Verhalten"
   },
   "STATIC_OPEN_READER_IN_NEW_TAB_17E1W2U": {
-    "message": "Open Reader in new tab"
+    "message": "Reader in neuem Tab öffnen"
   },
   "STATIC_SELECT_FIRST_ARTICLE_ON_FEED_SELECTION_1LTS2ZG": {
-    "message": "Select first article on feed selection"
+    "message": "Bei Feed-Auswahl ersten Artikel auswählen"
   },
   "STATIC_SELECT_ALL_FEEDS_ON_READER_OPEN_18VDTDH": {
-    "message": "Select all feeds on reader open"
+    "message": "Beim Öffnen des Readers alle Feeds auswählen"
   },
   "STATIC_AUTOMATICALLY_MARK_ARTICLES_AS_READ_14DJ9JE": {
-    "message": "Automatically mark articles as read"
+    "message": "Artikel automatisch als gelesen markieren"
   },
   "STATIC_ASK_WHEN_OPENING_10_TABS_1R6R46C": {
-    "message": "Ask when opening 10+ tabs"
+    "message": "Beim Öffnen von mehr als 10 Tabs nachfragen"
   },
   "STATIC_ALWAYS_SHOW_FULL_DATE_KMPID6": {
-    "message": "Always show full date"
+    "message": "Immer vollständiges Datum anzeigen"
   },
   "STATIC_CIRCULAR_NAVIGATION_Y2J9IA": {
-    "message": "Circular navigation"
+    "message": "Zyklische Navigation"
   },
   "STATIC_TITLE_IS_LINK_TO_FULL_ARTICLE_6N487X": {
-    "message": "Title is link to full article"
+    "message": "Titel ist Link zum vollständigen Artikel"
   },
   "STATIC_ENTER_OPENS_ARTICLES_IN_QIA8MY": {
-    "message": "Enter opens articles in"
+    "message": "Eingabetaste öffnet Artikel im"
   },
   "STATIC_BACKGROUND_1FVQIF1": {
-    "message": "Background"
+    "message": "Hintergrund"
   },
   "STATIC_FOREGROUND_1OBQHNK": {
-    "message": "Foreground"
+    "message": "Vordergrund"
   },
   "STATIC_ASK_WHEN_REMOVING_PINNED_ITEMS_1KXHKMX": {
-    "message": "Ask when removing pinned items"
+    "message": "Beim Entfernen angehefteter Elemente nachfragen"
   },
   "STATIC_ON_REMOVAL_FROM_TRASH_X7198Y": {
-    "message": "On removal from trash"
+    "message": "Beim Entfernen aus dem Papierkorb"
   },
   "STATIC_ALWAYS_1C30550": {
-    "message": "Always"
+    "message": "Immer"
   },
   "STATIC_ICON_BADGE_17WQASR": {
-    "message": "Icon badge"
+    "message": "Symbol-Badge"
   },
   "STATIC_DISABLED_EEX8G5": {
-    "message": "disabled"
+    "message": "deaktiviert"
   },
   "STATIC_OF_UNREAD_K5BYRM": {
-    "message": "# of unread"
+    "message": "Anzahl ungelesener"
   },
   "STATIC_OF_UNVISITED_156OOQ0": {
-    "message": "# of unvisited"
+    "message": "Anzahl nicht besuchter"
   },
   "STATIC_CONCURRENT_DOWNLOADS_1U3U0T1": {
-    "message": "Concurrent downloads"
+    "message": "Gleichzeitige Downloads"
   },
   "STATIC_DISABLE_AUTO_UPDATE_COMPLETELY_15NTBFL": {
-    "message": "Disable auto update completely"
+    "message": "Automatische Aktualisierung vollständig deaktivieren"
   },
   "STATIC_DEFAULT_UPDATE_FREQUENCY_MINUTES_18L1XRP": {
-    "message": "Default update frequency (minutes)"
+    "message": "Standard-Aktualisierungsintervall (Minuten)"
   },
   "STATIC_AUTO_REMOVE_AFTER_6741PK": {
-    "message": "Auto remove after"
+    "message": "Automatisch entfernen nach"
   },
   "STATIC_AUTO_REMOVE_1H062VA": {
-    "message": "Auto remove"
+    "message": "Automatisch entfernen"
   },
   "STATIC_AUTO_REMOVE_FROM_TRASH_5A2WBS": {
-    "message": "Auto remove from trash"
+    "message": "Automatisch aus dem Papierkorb entfernen"
   },
   "STATIC_AUTO_PIN_ARTICLES_MATCHING_10MA3NR": {
-    "message": "Auto pin articles matching"
+    "message": "Passende Artikel automatisch anheften"
   },
   "STATIC_DEFAULT_VIEW_1YHRPIR": {
-    "message": "Default view"
+    "message": "Standardansicht"
   },
   "STATIC_CONTENT_FROM_FEED_1RU9T9A": {
-    "message": "Content from feed"
+    "message": "Inhalt aus dem Feed"
   },
   "STATIC_PARSE_WEBSITE_4CUQJ5": {
-    "message": "Parse website"
+    "message": "Webseite verarbeiten"
   },
   "STATIC_CACHE_ARTICLE_AFTER_PARSING_KBFZI9": {
-    "message": "Cache article after parsing"
+    "message": "Artikel nach dem Verarbeiten zwischenspeichern"
   },
   "STATIC_HOTKEYS_1KHCIOW": {
-    "message": "Hotkeys"
+    "message": "Tastenkürzel"
   },
   "STATIC_NOTIFICATIONS_FKI4UN": {
-    "message": "Notifications"
+    "message": "Benachrichtigungen"
   },
   "STATIC_ENABLE_SYSTEM_NOTIFICATIONS_1KVIF4Z": {
-    "message": "Enable system notifications"
+    "message": "Systembenachrichtigungen aktivieren"
   },
   "STATIC_EXPORT_IMPORT_1KWL5UH": {
     "message": "Export/Import"
   },
   "STATIC_EXPORT_1SH99LF": {
-    "message": "Export"
+    "message": "Exportieren"
   },
   "STATIC_SMART_MQAJW2": {
     "message": "SMART"
@@ -819,40 +819,40 @@
     "message": "OPML"
   },
   "STATIC_IMPORT_O7FTO4": {
-    "message": "Import"
+    "message": "Importieren"
   },
   "STATIC_WARNING_SMART_RSS_WILL_RELOAD_AFTER_FINISHING_TH_1A77IDQ": {
-    "message": "Warning: Smart RSS will reload after finishing the SMART import, it's expected behavior"
+    "message": "Warnung: Smart RSS wird nach Abschluss des SMART-Imports neu geladen. Dieses Verhalten ist beabsichtigt"
   },
   "STATIC_ADVANCED_FEATURES_MOSTLY_FOR_TROUBLESHOOTING_PUR_120JK38": {
-    "message": "Advanced features. Mostly for troubleshooting purposes"
+    "message": "Erweiterte Funktionen, hauptsächlich zur Fehlerbehebung"
   },
   "STATIC_CLEAR_FAVICONS_135332F": {
-    "message": "Clear Favicons"
+    "message": "Favicons löschen"
   },
   "STATIC_REMOVE_FAVICON_DATA_15RZGB": {
-    "message": "Remove Favicon data"
+    "message": "Favicon-Daten entfernen"
   },
   "STATIC_CLEAR_H65A4E": {
-    "message": "!!Clear!!"
+    "message": "!!Löschen!!"
   },
   "STATIC_CLEAR_REMOVED_ARTICLES_STORE_CKA2F4": {
-    "message": "Clear removed articles store"
+    "message": "Speicher entfernter Artikel leeren"
   },
   "STATIC_REMOVE_REMOVED_ARTICLES_DATA_1H1FW9O": {
-    "message": "Remove removed articles data"
+    "message": "Daten entfernter Artikel löschen"
   },
   "STATIC_CLEAR_SETTINGS_182PX9V": {
-    "message": "Clear settings"
+    "message": "Einstellungen löschen"
   },
   "STATIC_REMOVE_EXTENSION_SETTINGS_15QON31": {
-    "message": "Remove extension settings"
+    "message": "Erweiterungseinstellungen entfernen"
   },
   "STATIC_CLEAR_DATA_8RGEDI": {
-    "message": "Clear data"
+    "message": "Daten löschen"
   },
   "STATIC_REMOVE_ALL_EXTENSION_DATA_ES3GNX": {
-    "message": "Remove ALL extension data"
+    "message": "ALLE Erweiterungsdaten entfernen"
   },
   "STATIC_VERSION_Q0ZD4N": {
     "message": "Version"

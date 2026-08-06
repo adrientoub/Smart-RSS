@@ -90,7 +90,7 @@
     "message": "Полный текст"
   },
   "FULL_ARTICLE_SINGLE": {
-    "message": "Full article (only when single selected)"
+    "message": "Полный текст (только при выборе одного источника)"
   },
   "REALLY_DELETE": {
     "message": "Вы действительно хотите удалить эту рассылку?"
@@ -111,10 +111,10 @@
     "message": "Свойства"
   },
   "REFETCH": {
-    "message": "Refetch"
+    "message": "Загрузить заново"
   },
   "OPENHOME": {
-    "message": "Open feed homepage"
+    "message": "Открыть домашнюю страницу канала"
   },
   "UNDELETE": {
     "message": "Восстановить"
@@ -159,7 +159,7 @@
     "message": "Адрес"
   },
   "PARENT": {
-    "message": "Parent folder"
+    "message": "Родительская папка"
   },
   "JANUARY": {
     "message": "Январь"
@@ -291,316 +291,316 @@
     "message": "Старше два месяца"
   },
   "AUTOREMOVE_SETTING": {
-    "message": "Automatically remove"
+    "message": "Удалять автоматически"
   },
   "USE_GLOBAL_SETTING": {
-    "message": "Use global setting"
+    "message": "Использовать общую настройку"
   },
   "REMOVE_ALL": {
-    "message": "Remove all"
+    "message": "Удалять все"
   },
   "KEEP_UNVISITED": {
-    "message": "Keep unvisited"
+    "message": "Сохранять непросмотренные"
   },
   "KEEP_UNREAD": {
-    "message": "Keep unread"
+    "message": "Сохранять непрочитанные"
   },
   "SORT_BY": {
-    "message": "Sort By"
+    "message": "Сортировать по"
   },
   "DATE": {
-    "message": "Date"
+    "message": "Дате"
   },
   "TITLE": {
-    "message": "Title"
+    "message": "Заголовку"
   },
   "AUTHOR": {
-    "message": "Author"
+    "message": "Автору"
   },
   "SORTING": {
-    "message": "Sorting"
+    "message": "Сортировка"
   },
   "SECONDARY_SORTING": {
-    "message": "Secondary sorting"
+    "message": "Дополнительная сортировка"
   },
   "HIDE_OVERLAYS": {
-    "message": "Hide overlays"
+    "message": "Скрыть наложения"
   },
   "TOGGLE_SHOW_ONLY_UNREAD": {
-    "message": "Toggle show only unread"
+    "message": "Переключить показ только непрочитанных"
   },
   "TOGGLE_THEME": {
-    "message": "Toggle dark mode"
+    "message": "Переключить тёмный режим"
   },
   "STOP_UPDATE": {
-    "message": "Stop updating feeds"
+    "message": "Остановить обновление каналов"
   },
   "OPEN_HOME": {
-    "message": "Open feed homepage"
+    "message": "Открыть домашнюю страницу канала"
   },
   "SCROLL_INTO_VIEW": {
-    "message": "Scroll into view"
+    "message": "Прокрутить до элемента"
   },
   "FOCUS_FEEDS": {
-    "message": "Focus feeds"
+    "message": "Перейти к каналам"
   },
   "SELECT_NEXT_FEED": {
-    "message": "Select next feed"
+    "message": "Выбрать следующий канал"
   },
   "SELECT_PREVIOUS_FEED": {
-    "message": "Select previous feed"
+    "message": "Выбрать предыдущий канал"
   },
   "CLOSE_FOLDERS": {
-    "message": "Close folders"
+    "message": "Свернуть папки"
   },
   "OPEN_FOLDERS": {
-    "message": "Open folders"
+    "message": "Развернуть папки"
   },
   "TOGGLE_FOLDER": {
-    "message": "Toggle folder"
+    "message": "Переключить папку"
   },
   "SHOW_ARTICLES": {
-    "message": "Show articles"
+    "message": "Показать статьи"
   },
   "SHOW_AND_FOCUS_ARTICLES": {
-    "message": "Show and focus articles"
+    "message": "Показать статьи и перейти к ним"
   },
   "SELECT_NEXT_ARTICLE": {
-    "message": "Select next article"
+    "message": "Выбрать следующую статью"
   },
   "SELECT_PREVIOUS_ARTICLE": {
-    "message": "Select previous article"
+    "message": "Выбрать предыдущую статью"
   },
   "FOCUS_SEARCH": {
-    "message": "Focus search"
+    "message": "Перейти к поиску"
   },
   "FOCUS_ARTICLES": {
-    "message": "Focus articles"
+    "message": "Перейти к статьям"
   },
   "SELECT_ALL_ARTICLES": {
-    "message": "Select All"
+    "message": "Выбрать всё"
   },
   "PAGE_UP": {
-    "message": "Page up"
+    "message": "На страницу вверх"
   },
   "PAGE_DOWN": {
-    "message": "Page down"
+    "message": "На страницу вниз"
   },
   "SCROLL_TO_TOP": {
-    "message": "Scroll to top"
+    "message": "Прокрутить в начало"
   },
   "SCROLL_TO_BOTTOM": {
-    "message": "Scroll to bottom"
+    "message": "Прокрутить в конец"
   },
   "FOCUS_CONTENT": {
-    "message": "Focus article content"
+    "message": "Перейти к содержимому статьи"
   },
   "SCROLL_UP": {
-    "message": "Scroll up"
+    "message": "Прокрутить вверх"
   },
   "SCROLL_DOWN": {
-    "message": "Scroll down"
+    "message": "Прокрутить вниз"
   },
   "EXTENSION_NAME": {
     "message": "Smart RSS"
   },
   "EXTENSION_DESCRIPTION": {
-    "message": "RSS Reader"
+    "message": "RSS-ридер"
   },
   "ROOT_FOLDER": {
-    "message": "Root folder"
+    "message": "Корневая папка"
   },
   "SUBSCRIBE_TO_FEED": {
-    "message": "Subscribe to this feed"
+    "message": "Подписаться на этот канал"
   },
   "REMOVE_SELECTED_PERMANENTLY": {
-    "message": "Remove selected items permanently?"
+    "message": "Удалить выбранные элементы безвозвратно?"
   },
   "PINNED_DELETE_CONFIRM": {
     "message": "Новость \"{title}\" закреплена. Вы действительно хотите её удалить?"
   },
   "UNKNOWN": {
-    "message": "Unknown"
+    "message": "Неизвестно"
   },
   "NO_ACTION": {
-    "message": "No action"
+    "message": "Нет действия"
   },
   "RESET_HOTKEYS": {
-    "message": "Reset hotkeys"
+    "message": "Сбросить горячие клавиши"
   },
   "RESET_HOTKEYS_CONFIRM": {
-    "message": "Resetting hotkeys will require an extension reload. Do you want to continue?"
+    "message": "Для сброса горячих клавиш потребуется перезагрузить расширение. Продолжить?"
   },
   "EXPORTING_WAIT": {
-    "message": "Exporting, please wait"
+    "message": "Идёт экспорт, подождите"
   },
   "DOWNLOAD_EXPORTED_DATA": {
-    "message": "Click to download exported data"
+    "message": "Нажмите, чтобы скачать экспортированные данные"
   },
   "WRONG_FILE": {
-    "message": "Wrong file"
+    "message": "Неверный файл"
   },
   "LOADING_PARSING_FILE": {
-    "message": "Loading and parsing file"
+    "message": "Загрузка и обработка файла"
   },
   "IMPORTING_WAIT": {
-    "message": "Importing, please wait!"
+    "message": "Идёт импорт, подождите!"
   },
   "IMPORT_COMPLETED": {
-    "message": "Import completed!"
+    "message": "Импорт завершён!"
   },
   "IMPORT_FULLY_COMPLETED": {
-    "message": "Import fully completed!"
+    "message": "Импорт полностью завершён!"
   },
   "LOADING_DATA_MEMORY": {
-    "message": "Loading data into memory!"
+    "message": "Загрузка данных в память!"
   },
   "IMPORT_ERROR": {
-    "message": "Importing error: {error}"
+    "message": "Ошибка импорта: {error}"
   },
   "REMOVE_SETTINGS_CONFIRM": {
-    "message": "Do you really want to remove all extension settings?"
+    "message": "Удалить все настройки расширения?"
   },
   "REMOVE_DATA_CONFIRM": {
-    "message": "Do you really want to remove all extension data?"
+    "message": "Удалить все данные расширения?"
   },
   "REMOVE_DELETED_CONFIRM": {
-    "message": "Do you really want to remove deleted article metadata? This may cause some articles to appear again."
+    "message": "Удалить метаданные удалённых статей? Некоторые статьи могут появиться снова."
   },
   "DONE_REBOOT": {
-    "message": "Done. The extension will restart now."
+    "message": "Готово. Расширение сейчас перезапустится."
   },
   "REMOVE_FAVICONS_CONFIRM": {
-    "message": "Do you really want to remove all favicons?"
+    "message": "Удалить все значки сайтов?"
   },
   "DONE": {
-    "message": "Done"
+    "message": "Готово"
   },
   "SPACE_THROUGH": {
-    "message": "Space through"
+    "message": "Просматривать пробелом"
   },
   "FOCUS_ARTICLE": {
-    "message": "Focus article"
+    "message": "Перейти к статье"
   },
   "FOLDERS_PROGRESS": {
-    "message": "Folders: {current}/{total}"
+    "message": "Папки: {current}/{total}"
   },
   "FEEDS_PROGRESS": {
-    "message": "Feeds: {current}/{total}"
+    "message": "Каналы: {current}/{total}"
   },
   "ARTICLES_PROGRESS": {
-    "message": "Articles: {current}/{total}"
+    "message": "Статьи: {current}/{total}"
   },
   "WRITING": {
-    "message": "Writing..."
+    "message": "Запись..."
   },
   "NEW_ARTICLES_FOUND": {
-    "message": "New articles found"
+    "message": "Найдены новые статьи"
   },
   "STATIC_CONTACT_ME_IF_YOU_WANT_TO_MAKE_TRANSLATION_FOR_Y_1GQG8TP": {
-    "message": "Contact me if you want to make translation for your lang."
+    "message": "Свяжитесь со мной, если хотите подготовить перевод на свой язык."
   },
   "STATIC_NORMAL_DD_MM_YYYY_ISO_YYYY_MM_DD_US_MM_DD_YYYY_1916X78": {
-    "message": "Normal = DD.MM.YYYY, ISO = YYYY-MM-DD, US = MM/DD/YYYY"
+    "message": "Обычный = DD.MM.YYYY, ISO = YYYY-MM-DD, US = MM/DD/YYYY"
   },
   "STATIC_TIME_FORMAT_1G1EA3J": {
-    "message": "Time format"
+    "message": "Формат времени"
   },
   "STATIC_FOLLOW_THE_BROWSER_THEME_OR_FORCE_LIGHT_OR_DARK_JZETTF": {
-    "message": "Follow the browser theme, or force light or dark."
+    "message": "Использовать тему браузера либо принудительно светлую или тёмную тему."
   },
   "STATIC_HORIZONTAL_PUTS_THE_THREE_PANES_SIDE_BY_SIDE_VER_W1S7J7": {
-    "message": "Horizontal puts the three panes side by side; vertical stacks the article below the list."
+    "message": "Горизонтальная компоновка размещает три панели рядом, а вертикальная — статью под списком."
   },
   "STATIC_COLOR_OF_ICON_THAT_SHOWS_UP_IN_EXTENSION_BUTTON__1ANMHVI": {
-    "message": "Color of icon that shows up in extension button when new articles are downloaded."
+    "message": "Цвет значка на кнопке расширения после загрузки новых статей."
   },
   "STATIC_CONTROLS_WHETHER_MEDIA_PREVIEW_SHOULD_BE_VISIBLE_1OS59WZ": {
-    "message": "Controls whether media preview should be visible when displaying article contents. Can be overridden per source"
+    "message": "Определяет, показывать ли предпросмотр медиа при отображении содержимого статьи. Можно изменить для каждого источника"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_SOURCES_WITH_UNREAD_ARTICL_1N3M15U": {
-    "message": "Controls whether only sources with unread articles should be visible"
+    "message": "Определяет, показывать ли только источники с непрочитанными статьями"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_UNREAD_ARTICLES_SHOULD_BE__YR6HJ0": {
-    "message": "Controls whether only unread articles should be visible"
+    "message": "Определяет, показывать ли только непрочитанные статьи"
   },
   "STATIC_REPLACE_FAVICON_OF_FEED_WITH_SPINNER_ANIMATION_D_PNWD6P": {
-    "message": "Replace favicon of feed with spinner animation during feed update."
+    "message": "Во время обновления канала заменять его значок индикатором загрузки."
   },
   "STATIC_DISPLAY_LINK_CONTEXT_MENU_ENTRY_ALLOWING_YOU_TO__PPKZFZ": {
-    "message": "Display link context menu entry allowing you to add given link to subscriptions."
+    "message": "Показывать в контекстном меню ссылки команду для добавления её в подписки."
   },
   "STATIC_IF_CHECKED_CLICKING_TOOLBAR_BUTTON_WILL_OPEN_NEW_1CVPZXJ": {
-    "message": "If checked clicking toolbar button will open new tab, else it will load reader in the same tab."
+    "message": "Если включено, кнопка панели инструментов откроет новую вкладку; иначе читалка загрузится в текущей вкладке."
   },
   "STATIC_THIS_OPTION_WILL_IMMEDIATELY_MARK_AS_READ_EVERY__1CY6HIE": {
-    "message": "This option will immediately mark as read every article you visit in the right column."
+    "message": "Эта настройка сразу отмечает прочитанной каждую статью, открытую в правом столбце."
   },
   "STATIC_WHEN_YOU_SELECT_MORE_THAN_10_FEEDS_IN_ARTICLE_LI_X0DDAN": {
-    "message": "When you select more than 10 feeds in article list and choose 'Open article link' options from context menu."
+    "message": "При выборе более 10 каналов в списке статей и команды «Открыть ссылку статьи» в контекстном меню."
   },
   "STATIC_EFFECTS_DATE_IN_ARTICLE_LIST_PPWLEU": {
-    "message": "Effects date in article list."
+    "message": "Влияет на дату в списке статей."
   },
   "STATIC_IF_ENABLED_PRESSING_ARROW_UP_IN_A_LIST_WHEN_THE__XJ6J5T": {
-    "message": "If enabled, pressing arrow up in a list when the first item is selected will select the last item and visa-versa."
+    "message": "Если включено, стрелка вверх при выбранном первом элементе списка выберет последний элемент и наоборот."
   },
   "STATIC_IF_ENABLED_TITLE_OF_ARTICLE_IS_A_LINK_TO_FULL_AR_1T9UQLB": {
-    "message": "If enabled, title of article is a link to full article."
+    "message": "Если включено, заголовок статьи является ссылкой на полную статью."
   },
   "STATIC_CONTROLS_HOW_TO_HANDLE_ENTER_PRESS_ON_ARTICLE_LI_MHS6OK": {
-    "message": "Controls how to handle `Enter` press on article list"
+    "message": "Определяет действие клавиши `Enter` в списке статей"
   },
   "STATIC_ASK_TO_PREVENT_ACCIDENTAL_REMOVAL_OF_PINNED_ITEM_1SB0OQ0": {
-    "message": "Ask to prevent accidental removal of pinned items."
+    "message": "Запрашивать подтверждение перед удалением закреплённых элементов."
   },
   "STATIC_COMMA_SEPARATED_LIST_CASE_INSENSITIVE_START_WITH_1CQ7C4W": {
-    "message": "Comma separated list, case insensitive, start with : to search in contents too"
+    "message": "Список через запятую без учёта регистра; начните с :, чтобы искать также в содержимом"
   },
   "STATIC_VIEW_TO_USE_WHEN_DISPLAYING_ARTICLES_HHTJ23": {
-    "message": "View to use when displaying articles"
+    "message": "Вид для отображения статей"
   },
   "STATIC_SHOULD_PARSED_ARTICLE_BE_SAVED_IN_LOCAL_STORAGE__92CMR7": {
-    "message": "Should parsed article be saved in local storage after parsing the website?"
+    "message": "Сохранять обработанную статью в локальном хранилище после разбора сайта?"
   },
   "STATIC_IF_SELECTED_TO_SEE_ALL_ARTICLES_HOLD_ALT_OR_CLIC_O6IHGE": {
-    "message": "If selected to see all articles hold alt or click on the counter"
+    "message": "Чтобы увидеть все статьи, удерживайте Alt или нажмите на счётчик"
   },
   "STATIC_IF_ENABLED_BROWSER_WILL_DISPLAY_A_NOTIFICATION_W_13STSDS": {
-    "message": "If enabled, browser will display a notification when new articles are found."
+    "message": "Если включено, браузер покажет уведомление при обнаружении новых статей."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_S56NYT": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports both, feeds and feeds's articles."
+    "message": "SMART — специальный формат расширения Smart RSS. Он экспортирует и импортирует каналы вместе с их статьями."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_EXPORT_FEEDS_FROM_SMA_1B1P69M": {
-    "message": "You can use OPML format to export feeds from Smart RSS to Opera 12."
+    "message": "Формат OPML можно использовать для экспорта каналов из Smart RSS в Opera 12."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_HPG76L": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports all feeds, folders and articles."
+    "message": "SMART — специальный формат расширения Smart RSS. Он экспортирует и импортирует все каналы, папки и статьи."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_IMPORT_FEEDS_AND_FOLD_1MKEBH7": {
-    "message": "You can use OPML format to import feeds and folders from Opera 12 to Smart RSS."
+    "message": "Формат OPML можно использовать для импорта каналов и папок из Opera 12 в Smart RSS."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_YOURS_FEEDS_AND_ARTICLES_AN_VTXBG9": {
-    "message": "This will remove all yours feeds and articles and settings."
+    "message": "Это удалит все ваши каналы, статьи и настройки."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_REMOVED_ARTICLES_CACHE_IT_M_1P8QIOJ": {
-    "message": "This will remove all removed articles cache. It may cause some removed articles to appear again."
+    "message": "Это очистит кэш удалённых статей. Некоторые удалённые статьи могут появиться снова."
   },
   "STATIC_SMART_RSS_OPTIONS_H34A8V": {
-    "message": "Smart RSS - Options"
+    "message": "Smart RSS — Настройки"
   },
   "STATIC_LOCALIZATION_EUKV6O": {
-    "message": "Localization"
+    "message": "Локализация"
   },
   "STATIC_LANGUAGE_16US7MJ": {
-    "message": "Language"
+    "message": "Язык"
   },
   "STATIC_DATE_FORMAT_P62DDW": {
-    "message": "Date format"
+    "message": "Формат даты"
   },
   "STATIC_NORMAL_ONOBJM": {
-    "message": "Normal"
+    "message": "Обычный"
   },
   "STATIC_ISO_1Q4DNHQ": {
     "message": "ISO"
@@ -615,202 +615,202 @@
     "message": "12h (AM/PM)"
   },
   "STATIC_APPEARANCE_DLI9WF": {
-    "message": "Appearance"
+    "message": "Внешний вид"
   },
   "STATIC_THEME_LTYTUA": {
-    "message": "Theme"
+    "message": "Тема"
   },
   "STATIC_MATCH_BROWSER_1C0MZBA": {
-    "message": "Match browser"
+    "message": "Как в браузере"
   },
   "STATIC_LIGHT_12IOB7Z": {
-    "message": "Light"
+    "message": "Светлая"
   },
   "STATIC_DARK_J8M6W5": {
-    "message": "Dark"
+    "message": "Тёмная"
   },
   "STATIC_HORIZONTAL_TYAPAH": {
-    "message": "Horizontal"
+    "message": "Горизонтально"
   },
   "STATIC_VERTICAL_ZSCUHN": {
-    "message": "Vertical"
+    "message": "Вертикально"
   },
   "STATIC_SHOW_FULL_HEADLINE_MV9HBV": {
-    "message": "Show full headline"
+    "message": "Показывать заголовок полностью"
   },
   "STATIC_YES_1DUDZCG": {
-    "message": "Yes"
+    "message": "Да"
   },
   "STATIC_NO_R5WQAI": {
-    "message": "No"
+    "message": "Нет"
   },
   "STATIC_DISPLAY_FAVICON_INSTEAD_OF_PIN_WHEN_MULTIPLE_SOU_3FEC4U": {
-    "message": "Display favicon instead of pin when multiple sources selected"
+    "message": "При выборе нескольких источников показывать значок сайта вместо булавки"
   },
   "STATIC_ARTICLE_LIST_DISPLAY_MODE_F3I958": {
-    "message": "Article list display mode"
+    "message": "Режим отображения списка статей"
   },
   "STATIC_ONE_LINE_Z5YGNJ": {
-    "message": "One Line"
+    "message": "Одна строка"
   },
   "STATIC_TWO_LINES_1HY5O7Q": {
-    "message": "Two Lines"
+    "message": "Две строки"
   },
   "STATIC_NEW_ARTICLES_NOTIFICATION_ICON_EFT2X4": {
-    "message": "New articles notification icon"
+    "message": "Значок уведомления о новых статьях"
   },
   "STATIC_ORANGE_VRISQZ": {
-    "message": "Orange"
+    "message": "Оранжевый"
   },
   "STATIC_BLUE_1SVZZZH": {
-    "message": "Blue"
+    "message": "Синий"
   },
   "STATIC_GREEN_1AZD270": {
-    "message": "Green"
+    "message": "Зелёный"
   },
   "STATIC_PURPLE_1EN1Q8V": {
-    "message": "Purple"
+    "message": "Фиолетовый"
   },
   "STATIC_RED_19D4CCC": {
-    "message": "Red"
+    "message": "Красный"
   },
   "STATIC_ROYAL_BLUE_8NJHF0": {
-    "message": "Royal Blue"
+    "message": "Королевский синий"
   },
   "STATIC_DISABLED_1H7WNC5": {
-    "message": "Disabled"
+    "message": "Отключён"
   },
   "STATIC_SHOW_SPECIAL_ALL_FEEDS_ITEM_ON_FEEDS_LIST_V8YX74": {
-    "message": "Show special All Feeds item on feeds list"
+    "message": "Показывать пункт «Все каналы» в списке каналов"
   },
   "STATIC_OPEN_MEDIA_PREVIEW_AUTOMATICALLY_16SZX1O": {
-    "message": "Open media preview automatically"
+    "message": "Автоматически открывать предпросмотр медиа"
   },
   "STATIC_SHOW_ONLY_SOURCES_WITH_UNREAD_ARTICLES_1VTNK9E": {
-    "message": "Show only sources with unread articles"
+    "message": "Показывать только источники с непрочитанными статьями"
   },
   "STATIC_SHOW_ONLY_UNREAD_ARTICLES_A9M1DK": {
-    "message": "Show only unread articles"
+    "message": "Показывать только непрочитанные статьи"
   },
   "STATIC_DISABLE_DATE_GROUPS_6ZXR9B": {
-    "message": "Disable date groups"
+    "message": "Отключить группировку по дате"
   },
   "STATIC_ARTICLE_FONT_SIZE_1NO2HGN": {
-    "message": "Article font size"
+    "message": "Размер шрифта статьи"
   },
   "STATIC_UI_FONT_SIZE_T1CX8D": {
-    "message": "UI font size"
+    "message": "Размер шрифта интерфейса"
   },
   "STATIC_SHOW_SPINNER_DURING_UPDATE_16IQC8F": {
-    "message": "Show spinner during update"
+    "message": "Показывать индикатор загрузки при обновлении"
   },
   "STATIC_LINK_CONTEXT_MENU_1MS8FUX": {
-    "message": "Link context menu"
+    "message": "Контекстное меню ссылки"
   },
   "STATIC_BEHAVIOR_8MNFIF": {
-    "message": "Behavior"
+    "message": "Поведение"
   },
   "STATIC_OPEN_READER_IN_NEW_TAB_17E1W2U": {
-    "message": "Open Reader in new tab"
+    "message": "Открывать читалку в новой вкладке"
   },
   "STATIC_SELECT_FIRST_ARTICLE_ON_FEED_SELECTION_1LTS2ZG": {
-    "message": "Select first article on feed selection"
+    "message": "Выбирать первую статью при выборе канала"
   },
   "STATIC_SELECT_ALL_FEEDS_ON_READER_OPEN_18VDTDH": {
-    "message": "Select all feeds on reader open"
+    "message": "Выбирать все каналы при открытии читалки"
   },
   "STATIC_AUTOMATICALLY_MARK_ARTICLES_AS_READ_14DJ9JE": {
-    "message": "Automatically mark articles as read"
+    "message": "Автоматически отмечать статьи прочитанными"
   },
   "STATIC_ASK_WHEN_OPENING_10_TABS_1R6R46C": {
-    "message": "Ask when opening 10+ tabs"
+    "message": "Спрашивать перед открытием 10 и более вкладок"
   },
   "STATIC_ALWAYS_SHOW_FULL_DATE_KMPID6": {
-    "message": "Always show full date"
+    "message": "Всегда показывать полную дату"
   },
   "STATIC_CIRCULAR_NAVIGATION_Y2J9IA": {
-    "message": "Circular navigation"
+    "message": "Циклическая навигация"
   },
   "STATIC_TITLE_IS_LINK_TO_FULL_ARTICLE_6N487X": {
-    "message": "Title is link to full article"
+    "message": "Заголовок является ссылкой на полную статью"
   },
   "STATIC_ENTER_OPENS_ARTICLES_IN_QIA8MY": {
-    "message": "Enter opens articles in"
+    "message": "Клавиша Enter открывает статьи:"
   },
   "STATIC_BACKGROUND_1FVQIF1": {
-    "message": "Background"
+    "message": "В фоновой вкладке"
   },
   "STATIC_FOREGROUND_1OBQHNK": {
-    "message": "Foreground"
+    "message": "В активной вкладке"
   },
   "STATIC_ASK_WHEN_REMOVING_PINNED_ITEMS_1KXHKMX": {
-    "message": "Ask when removing pinned items"
+    "message": "Спрашивать при удалении закреплённых элементов"
   },
   "STATIC_ON_REMOVAL_FROM_TRASH_X7198Y": {
-    "message": "On removal from trash"
+    "message": "При удалении из корзины"
   },
   "STATIC_ALWAYS_1C30550": {
-    "message": "Always"
+    "message": "Всегда"
   },
   "STATIC_ICON_BADGE_17WQASR": {
-    "message": "Icon badge"
+    "message": "Значок-счётчик"
   },
   "STATIC_DISABLED_EEX8G5": {
-    "message": "disabled"
+    "message": "отключён"
   },
   "STATIC_OF_UNREAD_K5BYRM": {
-    "message": "# of unread"
+    "message": "Число непрочитанных"
   },
   "STATIC_OF_UNVISITED_156OOQ0": {
-    "message": "# of unvisited"
+    "message": "Число непросмотренных"
   },
   "STATIC_CONCURRENT_DOWNLOADS_1U3U0T1": {
-    "message": "Concurrent downloads"
+    "message": "Одновременные загрузки"
   },
   "STATIC_DISABLE_AUTO_UPDATE_COMPLETELY_15NTBFL": {
-    "message": "Disable auto update completely"
+    "message": "Полностью отключить автообновление"
   },
   "STATIC_DEFAULT_UPDATE_FREQUENCY_MINUTES_18L1XRP": {
-    "message": "Default update frequency (minutes)"
+    "message": "Интервал обновления по умолчанию (минуты)"
   },
   "STATIC_AUTO_REMOVE_AFTER_6741PK": {
-    "message": "Auto remove after"
+    "message": "Автоматически удалять через"
   },
   "STATIC_AUTO_REMOVE_1H062VA": {
-    "message": "Auto remove"
+    "message": "Автоматическое удаление"
   },
   "STATIC_AUTO_REMOVE_FROM_TRASH_5A2WBS": {
-    "message": "Auto remove from trash"
+    "message": "Автоматически удалять из корзины"
   },
   "STATIC_AUTO_PIN_ARTICLES_MATCHING_10MA3NR": {
-    "message": "Auto pin articles matching"
+    "message": "Автоматически закреплять подходящие статьи"
   },
   "STATIC_DEFAULT_VIEW_1YHRPIR": {
-    "message": "Default view"
+    "message": "Вид по умолчанию"
   },
   "STATIC_CONTENT_FROM_FEED_1RU9T9A": {
-    "message": "Content from feed"
+    "message": "Содержимое из канала"
   },
   "STATIC_PARSE_WEBSITE_4CUQJ5": {
-    "message": "Parse website"
+    "message": "Обрабатывать сайт"
   },
   "STATIC_CACHE_ARTICLE_AFTER_PARSING_KBFZI9": {
-    "message": "Cache article after parsing"
+    "message": "Кэшировать статью после обработки"
   },
   "STATIC_HOTKEYS_1KHCIOW": {
-    "message": "Hotkeys"
+    "message": "Горячие клавиши"
   },
   "STATIC_NOTIFICATIONS_FKI4UN": {
-    "message": "Notifications"
+    "message": "Уведомления"
   },
   "STATIC_ENABLE_SYSTEM_NOTIFICATIONS_1KVIF4Z": {
-    "message": "Enable system notifications"
+    "message": "Включить системные уведомления"
   },
   "STATIC_EXPORT_IMPORT_1KWL5UH": {
-    "message": "Export/Import"
+    "message": "Экспорт/импорт"
   },
   "STATIC_EXPORT_1SH99LF": {
-    "message": "Export"
+    "message": "Экспорт"
   },
   "STATIC_SMART_MQAJW2": {
     "message": "SMART"
@@ -819,42 +819,42 @@
     "message": "OPML"
   },
   "STATIC_IMPORT_O7FTO4": {
-    "message": "Import"
+    "message": "Импорт"
   },
   "STATIC_WARNING_SMART_RSS_WILL_RELOAD_AFTER_FINISHING_TH_1A77IDQ": {
-    "message": "Warning: Smart RSS will reload after finishing the SMART import, it's expected behavior"
+    "message": "Внимание: после завершения импорта SMART программа Smart RSS перезагрузится; это ожидаемое поведение"
   },
   "STATIC_ADVANCED_FEATURES_MOSTLY_FOR_TROUBLESHOOTING_PUR_120JK38": {
-    "message": "Advanced features. Mostly for troubleshooting purposes"
+    "message": "Расширенные функции. В основном предназначены для устранения неполадок"
   },
   "STATIC_CLEAR_FAVICONS_135332F": {
-    "message": "Clear Favicons"
+    "message": "Очистить значки сайтов"
   },
   "STATIC_REMOVE_FAVICON_DATA_15RZGB": {
-    "message": "Remove Favicon data"
+    "message": "Удалить данные значков сайтов"
   },
   "STATIC_CLEAR_H65A4E": {
-    "message": "!!Clear!!"
+    "message": "!!Очистить!!"
   },
   "STATIC_CLEAR_REMOVED_ARTICLES_STORE_CKA2F4": {
-    "message": "Clear removed articles store"
+    "message": "Очистить хранилище удалённых статей"
   },
   "STATIC_REMOVE_REMOVED_ARTICLES_DATA_1H1FW9O": {
-    "message": "Remove removed articles data"
+    "message": "Удалить данные удалённых статей"
   },
   "STATIC_CLEAR_SETTINGS_182PX9V": {
-    "message": "Clear settings"
+    "message": "Очистить настройки"
   },
   "STATIC_REMOVE_EXTENSION_SETTINGS_15QON31": {
-    "message": "Remove extension settings"
+    "message": "Удалить настройки расширения"
   },
   "STATIC_CLEAR_DATA_8RGEDI": {
-    "message": "Clear data"
+    "message": "Очистить данные"
   },
   "STATIC_REMOVE_ALL_EXTENSION_DATA_ES3GNX": {
-    "message": "Remove ALL extension data"
+    "message": "Удалить ВСЕ данные расширения"
   },
   "STATIC_VERSION_Q0ZD4N": {
-    "message": "Version"
+    "message": "Версия"
   }
 }

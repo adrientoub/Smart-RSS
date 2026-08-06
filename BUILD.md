@@ -12,13 +12,17 @@ npm install
 npm run check   # eslint + tsc --noEmit + tests. Run this before committing.
 npm run build   # bundle into dist/
 npm run dev     # build, then launch Firefox with the extension loaded
+npm run dev:edge # build, then launch Edge with the extension loaded
 npm run watch   # rebuild on change, run alongside npm run dev
 ```
 
-`npm run dev` loads `dist/` as a temporary add-on. Inspect the background page from
+`npm run dev` loads `dist/` as a temporary add-on. Inspect the background from
 `about:debugging#/runtime/this-firefox`.
 
-Chromium is not usable yet: the manifest is still `manifest_version: 2`.
+`npm run dev:edge` runs the same `dist/` in Edge through web-ext's Chromium target.
+Inspect the service worker from `edge://extensions` with developer mode on. It expects
+Edge at its default Windows location; override `--chromium-binary` in the script if it
+lives elsewhere.
 
 ## Individual checks
 

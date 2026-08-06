@@ -49,16 +49,16 @@ JSON.safeParse = function (str) {
 };
 
 const documentReady = () => {
-    if (typeof browser === "undefined") {
-        const warning = document.querySelector(".ff-warning");
-        warning.parentNode.removeChild(warning);
-    }
     document.querySelector("#version").textContent = browser.runtime.getManifest().version;
-    if (typeof browser !== "undefined") {
+
+    const browserInfo = document.querySelector("#browser-info");
+    // Firefox-only, and Chromium has no equivalent.
+    if (browser.runtime.getBrowserInfo) {
         browser.runtime.getBrowserInfo().then((info) => {
-            document.querySelector("#browser-info").textContent =
-                `${info.vendor} ${info.name} ${info.version} ${info.buildID}`;
+            browserInfo.textContent = `${info.vendor} ${info.name} ${info.version} ${info.buildID}`;
         });
+    } else {
+        browserInfo.textContent = navigator.userAgent;
     }
 
     [
@@ -220,14 +220,9 @@ const documentReady = () => {
         }
         if (target.classList.contains("resetHotkeysButton")) {
             if (
-                typeof browser === "undefined" ||
                 confirm("Resetting hotkeys will require extension reload, do you want to continue?")
             ) {
                 settings.save("hotkeys", settings.defaults.hotkeys);
-                if (typeof browser === "undefined") {
-                    renderHotkeysBlock();
-                    return true;
-                }
                 browser.runtime.reload();
             }
         }
@@ -481,21 +476,7 @@ function handleImportSettings(event) {
                 settingsImportStatus.textContent = "Importing error: " + error.message;
             });
     };
-    if (typeof browser !== "undefined") {
-        reader.readAsText(file);
-    } else {
-        const url = browser.runtime.getURL("rss.html");
-        browser.tabs.query({ url: url }, function (tabs) {
-            for (let i = 0; i < tabs.length; i++) {
-                browser.tabs.remove(tabs[i].id);
-            }
-
-            // wait for clear events to happen
-            setTimeout(function () {
-                reader.readAsText(file);
-            }, 1000);
-        });
-    }
+    reader.readAsText(file);
 }
 
 function handleImportSmart(event) {
@@ -523,9 +504,7 @@ function handleImportSmart(event) {
             if (message.data.action === "finished") {
                 smartImportStatus.textContent = "Loading data to memory!";
                 sendMessage("reload-background-data").then(function () {
-                    if (typeof browser !== "undefined") {
-                        browser.runtime.reload();
-                    }
+                    browser.runtime.reload();
                     reloadData();
                     smartImportStatus.textContent = "Import fully completed!";
                     sendMessage("load-all");
@@ -540,21 +519,7 @@ function handleImportSmart(event) {
             alert("Importing error: " + error.message);
         };
     };
-    if (typeof browser !== "undefined") {
-        reader.readAsText(file);
-    } else {
-        const url = browser.runtime.getURL("rss.html");
-        browser.tabs.query({ url: url }, function (tabs) {
-            for (let i = 0; i < tabs.length; i++) {
-                browser.tabs.remove(tabs[i].id);
-            }
-
-            // wait for clear events to happen
-            setTimeout(function () {
-                reader.readAsText(file);
-            }, 1000);
-        });
-    }
+    reader.readAsText(file);
 }
 
 function handleImportOPML(event) {

@@ -3,11 +3,10 @@
  * @submodule modules/Animation
  */
 
-import actionApi from "./actionApi.js";
 import { settingsStore } from "../../shared/settings.ts";
 import { collections } from "../../shared/collectionRegistry.ts";
 
-const { action } = actionApi;
+const { action } = browser;
 const settings = settingsStore();
 
 /**

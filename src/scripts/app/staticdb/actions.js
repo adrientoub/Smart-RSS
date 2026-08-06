@@ -764,31 +764,18 @@ export default {
         showConfig: {
             title: L.SETTINGS,
             icon: "config.png",
-            fn: function () {
+            fn: async function () {
                 const url = browser.runtime.getURL("options.html");
-                browser.tabs.query(
-                    {
-                        url: url,
-                    },
-                    function (tabs) {
-                        if (tabs[0]) {
-                            if (tabs[0].active) {
-                                browser.tabs.remove(tabs[0].id);
-                            } else {
-                                browser.tabs.update(tabs[0].id, {
-                                    active: true,
-                                });
-                            }
-                        } else {
-                            browser.tabs.create(
-                                {
-                                    url: url,
-                                },
-                                function () {}
-                            );
-                        }
-                    }
-                );
+                const tabs = await browser.tabs.query({ url: url });
+                if (!tabs[0]) {
+                    await browser.tabs.create({ url: url });
+                    return;
+                }
+                if (tabs[0].active) {
+                    await browser.tabs.remove(tabs[0].id);
+                    return;
+                }
+                await browser.tabs.update(tabs[0].id, { active: true });
             },
         },
         focus: {

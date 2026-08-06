@@ -10,7 +10,6 @@ import { createCollections, fetchCollections } from "../shared/dataStore.ts";
 import { startDataBroadcast } from "./modules/dataBroadcast.js";
 import { handleMessages, broadcast } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
-import { migrateSettings } from "../shared/settingsMigration.ts";
 import { translate } from "../shared/i18n.ts";
 
 const { action } = browser;
@@ -209,9 +208,7 @@ const appStarted = new Promise((resolve, reject) => {
      * Init
      */
 
-    // Settings move out of IndexedDB before anything reads them.
-    migrateSettings(settings, browser.storage.local)
-        .then(fetchAll)
+    fetchAll()
         .then(function () {
             // After the first load, so the whole fetch is not replayed record by
             // record, and outside fetchAll, which runs again on settings import.

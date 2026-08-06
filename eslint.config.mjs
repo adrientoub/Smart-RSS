@@ -54,7 +54,7 @@ export default tseslint.config(
 
     // Web worker context.
     {
-        files: ["src/scripts/options/worker.js"],
+        files: ["src/scripts/options/worker.ts"],
         languageOptions: {
             globals: { ...globals.worker },
         },

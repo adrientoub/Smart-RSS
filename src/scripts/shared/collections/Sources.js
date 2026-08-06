@@ -4,7 +4,7 @@
 
 import BB from "backbone";
 import Source from "../models/Source.js";
-import "../preps/indexeddb.js";
+import "../backboneDexie.ts";
 
 /**
  * Collection of feed modules
@@ -14,7 +14,7 @@ import "../preps/indexeddb.js";
  */
 export default BB.Collection.extend({
     model: Source,
-    indexedDB: new BB.IndexedDB("sources-backbone"),
+    dexieTable: "sources",
     comparator: function (a, b) {
         const t1 = (a.get("title") || "").trim().toLowerCase();
         const t2 = (b.get("title") || "").trim().toLowerCase();

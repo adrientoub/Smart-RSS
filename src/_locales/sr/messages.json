@@ -90,7 +90,7 @@
     "message": "Цела вест"
   },
   "FULL_ARTICLE_SINGLE": {
-    "message": "Full article (only when single selected)"
+    "message": "Цела вест (само када је изабрана једна)"
   },
   "REALLY_DELETE": {
     "message": "Да ли заиста желите да избришете овај канал?"
@@ -111,10 +111,10 @@
     "message": "Својства"
   },
   "REFETCH": {
-    "message": "Refetch"
+    "message": "Поново преузми"
   },
   "OPENHOME": {
-    "message": "Open feed homepage"
+    "message": "Отвори почетну страницу канала"
   },
   "UNDELETE": {
     "message": "Врати"
@@ -159,7 +159,7 @@
     "message": "Адреса"
   },
   "PARENT": {
-    "message": "Parent folder"
+    "message": "Надређена фасцикла"
   },
   "JANUARY": {
     "message": "Јануар"
@@ -291,19 +291,19 @@
     "message": "Старије од два месеца"
   },
   "AUTOREMOVE_SETTING": {
-    "message": "Automatically remove"
+    "message": "Аутоматски уклони"
   },
   "USE_GLOBAL_SETTING": {
-    "message": "Use global setting"
+    "message": "Користи опште подешавање"
   },
   "REMOVE_ALL": {
-    "message": "Remove all"
+    "message": "Уклони све"
   },
   "KEEP_UNVISITED": {
-    "message": "Keep unvisited"
+    "message": "Задржи непосећене"
   },
   "KEEP_UNREAD": {
-    "message": "Keep unread"
+    "message": "Задржи непрочитане"
   },
   "SORT_BY": {
     "message": "Сортирај по"
@@ -324,283 +324,283 @@
     "message": "Споредно сортирање по"
   },
   "HIDE_OVERLAYS": {
-    "message": "Hide overlays"
+    "message": "Сакриј преклапајуће елементе"
   },
   "TOGGLE_SHOW_ONLY_UNREAD": {
-    "message": "Toggle show only unread"
+    "message": "Укључи или искључи приказ само непрочитаних"
   },
   "TOGGLE_THEME": {
-    "message": "Toggle dark mode"
+    "message": "Укључи или искључи тамни режим"
   },
   "STOP_UPDATE": {
-    "message": "Stop updating feeds"
+    "message": "Заустави ажурирање канала"
   },
   "OPEN_HOME": {
-    "message": "Open feed homepage"
+    "message": "Отвори почетну страницу канала"
   },
   "SCROLL_INTO_VIEW": {
-    "message": "Scroll into view"
+    "message": "Помери у видљиво подручје"
   },
   "FOCUS_FEEDS": {
-    "message": "Focus feeds"
+    "message": "Фокусирај канале"
   },
   "SELECT_NEXT_FEED": {
-    "message": "Select next feed"
+    "message": "Изабери следећи канал"
   },
   "SELECT_PREVIOUS_FEED": {
-    "message": "Select previous feed"
+    "message": "Изабери претходни канал"
   },
   "CLOSE_FOLDERS": {
-    "message": "Close folders"
+    "message": "Затвори фасцикле"
   },
   "OPEN_FOLDERS": {
-    "message": "Open folders"
+    "message": "Отвори фасцикле"
   },
   "TOGGLE_FOLDER": {
-    "message": "Toggle folder"
+    "message": "Отвори или затвори фасциклу"
   },
   "SHOW_ARTICLES": {
-    "message": "Show articles"
+    "message": "Прикажи вести"
   },
   "SHOW_AND_FOCUS_ARTICLES": {
-    "message": "Show and focus articles"
+    "message": "Прикажи и фокусирај вести"
   },
   "SELECT_NEXT_ARTICLE": {
-    "message": "Select next article"
+    "message": "Изабери следећу вест"
   },
   "SELECT_PREVIOUS_ARTICLE": {
-    "message": "Select previous article"
+    "message": "Изабери претходну вест"
   },
   "FOCUS_SEARCH": {
-    "message": "Focus search"
+    "message": "Фокусирај претрагу"
   },
   "FOCUS_ARTICLES": {
-    "message": "Focus articles"
+    "message": "Фокусирај вести"
   },
   "SELECT_ALL_ARTICLES": {
-    "message": "Select All"
+    "message": "Изабери све"
   },
   "PAGE_UP": {
-    "message": "Page up"
+    "message": "Страница нагоре"
   },
   "PAGE_DOWN": {
-    "message": "Page down"
+    "message": "Страница надоле"
   },
   "SCROLL_TO_TOP": {
-    "message": "Scroll to top"
+    "message": "Помери на врх"
   },
   "SCROLL_TO_BOTTOM": {
-    "message": "Scroll to bottom"
+    "message": "Помери на дно"
   },
   "FOCUS_CONTENT": {
-    "message": "Focus article content"
+    "message": "Фокусирај садржај вести"
   },
   "SCROLL_UP": {
-    "message": "Scroll up"
+    "message": "Помери нагоре"
   },
   "SCROLL_DOWN": {
-    "message": "Scroll down"
+    "message": "Помери надоле"
   },
   "EXTENSION_NAME": {
     "message": "Smart RSS"
   },
   "EXTENSION_DESCRIPTION": {
-    "message": "RSS Reader"
+    "message": "RSS читач"
   },
   "ROOT_FOLDER": {
-    "message": "Root folder"
+    "message": "Корена фасцикла"
   },
   "SUBSCRIBE_TO_FEED": {
-    "message": "Subscribe to this feed"
+    "message": "Претплати се на овај канал"
   },
   "REMOVE_SELECTED_PERMANENTLY": {
-    "message": "Remove selected items permanently?"
+    "message": "Трајно уклонити изабране ставке?"
   },
   "PINNED_DELETE_CONFIRM": {
     "message": "Вест \"{title}\" је закачена. Да ли заиста желите да је избришете?"
   },
   "UNKNOWN": {
-    "message": "Unknown"
+    "message": "Непознато"
   },
   "NO_ACTION": {
-    "message": "No action"
+    "message": "Без радње"
   },
   "RESET_HOTKEYS": {
-    "message": "Reset hotkeys"
+    "message": "Врати пречице"
   },
   "RESET_HOTKEYS_CONFIRM": {
-    "message": "Resetting hotkeys will require an extension reload. Do you want to continue?"
+    "message": "Враћање пречица захтева поновно учитавање проширења. Желите ли да наставите?"
   },
   "EXPORTING_WAIT": {
-    "message": "Exporting, please wait"
+    "message": "Извоз је у току, сачекајте"
   },
   "DOWNLOAD_EXPORTED_DATA": {
-    "message": "Click to download exported data"
+    "message": "Кликните да преузмете извезене податке"
   },
   "WRONG_FILE": {
-    "message": "Wrong file"
+    "message": "Погрешна датотека"
   },
   "LOADING_PARSING_FILE": {
-    "message": "Loading and parsing file"
+    "message": "Учитавање и обрада датотеке"
   },
   "IMPORTING_WAIT": {
-    "message": "Importing, please wait!"
+    "message": "Увоз је у току, сачекајте!"
   },
   "IMPORT_COMPLETED": {
-    "message": "Import completed!"
+    "message": "Увоз је завршен!"
   },
   "IMPORT_FULLY_COMPLETED": {
-    "message": "Import fully completed!"
+    "message": "Увоз је у потпуности завршен!"
   },
   "LOADING_DATA_MEMORY": {
-    "message": "Loading data into memory!"
+    "message": "Учитавање података у меморију!"
   },
   "IMPORT_ERROR": {
-    "message": "Importing error: {error}"
+    "message": "Грешка при увозу: {error}"
   },
   "REMOVE_SETTINGS_CONFIRM": {
-    "message": "Do you really want to remove all extension settings?"
+    "message": "Да ли заиста желите да уклоните сва подешавања проширења?"
   },
   "REMOVE_DATA_CONFIRM": {
-    "message": "Do you really want to remove all extension data?"
+    "message": "Да ли заиста желите да уклоните све податке проширења?"
   },
   "REMOVE_DELETED_CONFIRM": {
-    "message": "Do you really want to remove deleted article metadata? This may cause some articles to appear again."
+    "message": "Да ли заиста желите да уклоните метаподатке избрисаних вести? Због тога се неке вести могу поново појавити."
   },
   "DONE_REBOOT": {
-    "message": "Done. The extension will restart now."
+    "message": "Готово. Проширење ће се сада поново покренути."
   },
   "REMOVE_FAVICONS_CONFIRM": {
-    "message": "Do you really want to remove all favicons?"
+    "message": "Да ли заиста желите да уклоните све иконице веб-сајтова?"
   },
   "DONE": {
-    "message": "Done"
+    "message": "Готово"
   },
   "SPACE_THROUGH": {
-    "message": "Space through"
+    "message": "Кретање размакницом"
   },
   "FOCUS_ARTICLE": {
-    "message": "Focus article"
+    "message": "Фокусирај вест"
   },
   "FOLDERS_PROGRESS": {
-    "message": "Folders: {current}/{total}"
+    "message": "Фасцикле: {current}/{total}"
   },
   "FEEDS_PROGRESS": {
-    "message": "Feeds: {current}/{total}"
+    "message": "Канали: {current}/{total}"
   },
   "ARTICLES_PROGRESS": {
-    "message": "Articles: {current}/{total}"
+    "message": "Вести: {current}/{total}"
   },
   "WRITING": {
-    "message": "Writing..."
+    "message": "Уписивање..."
   },
   "NEW_ARTICLES_FOUND": {
-    "message": "New articles found"
+    "message": "Пронађене су нове вести"
   },
   "STATIC_CONTACT_ME_IF_YOU_WANT_TO_MAKE_TRANSLATION_FOR_Y_1GQG8TP": {
-    "message": "Contact me if you want to make translation for your lang."
+    "message": "Јавите ми се ако желите да преведете проширење на свој језик."
   },
   "STATIC_NORMAL_DD_MM_YYYY_ISO_YYYY_MM_DD_US_MM_DD_YYYY_1916X78": {
-    "message": "Normal = DD.MM.YYYY, ISO = YYYY-MM-DD, US = MM/DD/YYYY"
+    "message": "Уобичајено = DD.MM.YYYY, ISO = YYYY-MM-DD, САД = MM/DD/YYYY"
   },
   "STATIC_TIME_FORMAT_1G1EA3J": {
-    "message": "Time format"
+    "message": "Формат времена"
   },
   "STATIC_FOLLOW_THE_BROWSER_THEME_OR_FORCE_LIGHT_OR_DARK_JZETTF": {
-    "message": "Follow the browser theme, or force light or dark."
+    "message": "Прати тему прегледача или наметни светлу или тамну тему."
   },
   "STATIC_HORIZONTAL_PUTS_THE_THREE_PANES_SIDE_BY_SIDE_VER_W1S7J7": {
-    "message": "Horizontal puts the three panes side by side; vertical stacks the article below the list."
+    "message": "Водоравни распоред поставља три окна једно поред другог, а усправни поставља вест испод списка."
   },
   "STATIC_COLOR_OF_ICON_THAT_SHOWS_UP_IN_EXTENSION_BUTTON__1ANMHVI": {
-    "message": "Color of icon that shows up in extension button when new articles are downloaded."
+    "message": "Боја иконице на дугмету проширења када се преузму нове вести."
   },
   "STATIC_CONTROLS_WHETHER_MEDIA_PREVIEW_SHOULD_BE_VISIBLE_1OS59WZ": {
-    "message": "Controls whether media preview should be visible when displaying article contents. Can be overridden per source"
+    "message": "Одређује да ли преглед медија треба да буде видљив при приказу садржаја вести. Може се променити за сваки извор"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_SOURCES_WITH_UNREAD_ARTICL_1N3M15U": {
-    "message": "Controls whether only sources with unread articles should be visible"
+    "message": "Одређује да ли треба да буду видљиви само извори са непрочитаним вестима"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_UNREAD_ARTICLES_SHOULD_BE__YR6HJ0": {
-    "message": "Controls whether only unread articles should be visible"
+    "message": "Одређује да ли треба да буду видљиве само непрочитане вести"
   },
   "STATIC_REPLACE_FAVICON_OF_FEED_WITH_SPINNER_ANIMATION_D_PNWD6P": {
-    "message": "Replace favicon of feed with spinner animation during feed update."
+    "message": "Током ажурирања канала замени његову иконицу анимацијом учитавања."
   },
   "STATIC_DISPLAY_LINK_CONTEXT_MENU_ENTRY_ALLOWING_YOU_TO__PPKZFZ": {
-    "message": "Display link context menu entry allowing you to add given link to subscriptions."
+    "message": "Прикажи ставку у приручном менију везе која омогућава додавање те везе у претплате."
   },
   "STATIC_IF_CHECKED_CLICKING_TOOLBAR_BUTTON_WILL_OPEN_NEW_1CVPZXJ": {
-    "message": "If checked clicking toolbar button will open new tab, else it will load reader in the same tab."
+    "message": "Ако је означено, клик на дугме траке алатки отвориће нови језичак; иначе ће се читач учитати у истом језичку."
   },
   "STATIC_THIS_OPTION_WILL_IMMEDIATELY_MARK_AS_READ_EVERY__1CY6HIE": {
-    "message": "This option will immediately mark as read every article you visit in the right column."
+    "message": "Ова опција ће одмах означити као прочитану сваку вест коју отворите у десној колони."
   },
   "STATIC_WHEN_YOU_SELECT_MORE_THAN_10_FEEDS_IN_ARTICLE_LI_X0DDAN": {
-    "message": "When you select more than 10 feeds in article list and choose 'Open article link' options from context menu."
+    "message": "Питај када на списку вести изаберете више од 10 канала и у приручном менију изаберете „Отвори везу вести“."
   },
   "STATIC_EFFECTS_DATE_IN_ARTICLE_LIST_PPWLEU": {
-    "message": "Effects date in article list."
+    "message": "Утиче на датум на списку вести."
   },
   "STATIC_IF_ENABLED_PRESSING_ARROW_UP_IN_A_LIST_WHEN_THE__XJ6J5T": {
-    "message": "If enabled, pressing arrow up in a list when the first item is selected will select the last item and visa-versa."
+    "message": "Ако је омогућено, притисак стрелице нагоре када је изабрана прва ставка на списку изабраће последњу ставку и обрнуто."
   },
   "STATIC_IF_ENABLED_TITLE_OF_ARTICLE_IS_A_LINK_TO_FULL_AR_1T9UQLB": {
-    "message": "If enabled, title of article is a link to full article."
+    "message": "Ако је омогућено, наслов вести је веза ка целој вести."
   },
   "STATIC_CONTROLS_HOW_TO_HANDLE_ENTER_PRESS_ON_ARTICLE_LI_MHS6OK": {
-    "message": "Controls how to handle `Enter` press on article list"
+    "message": "Одређује како поступити када се на списку вести притисне `Enter`"
   },
   "STATIC_ASK_TO_PREVENT_ACCIDENTAL_REMOVAL_OF_PINNED_ITEM_1SB0OQ0": {
-    "message": "Ask to prevent accidental removal of pinned items."
+    "message": "Затражи потврду да би се спречило случајно уклањање закачених ставки."
   },
   "STATIC_COMMA_SEPARATED_LIST_CASE_INSENSITIVE_START_WITH_1CQ7C4W": {
-    "message": "Comma separated list, case insensitive, start with : to search in contents too"
+    "message": "Списак раздвојен запетама, без разликовања великих и малих слова; почните са : за претрагу садржаја"
   },
   "STATIC_VIEW_TO_USE_WHEN_DISPLAYING_ARTICLES_HHTJ23": {
-    "message": "View to use when displaying articles"
+    "message": "Приказ који се користи за приказ вести"
   },
   "STATIC_SHOULD_PARSED_ARTICLE_BE_SAVED_IN_LOCAL_STORAGE__92CMR7": {
-    "message": "Should parsed article be saved in local storage after parsing the website?"
+    "message": "Да ли обрађену вест треба сачувати у локалном складишту након обраде веб-сајта?"
   },
   "STATIC_IF_SELECTED_TO_SEE_ALL_ARTICLES_HOLD_ALT_OR_CLIC_O6IHGE": {
-    "message": "If selected to see all articles hold alt or click on the counter"
+    "message": "Ако је изабрано, за приказ свих вести држите Alt или кликните на бројач"
   },
   "STATIC_IF_ENABLED_BROWSER_WILL_DISPLAY_A_NOTIFICATION_W_13STSDS": {
-    "message": "If enabled, browser will display a notification when new articles are found."
+    "message": "Ако је омогућено, прегледач ће приказати обавештење када се пронађу нове вести."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_S56NYT": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports both, feeds and feeds's articles."
+    "message": "SMART је посебан формат проширења Smart RSS. Извози и увози канале и њихове вести."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_EXPORT_FEEDS_FROM_SMA_1B1P69M": {
-    "message": "You can use OPML format to export feeds from Smart RSS to Opera 12."
+    "message": "Формат OPML можете користити за извоз канала из Smart RSS-а у Оперу 12."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_HPG76L": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports all feeds, folders and articles."
+    "message": "SMART је посебан формат проширења Smart RSS. Извози и увози све канале, фасцикле и вести."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_IMPORT_FEEDS_AND_FOLD_1MKEBH7": {
-    "message": "You can use OPML format to import feeds and folders from Opera 12 to Smart RSS."
+    "message": "Формат OPML можете користити за увоз канала и фасцикли из Опере 12 у Smart RSS."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_YOURS_FEEDS_AND_ARTICLES_AN_VTXBG9": {
-    "message": "This will remove all yours feeds and articles and settings."
+    "message": "Овим ће се уклонити сви ваши канали, вести и подешавања."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_REMOVED_ARTICLES_CACHE_IT_M_1P8QIOJ": {
-    "message": "This will remove all removed articles cache. It may cause some removed articles to appear again."
+    "message": "Овим ће се уклонити кеш свих уклоњених вести. Неке уклоњене вести могу се поново појавити."
   },
   "STATIC_SMART_RSS_OPTIONS_H34A8V": {
-    "message": "Smart RSS - Options"
+    "message": "Smart RSS - Подешавања"
   },
   "STATIC_LOCALIZATION_EUKV6O": {
-    "message": "Localization"
+    "message": "Локализација"
   },
   "STATIC_LANGUAGE_16US7MJ": {
-    "message": "Language"
+    "message": "Језик"
   },
   "STATIC_DATE_FORMAT_P62DDW": {
-    "message": "Date format"
+    "message": "Формат датума"
   },
   "STATIC_NORMAL_ONOBJM": {
-    "message": "Normal"
+    "message": "Уобичајено"
   },
   "STATIC_ISO_1Q4DNHQ": {
     "message": "ISO"
@@ -615,202 +615,202 @@
     "message": "12h (AM/PM)"
   },
   "STATIC_APPEARANCE_DLI9WF": {
-    "message": "Appearance"
+    "message": "Изглед"
   },
   "STATIC_THEME_LTYTUA": {
-    "message": "Theme"
+    "message": "Тема"
   },
   "STATIC_MATCH_BROWSER_1C0MZBA": {
-    "message": "Match browser"
+    "message": "Усклади са прегледачем"
   },
   "STATIC_LIGHT_12IOB7Z": {
-    "message": "Light"
+    "message": "Светла"
   },
   "STATIC_DARK_J8M6W5": {
-    "message": "Dark"
+    "message": "Тамна"
   },
   "STATIC_HORIZONTAL_TYAPAH": {
-    "message": "Horizontal"
+    "message": "Водоравно"
   },
   "STATIC_VERTICAL_ZSCUHN": {
-    "message": "Vertical"
+    "message": "Усправно"
   },
   "STATIC_SHOW_FULL_HEADLINE_MV9HBV": {
-    "message": "Show full headline"
+    "message": "Прикажи цео наслов"
   },
   "STATIC_YES_1DUDZCG": {
-    "message": "Yes"
+    "message": "Да"
   },
   "STATIC_NO_R5WQAI": {
-    "message": "No"
+    "message": "Не"
   },
   "STATIC_DISPLAY_FAVICON_INSTEAD_OF_PIN_WHEN_MULTIPLE_SOU_3FEC4U": {
-    "message": "Display favicon instead of pin when multiple sources selected"
+    "message": "Прикажи иконицу веб-сајта уместо чиоде када је изабрано више извора"
   },
   "STATIC_ARTICLE_LIST_DISPLAY_MODE_F3I958": {
-    "message": "Article list display mode"
+    "message": "Начин приказа списка вести"
   },
   "STATIC_ONE_LINE_Z5YGNJ": {
-    "message": "One Line"
+    "message": "Један ред"
   },
   "STATIC_TWO_LINES_1HY5O7Q": {
-    "message": "Two Lines"
+    "message": "Два реда"
   },
   "STATIC_NEW_ARTICLES_NOTIFICATION_ICON_EFT2X4": {
-    "message": "New articles notification icon"
+    "message": "Иконица обавештења о новим вестима"
   },
   "STATIC_ORANGE_VRISQZ": {
-    "message": "Orange"
+    "message": "Наранџаста"
   },
   "STATIC_BLUE_1SVZZZH": {
-    "message": "Blue"
+    "message": "Плава"
   },
   "STATIC_GREEN_1AZD270": {
-    "message": "Green"
+    "message": "Зелена"
   },
   "STATIC_PURPLE_1EN1Q8V": {
-    "message": "Purple"
+    "message": "Љубичаста"
   },
   "STATIC_RED_19D4CCC": {
-    "message": "Red"
+    "message": "Црвена"
   },
   "STATIC_ROYAL_BLUE_8NJHF0": {
-    "message": "Royal Blue"
+    "message": "Краљевскоплава"
   },
   "STATIC_DISABLED_1H7WNC5": {
-    "message": "Disabled"
+    "message": "Онемогућено"
   },
   "STATIC_SHOW_SPECIAL_ALL_FEEDS_ITEM_ON_FEEDS_LIST_V8YX74": {
-    "message": "Show special All Feeds item on feeds list"
+    "message": "Прикажи посебну ставку Сви канали на списку канала"
   },
   "STATIC_OPEN_MEDIA_PREVIEW_AUTOMATICALLY_16SZX1O": {
-    "message": "Open media preview automatically"
+    "message": "Аутоматски отвори преглед медија"
   },
   "STATIC_SHOW_ONLY_SOURCES_WITH_UNREAD_ARTICLES_1VTNK9E": {
-    "message": "Show only sources with unread articles"
+    "message": "Прикажи само изворе са непрочитаним вестима"
   },
   "STATIC_SHOW_ONLY_UNREAD_ARTICLES_A9M1DK": {
-    "message": "Show only unread articles"
+    "message": "Прикажи само непрочитане вести"
   },
   "STATIC_DISABLE_DATE_GROUPS_6ZXR9B": {
-    "message": "Disable date groups"
+    "message": "Онемогући групе датума"
   },
   "STATIC_ARTICLE_FONT_SIZE_1NO2HGN": {
-    "message": "Article font size"
+    "message": "Величина фонта вести"
   },
   "STATIC_UI_FONT_SIZE_T1CX8D": {
-    "message": "UI font size"
+    "message": "Величина фонта интерфејса"
   },
   "STATIC_SHOW_SPINNER_DURING_UPDATE_16IQC8F": {
-    "message": "Show spinner during update"
+    "message": "Прикажи индикатор учитавања током ажурирања"
   },
   "STATIC_LINK_CONTEXT_MENU_1MS8FUX": {
-    "message": "Link context menu"
+    "message": "Приручни мени везе"
   },
   "STATIC_BEHAVIOR_8MNFIF": {
-    "message": "Behavior"
+    "message": "Понашање"
   },
   "STATIC_OPEN_READER_IN_NEW_TAB_17E1W2U": {
-    "message": "Open Reader in new tab"
+    "message": "Отвори читач у новом језичку"
   },
   "STATIC_SELECT_FIRST_ARTICLE_ON_FEED_SELECTION_1LTS2ZG": {
-    "message": "Select first article on feed selection"
+    "message": "Изабери прву вест при избору канала"
   },
   "STATIC_SELECT_ALL_FEEDS_ON_READER_OPEN_18VDTDH": {
-    "message": "Select all feeds on reader open"
+    "message": "Изабери све канале при отварању читача"
   },
   "STATIC_AUTOMATICALLY_MARK_ARTICLES_AS_READ_14DJ9JE": {
-    "message": "Automatically mark articles as read"
+    "message": "Аутоматски означи вести као прочитане"
   },
   "STATIC_ASK_WHEN_OPENING_10_TABS_1R6R46C": {
-    "message": "Ask when opening 10+ tabs"
+    "message": "Питај при отварању 10 или више језичака"
   },
   "STATIC_ALWAYS_SHOW_FULL_DATE_KMPID6": {
-    "message": "Always show full date"
+    "message": "Увек прикажи цео датум"
   },
   "STATIC_CIRCULAR_NAVIGATION_Y2J9IA": {
-    "message": "Circular navigation"
+    "message": "Кружна навигација"
   },
   "STATIC_TITLE_IS_LINK_TO_FULL_ARTICLE_6N487X": {
-    "message": "Title is link to full article"
+    "message": "Наслов је веза ка целој вести"
   },
   "STATIC_ENTER_OPENS_ARTICLES_IN_QIA8MY": {
-    "message": "Enter opens articles in"
+    "message": "Enter отвара вести у"
   },
   "STATIC_BACKGROUND_1FVQIF1": {
-    "message": "Background"
+    "message": "Позадини"
   },
   "STATIC_FOREGROUND_1OBQHNK": {
-    "message": "Foreground"
+    "message": "Предњем плану"
   },
   "STATIC_ASK_WHEN_REMOVING_PINNED_ITEMS_1KXHKMX": {
-    "message": "Ask when removing pinned items"
+    "message": "Питај при уклањању закачених ставки"
   },
   "STATIC_ON_REMOVAL_FROM_TRASH_X7198Y": {
-    "message": "On removal from trash"
+    "message": "При уклањању из отпада"
   },
   "STATIC_ALWAYS_1C30550": {
-    "message": "Always"
+    "message": "Увек"
   },
   "STATIC_ICON_BADGE_17WQASR": {
-    "message": "Icon badge"
+    "message": "Ознака на иконици"
   },
   "STATIC_DISABLED_EEX8G5": {
-    "message": "disabled"
+    "message": "онемогућено"
   },
   "STATIC_OF_UNREAD_K5BYRM": {
-    "message": "# of unread"
+    "message": "Број непрочитаних"
   },
   "STATIC_OF_UNVISITED_156OOQ0": {
-    "message": "# of unvisited"
+    "message": "Број непосећених"
   },
   "STATIC_CONCURRENT_DOWNLOADS_1U3U0T1": {
-    "message": "Concurrent downloads"
+    "message": "Истовремена преузимања"
   },
   "STATIC_DISABLE_AUTO_UPDATE_COMPLETELY_15NTBFL": {
-    "message": "Disable auto update completely"
+    "message": "Потпуно онемогући аутоматско ажурирање"
   },
   "STATIC_DEFAULT_UPDATE_FREQUENCY_MINUTES_18L1XRP": {
-    "message": "Default update frequency (minutes)"
+    "message": "Подразумевана учесталост ажурирања (минути)"
   },
   "STATIC_AUTO_REMOVE_AFTER_6741PK": {
-    "message": "Auto remove after"
+    "message": "Аутоматски уклони након"
   },
   "STATIC_AUTO_REMOVE_1H062VA": {
-    "message": "Auto remove"
+    "message": "Аутоматско уклањање"
   },
   "STATIC_AUTO_REMOVE_FROM_TRASH_5A2WBS": {
-    "message": "Auto remove from trash"
+    "message": "Аутоматски уклони из отпада"
   },
   "STATIC_AUTO_PIN_ARTICLES_MATCHING_10MA3NR": {
-    "message": "Auto pin articles matching"
+    "message": "Аутоматски закачи подударне вести"
   },
   "STATIC_DEFAULT_VIEW_1YHRPIR": {
-    "message": "Default view"
+    "message": "Подразумевани приказ"
   },
   "STATIC_CONTENT_FROM_FEED_1RU9T9A": {
-    "message": "Content from feed"
+    "message": "Садржај из канала"
   },
   "STATIC_PARSE_WEBSITE_4CUQJ5": {
-    "message": "Parse website"
+    "message": "Обради веб-сајт"
   },
   "STATIC_CACHE_ARTICLE_AFTER_PARSING_KBFZI9": {
-    "message": "Cache article after parsing"
+    "message": "Кеширај вест након обраде"
   },
   "STATIC_HOTKEYS_1KHCIOW": {
-    "message": "Hotkeys"
+    "message": "Пречице"
   },
   "STATIC_NOTIFICATIONS_FKI4UN": {
-    "message": "Notifications"
+    "message": "Обавештења"
   },
   "STATIC_ENABLE_SYSTEM_NOTIFICATIONS_1KVIF4Z": {
-    "message": "Enable system notifications"
+    "message": "Омогући системска обавештења"
   },
   "STATIC_EXPORT_IMPORT_1KWL5UH": {
-    "message": "Export/Import"
+    "message": "Извоз/увоз"
   },
   "STATIC_EXPORT_1SH99LF": {
-    "message": "Export"
+    "message": "Извоз"
   },
   "STATIC_SMART_MQAJW2": {
     "message": "SMART"
@@ -819,42 +819,42 @@
     "message": "OPML"
   },
   "STATIC_IMPORT_O7FTO4": {
-    "message": "Import"
+    "message": "Увоз"
   },
   "STATIC_WARNING_SMART_RSS_WILL_RELOAD_AFTER_FINISHING_TH_1A77IDQ": {
-    "message": "Warning: Smart RSS will reload after finishing the SMART import, it's expected behavior"
+    "message": "Упозорење: Smart RSS ће се поново учитати по завршетку увоза у формату SMART; то је очекивано понашање"
   },
   "STATIC_ADVANCED_FEATURES_MOSTLY_FOR_TROUBLESHOOTING_PUR_120JK38": {
-    "message": "Advanced features. Mostly for troubleshooting purposes"
+    "message": "Напредне функције, углавном намењене решавању проблема"
   },
   "STATIC_CLEAR_FAVICONS_135332F": {
-    "message": "Clear Favicons"
+    "message": "Очисти иконице веб-сајтова"
   },
   "STATIC_REMOVE_FAVICON_DATA_15RZGB": {
-    "message": "Remove Favicon data"
+    "message": "Уклони податке иконица веб-сајтова"
   },
   "STATIC_CLEAR_H65A4E": {
-    "message": "!!Clear!!"
+    "message": "!!Очисти!!"
   },
   "STATIC_CLEAR_REMOVED_ARTICLES_STORE_CKA2F4": {
-    "message": "Clear removed articles store"
+    "message": "Очисти складиште уклоњених вести"
   },
   "STATIC_REMOVE_REMOVED_ARTICLES_DATA_1H1FW9O": {
-    "message": "Remove removed articles data"
+    "message": "Уклони податке уклоњених вести"
   },
   "STATIC_CLEAR_SETTINGS_182PX9V": {
-    "message": "Clear settings"
+    "message": "Очисти подешавања"
   },
   "STATIC_REMOVE_EXTENSION_SETTINGS_15QON31": {
-    "message": "Remove extension settings"
+    "message": "Уклони подешавања проширења"
   },
   "STATIC_CLEAR_DATA_8RGEDI": {
-    "message": "Clear data"
+    "message": "Очисти податке"
   },
   "STATIC_REMOVE_ALL_EXTENSION_DATA_ES3GNX": {
-    "message": "Remove ALL extension data"
+    "message": "Уклони СВЕ податке проширења"
   },
   "STATIC_VERSION_Q0ZD4N": {
-    "message": "Version"
+    "message": "Верзија"
   }
 }

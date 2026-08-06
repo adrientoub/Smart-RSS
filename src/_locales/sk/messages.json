@@ -90,7 +90,7 @@
     "message": "Celý článok"
   },
   "FULL_ARTICLE_SINGLE": {
-    "message": "Full article (only when single selected)"
+    "message": "Celý článok (iba pri výbere jedného zdroja)"
   },
   "REALLY_DELETE": {
     "message": "Skutočne chcete vymazať tento zdroj?"
@@ -111,10 +111,10 @@
     "message": "Nastavenia"
   },
   "REFETCH": {
-    "message": "Refetch"
+    "message": "Načítať znova"
   },
   "OPENHOME": {
-    "message": "Open feed homepage"
+    "message": "Otvoriť domovskú stránku zdroja"
   },
   "UNDELETE": {
     "message": "Obnoviť"
@@ -159,7 +159,7 @@
     "message": "Adresa"
   },
   "PARENT": {
-    "message": "Parent folder"
+    "message": "Nadradený priečinok"
   },
   "JANUARY": {
     "message": "Január"
@@ -291,316 +291,316 @@
     "message": "Staršie ako dva mesiace"
   },
   "AUTOREMOVE_SETTING": {
-    "message": "Automatically remove"
+    "message": "Automaticky odstraňovať"
   },
   "USE_GLOBAL_SETTING": {
-    "message": "Use global setting"
+    "message": "Použiť globálne nastavenie"
   },
   "REMOVE_ALL": {
-    "message": "Remove all"
+    "message": "Odstrániť všetko"
   },
   "KEEP_UNVISITED": {
-    "message": "Keep unvisited"
+    "message": "Ponechať nenavštívené"
   },
   "KEEP_UNREAD": {
-    "message": "Keep unread"
+    "message": "Ponechať neprečítané"
   },
   "SORT_BY": {
-    "message": "Sort By"
+    "message": "Zoradiť podľa"
   },
   "DATE": {
-    "message": "Date"
+    "message": "Dátum"
   },
   "TITLE": {
-    "message": "Title"
+    "message": "Názov"
   },
   "AUTHOR": {
-    "message": "Author"
+    "message": "Autor"
   },
   "SORTING": {
-    "message": "Sorting"
+    "message": "Zoradenie"
   },
   "SECONDARY_SORTING": {
-    "message": "Secondary sorting"
+    "message": "Sekundárne zoradenie"
   },
   "HIDE_OVERLAYS": {
-    "message": "Hide overlays"
+    "message": "Skryť prekrytia"
   },
   "TOGGLE_SHOW_ONLY_UNREAD": {
-    "message": "Toggle show only unread"
+    "message": "Prepnúť zobrazenie iba neprečítaných"
   },
   "TOGGLE_THEME": {
-    "message": "Toggle dark mode"
+    "message": "Prepnúť tmavý režim"
   },
   "STOP_UPDATE": {
-    "message": "Stop updating feeds"
+    "message": "Zastaviť aktualizáciu zdrojov"
   },
   "OPEN_HOME": {
-    "message": "Open feed homepage"
+    "message": "Otvoriť domovskú stránku zdroja"
   },
   "SCROLL_INTO_VIEW": {
-    "message": "Scroll into view"
+    "message": "Posunúť do zobrazenia"
   },
   "FOCUS_FEEDS": {
-    "message": "Focus feeds"
+    "message": "Prejsť na zdroje"
   },
   "SELECT_NEXT_FEED": {
-    "message": "Select next feed"
+    "message": "Vybrať ďalší zdroj"
   },
   "SELECT_PREVIOUS_FEED": {
-    "message": "Select previous feed"
+    "message": "Vybrať predchádzajúci zdroj"
   },
   "CLOSE_FOLDERS": {
-    "message": "Close folders"
+    "message": "Zbaliť priečinky"
   },
   "OPEN_FOLDERS": {
-    "message": "Open folders"
+    "message": "Rozbaliť priečinky"
   },
   "TOGGLE_FOLDER": {
-    "message": "Toggle folder"
+    "message": "Prepnúť priečinok"
   },
   "SHOW_ARTICLES": {
-    "message": "Show articles"
+    "message": "Zobraziť články"
   },
   "SHOW_AND_FOCUS_ARTICLES": {
-    "message": "Show and focus articles"
+    "message": "Zobraziť články a prejsť na ne"
   },
   "SELECT_NEXT_ARTICLE": {
-    "message": "Select next article"
+    "message": "Vybrať ďalší článok"
   },
   "SELECT_PREVIOUS_ARTICLE": {
-    "message": "Select previous article"
+    "message": "Vybrať predchádzajúci článok"
   },
   "FOCUS_SEARCH": {
-    "message": "Focus search"
+    "message": "Prejsť na vyhľadávanie"
   },
   "FOCUS_ARTICLES": {
-    "message": "Focus articles"
+    "message": "Prejsť na články"
   },
   "SELECT_ALL_ARTICLES": {
-    "message": "Select All"
+    "message": "Vybrať všetko"
   },
   "PAGE_UP": {
-    "message": "Page up"
+    "message": "O stranu nahor"
   },
   "PAGE_DOWN": {
-    "message": "Page down"
+    "message": "O stranu nadol"
   },
   "SCROLL_TO_TOP": {
-    "message": "Scroll to top"
+    "message": "Posunúť na začiatok"
   },
   "SCROLL_TO_BOTTOM": {
-    "message": "Scroll to bottom"
+    "message": "Posunúť na koniec"
   },
   "FOCUS_CONTENT": {
-    "message": "Focus article content"
+    "message": "Prejsť na obsah článku"
   },
   "SCROLL_UP": {
-    "message": "Scroll up"
+    "message": "Posunúť nahor"
   },
   "SCROLL_DOWN": {
-    "message": "Scroll down"
+    "message": "Posunúť nadol"
   },
   "EXTENSION_NAME": {
     "message": "Smart RSS"
   },
   "EXTENSION_DESCRIPTION": {
-    "message": "RSS Reader"
+    "message": "Čítačka RSS"
   },
   "ROOT_FOLDER": {
-    "message": "Root folder"
+    "message": "Koreňový priečinok"
   },
   "SUBSCRIBE_TO_FEED": {
-    "message": "Subscribe to this feed"
+    "message": "Prihlásiť sa na odber tohto zdroja"
   },
   "REMOVE_SELECTED_PERMANENTLY": {
-    "message": "Remove selected items permanently?"
+    "message": "Natrvalo odstrániť vybrané položky?"
   },
   "PINNED_DELETE_CONFIRM": {
     "message": "Položka \"{title}\" je označená. Chcete ju zmazať?"
   },
   "UNKNOWN": {
-    "message": "Unknown"
+    "message": "Neznáme"
   },
   "NO_ACTION": {
-    "message": "No action"
+    "message": "Žiadna akcia"
   },
   "RESET_HOTKEYS": {
-    "message": "Reset hotkeys"
+    "message": "Obnoviť klávesové skratky"
   },
   "RESET_HOTKEYS_CONFIRM": {
-    "message": "Resetting hotkeys will require an extension reload. Do you want to continue?"
+    "message": "Obnovenie klávesových skratiek vyžaduje opätovné načítanie rozšírenia. Chcete pokračovať?"
   },
   "EXPORTING_WAIT": {
-    "message": "Exporting, please wait"
+    "message": "Prebieha export, počkajte prosím"
   },
   "DOWNLOAD_EXPORTED_DATA": {
-    "message": "Click to download exported data"
+    "message": "Kliknutím stiahnete exportované údaje"
   },
   "WRONG_FILE": {
-    "message": "Wrong file"
+    "message": "Nesprávny súbor"
   },
   "LOADING_PARSING_FILE": {
-    "message": "Loading and parsing file"
+    "message": "Načítavanie a spracovanie súboru"
   },
   "IMPORTING_WAIT": {
-    "message": "Importing, please wait!"
+    "message": "Prebieha import, počkajte prosím!"
   },
   "IMPORT_COMPLETED": {
-    "message": "Import completed!"
+    "message": "Import dokončený!"
   },
   "IMPORT_FULLY_COMPLETED": {
-    "message": "Import fully completed!"
+    "message": "Import bol úplne dokončený!"
   },
   "LOADING_DATA_MEMORY": {
-    "message": "Loading data into memory!"
+    "message": "Načítavanie údajov do pamäte!"
   },
   "IMPORT_ERROR": {
-    "message": "Importing error: {error}"
+    "message": "Chyba importu: {error}"
   },
   "REMOVE_SETTINGS_CONFIRM": {
-    "message": "Do you really want to remove all extension settings?"
+    "message": "Naozaj chcete odstrániť všetky nastavenia rozšírenia?"
   },
   "REMOVE_DATA_CONFIRM": {
-    "message": "Do you really want to remove all extension data?"
+    "message": "Naozaj chcete odstrániť všetky údaje rozšírenia?"
   },
   "REMOVE_DELETED_CONFIRM": {
-    "message": "Do you really want to remove deleted article metadata? This may cause some articles to appear again."
+    "message": "Naozaj chcete odstrániť metadáta vymazaných článkov? Niektoré články sa môžu znova objaviť."
   },
   "DONE_REBOOT": {
-    "message": "Done. The extension will restart now."
+    "message": "Hotovo. Rozšírenie sa teraz reštartuje."
   },
   "REMOVE_FAVICONS_CONFIRM": {
-    "message": "Do you really want to remove all favicons?"
+    "message": "Naozaj chcete odstrániť všetky ikony webov?"
   },
   "DONE": {
-    "message": "Done"
+    "message": "Hotovo"
   },
   "SPACE_THROUGH": {
-    "message": "Space through"
+    "message": "Prechádzať medzerníkom"
   },
   "FOCUS_ARTICLE": {
-    "message": "Focus article"
+    "message": "Prejsť na článok"
   },
   "FOLDERS_PROGRESS": {
-    "message": "Folders: {current}/{total}"
+    "message": "Priečinky: {current}/{total}"
   },
   "FEEDS_PROGRESS": {
-    "message": "Feeds: {current}/{total}"
+    "message": "Zdroje: {current}/{total}"
   },
   "ARTICLES_PROGRESS": {
-    "message": "Articles: {current}/{total}"
+    "message": "Články: {current}/{total}"
   },
   "WRITING": {
-    "message": "Writing..."
+    "message": "Zapisovanie..."
   },
   "NEW_ARTICLES_FOUND": {
-    "message": "New articles found"
+    "message": "Nájdené nové články"
   },
   "STATIC_CONTACT_ME_IF_YOU_WANT_TO_MAKE_TRANSLATION_FOR_Y_1GQG8TP": {
-    "message": "Contact me if you want to make translation for your lang."
+    "message": "Ak chcete vytvoriť preklad do svojho jazyka, kontaktujte ma."
   },
   "STATIC_NORMAL_DD_MM_YYYY_ISO_YYYY_MM_DD_US_MM_DD_YYYY_1916X78": {
-    "message": "Normal = DD.MM.YYYY, ISO = YYYY-MM-DD, US = MM/DD/YYYY"
+    "message": "Bežný = DD.MM.YYYY, ISO = YYYY-MM-DD, US = MM/DD/YYYY"
   },
   "STATIC_TIME_FORMAT_1G1EA3J": {
-    "message": "Time format"
+    "message": "Formát času"
   },
   "STATIC_FOLLOW_THE_BROWSER_THEME_OR_FORCE_LIGHT_OR_DARK_JZETTF": {
-    "message": "Follow the browser theme, or force light or dark."
+    "message": "Použiť motív prehliadača alebo vynútiť svetlý či tmavý."
   },
   "STATIC_HORIZONTAL_PUTS_THE_THREE_PANES_SIDE_BY_SIDE_VER_W1S7J7": {
-    "message": "Horizontal puts the three panes side by side; vertical stacks the article below the list."
+    "message": "Vodorovné rozloženie umiestni tri panely vedľa seba; zvislé umiestni článok pod zoznam."
   },
   "STATIC_COLOR_OF_ICON_THAT_SHOWS_UP_IN_EXTENSION_BUTTON__1ANMHVI": {
-    "message": "Color of icon that shows up in extension button when new articles are downloaded."
+    "message": "Farba ikony na tlačidle rozšírenia po stiahnutí nových článkov."
   },
   "STATIC_CONTROLS_WHETHER_MEDIA_PREVIEW_SHOULD_BE_VISIBLE_1OS59WZ": {
-    "message": "Controls whether media preview should be visible when displaying article contents. Can be overridden per source"
+    "message": "Určuje, či sa pri zobrazení obsahu článku zobrazí náhľad médií. Možno zmeniť pre jednotlivé zdroje"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_SOURCES_WITH_UNREAD_ARTICL_1N3M15U": {
-    "message": "Controls whether only sources with unread articles should be visible"
+    "message": "Určuje, či sa majú zobrazovať iba zdroje s neprečítanými článkami"
   },
   "STATIC_CONTROLS_WHETHER_ONLY_UNREAD_ARTICLES_SHOULD_BE__YR6HJ0": {
-    "message": "Controls whether only unread articles should be visible"
+    "message": "Určuje, či sa majú zobrazovať iba neprečítané články"
   },
   "STATIC_REPLACE_FAVICON_OF_FEED_WITH_SPINNER_ANIMATION_D_PNWD6P": {
-    "message": "Replace favicon of feed with spinner animation during feed update."
+    "message": "Počas aktualizácie zdroja nahradiť jeho ikonu animáciou načítavania."
   },
   "STATIC_DISPLAY_LINK_CONTEXT_MENU_ENTRY_ALLOWING_YOU_TO__PPKZFZ": {
-    "message": "Display link context menu entry allowing you to add given link to subscriptions."
+    "message": "Zobraziť v kontextovej ponuke odkazu položku na pridanie odkazu k odberom."
   },
   "STATIC_IF_CHECKED_CLICKING_TOOLBAR_BUTTON_WILL_OPEN_NEW_1CVPZXJ": {
-    "message": "If checked clicking toolbar button will open new tab, else it will load reader in the same tab."
+    "message": "Ak je začiarknuté, tlačidlo na paneli nástrojov otvorí novú kartu; inak načíta čítačku na rovnakej karte."
   },
   "STATIC_THIS_OPTION_WILL_IMMEDIATELY_MARK_AS_READ_EVERY__1CY6HIE": {
-    "message": "This option will immediately mark as read every article you visit in the right column."
+    "message": "Táto možnosť ihneď označí ako prečítaný každý článok otvorený v pravom stĺpci."
   },
   "STATIC_WHEN_YOU_SELECT_MORE_THAN_10_FEEDS_IN_ARTICLE_LI_X0DDAN": {
-    "message": "When you select more than 10 feeds in article list and choose 'Open article link' options from context menu."
+    "message": "Pri výbere viac ako 10 zdrojov v zozname článkov a voľbe „Otvoriť odkaz článku“ z kontextovej ponuky."
   },
   "STATIC_EFFECTS_DATE_IN_ARTICLE_LIST_PPWLEU": {
-    "message": "Effects date in article list."
+    "message": "Ovplyvňuje dátum v zozname článkov."
   },
   "STATIC_IF_ENABLED_PRESSING_ARROW_UP_IN_A_LIST_WHEN_THE__XJ6J5T": {
-    "message": "If enabled, pressing arrow up in a list when the first item is selected will select the last item and visa-versa."
+    "message": "Ak je povolené, šípka nahor pri výbere prvej položky zoznamu vyberie poslednú položku a naopak."
   },
   "STATIC_IF_ENABLED_TITLE_OF_ARTICLE_IS_A_LINK_TO_FULL_AR_1T9UQLB": {
-    "message": "If enabled, title of article is a link to full article."
+    "message": "Ak je povolené, názov článku je odkazom na celý článok."
   },
   "STATIC_CONTROLS_HOW_TO_HANDLE_ENTER_PRESS_ON_ARTICLE_LI_MHS6OK": {
-    "message": "Controls how to handle `Enter` press on article list"
+    "message": "Určuje správanie klávesu `Enter` v zozname článkov"
   },
   "STATIC_ASK_TO_PREVENT_ACCIDENTAL_REMOVAL_OF_PINNED_ITEM_1SB0OQ0": {
-    "message": "Ask to prevent accidental removal of pinned items."
+    "message": "Pred odstránením označených položiek zobraziť potvrdenie."
   },
   "STATIC_COMMA_SEPARATED_LIST_CASE_INSENSITIVE_START_WITH_1CQ7C4W": {
-    "message": "Comma separated list, case insensitive, start with : to search in contents too"
+    "message": "Zoznam oddelený čiarkami bez rozlišovania veľkosti písmen; znakom : na začiatku možno hľadať aj v obsahu"
   },
   "STATIC_VIEW_TO_USE_WHEN_DISPLAYING_ARTICLES_HHTJ23": {
-    "message": "View to use when displaying articles"
+    "message": "Zobrazenie použité pre články"
   },
   "STATIC_SHOULD_PARSED_ARTICLE_BE_SAVED_IN_LOCAL_STORAGE__92CMR7": {
-    "message": "Should parsed article be saved in local storage after parsing the website?"
+    "message": "Má sa spracovaný článok po načítaní webovej stránky uložiť do lokálneho úložiska?"
   },
   "STATIC_IF_SELECTED_TO_SEE_ALL_ARTICLES_HOLD_ALT_OR_CLIC_O6IHGE": {
-    "message": "If selected to see all articles hold alt or click on the counter"
+    "message": "Ak chcete zobraziť všetky články, podržte Alt alebo kliknite na počítadlo"
   },
   "STATIC_IF_ENABLED_BROWSER_WILL_DISPLAY_A_NOTIFICATION_W_13STSDS": {
-    "message": "If enabled, browser will display a notification when new articles are found."
+    "message": "Ak je povolené, prehliadač pri nájdení nových článkov zobrazí oznámenie."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_S56NYT": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports both, feeds and feeds's articles."
+    "message": "SMART je špeciálny formát rozšírenia Smart RSS. Exportuje a importuje zdroje aj ich články."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_EXPORT_FEEDS_FROM_SMA_1B1P69M": {
-    "message": "You can use OPML format to export feeds from Smart RSS to Opera 12."
+    "message": "Formát OPML môžete použiť na export zdrojov zo Smart RSS do Opery 12."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_HPG76L": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports all feeds, folders and articles."
+    "message": "SMART je špeciálny formát rozšírenia Smart RSS. Exportuje a importuje všetky zdroje, priečinky a články."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_IMPORT_FEEDS_AND_FOLD_1MKEBH7": {
-    "message": "You can use OPML format to import feeds and folders from Opera 12 to Smart RSS."
+    "message": "Formát OPML môžete použiť na import zdrojov a priečinkov z Opery 12 do Smart RSS."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_YOURS_FEEDS_AND_ARTICLES_AN_VTXBG9": {
-    "message": "This will remove all yours feeds and articles and settings."
+    "message": "Týmto odstránite všetky svoje zdroje, články a nastavenia."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_REMOVED_ARTICLES_CACHE_IT_M_1P8QIOJ": {
-    "message": "This will remove all removed articles cache. It may cause some removed articles to appear again."
+    "message": "Týmto vymažete vyrovnávaciu pamäť odstránených článkov. Niektoré odstránené články sa môžu znova objaviť."
   },
   "STATIC_SMART_RSS_OPTIONS_H34A8V": {
-    "message": "Smart RSS - Options"
+    "message": "Smart RSS - Možnosti"
   },
   "STATIC_LOCALIZATION_EUKV6O": {
-    "message": "Localization"
+    "message": "Lokalizácia"
   },
   "STATIC_LANGUAGE_16US7MJ": {
-    "message": "Language"
+    "message": "Jazyk"
   },
   "STATIC_DATE_FORMAT_P62DDW": {
-    "message": "Date format"
+    "message": "Formát dátumu"
   },
   "STATIC_NORMAL_ONOBJM": {
-    "message": "Normal"
+    "message": "Bežný"
   },
   "STATIC_ISO_1Q4DNHQ": {
     "message": "ISO"
@@ -615,202 +615,202 @@
     "message": "12h (AM/PM)"
   },
   "STATIC_APPEARANCE_DLI9WF": {
-    "message": "Appearance"
+    "message": "Vzhľad"
   },
   "STATIC_THEME_LTYTUA": {
-    "message": "Theme"
+    "message": "Motív"
   },
   "STATIC_MATCH_BROWSER_1C0MZBA": {
-    "message": "Match browser"
+    "message": "Podľa prehliadača"
   },
   "STATIC_LIGHT_12IOB7Z": {
-    "message": "Light"
+    "message": "Svetlý"
   },
   "STATIC_DARK_J8M6W5": {
-    "message": "Dark"
+    "message": "Tmavý"
   },
   "STATIC_HORIZONTAL_TYAPAH": {
-    "message": "Horizontal"
+    "message": "Vodorovné"
   },
   "STATIC_VERTICAL_ZSCUHN": {
-    "message": "Vertical"
+    "message": "Zvislé"
   },
   "STATIC_SHOW_FULL_HEADLINE_MV9HBV": {
-    "message": "Show full headline"
+    "message": "Zobraziť celý nadpis"
   },
   "STATIC_YES_1DUDZCG": {
-    "message": "Yes"
+    "message": "Áno"
   },
   "STATIC_NO_R5WQAI": {
-    "message": "No"
+    "message": "Nie"
   },
   "STATIC_DISPLAY_FAVICON_INSTEAD_OF_PIN_WHEN_MULTIPLE_SOU_3FEC4U": {
-    "message": "Display favicon instead of pin when multiple sources selected"
+    "message": "Pri výbere viacerých zdrojov zobraziť namiesto značky ikonu webu"
   },
   "STATIC_ARTICLE_LIST_DISPLAY_MODE_F3I958": {
-    "message": "Article list display mode"
+    "message": "Režim zobrazenia zoznamu článkov"
   },
   "STATIC_ONE_LINE_Z5YGNJ": {
-    "message": "One Line"
+    "message": "Jeden riadok"
   },
   "STATIC_TWO_LINES_1HY5O7Q": {
-    "message": "Two Lines"
+    "message": "Dva riadky"
   },
   "STATIC_NEW_ARTICLES_NOTIFICATION_ICON_EFT2X4": {
-    "message": "New articles notification icon"
+    "message": "Ikona upozornenia na nové články"
   },
   "STATIC_ORANGE_VRISQZ": {
-    "message": "Orange"
+    "message": "Oranžová"
   },
   "STATIC_BLUE_1SVZZZH": {
-    "message": "Blue"
+    "message": "Modrá"
   },
   "STATIC_GREEN_1AZD270": {
-    "message": "Green"
+    "message": "Zelená"
   },
   "STATIC_PURPLE_1EN1Q8V": {
-    "message": "Purple"
+    "message": "Fialová"
   },
   "STATIC_RED_19D4CCC": {
-    "message": "Red"
+    "message": "Červená"
   },
   "STATIC_ROYAL_BLUE_8NJHF0": {
-    "message": "Royal Blue"
+    "message": "Kráľovská modrá"
   },
   "STATIC_DISABLED_1H7WNC5": {
-    "message": "Disabled"
+    "message": "Vypnuté"
   },
   "STATIC_SHOW_SPECIAL_ALL_FEEDS_ITEM_ON_FEEDS_LIST_V8YX74": {
-    "message": "Show special All Feeds item on feeds list"
+    "message": "Zobraziť v zozname zdrojov špeciálnu položku Všetky zdroje"
   },
   "STATIC_OPEN_MEDIA_PREVIEW_AUTOMATICALLY_16SZX1O": {
-    "message": "Open media preview automatically"
+    "message": "Automaticky otvárať náhľad médií"
   },
   "STATIC_SHOW_ONLY_SOURCES_WITH_UNREAD_ARTICLES_1VTNK9E": {
-    "message": "Show only sources with unread articles"
+    "message": "Zobraziť iba zdroje s neprečítanými článkami"
   },
   "STATIC_SHOW_ONLY_UNREAD_ARTICLES_A9M1DK": {
-    "message": "Show only unread articles"
+    "message": "Zobraziť iba neprečítané články"
   },
   "STATIC_DISABLE_DATE_GROUPS_6ZXR9B": {
-    "message": "Disable date groups"
+    "message": "Vypnúť zoskupovanie podľa dátumu"
   },
   "STATIC_ARTICLE_FONT_SIZE_1NO2HGN": {
-    "message": "Article font size"
+    "message": "Veľkosť písma článku"
   },
   "STATIC_UI_FONT_SIZE_T1CX8D": {
-    "message": "UI font size"
+    "message": "Veľkosť písma rozhrania"
   },
   "STATIC_SHOW_SPINNER_DURING_UPDATE_16IQC8F": {
-    "message": "Show spinner during update"
+    "message": "Počas aktualizácie zobraziť indikátor načítavania"
   },
   "STATIC_LINK_CONTEXT_MENU_1MS8FUX": {
-    "message": "Link context menu"
+    "message": "Kontextová ponuka odkazu"
   },
   "STATIC_BEHAVIOR_8MNFIF": {
-    "message": "Behavior"
+    "message": "Správanie"
   },
   "STATIC_OPEN_READER_IN_NEW_TAB_17E1W2U": {
-    "message": "Open Reader in new tab"
+    "message": "Otvoriť čítačku na novej karte"
   },
   "STATIC_SELECT_FIRST_ARTICLE_ON_FEED_SELECTION_1LTS2ZG": {
-    "message": "Select first article on feed selection"
+    "message": "Pri výbere zdroja vybrať prvý článok"
   },
   "STATIC_SELECT_ALL_FEEDS_ON_READER_OPEN_18VDTDH": {
-    "message": "Select all feeds on reader open"
+    "message": "Pri otvorení čítačky vybrať všetky zdroje"
   },
   "STATIC_AUTOMATICALLY_MARK_ARTICLES_AS_READ_14DJ9JE": {
-    "message": "Automatically mark articles as read"
+    "message": "Automaticky označovať články ako prečítané"
   },
   "STATIC_ASK_WHEN_OPENING_10_TABS_1R6R46C": {
-    "message": "Ask when opening 10+ tabs"
+    "message": "Potvrdiť otvorenie 10 a viac kariet"
   },
   "STATIC_ALWAYS_SHOW_FULL_DATE_KMPID6": {
-    "message": "Always show full date"
+    "message": "Vždy zobrazovať celý dátum"
   },
   "STATIC_CIRCULAR_NAVIGATION_Y2J9IA": {
-    "message": "Circular navigation"
+    "message": "Cyklické prechádzanie"
   },
   "STATIC_TITLE_IS_LINK_TO_FULL_ARTICLE_6N487X": {
-    "message": "Title is link to full article"
+    "message": "Názov odkazuje na celý článok"
   },
   "STATIC_ENTER_OPENS_ARTICLES_IN_QIA8MY": {
-    "message": "Enter opens articles in"
+    "message": "Kláves Enter otvára články na"
   },
   "STATIC_BACKGROUND_1FVQIF1": {
-    "message": "Background"
+    "message": "Pozadí"
   },
   "STATIC_FOREGROUND_1OBQHNK": {
-    "message": "Foreground"
+    "message": "Popredí"
   },
   "STATIC_ASK_WHEN_REMOVING_PINNED_ITEMS_1KXHKMX": {
-    "message": "Ask when removing pinned items"
+    "message": "Potvrdiť odstránenie označených položiek"
   },
   "STATIC_ON_REMOVAL_FROM_TRASH_X7198Y": {
-    "message": "On removal from trash"
+    "message": "Pri odstránení z koša"
   },
   "STATIC_ALWAYS_1C30550": {
-    "message": "Always"
+    "message": "Vždy"
   },
   "STATIC_ICON_BADGE_17WQASR": {
-    "message": "Icon badge"
+    "message": "Odznak ikony"
   },
   "STATIC_DISABLED_EEX8G5": {
-    "message": "disabled"
+    "message": "vypnuté"
   },
   "STATIC_OF_UNREAD_K5BYRM": {
-    "message": "# of unread"
+    "message": "Počet neprečítaných"
   },
   "STATIC_OF_UNVISITED_156OOQ0": {
-    "message": "# of unvisited"
+    "message": "Počet nenavštívených"
   },
   "STATIC_CONCURRENT_DOWNLOADS_1U3U0T1": {
-    "message": "Concurrent downloads"
+    "message": "Súbežné sťahovania"
   },
   "STATIC_DISABLE_AUTO_UPDATE_COMPLETELY_15NTBFL": {
-    "message": "Disable auto update completely"
+    "message": "Úplne vypnúť automatické aktualizácie"
   },
   "STATIC_DEFAULT_UPDATE_FREQUENCY_MINUTES_18L1XRP": {
-    "message": "Default update frequency (minutes)"
+    "message": "Predvolený interval aktualizácie (minúty)"
   },
   "STATIC_AUTO_REMOVE_AFTER_6741PK": {
-    "message": "Auto remove after"
+    "message": "Automaticky odstrániť po"
   },
   "STATIC_AUTO_REMOVE_1H062VA": {
-    "message": "Auto remove"
+    "message": "Automatické odstraňovanie"
   },
   "STATIC_AUTO_REMOVE_FROM_TRASH_5A2WBS": {
-    "message": "Auto remove from trash"
+    "message": "Automaticky odstraňovať z koša"
   },
   "STATIC_AUTO_PIN_ARTICLES_MATCHING_10MA3NR": {
-    "message": "Auto pin articles matching"
+    "message": "Automaticky označiť zodpovedajúce články"
   },
   "STATIC_DEFAULT_VIEW_1YHRPIR": {
-    "message": "Default view"
+    "message": "Predvolené zobrazenie"
   },
   "STATIC_CONTENT_FROM_FEED_1RU9T9A": {
-    "message": "Content from feed"
+    "message": "Obsah zo zdroja"
   },
   "STATIC_PARSE_WEBSITE_4CUQJ5": {
-    "message": "Parse website"
+    "message": "Načítať webovú stránku"
   },
   "STATIC_CACHE_ARTICLE_AFTER_PARSING_KBFZI9": {
-    "message": "Cache article after parsing"
+    "message": "Po načítaní uložiť článok do vyrovnávacej pamäte"
   },
   "STATIC_HOTKEYS_1KHCIOW": {
-    "message": "Hotkeys"
+    "message": "Klávesové skratky"
   },
   "STATIC_NOTIFICATIONS_FKI4UN": {
-    "message": "Notifications"
+    "message": "Oznámenia"
   },
   "STATIC_ENABLE_SYSTEM_NOTIFICATIONS_1KVIF4Z": {
-    "message": "Enable system notifications"
+    "message": "Povoliť systémové oznámenia"
   },
   "STATIC_EXPORT_IMPORT_1KWL5UH": {
-    "message": "Export/Import"
+    "message": "Export a import"
   },
   "STATIC_EXPORT_1SH99LF": {
-    "message": "Export"
+    "message": "Exportovať"
   },
   "STATIC_SMART_MQAJW2": {
     "message": "SMART"
@@ -819,42 +819,42 @@
     "message": "OPML"
   },
   "STATIC_IMPORT_O7FTO4": {
-    "message": "Import"
+    "message": "Importovať"
   },
   "STATIC_WARNING_SMART_RSS_WILL_RELOAD_AFTER_FINISHING_TH_1A77IDQ": {
-    "message": "Warning: Smart RSS will reload after finishing the SMART import, it's expected behavior"
+    "message": "Upozornenie: Po dokončení importu SMART sa Smart RSS znova načíta; ide o očakávané správanie"
   },
   "STATIC_ADVANCED_FEATURES_MOSTLY_FOR_TROUBLESHOOTING_PUR_120JK38": {
-    "message": "Advanced features. Mostly for troubleshooting purposes"
+    "message": "Pokročilé funkcie. Určené najmä na riešenie problémov"
   },
   "STATIC_CLEAR_FAVICONS_135332F": {
-    "message": "Clear Favicons"
+    "message": "Vymazať ikony webov"
   },
   "STATIC_REMOVE_FAVICON_DATA_15RZGB": {
-    "message": "Remove Favicon data"
+    "message": "Odstrániť údaje ikon webov"
   },
   "STATIC_CLEAR_H65A4E": {
-    "message": "!!Clear!!"
+    "message": "!!Vymazať!!"
   },
   "STATIC_CLEAR_REMOVED_ARTICLES_STORE_CKA2F4": {
-    "message": "Clear removed articles store"
+    "message": "Vymazať úložisko odstránených článkov"
   },
   "STATIC_REMOVE_REMOVED_ARTICLES_DATA_1H1FW9O": {
-    "message": "Remove removed articles data"
+    "message": "Odstrániť údaje odstránených článkov"
   },
   "STATIC_CLEAR_SETTINGS_182PX9V": {
-    "message": "Clear settings"
+    "message": "Vymazať nastavenia"
   },
   "STATIC_REMOVE_EXTENSION_SETTINGS_15QON31": {
-    "message": "Remove extension settings"
+    "message": "Odstrániť nastavenia rozšírenia"
   },
   "STATIC_CLEAR_DATA_8RGEDI": {
-    "message": "Clear data"
+    "message": "Vymazať údaje"
   },
   "STATIC_REMOVE_ALL_EXTENSION_DATA_ES3GNX": {
-    "message": "Remove ALL extension data"
+    "message": "Odstrániť VŠETKY údaje rozšírenia"
   },
   "STATIC_VERSION_Q0ZD4N": {
-    "message": "Version"
+    "message": "Verzia"
   }
 }

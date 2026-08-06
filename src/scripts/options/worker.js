@@ -58,7 +58,8 @@ function startImport() {
             if (i % 10 === 0) {
                 postMessage({
                     action: "message",
-                    value: "Folders: " + i + "/" + j,
+                    messageKey: "FOLDERS_PROGRESS",
+                    substitutions: { current: i, total: j },
                 });
             }
         }
@@ -71,7 +72,8 @@ function startImport() {
             if (i % 10 === 0) {
                 postMessage({
                     action: "message",
-                    value: "Feeds: " + i + "/" + j,
+                    messageKey: "FEEDS_PROGRESS",
+                    substitutions: { current: i, total: j },
                 });
             }
         }
@@ -84,7 +86,8 @@ function startImport() {
             if (i % 10 === 0) {
                 postMessage({
                     action: "message",
-                    value: "Articles: " + i + "/" + j,
+                    messageKey: "ARTICLES_PROGRESS",
+                    substitutions: { current: i, total: j },
                 });
             }
         }
@@ -93,6 +96,6 @@ function startImport() {
     if (writes === 0) {
         postMessage({ action: "finished" });
     } else {
-        postMessage({ action: "message", value: "Writing..." });
+        postMessage({ action: "message", messageKey: "WRITING" });
     }
 }

@@ -569,7 +569,7 @@ let ArticleListView = BB.View.extend({
         const askRmPinned = settings.get("askRmPinned");
         if (view.model.get("pinned") && askRmPinned === "all") {
             const confirmation = confirm(
-                Locale.PIN_QUESTION_A + view.model.escape("title") + Locale.PIN_QUESTION_B
+                Locale.translate("PINNED_DELETE_CONFIRM", { title: view.model.get("title") })
             );
             if (!confirmation) {
                 return;
@@ -589,7 +589,7 @@ let ArticleListView = BB.View.extend({
         const askRmPinned = settings.get("askRmPinned");
         if (view.model.get("pinned") && askRmPinned && askRmPinned !== "none") {
             const confirmation = confirm(
-                Locale.PIN_QUESTION_A + view.model.escape("title") + Locale.PIN_QUESTION_B
+                Locale.translate("PINNED_DELETE_CONFIRM", { title: view.model.get("title") })
             );
             if (!confirmation) {
                 return;

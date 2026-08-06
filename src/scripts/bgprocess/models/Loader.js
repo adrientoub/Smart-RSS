@@ -13,6 +13,7 @@ import { collections } from "../../shared/collectionRegistry.ts";
 import Source from "../../shared/models/Source.js";
 import Folder from "../../shared/models/Folder.js";
 import info from "./Info.js";
+import { translate } from "../../shared/i18n.ts";
 
 const settings = settingsStore();
 
@@ -190,7 +191,7 @@ export default class Loader {
         browser.notifications.create({
             type: "basic",
             title: "Smart RSS",
-            message: "New articles found",
+            message: translate("NEW_ARTICLES_FOUND"),
         });
     }
 

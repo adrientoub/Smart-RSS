@@ -8,26 +8,14 @@
  */
 
 import type { ThemePreference } from "./theme.ts";
+import { availableLanguageCodes } from "./locales.ts";
 
 export interface Hotkeys {
     [region: string]: { [combination: string]: string };
 }
 
 /** Locales that ship with the extension. */
-export const AVAILABLE_LANGUAGES = [
-    "en",
-    "cs",
-    "sk",
-    "de",
-    "tr",
-    "pl",
-    "ru",
-    "hu",
-    "nl",
-    "fr",
-    "pt",
-    "hr",
-] as const;
+export const AVAILABLE_LANGUAGES = availableLanguageCodes;
 
 export function defaultLanguage(navigatorLanguage: string): string {
     const language = String(navigatorLanguage).split("-")[0];

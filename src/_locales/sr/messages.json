@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Укључи или искључи приказ само непрочитаних"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Прикажи само непрочитане чланке"
+  },
   "TOGGLE_THEME": {
     "message": "Укључи или искључи тамни режим"
   },

@@ -329,6 +329,9 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Alternar mostrar solo no leídos"
   },
+  "DEFAULT_TO_UNREAD_ONLY": {
+    "message": "Mostrar solo artículos no leídos"
+  },
   "TOGGLE_THEME": {
     "message": "Alternar modo oscuro"
   },

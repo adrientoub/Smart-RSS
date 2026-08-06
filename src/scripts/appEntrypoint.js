@@ -10,7 +10,9 @@ import { waitForBackground } from "./shared/messages.ts";
 (async () => {
     // The background still owns writing and feed downloads.
     await waitForBackground();
-    await settingsStore().load();
+    const settings = settingsStore();
+    await settings.load();
+    settings.on("change:lang", () => location.reload());
 
     const { loadData, startApplyingChanges } = await import("./app/modules/data.js");
     await loadData();

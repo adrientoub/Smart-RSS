@@ -11,6 +11,7 @@ import { startDataBroadcast } from "./modules/dataBroadcast.js";
 import { handleMessages, broadcast } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
 import { migrateSettings } from "../shared/settingsMigration.ts";
+import { translate } from "../shared/i18n.ts";
 
 const { action } = browser;
 
@@ -47,7 +48,7 @@ async function createLinksMenu() {
     }
     browser.contextMenus.create({
         id: SUBSCRIBE_LINK_MENU_ID,
-        title: "Subscribe to this feed",
+        title: translate("SUBSCRIBE_TO_FEED"),
         contexts: ["link"],
         checked: false,
     });
@@ -268,6 +269,7 @@ const appStarted = new Promise((resolve, reject) => {
             // The menu used to be rebuilt on every page visit as a side effect of feed
             // detection, which is how toggling this setting took effect. Rebuild explicitly.
             settings.on("change:displaySubscribeToLink", createLinksMenu);
+            settings.on("change:lang", createLinksMenu);
 
             /**
              * Set icon

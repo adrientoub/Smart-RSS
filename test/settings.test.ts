@@ -41,6 +41,8 @@ describe("defaultLanguage", () => {
     it("uses the base language when it ships with the extension", () => {
         assert.equal(defaultLanguage("fr-FR"), "fr");
         assert.equal(defaultLanguage("de"), "de");
+        assert.equal(defaultLanguage("es-MX"), "es");
+        assert.equal(defaultLanguage("sr-Latn"), "sr");
     });
 
     it("falls back to English for anything else", () => {

@@ -4,7 +4,7 @@
 
 Originally developed for Opera 15+ by BS-Harou (Martin Kadlec)
 
-Translations are in scripts/nls/\*.js
+Translations are WebExtension message catalogs in `src/_locales/*/messages.json`.
 
 For technical bug reports use issues here on GitHub
 
@@ -22,7 +22,7 @@ If you encounter issue with a specific feed for best results please back up and 
 
 Clone the repository, then see [BUILD.md](BUILD.md) to build and run it.
 
-Sometimes you may encounter texts ending with `*` or `!` in app, first ones are fallbacks to English text when used locale lacks the needed one and the latter are actual keys displayed when even English text is missing, feel free to submit PR's to fill them. If you change wording or punctuation somewhere please comment that line (using GitHub interface) with reasoning like common conventions or special punctuation rules in given language.
+Every locale must contain the same keys as the English catalog. Missing translations should temporarily use the English message so the catalogs remain structurally complete. If you change wording or punctuation, explain conventions specific to that language in the pull request.
 
 ### Code Quality
 

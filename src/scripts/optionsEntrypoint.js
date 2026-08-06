@@ -8,7 +8,9 @@ import { waitForBackground } from "./shared/messages.ts";
 
 (async () => {
     await waitForBackground();
-    await settingsStore().load();
+    const settings = settingsStore();
+    await settings.load();
+    settings.on("change:lang", () => location.reload());
 
     const { loadData } = await import("./app/modules/data.js");
     await loadData({ live: false });

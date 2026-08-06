@@ -3,6 +3,8 @@ import shortcuts from "./staticdb/shortcuts.js";
 import { sendMessage } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
 import { applyTheme } from "../shared/theme.ts";
+import { localizeDocument, translate } from "../shared/i18n.ts";
+import { languages } from "../shared/locales.ts";
 import { createRecord, updateRecords, destroyRecords, idsOf } from "../shared/dataClient.ts";
 import { sources, items, folders, reloadData } from "./modules/data.js";
 
@@ -54,6 +56,15 @@ JSON.safeParse = function (str) {
 };
 
 const documentReady = () => {
+    const languageSelect = document.querySelector("#lang");
+    for (const [code, language] of Object.entries(languages)) {
+        const option = document.createElement("option");
+        option.value = code;
+        option.textContent = language.name;
+        languageSelect.appendChild(option);
+    }
+    localizeDocument(document);
+
     document.querySelector("#version").textContent = browser.runtime.getManifest().version;
 
     const browserInfo = document.querySelector("#browser-info");
@@ -168,7 +179,7 @@ const documentReady = () => {
         hotkeysElement.textContent = "";
         const resetHotkeysButton = document.createElement("button");
         resetHotkeysButton.classList.add("resetHotkeysButton");
-        resetHotkeysButton.textContent = "Reset hotkeys";
+        resetHotkeysButton.textContent = translate("RESET_HOTKEYS");
         hotkeysElement.insertAdjacentElement("beforeend", resetHotkeysButton);
         const hotkeys = settings.get("hotkeys");
 
@@ -219,7 +230,7 @@ const documentReady = () => {
         }
         if (target.classList.contains("resetHotkeysButton")) {
             if (
-                confirm("Resetting hotkeys will require extension reload, do you want to continue?")
+                confirm(translate("RESET_HOTKEYS_CONFIRM"))
             ) {
                 settings.save("hotkeys", settings.defaults.hotkeys);
                 browser.runtime.reload();
@@ -291,13 +302,13 @@ function handleExportSmart() {
 
     smartExportStatus.setAttribute("href", "#");
     smartExportStatus.removeAttribute("download");
-    smartExportStatus.textContent = "Exporting, please wait";
+    smartExportStatus.textContent = translate("EXPORTING_WAIT");
 
     setTimeout(() => {
         const expr = new Blob([JSON.stringify(data)]);
         smartExportStatus.setAttribute("href", URL.createObjectURL(expr));
         smartExportStatus.setAttribute("download", "exported-rss.smart");
-        smartExportStatus.textContent = "Click to download exported data";
+        smartExportStatus.textContent = translate("DOWNLOAD_EXPORTED_DATA");
     }, 20);
 }
 
@@ -309,13 +320,13 @@ function handleExportSettings() {
 
     settingsExportStatus.setAttribute("href", "#");
     settingsExportStatus.removeAttribute("download");
-    settingsExportStatus.textContent = "Exporting, please wait";
+    settingsExportStatus.textContent = translate("EXPORTING_WAIT");
 
     setTimeout(() => {
         const expr = new Blob([JSON.stringify(data)]);
         settingsExportStatus.setAttribute("href", URL.createObjectURL(expr));
         settingsExportStatus.setAttribute("download", "settings.smart");
-        settingsExportStatus.textContent = "Click to download exported data";
+        settingsExportStatus.textContent = translate("DOWNLOAD_EXPORTED_DATA");
     }, 20);
 }
 
@@ -346,7 +357,7 @@ function handleExportOPML() {
 
     opmlExportStatus.setAttribute("href", "#");
     opmlExportStatus.removeAttribute("download");
-    opmlExportStatus.textContent = "Exporting, please wait";
+    opmlExportStatus.textContent = translate("EXPORTING_WAIT");
 
     const start =
         '<?xml version="1.0" encoding="utf-8"?>\n<opml version="1.0">\n<head>\n\t<title>Newsfeeds exported from Smart RSS</title>\n</head>\n<body>';
@@ -387,7 +398,7 @@ function handleExportOPML() {
         const expr = new Blob([new XMLSerializer().serializeToString(doc)]);
         opmlExportStatus.setAttribute("href", URL.createObjectURL(expr));
         opmlExportStatus.setAttribute("download", "exported-rss.opml");
-        opmlExportStatus.textContent = "Click to download exported data";
+        opmlExportStatus.textContent = translate("DOWNLOAD_EXPORTED_DATA");
     }, 20);
 }
 
@@ -395,21 +406,21 @@ function handleImportSettings(event) {
     const settingsImportStatus = document.querySelector("#settings-imported");
     const file = event.target.files[0];
     if (!file || file.size === 0) {
-        settingsImportStatus.textContent = "Wrong file";
+        settingsImportStatus.textContent = translate("WRONG_FILE");
         return;
     }
-    settingsImportStatus.textContent = "Loading & parsing file";
+    settingsImportStatus.textContent = translate("LOADING_PARSING_FILE");
 
     const reader = new FileReader();
     reader.onload = function () {
         const data = JSON.safeParse(this.result);
 
         if (!data || !data.settings) {
-            settingsImportStatus.textContent = "Wrong file";
+            settingsImportStatus.textContent = translate("WRONG_FILE");
             return;
         }
 
-        settingsImportStatus.textContent = "Importing, please wait!";
+        settingsImportStatus.textContent = translate("IMPORTING_WAIT");
 
         // Settings live in storage.local now, so this no longer goes through the
         // IndexedDB import worker. Every extension context is notified by
@@ -417,10 +428,12 @@ function handleImportSettings(event) {
         settings
             .setMany(data.settings)
             .then(() => {
-                settingsImportStatus.textContent = "Import fully completed!";
+                settingsImportStatus.textContent = translate("IMPORT_FULLY_COMPLETED");
             })
             .catch((error) => {
-                settingsImportStatus.textContent = "Importing error: " + error.message;
+                settingsImportStatus.textContent = translate("IMPORT_ERROR", {
+                    error: error.message,
+                });
             });
     };
     reader.readAsText(file);
@@ -430,40 +443,43 @@ function handleImportSmart(event) {
     const smartImportStatus = document.querySelector("#smart-imported");
     const file = event.target.files[0];
     if (!file || file.size === 0) {
-        smartImportStatus.textContent = "Wrong file";
+        smartImportStatus.textContent = translate("WRONG_FILE");
         return;
     }
-    smartImportStatus.textContent = "Loading & parsing file";
+    smartImportStatus.textContent = translate("LOADING_PARSING_FILE");
 
     const reader = new FileReader();
     reader.onload = function () {
         const data = JSON.safeParse(this.result);
 
         if (!data || !data.items || !data.sources) {
-            smartImportStatus.textContent = "Wrong file";
+            smartImportStatus.textContent = translate("WRONG_FILE");
             return;
         }
 
-        smartImportStatus.textContent = "Importing, please wait!";
+        smartImportStatus.textContent = translate("IMPORTING_WAIT");
 
         const worker = new Worker("scripts/options/worker.js");
         worker.onmessage = function (message) {
             if (message.data.action === "finished") {
-                smartImportStatus.textContent = "Loading data to memory!";
+                smartImportStatus.textContent = translate("LOADING_DATA_MEMORY");
                 sendMessage("reload-background-data").then(function () {
                     browser.runtime.reload();
                     reloadData();
-                    smartImportStatus.textContent = "Import fully completed!";
+                    smartImportStatus.textContent = translate("IMPORT_FULLY_COMPLETED");
                     sendMessage("load-all");
                 });
             } else if (message.data.action === "message") {
-                smartImportStatus.textContent = message.data.value;
+                smartImportStatus.textContent = translate(
+                    message.data.messageKey,
+                    message.data.substitutions
+                );
             }
         };
         worker.postMessage({ action: "file-content", value: data });
 
         worker.onerror = function (error) {
-            alert("Importing error: " + error.message);
+            alert(translate("IMPORT_ERROR", { error: error.message }));
         };
     };
     reader.readAsText(file);
@@ -473,11 +489,11 @@ function handleImportOPML(event) {
     const opmlImportStatus = document.querySelector("#opml-imported");
     const file = event.target.files[0];
     if (!file || file.size === 0) {
-        opmlImportStatus.textContent = "Wrong file";
+        opmlImportStatus.textContent = translate("WRONG_FILE");
         return;
     }
 
-    opmlImportStatus.textContent = "Importing, please wait!";
+    opmlImportStatus.textContent = translate("IMPORTING_WAIT");
 
     const reader = new FileReader();
     reader.onload = async function () {
@@ -485,7 +501,7 @@ function handleImportOPML(event) {
         const doc = parser.parseFromString(this.result, "application/xml");
 
         if (!doc) {
-            opmlImportStatus.textContent = "Wrong file";
+            opmlImportStatus.textContent = translate("WRONG_FILE");
             return;
         }
 
@@ -540,7 +556,7 @@ function handleImportOPML(event) {
             }
         }
 
-        opmlImportStatus.textContent = "Import completed!";
+        opmlImportStatus.textContent = translate("IMPORT_COMPLETED");
 
         setTimeout(function () {
             sendMessage("load-all");
@@ -551,7 +567,7 @@ function handleImportOPML(event) {
 }
 
 function handleClearSettings() {
-    if (!confirm("Do you really want to remove all extension settings?")) {
+    if (!confirm(translate("REMOVE_SETTINGS_CONFIRM"))) {
         return;
     }
     settings.clear().then(() => {
@@ -561,7 +577,7 @@ function handleClearSettings() {
 }
 
 function handleClearData() {
-    if (!confirm("Do you really want to remove all extension data?")) {
+    if (!confirm(translate("REMOVE_DATA_CONFIRM"))) {
         return;
     }
 
@@ -573,20 +589,18 @@ function handleClearData() {
 
 async function handleClearDeletedStorage() {
     if (
-        !confirm(
-            "Do you really want to remove deleted articles metadata? This may cause some of them to appear again"
-        )
+        !confirm(translate("REMOVE_DELETED_CONFIRM"))
     ) {
         return;
     }
 
     await destroyRecords("items", idsOf(items.where({ deleted: true })));
-    alert("Done,extension will reboot now");
+    alert(translate("DONE_REBOOT"));
     browser.runtime.reload();
 }
 
 function handleClearFavicons() {
-    if (!confirm("Do you really want to remove all favicons?")) {
+    if (!confirm(translate("REMOVE_FAVICONS_CONFIRM"))) {
         return;
     }
 
@@ -594,5 +608,5 @@ function handleClearFavicons() {
         favicon: "/images/feed.png",
         faviconExpires: 0,
     });
-    alert("Done");
+    alert(translate("DONE"));
 }

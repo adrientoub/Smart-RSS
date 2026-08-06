@@ -22,9 +22,9 @@ const settings = settingsStore();
 export default {
     global: {
         default: {
-            title: "Unknown",
+            title: L.UNKNOWN,
             fn: function () {
-                alert("no action");
+                alert(L.NO_ACTION);
             },
         },
         hideOverlays: {
@@ -378,7 +378,7 @@ export default {
                 const toFocus = activeElement.closest(".region");
                 const list = articleList;
                 if (list.currentData.name === "trash" || event.shiftKey) {
-                    if (!confirm("Remove selected items permanently?")) {
+                    if (!confirm(L.REMOVE_SELECTED_PERMANENTLY)) {
                         return;
                     }
                     list.destroyBatch(list.selectedItems, list.removeItemCompletely);
@@ -664,7 +664,7 @@ export default {
             },
         },
         spaceThrough: {
-            title: "Space Through",
+            title: L.SPACE_THROUGH,
             fn: function () {
                 if (!articleList.selectedItems || !articleList.selectedItems.length) {
                     return;
@@ -739,7 +739,9 @@ export default {
                 if (e.shiftKey) {
                     if (contentView.model.get("pinned") && askRmPinned && askRmPinned !== "none") {
                         const conf = confirm(
-                            L.PIN_QUESTION_A + contentView.model.escape("title") + L.PIN_QUESTION_B
+                            L.translate("PINNED_DELETE_CONFIRM", {
+                                title: contentView.model.get("title"),
+                            })
                         );
                         if (!conf) {
                             return;
@@ -749,7 +751,9 @@ export default {
                 } else {
                     if (contentView.model.get("pinned") && askRmPinned === "all") {
                         const conf = confirm(
-                            L.PIN_QUESTION_A + contentView.model.escape("title") + L.PIN_QUESTION_B
+                            L.translate("PINNED_DELETE_CONFIRM", {
+                                title: contentView.model.get("title"),
+                            })
                         );
                         if (!conf) {
                             return;
@@ -794,7 +798,7 @@ export default {
             },
         },
         focusSandbox: {
-            title: "Focus Article",
+            title: L.FOCUS_ARTICLE,
             fn: function () {
                 app.content.sandbox.el.focus();
             },
@@ -814,7 +818,7 @@ export default {
             },
         },
         spaceThrough: {
-            title: "Space trough",
+            title: L.SPACE_THROUGH,
             fn: function () {
                 contentView.handleSpace();
             },

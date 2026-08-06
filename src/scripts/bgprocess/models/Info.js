@@ -5,14 +5,13 @@
 
 import BB from "backbone";
 import animation from "../modules/Animation.js";
-import actionApi from "../modules/actionApi.js";
 import { settingsStore } from "../../shared/settings.ts";
 import { collections } from "../../shared/collectionRegistry.ts";
 import { applyCounts } from "../../shared/counters.ts";
 
 const settings = settingsStore();
 
-const { action } = actionApi;
+const { action } = browser;
 
 const handleAllCountChange = function (model) {
     if (settings.get("badgeMode") === "disabled") {

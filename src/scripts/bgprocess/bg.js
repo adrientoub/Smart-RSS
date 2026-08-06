@@ -5,7 +5,6 @@
 import Animation from "./modules/Animation.js";
 import info from "./models/Info.js";
 import Loader from "./models/Loader.js";
-import actionApi from "./modules/actionApi.js";
 import { dataHandlers } from "./modules/dataApi.js";
 import { createCollections, fetchCollections } from "../shared/dataStore.ts";
 import { startDataBroadcast } from "./modules/dataBroadcast.js";
@@ -13,7 +12,7 @@ import { handleMessages, broadcast } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
 import { migrateSettings } from "../shared/settingsMigration.ts";
 
-const { action } = actionApi;
+const { action } = browser;
 
 /**
  * Messages
@@ -40,7 +39,9 @@ function addSource(address) {
 
 const SUBSCRIBE_LINK_MENU_ID = "smart-rss-subscribe-link";
 
-function createLinksMenu() {
+// Menus do not survive a worker restart, and creating one twice is an error.
+async function createLinksMenu() {
+    await browser.contextMenus.removeAll();
     if (!settings.get("displaySubscribeToLink")) {
         return;
     }
@@ -53,97 +54,101 @@ function createLinksMenu() {
 }
 
 // MV3 removed the per-item `onclick` property, so menu clicks are routed here.
-browser.contextMenus.onClicked.addListener((menuInfo) => {
+browser.contextMenus.onClicked.addListener(async (menuInfo) => {
     if (menuInfo.menuItemId === SUBSCRIBE_LINK_MENU_ID) {
+        await appStarted;
         addSource(menuInfo.linkUrl);
     }
 });
 
-handleMessages({
-    "load-all": () => {
-        loader.downloadAll(true);
-    },
-    "new-rss": ({ url }) => {
-        if (url) {
-            addSource(url);
-        }
-    },
-    // Sources cross the boundary as ids, since Backbone models are not cloneable.
-    "download-sources": ({ ids }) => {
-        const models = ids
-            .map((id) => collections.sources.get(id) ?? collections.folders.get(id))
-            .filter((model) => Boolean(model));
-        loader.download(models);
-    },
-    "abort-downloads": () => {
-        loader.abortDownloading();
-    },
-    // The UI waits on this instead of reaching for the background page.
-    "background-ready": () => appStarted,
-    "reload-background-data": () => fetchAll(),
-    "take-source-to-focus": () => {
-        const id = sourceToFocus;
-        sourceToFocus = null;
-        return { id };
-    },
-    ...dataHandlers,
-});
-
-function openRSS(closeIfActive, focusSource) {
-    const url = browser.runtime.getURL("rss.html");
-    browser.tabs.query({ url: url }, (tabs) => {
-        if (tabs[0]) {
-            if (tabs[0].active && closeIfActive) {
-                browser.tabs.remove(tabs[0].id);
-                return;
-            }
-            browser.tabs.update(tabs[0].id, {
-                active: true,
-            });
-            if (focusSource) {
-                // The reader is already running, so it can be told directly.
-                broadcast("focus-source", { id: focusSource });
-            }
-            return;
-        }
-        // No reader yet; it collects this once it starts.
-        sourceToFocus = focusSource;
-        if (settings.get("openInNewTab")) {
-            browser.tabs.create(
-                {
-                    url: url,
-                },
-                () => {}
-            );
-        } else {
-            browser.tabs.update({ url: url });
-        }
-    });
-}
-
-function openInNewTab() {
-    browser.tabs.create(
-        {
-            url: browser.runtime.getURL("rss.html"),
-        },
-        () => {}
+/**
+ * A worker is started for whichever event comes first, so every entry point
+ * waits for the same init rather than assuming the collections are loaded.
+ */
+function whenStarted(handlers) {
+    return Object.fromEntries(
+        Object.entries(handlers).map(([name, handler]) => [
+            name,
+            async (request) => {
+                await appStarted;
+                return handler(request);
+            },
+        ])
     );
 }
 
-action.onClicked.addListener(function (tab, onClickData) {
+handleMessages({
+    // The UI waits on this instead of reaching for the background page.
+    "background-ready": () => appStarted,
+    ...whenStarted({
+        "load-all": () => {
+            loader.downloadAll(true);
+        },
+        "new-rss": ({ url }) => {
+            if (url) {
+                addSource(url);
+            }
+        },
+        // Sources cross the boundary as ids, since Backbone models are not cloneable.
+        "download-sources": ({ ids }) => {
+            const models = ids
+                .map((id) => collections.sources.get(id) ?? collections.folders.get(id))
+                .filter((model) => Boolean(model));
+            loader.download(models);
+        },
+        "abort-downloads": () => {
+            loader.abortDownloading();
+        },
+        "reload-background-data": () => fetchAll(),
+        "take-source-to-focus": () => {
+            const id = sourceToFocus;
+            sourceToFocus = null;
+            return { id };
+        },
+        ...dataHandlers,
+    }),
+});
+
+async function openRSS(closeIfActive, focusSource) {
+    const url = browser.runtime.getURL("rss.html");
+    const tabs = await browser.tabs.query({ url: url });
+    if (tabs[0]) {
+        if (tabs[0].active && closeIfActive) {
+            await browser.tabs.remove(tabs[0].id);
+            return;
+        }
+        await browser.tabs.update(tabs[0].id, {
+            active: true,
+        });
+        if (focusSource) {
+            // The reader is already running, so it can be told directly.
+            broadcast("focus-source", { id: focusSource });
+        }
+        return;
+    }
+    // No reader yet; it collects this once it starts.
+    sourceToFocus = focusSource;
+    if (settings.get("openInNewTab")) {
+        await browser.tabs.create({ url: url });
+    } else {
+        await browser.tabs.update({ url: url });
+    }
+}
+
+function openInNewTab() {
+    return browser.tabs.create({ url: browser.runtime.getURL("rss.html") });
+}
+
+action.onClicked.addListener(async function (tab, onClickData) {
+    await appStarted;
     if (typeof onClickData !== "undefined") {
         if (onClickData.button === 1) {
-            openInNewTab();
+            await openInNewTab();
             return;
         }
     }
-    openRSS(true);
+    await openRSS(true);
 });
-
-/**
- * Update animations
- */
-Animation.start();
 
 /**
  * DB models
@@ -157,6 +162,41 @@ const collections = createCollections();
 let sourceToFocus = null;
 
 const loader = new Loader();
+
+const SCHEDULER_ALARM = "scheduler";
+
+// Registered here rather than after init: a worker started by the alarm only
+// receives it if the listener is in place during the first turn.
+browser.alarms.onAlarm.addListener(async (alarm) => {
+    if (alarm.name !== SCHEDULER_ALARM) {
+        return;
+    }
+    await appStarted;
+    if (!settings.get("disableAutoUpdate")) {
+        loader.downloadAll();
+    }
+    const trashCleaningDelay = settings.get("autoremovetrash");
+    if (trashCleaningDelay === 0) {
+        return;
+    }
+    const now = Date.now();
+    const trashCleaningDelayInMs = trashCleaningDelay * 1000 * 60 * 60 * 24;
+    collections.items.where({ trashed: true, deleted: false }).forEach((item) => {
+        if (now - item.get("trashedOn") > trashCleaningDelayInMs) {
+            item.markAsDeleted();
+        }
+    });
+});
+
+/**
+ * Re-creating an alarm restarts its period. The worker starts often enough in
+ * MV3 that always creating it would keep pushing the next run out of reach.
+ */
+async function ensureScheduler() {
+    if (!(await browser.alarms.get(SCHEDULER_ALARM))) {
+        browser.alarms.create(SCHEDULER_ALARM, { periodInMinutes: 1 });
+    }
+}
 
 async function fetchAll() {
     await settings.load();
@@ -218,39 +258,16 @@ const appStarted = new Promise((resolve, reject) => {
                 settings.save("version", 1);
             }
 
-            browser.alarms.create("scheduler", {
-                periodInMinutes: 1,
-            });
-
-            browser.alarms.onAlarm.addListener((alarm) => {
-                if (alarm.name === "scheduler") {
-                    if (!settings.get("disableAutoUpdate")) {
-                        loader.downloadAll();
-                    }
-                    const trashCleaningDelay = settings.get("autoremovetrash");
-                    if (trashCleaningDelay === 0) {
-                        return;
-                    }
-                    const now = Date.now();
-                    const trashCleaningDelayInMs = trashCleaningDelay * 1000 * 60 * 60 * 24;
-                    collections.items.where({ trashed: true, deleted: false }).forEach((item) => {
-                        if (now - item.get("trashedOn") > trashCleaningDelayInMs) {
-                            item.markAsDeleted();
-                        }
-                    });
-                }
-            });
-
+            return ensureScheduler();
+        })
+        .then(function () {
             /**
              * onclick:button -> open RSS
              */
             createLinksMenu();
-
             // The menu used to be rebuilt on every page visit as a side effect of feed
             // detection, which is how toggling this setting took effect. Rebuild explicitly.
-            settings.on("change:displaySubscribeToLink", () => {
-                Promise.resolve(browser.contextMenus.removeAll()).then(createLinksMenu);
-            });
+            settings.on("change:displaySubscribeToLink", createLinksMenu);
 
             /**
              * Set icon

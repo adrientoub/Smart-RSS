@@ -41,15 +41,15 @@ works:
 
 ```
 npm run dev       # build, then launch Firefox with the extension and devtools
+npm run dev:edge  # build, then launch Edge with the same dist/
 npm run lint:ext  # web-ext lint against dist/ (0 errors expected)
 npm run watch     # rebuild src -> dist in another terminal; web-ext reloads on change
 ```
 
-`npm run dev` loads `dist/` as a temporary add-on. The background page has its own
-console, reachable from `about:debugging#/runtime/this-firefox` via "Inspect".
-
-**Chromium cannot be tested yet.** The manifest is still `manifest_version: 2` and Chrome
-no longer loads MV2 extensions, so Firefox is the only target until the MV3 flip.
+`npm run dev` loads `dist/` as a temporary add-on. The background runs as an event page
+with its own console, reachable from `about:debugging#/runtime/this-firefox` via
+"Inspect". `npm run dev:edge` loads the same build in Edge, where the background is a
+service worker inspectable from `edge://extensions`.
 
 If a change could affect runtime behaviour and you have not run it, say so plainly and
 list what needs manual testing rather than implying it works.
@@ -58,9 +58,8 @@ list what needs manual testing rather than implying it works.
 
 - **Modules are ESM.** RequireJS and `src/scripts/libs/` are gone; third-party code comes
   from npm and is bundled by `build.js` (esbuild).
-- **`src/scripts/globals.d.ts`** declares the ambient globals (`bg`, `settings`, `sources`,
-  `items`, ...) that the MV2 background page assigns onto `window`. These are legacy and
-  disappear with the MV3 message-passing refactor. **Do not add new ambient globals.**
+- **`src/scripts/globals.d.ts`** declares `app`, the last ambient global, assigned by
+  `app/app.js` and read by the views. **Do not add new ambient globals.**
 - **`src/scripts/` is ESM, the repo root is CommonJS.** `build.js` is CommonJS. `test/` and
   `src/scripts/` each carry a `package.json` with `"type": "module"`.
 - Anything under `src/scripts/` is bundled; everything else in `src/` is copied verbatim.
@@ -96,30 +95,39 @@ gh stack link --remote fork <branches bottom-to-top>
 
 There is no CI. The `check` and `build` scripts are the only gate.
 
-## Manifest V3 migration
+## Manifest V3
 
-The target is a single build running on both Firefox and Chromium.
-`getBackgroundPage()` is gone: the UI owns its own collections over the same
-IndexedDB, the background is the only writer, and the two talk through
-`shared/messages.ts`. Remaining work:
+The manifest is V3 and one build runs on both Firefox and Chromium. `background`
+carries `service_worker` for Chromium and `scripts` for Firefox, which has no
+service worker support; each browser ignores the other's key.
 
-1. The `manifest_version: 3` flip — `host_permissions`, `action`, the CSP object
-   form, `background.service_worker`
-2. Service worker lifecycle. The background still holds every article in memory
-   and a worker is terminated when idle, so it would reload the whole database on
-   each wake. This is a design decision, not a mechanical change.
+**The background is not persistent on either.** It is torn down when idle and
+restarted for whichever event comes first, so:
+
+- Register every listener synchronously at the top level of `bg.js`. A listener
+  added from a `.then()` misses the event that started the worker.
+- Everything that touches the collections must `await appStarted` first, which is
+  what `whenStarted()` wraps the message handlers in.
+- Anything done on startup must be idempotent: context menus are removed before
+  being created, and the scheduler alarm is only created when absent, because
+  re-creating an alarm restarts its period and it would never come due.
+- The whole database is re-read on every wake, since the background keeps all
+  articles in memory. A reader tab holds a `runtime.connect` port open, which
+  keeps the worker alive while one is open. Paging the data layer is the real
+  fix; it is not done.
+
+On Firefox MV3, `host_permissions` are **not** granted on install. Feed fetching
+stays broken until the user allows all sites from the add-on's permissions tab.
 
 `browser` comes from `webextension-polyfill`, loaded for its side effect by
 `shared/polyfill.js`, which every entry point imports **first**. Chrome has no
 native `browser`; Firefox does, and the polyfill defers to it. Do not import the
 package anywhere else — it throws outside an extension, which breaks the tests.
+The polyfill also caps argument counts, so callback-style calls such as
+`tabs.query(info, cb)` throw in Chromium. Await the promise instead.
 
-The background process no longer parses with the DOM: `RSSParser.ts` uses
+The background process does not parse with the DOM: `RSSParser.ts` uses
 `@rgrove/parse-xml`, favicons come from `/favicon.ico` directly, and article diffing
 uses `articleDiff.ts`. Keep it that way — nothing under `bgprocess/` may use
 `DOMParser`, `XMLSerializer`, `document`, `window` or `XMLHttpRequest`. Audio
 notifications were removed rather than moved to an offscreen document.
-
-Prefer changes that work under MV2 _and_ MV3 so they can ship incrementally. When an API
-differs between manifest versions, resolve it once behind a small shim, as
-`bgprocess/modules/actionApi.js` does — a bare rename usually breaks MV2.

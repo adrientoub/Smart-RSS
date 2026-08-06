@@ -4,7 +4,7 @@
 
 import BB from "backbone";
 import Item from "../models/Item.js";
-import "../preps/indexeddb.js";
+import "../backboneDexie.ts";
 import { settingsStore } from "../settings.ts";
 
 const settings = settingsStore();
@@ -27,7 +27,7 @@ const collator = new Intl.Collator(undefined, { sensitivity: "base", numeric: tr
 const Items = BB.Collection.extend({
     model: Item,
     batch: false,
-    indexedDB: new BB.IndexedDB("items-backbone"),
+    dexieTable: "items",
     spaceship: function spaceship(val1, val2) {
         if (val1 === null || val2 === null || typeof val1 !== typeof val2) {
             return null;

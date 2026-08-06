@@ -23,8 +23,8 @@ export function createCollections(): CollectionRegistry {
 }
 
 /**
- * Sequential on purpose: the adapter shares one database connection, and a
- * failed store must not abort the rest.
+ * Sequential on purpose: folders and sources are referenced by the records that
+ * follow them, and a failed store must not abort the rest.
  */
 export async function fetchCollections(collections: CollectionRegistry): Promise<void> {
     for (const name of ["folders", "sources", "toolbars", "items"] as const) {

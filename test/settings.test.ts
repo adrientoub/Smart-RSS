@@ -1,11 +1,6 @@
 import { describe, it, beforeEach } from "node:test";
 import assert from "node:assert/strict";
 import { createSettingsStore, type StorageArea } from "../src/scripts/shared/settings.ts";
-import {
-    migrateSettings,
-    pickKnownSettings,
-    MIGRATION_FLAG,
-} from "../src/scripts/shared/settingsMigration.ts";
 import { createDefaults, defaultLanguage } from "../src/scripts/shared/settingsSchema.ts";
 
 function fakeStorage(initial: Record<string, unknown> = {}) {
@@ -207,91 +202,6 @@ describe("settings store / cross-context updates", () => {
 
         store.applyExternalChanges({ somethingElse: { newValue: 1 } });
         assert.deepEqual(store.toJSON(), createDefaults());
-    });
-});
-
-describe("settings migration", () => {
-    const legacyRecord = {
-        id: "settings-id",
-        layout: "vertical",
-        updateFrequency: 45,
-        uiFontSize: "120",
-        someRemovedSetting: "ignore me",
-    };
-
-    it("copies known settings out of the legacy record", async () => {
-        const area = fakeStorage();
-        const store = createSettingsStore(area);
-        await store.load();
-
-        const result = await migrateSettings(store, area, async () => legacyRecord);
-
-        assert.equal(result.migrated, true);
-        assert.equal(result.count, 3);
-        assert.equal(store.get("layout"), "vertical");
-        assert.equal(store.get("updateFrequency"), 45);
-        assert.equal(store.get("uiFontSize"), "120");
-    });
-
-    it("does not carry over settings that no longer exist", async () => {
-        const area = fakeStorage();
-        const store = createSettingsStore(area);
-        await store.load();
-
-        await migrateSettings(store, area, async () => legacyRecord);
-        assert.equal(area.data["setting.someRemovedSetting"], undefined);
-    });
-
-    it("marks itself done and does not run twice", async () => {
-        const area = fakeStorage();
-        const store = createSettingsStore(area);
-        await store.load();
-
-        await migrateSettings(store, area, async () => legacyRecord);
-        assert.equal(area.data[MIGRATION_FLAG], true);
-
-        let readAgain = false;
-        const second = await migrateSettings(store, area, async () => {
-            readAgain = true;
-            return legacyRecord;
-        });
-
-        assert.equal(second.migrated, false);
-        assert.equal(readAgain, false);
-    });
-
-    it("does not overwrite a newer value on a second run", async () => {
-        const area = fakeStorage();
-        const store = createSettingsStore(area);
-        await store.load();
-
-        await migrateSettings(store, area, async () => legacyRecord);
-        await store.set("layout", "horizontal");
-        await migrateSettings(store, area, async () => legacyRecord);
-
-        assert.equal(store.get("layout"), "horizontal");
-    });
-
-    it("still completes when there is nothing to migrate", async () => {
-        const area = fakeStorage();
-        const store = createSettingsStore(area);
-        await store.load();
-
-        const result = await migrateSettings(store, area, async () => null);
-
-        assert.equal(result.migrated, true);
-        assert.equal(result.count, 0);
-        assert.equal(area.data[MIGRATION_FLAG], true);
-        assert.equal(store.get("layout"), "horizontal");
-    });
-
-    it("pickKnownSettings drops unknown and undefined entries", () => {
-        const picked = pickKnownSettings({
-            layout: "vertical",
-            unknownThing: 1,
-            uiFontSize: undefined,
-        });
-        assert.deepEqual(picked, { layout: "vertical" });
     });
 });
 

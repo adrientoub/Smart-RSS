@@ -5,7 +5,7 @@
 import BB from "backbone";
 import Toolbar from "../models/Toolbar.js";
 import defaultToolbarItems from "../staticdb/defaultToolbarItems.js";
-import "../preps/indexeddb.js";
+import "../backboneDexie.ts";
 
 function getDataByRegion(data, region) {
     if (!Array.isArray(data)) {
@@ -32,7 +32,7 @@ function getDataByRegion(data, region) {
  */
 const Toolbars = BB.Collection.extend({
     model: Toolbar,
-    indexedDB: new BB.IndexedDB("toolbars-backbone"),
+    dexieTable: "toolbars",
     parse: function (data) {
         if (!data.length) {
             return defaultToolbarItems;

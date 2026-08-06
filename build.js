@@ -26,7 +26,8 @@ const BUNDLE_ENTRIES = [
     "scripts/bgprocess.js",
 ];
 // Runs as a Web Worker, so it gets its own classic-script bundle.
-const WORKER_ENTRY = "scripts/options/worker.js";
+const WORKER_ENTRY = "scripts/options/worker.ts";
+const WORKER_OUTPUT = "scripts/options/worker.js";
 
 // Utility functions
 const scan = (dir) => {
@@ -148,7 +149,7 @@ const bundle = async ({ minify = false } = {}) => {
     await esbuild.build({
         ...shared,
         entryPoints: [join(SRC, WORKER_ENTRY)],
-        outfile: join(DIST, WORKER_ENTRY),
+        outfile: join(DIST, WORKER_OUTPUT),
         format: "iife",
         splitting: false,
     });

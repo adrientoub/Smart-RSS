@@ -4,7 +4,7 @@
 
 import BB from "backbone";
 import Folder from "../models/Folder.js";
-import "../preps/indexeddb.js";
+import "../backboneDexie.ts";
 
 /**
  * Collection of feed folders
@@ -14,7 +14,7 @@ import "../preps/indexeddb.js";
  */
 export default BB.Collection.extend({
     model: Folder,
-    indexedDB: new BB.IndexedDB("folders-backbone"),
+    dexieTable: "folders",
     comparator: function (a, b) {
         const t1 = (a.get("title") || "").trim().toLowerCase();
         const t2 = (b.get("title") || "").trim().toLowerCase();

@@ -6,6 +6,7 @@ import { applyTheme } from "../shared/theme.ts";
 import { localizeDocument, translate } from "../shared/i18n.ts";
 import { languages } from "../shared/locales.ts";
 import { createRecord, updateRecords, destroyRecords, idsOf } from "../shared/dataClient.ts";
+import { db } from "../shared/db.ts";
 import { sources, items, folders, reloadData } from "./modules/data.js";
 
 const settings = settingsStore();
@@ -474,6 +475,10 @@ function handleImportSmart(event) {
                     message.data.messageKey,
                     message.data.substitutions
                 );
+            } else if (message.data.action === "failed") {
+                smartImportStatus.textContent = translate("IMPORT_ERROR", {
+                    error: message.data.message,
+                });
             }
         };
         worker.postMessage({ action: "file-content", value: data });
@@ -576,12 +581,14 @@ function handleClearSettings() {
     });
 }
 
-function handleClearData() {
+async function handleClearData() {
     if (!confirm(translate("REMOVE_DATA_CONFIRM"))) {
         return;
     }
 
-    indexedDB.deleteDatabase("backbone-indexeddb");
+    // Dexie closes its other connections on `versionchange`, so this does not
+    // block on the reader tab or the background.
+    await db.delete();
     localStorage.clear();
     browser.alarms.clearAll();
     browser.runtime.reload();

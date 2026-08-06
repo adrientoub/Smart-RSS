@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { describe, it } from "node:test";
 
-import { staticMessageKey, translateFor } from "../src/scripts/shared/i18n.ts";
+import { translateFor } from "../src/scripts/shared/i18n.ts";
 import { availableLanguageCodes, languages } from "../src/scripts/shared/locales.ts";
 
 describe("locale catalogs", () => {
@@ -18,27 +18,24 @@ describe("locale catalogs", () => {
         });
     }
 
-    it("covers every static options-page string", async () => {
+    it("defines every message referenced by the options page", async () => {
         const html = await readFile(new URL("../src/options.html", import.meta.url), "utf8");
-        const texts = new Set<string>();
-        for (const match of html.matchAll(/\b(?:title|placeholder)\s*=\s*"([^"]+)"/g)) {
-            texts.add(match[1].replace(/\s+/g, " ").trim().replace(/:$/, ""));
-        }
-        for (const match of html.replace(/<!--[\s\S]*?-->/g, "").matchAll(/>([^<>]+)</g)) {
-            const text = match[1].replace(/\s+/g, " ").trim().replace(/:$/, "");
-            if (text && text !== "%") {
-                texts.add(text);
-            }
+        const keys = html.matchAll(/\bdata-i18n(?:-title)?="([A-Z0-9_]+)"/g);
+        for (const [, key] of keys) {
+            assert.ok(key in languages.en.messages, `Missing options message: ${key}`);
         }
 
-        const englishMessages = new Set(
-            Object.values(languages.en.messages).map((entry) => entry.message)
-        );
-        for (const text of texts) {
-            assert.ok(
-                englishMessages.has(text) || languages.en.messages[staticMessageKey(text)],
-                `Missing options message: ${text}`
-            );
+        const uncommented = html.replace(/<!--[\s\S]*?-->/g, "");
+        for (const match of uncommented.matchAll(/<[^>]+\stitle="[^"]+"[^>]*>/g)) {
+            assert.match(match[0], /\bdata-i18n-title=/, `Unmarked tooltip: ${match[0]}`);
+        }
+        for (const match of uncommented.matchAll(
+            /(<([a-z][\w-]*)(?:\s[^<>]*?)?>)([^<>]+)<\/\2>/g
+        )) {
+            const text = match[3].replace(/\s+/g, " ").trim();
+            if (text && text !== "%") {
+                assert.match(match[1], /\bdata-i18n=/, `Unmarked options text: ${text}`);
+            }
         }
     });
 });

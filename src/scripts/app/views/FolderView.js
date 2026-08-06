@@ -3,7 +3,6 @@
  * @submodule views/FolderView
  */
 
-import BB from "backbone";
 import TopView from "./TopView.js";
 import contextMenus from "../instances/contextMenus.js";
 import { iconMarkup } from "../staticdb/icons.ts";

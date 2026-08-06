@@ -6,7 +6,6 @@
 import BB from "backbone";
 import dateUtils from "../helpers/dateUtils.js";
 import contextMenus from "../instances/contextMenus.js";
-import stripTags from "../helpers/stripTags.js";
 import itemTemplate from "../templates/itemView.html";
 import { isReadStateOnlyChange } from "../helpers/itemRender.js";
 

@@ -6,7 +6,6 @@
 import Layout from "./Layout.js";
 import ToolbarView from "../views/ToolbarView.js";
 import feedList from "../views/feedList.js";
-import contextMenus from "../instances/contextMenus.js";
 import Properties from "../views/Properties.js";
 import resizable from "../mixins/resizable.js";
 import IndicatorView from "../views/IndicatorView.js";

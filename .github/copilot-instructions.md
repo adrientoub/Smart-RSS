@@ -41,14 +41,14 @@ works:
 
 ```
 npm run dev       # build, then launch Firefox with the extension and devtools
-npm run dev:edge  # build, then launch Edge with the same dist/
+npm run dev:edge  # build a Chromium manifest, then launch Edge from dist/
 npm run lint:ext  # web-ext lint against dist/ (0 errors expected)
 npm run watch     # rebuild src -> dist in another terminal; web-ext reloads on change
 ```
 
 `npm run dev` loads `dist/` as a temporary add-on. The background runs as an event page
 with its own console, reachable from `about:debugging#/runtime/this-firefox` via
-"Inspect". `npm run dev:edge` loads the same build in Edge, where the background is a
+"Inspect". `npm run dev:edge` rebuilds `dist/` for Edge, where the background is a
 service worker inspectable from `edge://extensions`.
 
 If a change could affect runtime behaviour and you have not run it, say so plainly and
@@ -93,13 +93,13 @@ gh stack link --remote fork <branches bottom-to-top>
   through PowerShell and back; it collapses newlines and corrupts UTF-8.
 - Keep unrelated changes out of a layer, including incidental reformatting.
 
-There is no CI. The `check` and `build` scripts are the only gate.
+CI runs the checks and uploads separate Firefox and Chromium packages.
 
 ## Manifest V3
 
-The manifest is V3 and one build runs on both Firefox and Chromium. `background`
-carries `service_worker` for Chromium and `scripts` for Firefox, which has no
-service worker support; each browser ignores the other's key.
+The manifest is V3, but Firefox and Chromium need separate build outputs. The source
+manifest carries `service_worker` for Chromium and `scripts` for Firefox, which has no
+service worker support. Chromium packaging removes `scripts` and Firefox-only metadata.
 
 **The background is not persistent on either.** It is torn down when idle and
 restarted for whichever event comes first, so:

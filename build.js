@@ -18,6 +18,8 @@ const esbuild = require("esbuild");
 
 const SRC = join(__dirname, "src");
 const DIST = join(__dirname, "dist");
+const ARTIFACTS = join(__dirname, "artifacts");
+const TARGETS = ["firefox", "chromium"];
 
 // Bundled by esbuild rather than copied.
 const BUNDLE_ENTRIES = [
@@ -118,6 +120,18 @@ const copyFiles = () => {
     console.log(`Static files copied (${copied})`);
 };
 
+const prepareManifest = (target) => {
+    if (target !== "chromium") {
+        return;
+    }
+
+    const manifestPath = join(DIST, "manifest.json");
+    const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+    delete manifest.developer;
+    delete manifest.background.scripts;
+    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+};
+
 const bundle = async ({ minify = false } = {}) => {
     console.log(`Bundling with esbuild (minify: ${minify})...`);
 
@@ -157,8 +171,8 @@ const bundle = async ({ minify = false } = {}) => {
     console.log("Bundled");
 };
 
-const zipPackage = () => {
-    console.log("Creating zip package...");
+const zipPackage = (target) => {
+    console.log(`Creating ${target} zip package...`);
     const root = join(__dirname, "dist");
     const manifestPath = join(root, "manifest.json");
     const filesList = scan(root);
@@ -176,7 +190,8 @@ const zipPackage = () => {
         zipFile.addLocalFile(file, relativePath);
     });
 
-    const zipPath = join(__dirname, "dist", `SmartRSS_v${version}.zip`);
+    ensureDirectoryExists(ARTIFACTS);
+    const zipPath = join(ARTIFACTS, `SmartRSS_v${version}_${target}.zip`);
     zipFile.writeZip(zipPath);
     console.log(`Zip package created: ${zipPath}`);
 };
@@ -214,14 +229,18 @@ const watch = () => {
 };
 
 // Combined tasks
-const prepare = async ({ minify = false } = {}) => {
+const prepare = async ({ minify = false, target = "firefox" } = {}) => {
     copyFiles();
+    prepareManifest(target);
     await bundle({ minify });
 };
 
 const packageTask = async () => {
-    await prepare({ minify: true });
-    zipPackage();
+    rmSync(ARTIFACTS, { recursive: true, force: true });
+    for (const target of TARGETS) {
+        await prepare({ minify: true, target });
+        zipPackage(target);
+    }
 };
 
 const release = async (level = "patch") => {
@@ -232,8 +251,7 @@ const release = async (level = "patch") => {
 
     bumpVersion(level);
     commit(level);
-    await prepare({ minify: true });
-    zipPackage();
+    await packageTask();
 };
 
 // Command line interface
@@ -242,18 +260,18 @@ const printUsage = () => {
 Usage: node build.js [command] [options]
 
 Commands:
-  prepare             Copy static assets and bundle sources into dist
-  package             Prepare (minified) and create zip package
-  release [level]     Bump version, commit, prepare, and create zip package
-                      level can be: patch, minor, major (default: patch)
-  watch               Watch for changes in src directory
-  bump-version [level] Bump version number
-                      level can be: patch, minor, major (default: patch)
+prepare [target]    Build into dist (target: firefox or chromium; default: firefox)
+package             Create minified Firefox and Chromium zip packages
+release [level]     Bump version, commit, and create both zip packages
+level can be: patch, minor, major (default: patch)
+watch               Watch for changes in src directory
+bump-version [level] Bump version number
+level can be: patch, minor, major (default: patch)
   
 Examples:
-  node build.js prepare
-  node build.js release minor
-  node build.js watch
+node build.js prepare chromium
+node build.js release minor
+node build.js watch
 `);
 };
 
@@ -270,7 +288,10 @@ if (!command) {
 const run = async () => {
     switch (command) {
         case "prepare":
-            await prepare();
+            if (option && !["firefox", "chromium"].includes(option)) {
+                throw new Error(`Unknown build target: ${option}`);
+            }
+            await prepare({ target: option || "firefox" });
             break;
         case "package":
             await packageTask();

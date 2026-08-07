@@ -19,10 +19,10 @@ npm run watch   # rebuild on change, run alongside npm run dev
 `npm run dev` loads `dist/` as a temporary add-on. Inspect the background from
 `about:debugging#/runtime/this-firefox`.
 
-`npm run dev:edge` runs the same `dist/` in Edge through web-ext's Chromium target.
-Inspect the service worker from `edge://extensions` with developer mode on. It expects
-Edge at its default Windows location; override `--chromium-binary` in the script if it
-lives elsewhere.
+`npm run dev:edge` rebuilds `dist/` with the Chromium manifest and runs it in Edge
+through web-ext's Chromium target. Inspect the service worker from `edge://extensions`
+with developer mode on. It expects Edge at its default Windows location; override
+`--chromium-binary` in the script if it lives elsewhere.
 
 ## Individual checks
 
@@ -35,11 +35,13 @@ npm test              npm run format        # npm run format:check to only repor
 ## Release
 
 ```bash
-npm run package        # minified build plus dist/SmartRSS_v<version>.zip
+npm run package        # target-specific Firefox and Chromium zips in artifacts/
 npm run bump-version   # patch, or pass minor or major
 npm run release        # bump, commit, build, zip
 ```
 
-`release:minor` and `release:major` bump that level instead.
+The packages are named `SmartRSS_v<version>_firefox.zip` and
+`SmartRSS_v<version>_chromium.zip`. `release:minor` and `release:major` bump that level
+instead.
 
 Every command also works as `node build.js <command>`.

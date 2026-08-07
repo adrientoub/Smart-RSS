@@ -10,7 +10,7 @@ const byDate = (a: { date: number }, b: { date: number }) => {
     return a.date < b.date ? -1 : 0;
 };
 
-const views = (...dates: number[]) => dates.map((date) => ({ model: { date } }));
+const views = (...dates: number[]) => dates.map((date) => ({ date }));
 
 describe("findInsertionIndex", () => {
     it("returns 0 for an empty list", () => {
@@ -37,7 +37,7 @@ describe("findInsertionIndex", () => {
     it("agrees with a linear scan over every position", () => {
         const sorted = views(10, 20, 30, 40, 50);
         for (const date of [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]) {
-            const expected = sorted.findIndex((view) => byDate(view.model, { date }) === 1);
+            const expected = sorted.findIndex((model) => byDate(model, { date }) === 1);
             assert.equal(
                 findInsertionIndex(sorted, { date }, byDate),
                 expected === -1 ? sorted.length : expected,
@@ -47,13 +47,13 @@ describe("findInsertionIndex", () => {
     });
 
     it("keeps the list sorted when inserting repeatedly", () => {
-        const list: { model: { date: number } }[] = [];
+        const list: { date: number }[] = [];
         for (const date of [5, 1, 9, 3, 7, 1, 9]) {
-            list.splice(findInsertionIndex(list, { date }, byDate), 0, { model: { date } });
+            list.splice(findInsertionIndex(list, { date }, byDate), 0, { date });
         }
 
         assert.deepEqual(
-            list.map((view) => view.model.date),
+            list.map((model) => model.date),
             [1, 1, 3, 5, 7, 9, 9]
         );
     });

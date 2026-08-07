@@ -423,16 +423,8 @@ export default {
                 let query = event.currentTarget.value || "";
                 const list = articleList;
                 if (query === "") {
-                    [...document.querySelectorAll(".date-group, .articles-list-item")].map(
-                        (element) => {
-                            element.classList.remove("hidden");
-                        }
-                    );
+                    list.setSearchFilter(null);
                     return;
-                } else {
-                    [...document.querySelectorAll(".date-group")].map((element) => {
-                        element.classList.add("hidden");
-                    });
                 }
 
                 let searchInContent = false;
@@ -440,54 +432,37 @@ export default {
                     query = query.replace(/^:/, "", query);
                     searchInContent = true;
                 }
-                RegExp.escape = function (text) {
-                    return String(text).replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
-                };
-                const expression = new RegExp(RegExp.escape(query), "i");
+                const escape = (text) => String(text).replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
+                const expression = new RegExp(escape(query), "i");
                 const selectedSpecial = document.querySelector(
                     ".sources-list-item.selected.special"
                 );
-                list.views.some(function (view) {
-                    if (!view.model) {
-                        return false;
-                    }
-                    const sourceId = view.model.get("sourceID");
+                const strip = (text) =>
+                    String(text)
+                        .normalize("NFD")
+                        .replace(/[\u0300-\u036f]/g, "");
+
+                list.setSearchFilter(function (model) {
+                    const sourceId = model.get("sourceID");
                     const sourceItem = document.querySelector('[data-id="' + sourceId + '"]');
+                    // Out of the searched scope: left as it was, i.e. visible.
                     if (!sourceItem) {
-                        return false;
+                        return true;
                     }
                     if (!sourceItem.classList.contains("selected")) {
                         const folderId = sourceItem.view.model.get("folderID");
                         const folderItem = document.querySelector('[data-id="' + folderId + '"]');
 
                         if (!selectedSpecial && !folderItem) {
-                            return false;
+                            return true;
                         }
                     }
-                    const cleanedTitle = view.model
-                        .get("title")
-                        .normalize("NFD")
-                        .replace(/[\u0300-\u036f]/g, "");
-                    const cleanedAuthor = view.model
-                        .get("author")
-                        .normalize("NFD")
-                        .replace(/[\u0300-\u036f]/g, "");
-                    const cleanedContent = searchInContent
-                        ? view.model
-                              .get("content")
-                              .normalize("NFD")
-                              .replace(/[\u0300-\u036f]/g, "")
-                        : "";
 
-                    if (!(
-                        expression.test(cleanedTitle) ||
-                        expression.test(cleanedAuthor) ||
-                        (searchInContent && expression.test(cleanedContent))
-                    )) {
-                        view.el.classList.add("hidden");
-                    } else {
-                        view.el.classList.remove("hidden");
-                    }
+                    return (
+                        expression.test(strip(model.get("title"))) ||
+                        expression.test(strip(model.get("author"))) ||
+                        (searchInContent && expression.test(strip(model.get("content"))))
+                    );
                 });
             },
         },
@@ -625,30 +600,7 @@ export default {
         selectAll: {
             title: L.SELECT_ALL_ARTICLES,
             fn: function () {
-                [...articleList.el.querySelectorAll(".selected")].forEach((element) => {
-                    element.classList.remove("selected");
-                });
-
-                articleList.selectedItems = [];
-
-                [...articleList.el.querySelectorAll(".articles-list-item:not(.hidden)")].forEach(
-                    (element) => {
-                        element.view.el.classList.add("selected");
-                        articleList.selectedItems.push(element.view);
-                    }
-                );
-
-                const lastSelected = articleList.el.querySelector(".last-selected");
-                if (lastSelected) {
-                    lastSelected.classList.remove("last-selected");
-                }
-
-                const lastVisible = articleList.el.querySelector(
-                    ".articles-list-item:not(.hidden):last-child"
-                );
-                if (lastVisible) {
-                    lastVisible.classList.add("last-selected");
-                }
+                articleList.selectAll();
             },
         },
         pin: {

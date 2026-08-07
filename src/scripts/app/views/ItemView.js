@@ -53,36 +53,17 @@ const ItemView = BB.View.extend({
     /**
      * Initializations (*constructor*)
      * @method initialize
-     * @param opt {Object} I don't use it, but it is automatically passed by Backbone
+     * @param opt {Object} { model, multiple }
      * @param list {Backbone.View} Reference to articleList
      */
     initialize: function (opt, list) {
-        this.multiple = opt.model.multiple;
+        this.multiple = opt.multiple;
         this.list = list;
         this.contentRendered = false;
         // this.el.setAttribute('draggable', 'true');
+        // Only valid while this row is bound to this model; the list drops the
+        // node as soon as the row scrolls out of the window.
         this.el.view = this;
-        this.setEvents();
-    },
-
-    /**
-     * Set events that are binded to bgprocess
-     * @method setEvents
-     */
-    setEvents: function () {
-        this.model.on("change", this.handleModelChange, this);
-        this.model.on("destroy", this.handleModelDestroy, this);
-    },
-
-    /**
-     * Removes all events binded to bgprocess
-     * @method clearEvents
-     */
-    clearEvents: function () {
-        if (this.model) {
-            this.model.off("change", this.handleModelChange, this);
-            this.model.off("destroy", this.handleModelDestroy, this);
-        }
     },
 
     /**
@@ -217,31 +198,6 @@ const ItemView = BB.View.extend({
         }
         contextMenus.get("items").currentSource = this.model;
         contextMenus.get("items").show(event.clientX, event.clientY);
-    },
-
-    /**
-     * When model is changed rerender it or remove it from DOM (depending on what is changed)
-     * @method handleModelChange
-     * @triggered when model is changed
-     */
-    handleModelChange: function () {
-        if (
-            this.model.get("deleted") ||
-            (this.list.currentData.name !== "trash" && this.model.get("trashed"))
-        ) {
-            this.list.destroyItem(this);
-        } else {
-            this.render();
-        }
-    },
-
-    /**
-     * When model is removed from DB/Backbone remove it from DOM as well
-     * @method handleModelDestroy
-     * @triggered when model is destroyed
-     */
-    handleModelDestroy: function () {
-        this.list.destroyItem(this);
     },
 
     /**

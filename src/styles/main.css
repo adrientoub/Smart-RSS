@@ -619,6 +619,21 @@ input[type="search"]:not(:focus):placeholder-shown {
     font-family: inherit;
 }
 
+/* Sized to the whole list; only the rows in the scroll window are ever in it. */
+.articles-list-sizer {
+    position: relative;
+    width: 100%;
+}
+
+.articles-list-sizer > .articles-list-item,
+.articles-list-sizer > .date-group {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .articles-list-item {
     width: 100%;
     padding: 4px 8px;
@@ -769,8 +784,21 @@ input[type="search"]:not(:focus):placeholder-shown {
     font-weight: 700;
     -moz-user-select: none;
     user-select: none;
+    box-sizing: border-box;
+}
+
+/* The date rows are positioned by the virtualizer and so cannot stick
+   themselves; this zero-height overlay stands in for whichever one is current. */
+.date-group-sticky {
     position: sticky;
     top: 0;
+    z-index: 2;
+    height: 0;
+    overflow: visible;
+}
+
+.date-group-sticky > .date-group {
+    width: 100%;
 }
 
 /**

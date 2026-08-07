@@ -341,9 +341,6 @@
   "OPEN_HOME": {
     "message": "Ouvrir la page d’accueil du flux"
   },
-  "SCROLL_INTO_VIEW": {
-    "message": "Faire défiler jusqu’à l’élément"
-  },
   "FOCUS_FEEDS": {
     "message": "Placer le focus sur les flux"
   },

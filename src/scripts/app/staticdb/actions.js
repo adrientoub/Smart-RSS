@@ -139,27 +139,6 @@ export default {
                 destroyRecords("folders", idsOf(selectedFolders));
             },
         },
-        scrollIntoView: {
-            icon: "target",
-            title: L.SCROLL_INTO_VIEW,
-            fn: function () {
-                const selectedFolders = feedList.getSelectedFolders();
-
-                if (selectedFolders.length > 0) {
-                    const id = selectedFolders[0].get("id");
-                    const sourceElement = document.querySelector(`[data-id="${id}"]`);
-                    sourceElement.scrollIntoView();
-                    return;
-                }
-
-                const feeds = feedList.getSelectedFeeds();
-                if (feeds.length > 0) {
-                    const id = feeds[0].get("id");
-                    const sourceElement = document.querySelector(`[data-id="${id}"]`);
-                    sourceElement.scrollIntoView();
-                }
-            },
-        },
         showProperties: {
             icon: "info",
             title: L.PROPERTIES,

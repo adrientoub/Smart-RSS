@@ -341,9 +341,6 @@
   "OPEN_HOME": {
     "message": "Abrir la página principal del canal"
   },
-  "SCROLL_INTO_VIEW": {
-    "message": "Desplazar hasta mostrar"
-  },
   "FOCUS_FEEDS": {
     "message": "Enfocar canales"
   },

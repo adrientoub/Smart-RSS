@@ -341,9 +341,6 @@
   "OPEN_HOME": {
     "message": "Feed-Webseite öffnen"
   },
-  "SCROLL_INTO_VIEW": {
-    "message": "In den sichtbaren Bereich scrollen"
-  },
   "FOCUS_FEEDS": {
     "message": "Feeds fokussieren"
   },

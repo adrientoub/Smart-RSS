@@ -341,9 +341,6 @@
   "OPEN_HOME": {
     "message": "Hírcsatorna honlapjának megnyitása"
   },
-  "SCROLL_INTO_VIEW": {
-    "message": "Görgetés látható területre"
-  },
   "FOCUS_FEEDS": {
     "message": "Hírcsatornák fókuszálása"
   },

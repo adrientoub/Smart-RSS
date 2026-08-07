@@ -341,9 +341,6 @@
   "OPEN_HOME": {
     "message": "Abrir página inicial do feed"
   },
-  "SCROLL_INTO_VIEW": {
-    "message": "Rolar até ficar visível"
-  },
   "FOCUS_FEEDS": {
     "message": "Focar nos feeds"
   },

@@ -1,13 +1,12 @@
 export default [
     {
-        version: 1,
+        version: 2,
         region: "feeds",
         actions: [
             "feeds:addSource",
             "feeds:addFolder",
             "feeds:updateAll",
             "feeds:delete",
-            "feeds:scrollIntoView",
             "!dynamicSpace",
             "feeds:toggleShowOnlyUnread",
         ],

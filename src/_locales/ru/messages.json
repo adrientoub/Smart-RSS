@@ -341,9 +341,6 @@
   "OPEN_HOME": {
     "message": "Открыть домашнюю страницу канала"
   },
-  "SCROLL_INTO_VIEW": {
-    "message": "Прокрутить до элемента"
-  },
   "FOCUS_FEEDS": {
     "message": "Перейти к каналам"
   },

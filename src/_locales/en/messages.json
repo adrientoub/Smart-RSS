@@ -341,9 +341,6 @@
   "OPEN_HOME": {
     "message": "Open feed homepage"
   },
-  "SCROLL_INTO_VIEW": {
-    "message": "Scroll into view"
-  },
   "FOCUS_FEEDS": {
     "message": "Focus feeds"
   },

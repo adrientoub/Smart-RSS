@@ -104,8 +104,11 @@ const ArticleListView = BB.View.extend({
     handleMouseDown(event) {
         if (event.button === 1) {
             const linkElement = event.target.closest("a");
-            if (typeof browser !== "undefined") {
+            if (this.prefetcher && linkElement?.href) {
                 this.prefetcher.href = linkElement.href;
+                if (!this.prefetcher.isConnected) {
+                    document.head.appendChild(this.prefetcher);
+                }
             }
         }
     },
@@ -151,7 +154,6 @@ const ArticleListView = BB.View.extend({
             this.prefetcher.rel = "preload";
             this.prefetcher.setAttribute("as", "fetch");
             this.prefetcher.setAttribute("crossorigin", "crossorigin");
-            document.head.appendChild(this.prefetcher);
         }
 
         /** Every article of the current feed selection, in comparator order. */

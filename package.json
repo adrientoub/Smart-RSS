@@ -32,7 +32,7 @@
     "watch": "node build.js watch",
     "bump-version": "node build.js bump-version",
     "dev": "npm run build && web-ext run --source-dir dist --devtools",
-    "dev:edge": "npm run build && web-ext run --source-dir dist --target chromium --chromium-binary \"C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe\"",
+    "dev:edge": "node build.js prepare chromium && web-ext run --source-dir dist --target chromium --chromium-binary \"C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe\"",
     "lint:ext": "npm run build && web-ext lint --source-dir dist",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

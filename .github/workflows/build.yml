@@ -42,12 +42,18 @@ jobs:
       - name: web-ext lint
         run: npx web-ext lint --source-dir dist
 
-      # Rebuilds dist minified and zips it into dist/SmartRSS_v<version>.zip.
+      # Rebuilds each browser target and creates target-specific zip packages.
       - name: Package
         run: npm run package
 
       - uses: actions/upload-artifact@v5
         with:
-          name: smart-rss-extension
-          path: dist/*.zip
+          name: smart-rss-firefox
+          path: artifacts/*_firefox.zip
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: smart-rss-chromium
+          path: artifacts/*_chromium.zip
           if-no-files-found: error

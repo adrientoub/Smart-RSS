@@ -1,0 +1,53 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # package-lock.json is gitignored, so there is nothing to cache and
+      # `npm ci` cannot be used.
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - run: npm install --no-audit --no-fund
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: web-ext lint
+        run: npx web-ext lint --source-dir dist
+
+      # Rebuilds dist minified and zips it into dist/SmartRSS_v<version>.zip.
+      - name: Package
+        run: npm run package
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: smart-rss-extension
+          path: dist/*.zip
+          if-no-files-found: error

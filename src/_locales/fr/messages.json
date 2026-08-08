@@ -117,7 +117,13 @@
     "message": "Ouvrir la page d’accueil du flux"
   },
   "UNDELETE": {
-    "message": "Annuler la suppression"
+    "message": "Restaurer l'article"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Restaurer tous les articles"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Supprimer définitivement"
   },
   "NEXT_UNREAD": {
     "message": "Prochain non lu"

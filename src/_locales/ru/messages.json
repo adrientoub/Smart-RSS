@@ -117,7 +117,13 @@
     "message": "Открыть домашнюю страницу канала"
   },
   "UNDELETE": {
-    "message": "Восстановить"
+    "message": "Восстановить статью"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Восстановить все статьи"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Удалить навсегда"
   },
   "NEXT_UNREAD": {
     "message": "Следующая непрочтённая"

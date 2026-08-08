@@ -117,7 +117,13 @@
     "message": "Отвори почетну страницу канала"
   },
   "UNDELETE": {
-    "message": "Врати"
+    "message": "Врати чланак"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Врати све чланке"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Трајно избриши"
   },
   "NEXT_UNREAD": {
     "message": "Следеће непрочитано"

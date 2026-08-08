@@ -117,7 +117,13 @@
     "message": "Homepage van feed openen"
   },
   "UNDELETE": {
-    "message": "Terugzetten"
+    "message": "Artikel herstellen"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Alle artikelen herstellen"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Permanent verwijderen"
   },
   "NEXT_UNREAD": {
     "message": "Volgende ongelezen"

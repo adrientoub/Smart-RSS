@@ -117,7 +117,13 @@
     "message": "Feed-Webseite öffnen"
   },
   "UNDELETE": {
-    "message": "Wiederherstellen"
+    "message": "Artikel wiederherstellen"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Alle Artikel wiederherstellen"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Endgültig löschen"
   },
   "NEXT_UNREAD": {
     "message": "Nächste Ungelesene"

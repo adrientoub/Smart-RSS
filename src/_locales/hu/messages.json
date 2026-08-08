@@ -117,7 +117,13 @@
     "message": "Hírcsatorna honlapjának megnyitása"
   },
   "UNDELETE": {
-    "message": "Törlés visszavonása"
+    "message": "Cikk visszaállítása"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Összes cikk visszaállítása"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Végleges törlés"
   },
   "NEXT_UNREAD": {
     "message": "Ugrás a következő olvasatlanra"

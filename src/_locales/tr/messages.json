@@ -117,7 +117,13 @@
     "message": "Besleme ana sayfasını aç"
   },
   "UNDELETE": {
-    "message": "Geri al"
+    "message": "Makaleyi geri yükle"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Tüm makaleleri geri yükle"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Kalıcı olarak sil"
   },
   "NEXT_UNREAD": {
     "message": "Sonraki Okunmamış"

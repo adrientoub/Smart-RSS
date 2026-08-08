@@ -127,10 +127,6 @@ header {
     color: var(--accent);
 }
 
-#context-undelete {
-    display: none;
-}
-
 input[type="search"] {
     flex: 0 1 180px;
     max-width: 180px;

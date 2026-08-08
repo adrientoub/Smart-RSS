@@ -117,7 +117,13 @@
     "message": "Otvoriť domovskú stránku zdroja"
   },
   "UNDELETE": {
-    "message": "Obnoviť"
+    "message": "Obnoviť článok"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Obnoviť všetky články"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Natrvalo odstrániť"
   },
   "NEXT_UNREAD": {
     "message": "Ďalšia neprečítaná"

@@ -21,6 +21,7 @@ export const toolbarItems = {
     ],
     content: [
         "content:mark",
+        "content:undelete",
         "content:delete",
         "!dynamicSpace",
         "content:changeView",

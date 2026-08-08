@@ -753,6 +753,10 @@ const ArticleListView = BB.View.extend({
             app.articles.toolbar.hideItems("articles:update").showItems("articles:undelete");
             document.querySelector("#context-undelete").hidden = false;
         }
+        app.articles.toolbar.updateButtonStates();
+        document.querySelector("#context-delete .context-menu-label").textContent =
+            (this.currentData.name === "trash" ? Locale.DELETE_PERMANENTLY : Locale.DELETE) +
+            " (D)";
         const visible = searchIn.filter((item) => {
             if (!item.get("unread") && this.unreadOnly) {
                 return false;

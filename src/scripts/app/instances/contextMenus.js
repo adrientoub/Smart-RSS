@@ -53,6 +53,15 @@ const sourceContextMenu = new ContextMenu([
 
 const trashContextMenu = new ContextMenu([
     {
+        title: Locale.RESTORE_ALL_ARTICLES,
+        icon: "undo",
+        action: function () {
+            updateRecords("items", idsOf(items.where({ trashed: true, deleted: false })), {
+                trashed: false,
+            });
+        },
+    },
+    {
         title: Locale.MARK_ALL_AS_READ,
         icon: "check-all",
         action: function () {
@@ -189,6 +198,7 @@ const itemsContextMenu = new ContextMenu([
     },
     {
         title: Locale.DELETE + " (D)",
+        id: "context-delete",
         icon: "trash",
         action: function (e) {
             app.actions.execute("articles:delete", e);

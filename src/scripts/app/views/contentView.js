@@ -106,6 +106,8 @@ const ContentView = BB.View.extend({
                     clearTimeout(this.renderTimeout);
                 }
                 this.model = null;
+                app.content.toolbar.hideItems("content:undelete");
+                app.content.toolbar.updateButtonStates();
                 this.hide();
             },
             this
@@ -488,6 +490,10 @@ const ContentView = BB.View.extend({
             return;
         }
         this.model = model;
+        app.content.toolbar[model?.get("trashed") ? "showItems" : "hideItems"](
+            "content:undelete"
+        );
+        app.content.toolbar.updateButtonStates();
         if (!this.model) {
             // should not happen but happens
             this.hide();

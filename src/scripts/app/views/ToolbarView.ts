@@ -23,6 +23,7 @@ const ToolbarView = BB.View.extend({
         this.actions = options.actions;
         this.render();
         this.hideItems("articles:undelete");
+        this.hideItems("content:undelete");
         settings.on("change", this.updateButtonStates, this);
     },
 

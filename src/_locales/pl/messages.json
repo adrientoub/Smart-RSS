@@ -117,7 +117,13 @@
     "message": "Strona kanału"
   },
   "UNDELETE": {
-    "message": "Przywróć"
+    "message": "Przywróć artykuł"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Przywróć wszystkie artykuły"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Usuń trwale"
   },
   "NEXT_UNREAD": {
     "message": "Następna nieprzeczytana"

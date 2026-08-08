@@ -117,7 +117,13 @@
     "message": "Abrir página principal del canal"
   },
   "UNDELETE": {
-    "message": "Restarurar"
+    "message": "Restaurar artículo"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Restaurar todos los artículos"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Eliminar permanentemente"
   },
   "NEXT_UNREAD": {
     "message": "Siguiente no leído"

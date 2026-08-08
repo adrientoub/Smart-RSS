@@ -117,7 +117,13 @@
     "message": "Abrir página inicial do feed"
   },
   "UNDELETE": {
-    "message": "Desfazer deletar"
+    "message": "Restaurar artigo"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Restaurar todos os artigos"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Excluir permanentemente"
   },
   "NEXT_UNREAD": {
     "message": "Próximo Năo-Lido"

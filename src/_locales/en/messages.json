@@ -117,7 +117,13 @@
     "message": "Open feed homepage"
   },
   "UNDELETE": {
-    "message": "Undelete"
+    "message": "Restore article"
+  },
+  "RESTORE_ALL_ARTICLES": {
+    "message": "Restore all articles"
+  },
+  "DELETE_PERMANENTLY": {
+    "message": "Delete permanently"
   },
   "NEXT_UNREAD": {
     "message": "Next Unread"

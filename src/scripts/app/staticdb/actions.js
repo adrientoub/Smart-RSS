@@ -365,7 +365,8 @@ export default {
         },
         delete: {
             icon: "trash",
-            title: L.DELETE,
+            title: () =>
+                articleList.currentData.name === "trash" ? L.DELETE_PERMANENTLY : L.DELETE,
             fn: function (event) {
                 const activeElement = document.activeElement;
                 const toFocus = activeElement.closest(".region");
@@ -674,8 +675,19 @@ export default {
                 });
             },
         },
+        undelete: {
+            title: L.UNDELETE,
+            icon: "undo",
+            fn: function () {
+                if (!contentView.model || !contentView.model.get("trashed")) {
+                    return;
+                }
+                updateRecords("items", idsOf(contentView.model), { trashed: false });
+            },
+        },
         delete: {
-            title: L.DELETE,
+            title: () =>
+                contentView.model?.get("trashed") ? L.DELETE_PERMANENTLY : L.DELETE,
             icon: "trash",
             fn: function (e) {
                 if (!contentView.model) {
@@ -686,7 +698,13 @@ export default {
                     ? settings.get("askRmPinned")
                     : "none";
 
-                if (e.shiftKey) {
+                if (contentView.model.get("trashed") || e.shiftKey) {
+                    if (
+                        contentView.model.get("trashed") &&
+                        !confirm(L.REMOVE_SELECTED_PERMANENTLY)
+                    ) {
+                        return;
+                    }
                     if (contentView.model.get("pinned") && askRmPinned && askRmPinned !== "none") {
                         const conf = confirm(
                             L.translate("PINNED_DELETE_CONFIRM", {

@@ -4,12 +4,10 @@
  */
 
 import Layout from "./Layout.js";
-import ToolbarView from "../views/ToolbarView.js";
+import ToolbarView from "../views/ToolbarView.ts";
+import { toolbarItems } from "../staticdb/toolbarItems.ts";
 import contentView from "../views/contentView.js";
 import SandboxView from "../views/SandboxView.js";
-import { toolbars } from "../modules/data.js";
-
-const toolbar = toolbars.findWhere({ region: "content" });
 
 /**
  * Content layout view
@@ -31,7 +29,7 @@ const ContentLayout = Layout.extend({
      */
     initialize: function () {
         this.on("attach", function () {
-            this.attach("toolbar", new ToolbarView({ model: toolbar }));
+            this.attach("toolbar", new ToolbarView({ actions: toolbarItems.content }));
             this.attach("content", contentView);
             this.attach("sandbox", new SandboxView());
         });

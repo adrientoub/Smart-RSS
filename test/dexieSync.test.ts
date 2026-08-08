@@ -25,6 +25,13 @@ beforeEach(async () => {
 after(() => db.close());
 
 describe("dexieSync", () => {
+    it("does not persist static toolbar definitions", () => {
+        assert.equal(
+            db.tables.some((table) => table.name === "toolbars"),
+            false
+        );
+    });
+
     it("resolves the table from the model or its collection", () => {
         assert.equal(tableNameOf(fakeModel("items")), "items");
         assert.equal(tableNameOf({ dexieTable: "sources" } as SyncModel), "sources");
@@ -90,16 +97,6 @@ describe("dexieSync", () => {
         await dexieSync("delete", model);
 
         assert.equal(await db.table("items").get("a"), undefined);
-    });
-
-    it("keys toolbars by region rather than id", async () => {
-        const model = fakeModel("toolbars", { region: "feeds", actions: [] });
-        await dexieSync("create", model);
-
-        assert.equal((await db.table("toolbars").get("feeds")).region, "feeds");
-
-        await dexieSync("delete", model);
-        assert.equal(await db.table("toolbars").get("feeds"), undefined);
     });
 
     it("reports through success and complete, and through error on failure", async () => {

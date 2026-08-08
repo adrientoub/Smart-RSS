@@ -4,15 +4,13 @@
  */
 
 import Layout from "./Layout.js";
-import ToolbarView from "../views/ToolbarView.js";
+import ToolbarView from "../views/ToolbarView.ts";
+import { toolbarItems } from "../staticdb/toolbarItems.ts";
 import articleList from "../views/articleList.js";
 import resizable from "../mixins/resizable.js";
 import { settingsStore } from "../../shared/settings.ts";
-import { toolbars } from "../modules/data.js";
 
 const settings = settingsStore();
-
-const toolbar = toolbars.findWhere({ region: "articles" });
 
 /**
  * Articles layout view
@@ -29,7 +27,7 @@ let ArticlesLayout = Layout.extend({
         this.el.view = this;
 
         this.on("attach", function () {
-            this.attach("toolbar", new ToolbarView({ model: toolbar }));
+            this.attach("toolbar", new ToolbarView({ actions: toolbarItems.articles }));
             this.attach("articleList", articleList);
         });
 

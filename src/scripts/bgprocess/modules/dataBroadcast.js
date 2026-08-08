@@ -12,7 +12,7 @@ import { broadcast } from "../../shared/messages.ts";
  * view looks its source up by id, so a source must reach the other side before
  * the articles that reference it.
  */
-const STORES = ["sources", "folders", "toolbars", "items"];
+const STORES = ["sources", "folders", "items"];
 
 /**
  * An added record carries the whole article, content included, and a mass

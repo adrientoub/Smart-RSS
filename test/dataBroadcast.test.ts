@@ -22,7 +22,6 @@ function fakeCollections() {
     const collections = {
         sources: make("sources"),
         folders: make("folders"),
-        toolbars: make("toolbars"),
         items: make("items"),
     };
     const add = (store: string, id: string) =>

@@ -14,7 +14,7 @@ import { createChangeBuffer } from "../../shared/changeBuffer.ts";
 import { handleMessages } from "../../shared/messages.ts";
 
 export const collections = createCollections();
-export const { sources, items, folders, toolbars } = collections;
+export const { sources, items, folders } = collections;
 
 /** Counters for the special rows. Derived locally; they are never persisted. */
 export const info = new BB.Model();

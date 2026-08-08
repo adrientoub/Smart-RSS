@@ -10,7 +10,7 @@
  */
 
 /** The persisted Backbone collections. The background is their only writer. */
-export type StoreName = "sources" | "items" | "folders" | "toolbars";
+export type StoreName = "sources" | "items" | "folders";
 
 export interface MessageMap {
     /** Resolves once the background has finished starting up. */

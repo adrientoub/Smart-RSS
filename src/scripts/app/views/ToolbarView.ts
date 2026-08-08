@@ -54,7 +54,6 @@ const ToolbarView = BB.View.extend({
         const button = document.createElement("div");
         button.className = "button";
         button.dataset.action = item;
-        button.title = action.get("title");
         return button;
     },
 
@@ -66,8 +65,10 @@ const ToolbarView = BB.View.extend({
             const action = app.actions.get(button.dataset.action);
             const state = action.get("state");
             const icon = action.get("icon");
+            const title = action.get("title");
 
             button.classList.toggle("active", Boolean(state && settings.get(state)));
+            button.title = typeof title === "function" ? title() : title;
             const iconName = typeof icon === "function" ? icon() : icon;
             const currentIcon = button.firstElementChild?.getAttribute("data-icon");
             if (iconName && currentIcon !== iconName) {

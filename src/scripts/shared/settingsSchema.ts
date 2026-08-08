@@ -169,6 +169,7 @@ export function createDefaults(navigatorLanguage = "en") {
         showAllFeeds: true,
         showPinned: true,
         showOnlyUnreadSources: false,
+        feedListVisible: null as boolean | null,
         displayFaviconInsteadOfPin: false,
         queries: [] as string[],
         theme: "auto" as ThemePreference,

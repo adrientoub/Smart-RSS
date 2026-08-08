@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Csak olvasatlanok megjelenítésének váltása"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Hírcsatornalista megjelenítése"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Hírcsatornalista elrejtése"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Csak az olvasatlan cikkek megjelenítése"
   },

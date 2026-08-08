@@ -8,6 +8,7 @@ export const toolbarItems = {
         "feeds:delete",
         "!dynamicSpace",
         "feeds:toggleShowOnlyUnread",
+        "feeds:toggleFeedList",
     ],
     articles: [
         "articles:markAllAsRead",

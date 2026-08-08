@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Alleen ongelezen tonen in-/uitschakelen"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Feedlijst tonen"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Feedlijst verbergen"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Alleen ongelezen artikelen tonen"
   },

@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Uključi ili isključi prikaz samo nepročitanih"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Prikaži popis kanala"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Sakrij popis kanala"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Prikaži samo nepročitane članke"
   },

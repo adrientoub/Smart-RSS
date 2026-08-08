@@ -42,6 +42,18 @@ export default {
         },
     },
     feeds: {
+        toggleFeedList: {
+            icon: "panel-left",
+            title: function () {
+                const preference = settings.get("feedListVisible");
+                return (preference ?? sources.length === 0)
+                    ? L.HIDE_FEED_LIST
+                    : L.SHOW_FEED_LIST;
+            },
+            fn: function () {
+                app.feeds.toggleFeedList();
+            },
+        },
         toggleShowOnlyUnread: {
             icon: "filter",
             state: "showOnlyUnreadSources",
@@ -190,8 +202,10 @@ export default {
                         updateEvery: -1,
                         folderID: folderID,
                     });
+                    app.feeds.showFeedList();
                     app.trigger("focus-feed", id);
                 } else {
+                    app.feeds.showFeedList();
                     app.trigger("focus-feed", duplicate.get("id"));
                 }
             },

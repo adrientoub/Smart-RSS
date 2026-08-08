@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Alternar exibição somente de não lidos"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Mostrar lista de feeds"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Ocultar lista de feeds"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Mostrar apenas artigos não lidos"
   },

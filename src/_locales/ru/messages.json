@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Переключить показ только непрочитанных"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Показать список лент"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Скрыть список лент"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Показывать только непрочитанные статьи"
   },

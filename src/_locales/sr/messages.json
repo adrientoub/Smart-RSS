@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Укључи или искључи приказ само непрочитаних"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Прикажи листу извора"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Сакриј листу извора"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Прикажи само непрочитане чланке"
   },

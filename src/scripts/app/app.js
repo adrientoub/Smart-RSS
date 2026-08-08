@@ -94,6 +94,7 @@ const app = (window.app = new (Layout.extend({
         this.attach("feeds", new FeedsLayout());
         this.attach("articles", new ArticlesLayout());
         this.attach("content", new ContentLayout());
+        this.feeds.applyFeedListVisibility();
 
         this.feeds.enableResizing("horizontal", settings.get("posA"));
         this.articles.enableResizing("horizontal", settings.get("posB"));

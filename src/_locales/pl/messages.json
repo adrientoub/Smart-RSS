@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Przełącz wyświetlanie tylko nieprzeczytanych"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Pokaż listę kanałów"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Ukryj listę kanałów"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Pokaż tylko nieprzeczytane artykuły"
   },

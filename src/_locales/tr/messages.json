@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Yalnızca okunmamışları göstermeyi aç veya kapat"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Akış listesini göster"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Akış listesini gizle"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Yalnızca okunmamış makaleleri göster"
   },

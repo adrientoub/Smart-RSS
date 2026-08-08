@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Afficher ou masquer les articles lus"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Afficher la liste des flux"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Masquer la liste des flux"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Afficher uniquement les articles non lus"
   },

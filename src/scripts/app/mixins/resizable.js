@@ -118,4 +118,7 @@ export default {
 
         document.body.appendChild(this.resizer);
     },
+    refreshResizePosition: function () {
+        loadPosition.call(this);
+    },
 };

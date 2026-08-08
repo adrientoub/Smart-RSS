@@ -21,7 +21,7 @@ const Action = BB.Model.extend({
     defaults: {
         /**
          * @attribute name
-         * @type String
+         * @type String|Function
          * @default global:default
          */
         name: "global:default",

@@ -329,6 +329,12 @@
   "TOGGLE_SHOW_ONLY_UNREAD": {
     "message": "Přepnout zobrazení pouze nepřečtených"
   },
+  "SHOW_FEED_LIST": {
+    "message": "Zobrazit seznam kanálů"
+  },
+  "HIDE_FEED_LIST": {
+    "message": "Skrýt seznam kanálů"
+  },
   "DEFAULT_TO_UNREAD_ONLY": {
     "message": "Zobrazit pouze nepřečtené články"
   },

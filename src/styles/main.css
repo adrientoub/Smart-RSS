@@ -554,18 +554,57 @@ input[type="search"]:not(:focus):placeholder-shown {
 }
 
 #indicator-progress {
+    --indicator-progress: 0%;
+    position: relative;
     border-right: var(--border);
     font-family: inherit;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    background: linear-gradient(to right, var(--accent-soft) 0%, var(--surface-raised) 0%);
+    background-color: var(--surface-raised);
     flex-shrink: 1;
     flex-grow: 1;
     flex-basis: auto;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--text);
+}
+
+/* Filled portion of the track. */
+#indicator-progress::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--indicator-progress);
+    background-color: var(--accent-soft);
+    transition: width 0.2s ease-out;
+}
+
+/* Leading edge, so the position stays legible when the fill is subtle. */
+#indicator-progress::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: var(--indicator-progress);
+    background-color: var(--accent);
+    transition: width 0.2s ease-out;
+}
+
+#indicator-label {
+    position: relative;
+    padding: 0 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #indicator-progress::before,
+    #indicator-progress::after {
+        transition: none;
+    }
 }
 
 .indicator-invisible > #indicator-toolbar,

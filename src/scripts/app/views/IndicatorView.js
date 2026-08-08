@@ -75,9 +75,10 @@ const IndicatorView = BB.View.extend({
             return;
         }
         const percentage = Math.round((loaded * 100) / maxSources);
-        this.el.querySelector("#indicator-progress").style.background =
-            "linear-gradient(to right,  #c5c5c5 " + percentage + "%, #eee " + percentage + "%)";
-        this.el.querySelector("#indicator-progress").textContent =
+        const progress = this.el.querySelector("#indicator-progress");
+        progress.style.setProperty("--indicator-progress", percentage + "%");
+        progress.setAttribute("aria-valuenow", String(percentage));
+        this.el.querySelector("#indicator-label").textContent =
             Locale.UPDATING_FEEDS + " (" + loaded + "/" + maxSources + ")";
         this.el.classList.remove("indicator-invisible");
         return this;

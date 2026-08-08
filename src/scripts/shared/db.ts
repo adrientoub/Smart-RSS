@@ -19,7 +19,6 @@ const SCHEMA = {
     items: "id, sourceID, date, dateCreated, [sourceID+date]",
     sources: "id, folderID, url",
     folders: "id, title",
-    toolbars: "region",
 };
 
 export type TableName = keyof typeof SCHEMA;

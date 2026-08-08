@@ -4,17 +4,15 @@
  */
 
 import Layout from "./Layout.js";
-import ToolbarView from "../views/ToolbarView.js";
+import ToolbarView from "../views/ToolbarView.ts";
+import { toolbarItems } from "../staticdb/toolbarItems.ts";
 import feedList from "../views/feedList.js";
 import Properties from "../views/Properties.js";
 import resizable from "../mixins/resizable.js";
 import IndicatorView from "../views/IndicatorView.js";
 import { settingsStore } from "../../shared/settings.ts";
-import { toolbars } from "../modules/data.js";
 
 const settings = settingsStore();
-
-const toolbar = toolbars.findWhere({ region: "feeds" });
 
 /**
  * Feeds layout view
@@ -36,7 +34,7 @@ let FeedsLayout = Layout.extend({
      */
     initialize: function () {
         this.on("attach", function () {
-            this.attach("toolbar", new ToolbarView({ model: toolbar }));
+            this.attach("toolbar", new ToolbarView({ actions: toolbarItems.feeds }));
             this.attach("properties", new Properties());
             this.attach("feedList", feedList);
             this.attach("indicator", new IndicatorView());

@@ -54,7 +54,6 @@ describe("background data handlers", () => {
                 { id: "i2", unread: true },
             ]),
             folders: fakeCollection([{ id: "f1", opened: false }]),
-            toolbars: fakeCollection(),
         });
     });
 

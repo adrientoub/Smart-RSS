@@ -12,14 +12,12 @@ export interface CollectionRegistry {
     sources: any;
     items: any;
     folders: any;
-    toolbars: any;
 }
 
 export const collections: CollectionRegistry = {
     sources: null,
     items: null,
     folders: null,
-    toolbars: null,
 };
 
 export function registerCollections(registered: Partial<CollectionRegistry>): void {

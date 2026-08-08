@@ -3,6 +3,9 @@ import ContextMenu from "../views/ContextMenu.js";
 import Locale from "../modules/Locale.js";
 import { updateRecords, markItemsDeleted, idsOf } from "../../shared/dataClient.ts";
 import { items } from "../modules/data.js";
+import { settingsStore } from "../../shared/settings.ts";
+
+const settings = settingsStore();
 
 const sourceContextMenu = new ContextMenu([
     {
@@ -178,6 +181,7 @@ const itemsContextMenu = new ContextMenu([
     },
     {
         title: Locale.PIN + " (P)",
+        id: "context-pin",
         icon: "pin",
         action: function () {
             app.actions.execute("articles:pin");
@@ -199,6 +203,15 @@ const itemsContextMenu = new ContextMenu([
         },
     },
 ]);
+
+const applyPinVisibility = () => {
+    const pinItem = itemsContextMenu.el.querySelector("#context-pin");
+    if (pinItem) {
+        pinItem.hidden = !settings.get("enablePin");
+    }
+};
+settings.on("change:enablePin", applyPinVisibility);
+applyPinVisibility();
 
 export default new (BB.View.extend({
     list: {},

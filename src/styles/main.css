@@ -204,6 +204,11 @@ input[type="search"]:not(:focus):placeholder-shown {
     border-radius: var(--radius-sm);
 }
 
+/* `display: flex` above would otherwise beat the UA rule for [hidden]. */
+.context-menu-item[hidden] {
+    display: none;
+}
+
 .context-menu-label {
     overflow: hidden;
     text-overflow: ellipsis;

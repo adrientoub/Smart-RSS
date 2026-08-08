@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" is vastgemaakt. Weet je zeker dat je dit wilt verwijderen?"
   },
+  "ENABLE_PIN": {
+    "message": "Vastzetfunctie inschakelen"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Toont het vastzetten in de feedlijst, de artikellijst en de artikelkop."
+  },
   "MARK_ALL_QUESTION": {
     "message": "Weet je zeker dat je ALLE artikelen wilt markeren als gelezen?"
   },

@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" je zakačena. Dali je stvarno želite obrisati?"
   },
+  "ENABLE_PIN": {
+    "message": "Omogući funkciju prikvačivanja"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Prikazuje prikvačivanje na popisu kanala, popisu članaka i u zaglavlju članka."
+  },
   "MARK_ALL_QUESTION": {
     "message": "Dali stvaro želite označiti SVE članke kao pročitane?"
   },

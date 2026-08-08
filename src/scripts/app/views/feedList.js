@@ -71,6 +71,7 @@ let FeedListView = BB.View.extend({
         sources.on("change:folderID", this.handleChangeFolder, this);
         folders.on("add", this.addFolder, this);
         settings.on("change:showOnlyUnreadSources", this.insertFeeds, this);
+        settings.on("change:enablePin", this.insertFeeds, this);
 
         this.on("pick", this.handlePick);
     },
@@ -122,7 +123,7 @@ let FeedListView = BB.View.extend({
             this.el.removeChild(this.el.lastChild);
         }
         this.addFolders(folders);
-        if (settings.get("showPinned")) {
+        if (settings.get("showPinned") && settings.get("enablePin")) {
             this.addSpecial(specials.pinned);
         }
         if (settings.get("showAllFeeds")) {

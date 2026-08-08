@@ -84,7 +84,7 @@ const ItemView = BB.View.extend({
         if (this.model.get("unread")) {
             classList.add("unread");
         }
-        if (this.model.get("pinned")) {
+        if (this.model.get("pinned") && settings.get("enablePin")) {
             classList.add("pinned");
         }
         if (settings.get("lines") === "1") {

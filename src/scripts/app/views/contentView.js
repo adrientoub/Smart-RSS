@@ -14,11 +14,15 @@ import enclosureYoutubeCover from "../templates/enclosureYoutubeCover.html";
 import enclosureYoutube from "../templates/enclosureYoutube.html";
 import enclosureGeneral from "../templates/enclosureGeneral.html";
 import { settingsStore } from "../../shared/settings.ts";
+import { translateHtml } from "../../shared/i18n.ts";
 import { getElementBoolean, getElementSetting } from "../../shared/elementSettings.ts";
 import { updateRecords, idsOf } from "../../shared/dataClient.ts";
 import { items } from "../modules/data.js";
 
 const settings = settingsStore();
+
+// Changing the language reloads the page, so one pass at load time is enough.
+const contentViewTemplate = translateHtml(contentView);
 
 /**
  * Full view of one article (right column)
@@ -49,6 +53,9 @@ const ContentView = BB.View.extend({
      * @param event {MouseEvent}
      */
     handlePinClick: function (event) {
+        if (!settings.get("enablePin")) {
+            return;
+        }
         const target = event.target;
         if (target.classList.contains("pinned")) {
             target.classList.remove("pinned");
@@ -128,6 +135,9 @@ const ContentView = BB.View.extend({
     handleItemsPin: function (model) {
         if (model === this.model) {
             const pinButton = this.el.querySelector(".pin-button");
+            if (!pinButton) {
+                return;
+            }
             if (this.model.get("pinned")) {
                 pinButton.classList.add("pinned");
             } else {
@@ -233,11 +243,14 @@ const ContentView = BB.View.extend({
                 this.el.removeChild(this.el.firstChild);
             }
 
-            const fragment = document.createRange().createContextualFragment(contentView);
+            const fragment = document.createRange().createContextualFragment(contentViewTemplate);
             fragment.querySelector(".author").textContent = data.author;
             fragment.querySelector(".date").textContent = data.date;
             if (data.pinned) {
                 fragment.querySelector(".pin-button").classList.add("pinned");
+            }
+            if (!settings.get("enablePin")) {
+                fragment.querySelector(".pin-button").remove();
             }
 
             function createEnclosure(enclosureData) {

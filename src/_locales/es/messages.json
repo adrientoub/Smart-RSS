@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" está clavado. ¿Realmente desea eliminarlo?"
   },
+  "ENABLE_PIN": {
+    "message": "Activar la función de fijar"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Muestra la fijación en la lista de fuentes, la lista de artículos y la cabecera del artículo."
+  },
   "MARK_ALL_QUESTION": {
     "message": "¿Realmente desea marcar TODOS los artículos como leídos?"
   },

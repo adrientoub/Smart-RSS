@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" jest przypięta. Czy na pewno chcesz ją usunąć?"
   },
+  "ENABLE_PIN": {
+    "message": "Włącz funkcję przypinania"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Pokazuje przypinanie na liście kanałów, liście artykułów i w nagłówku artykułu."
+  },
   "MARK_ALL_QUESTION": {
     "message": "Czy na pewno chcesz oznaczyć WSZYSTKIE wiadomości jako przeczytane?"
   },

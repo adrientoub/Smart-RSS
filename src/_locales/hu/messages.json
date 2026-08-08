@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" című bejegyzés rögzítve van. Biztos, hogy törölni akarod?"
   },
+  "ENABLE_PIN": {
+    "message": "A kitűzés funkció engedélyezése"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Megjeleníti a kitűzést a hírforráslistában, a cikklistában és a cikk fejlécében."
+  },
   "MARK_ALL_QUESTION": {
     "message": "Biztos, hogy az összes bejegyzést olvasottnak akarod jelölni?"
   },

@@ -168,6 +168,9 @@ export function createDefaults(navigatorLanguage = "en") {
         version: 1,
         showAllFeeds: true,
         showPinned: true,
+        // Gates the whole pin feature: the Pinned special, the pin toggle in the
+        // article list and the pin button in the article header.
+        enablePin: false,
         showOnlyUnreadSources: false,
         feedListVisible: null as boolean | null,
         displayFaviconInsteadOfPin: false,

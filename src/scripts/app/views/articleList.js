@@ -130,6 +130,9 @@ const ArticleListView = BB.View.extend({
      * @param event {MouseEvent}
      */
     handleClickPin: function (event) {
+        if (!settings.get("enablePin")) {
+            return;
+        }
         event.currentTarget.parentNode.view.handleClickPin(event);
     },
 
@@ -808,7 +811,7 @@ const ArticleListView = BB.View.extend({
      */
     removeItem: function (target) {
         const model = modelOf(target);
-        const askRmPinned = settings.get("askRmPinned");
+        const askRmPinned = settings.get("enablePin") ? settings.get("askRmPinned") : "none";
         if (model.get("pinned") && askRmPinned === "all") {
             const confirmation = confirm(
                 Locale.translate("PINNED_DELETE_CONFIRM", { title: model.get("title") })
@@ -829,7 +832,7 @@ const ArticleListView = BB.View.extend({
      */
     removeItemCompletely: function (target) {
         const model = modelOf(target);
-        const askRmPinned = settings.get("askRmPinned");
+        const askRmPinned = settings.get("enablePin") ? settings.get("askRmPinned") : "none";
         if (model.get("pinned") && askRmPinned && askRmPinned !== "none") {
             const confirmation = confirm(
                 Locale.translate("PINNED_DELETE_CONFIRM", { title: model.get("title") })

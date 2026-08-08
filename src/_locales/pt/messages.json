@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" está fixado. Quer realmente deletá-lo?"
   },
+  "ENABLE_PIN": {
+    "message": "Ativar a funcionalidade de fixar"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Mostra a fixação na lista de fontes, na lista de artigos e no cabeçalho do artigo."
+  },
   "MARK_ALL_QUESTION": {
     "message": " Quer realmente marcar todos os artigos como lido?"
   },

@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" ist angeheftet. Möchten Sie ihn wirklich löschen?"
   },
+  "ENABLE_PIN": {
+    "message": "Pin-Funktion aktivieren"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Zeigt das Anpinnen in der Feed-Liste, der Artikelliste und der Artikel-Kopfzeile an."
+  },
   "MARK_ALL_QUESTION": {
     "message": "Möchten sie wirklich ALLE Artikel als gelesen markieren?"
   },

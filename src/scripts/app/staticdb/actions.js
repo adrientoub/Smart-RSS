@@ -600,6 +600,9 @@ export default {
             title: L.PIN,
             icon: "pin",
             fn: function () {
+                if (!settings.get("enablePin")) {
+                    return;
+                }
                 if (!articleList.selectedItems || !articleList.selectedItems.length) {
                     return;
                 }
@@ -679,7 +682,9 @@ export default {
                     return;
                 }
 
-                const askRmPinned = settings.get("askRmPinned");
+                const askRmPinned = settings.get("enablePin")
+                    ? settings.get("askRmPinned")
+                    : "none";
 
                 if (e.shiftKey) {
                     if (contentView.model.get("pinned") && askRmPinned && askRmPinned !== "none") {

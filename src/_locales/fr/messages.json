@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": " » est épinglé. Souhaitez-vous vraiment le supprimer ?"
   },
+  "ENABLE_PIN": {
+    "message": "Activer la fonction d'épinglage"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Affiche l'épinglage dans la liste des flux, la liste des articles et l'en-tête de l'article."
+  },
   "MARK_ALL_QUESTION": {
     "message": "Souhaitez-vous vraiment marquer tous les articles comme étant lus ?"
   },

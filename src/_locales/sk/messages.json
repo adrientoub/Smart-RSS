@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" je označená. Chcete ju zmazať?"
   },
+  "ENABLE_PIN": {
+    "message": "Povoliť funkciu pripínania"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Zobrazí pripínanie v zozname kanálov, zozname článkov a v hlavičke článku."
+  },
   "MARK_ALL_QUESTION": {
     "message": "Chcete označiť všetky položky, ako prečítané?"
   },

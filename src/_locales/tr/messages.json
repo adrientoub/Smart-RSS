@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" sabitlendi. Gerçekten silmek istiyor musunuz?"
   },
+  "ENABLE_PIN": {
+    "message": "Sabitleme özelliğini etkinleştir"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Sabitlemeyi besleme listesinde, makale listesinde ve makale başlığında gösterir."
+  },
   "MARK_ALL_QUESTION": {
     "message": "Tüm BAŞLIKLARI okundu olarak işaretlemek istiyor musunuz?"
   },

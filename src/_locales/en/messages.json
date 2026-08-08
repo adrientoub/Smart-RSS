@@ -140,6 +140,12 @@
   "PIN_QUESTION_B": {
     "message": "\" is pinned. Do you really want to delete it?"
   },
+  "ENABLE_PIN": {
+    "message": "Enable the pin feature"
+  },
+  "ENABLE_PIN_TITLE": {
+    "message": "Shows pinning in the feed list, the article list and the article header."
+  },
   "MARK_ALL_QUESTION": {
     "message": "Do you really want to mark ALL articles as read?"
   },

@@ -110,6 +110,15 @@ header {
     pointer-events: none;
 }
 
+.toolbar-unread-count {
+    display: none;
+    min-width: 1ch;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    pointer-events: none;
+}
+
 .button:hover {
     background-color: var(--surface-hover);
     border-color: var(--line);
@@ -321,6 +330,20 @@ input[type="search"]:not(:focus):placeholder-shown {
 
 #feeds.feed-list-hidden + #second-pane #articles > .toolbar {
     padding-left: 83px;
+}
+
+#feeds.feed-list-hidden
+    + #second-pane
+    #articles
+    > .toolbar
+    [data-action="articles:toggleShowOnlyUnread"] {
+    flex-basis: auto;
+    gap: 5px;
+    padding: 0 7px;
+}
+
+#feeds.feed-list-hidden + #second-pane #articles > .toolbar .toolbar-unread-count {
+    display: inline;
 }
 
 #feeds.feed-list-hidden .dynamic-space,

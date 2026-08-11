@@ -3,6 +3,7 @@ import { createIcon } from "../staticdb/icons.ts";
 import type { ToolbarItem } from "../staticdb/toolbarItems.ts";
 import Locale from "../modules/Locale.js";
 import { settingsStore } from "../../shared/settings.ts";
+import { info } from "../modules/data.js";
 
 const settings = settingsStore();
 
@@ -25,6 +26,7 @@ const ToolbarView = BB.View.extend({
         this.hideItems("articles:undelete");
         this.hideItems("content:undelete");
         settings.on("change", this.updateButtonStates, this);
+        info.on("change:allCountUnread", this.updateUnreadCount, this);
     },
 
     render: function () {
@@ -55,6 +57,11 @@ const ToolbarView = BB.View.extend({
         const button = document.createElement("div");
         button.className = "button";
         button.dataset.action = item;
+        if (item === "articles:toggleShowOnlyUnread") {
+            const count = document.createElement("span");
+            count.className = "toolbar-unread-count";
+            button.appendChild(count);
+        }
         return button;
     },
 
@@ -71,13 +78,24 @@ const ToolbarView = BB.View.extend({
             button.classList.toggle("active", Boolean(state && settings.get(state)));
             button.title = typeof title === "function" ? title() : title;
             const iconName = typeof icon === "function" ? icon() : icon;
-            const currentIcon = button.firstElementChild?.getAttribute("data-icon");
-            if (iconName && currentIcon !== iconName) {
+            const currentIcon = button.querySelector<HTMLElement>("[data-icon]");
+            if (iconName && currentIcon?.dataset.icon !== iconName) {
                 const element = createIcon(iconName, "button-icon");
                 element?.setAttribute("data-icon", iconName);
-                button.replaceChildren(...(element ? [element] : []));
+                currentIcon?.remove();
+                if (element) {
+                    button.prepend(element);
+                }
             }
         });
+        this.updateUnreadCount();
+    },
+
+    updateUnreadCount: function () {
+        const count = this.el.querySelector(".toolbar-unread-count") as HTMLElement | null;
+        if (count) {
+            count.textContent = String(info.get("allCountUnread") ?? 0);
+        }
     },
 
     handleAction: function (event: Event) {
@@ -104,6 +122,7 @@ const ToolbarView = BB.View.extend({
 
     remove: function () {
         settings.off("change", this.updateButtonStates, this);
+        info.off("change:allCountUnread", this.updateUnreadCount, this);
         return BB.View.prototype.remove.call(this);
     },
 });

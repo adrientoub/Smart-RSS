@@ -1,21 +1,11 @@
 /**
- * Applies a `data-changed` batch to a context's own collections.
+ * Applies a `data-changed` batch to a context's own record stores.
  *
- * Uses `set`/`add`/`remove` only. None of those persist, which is what keeps the
- * background the single writer while every context still sees the change.
+ * Nothing here persists, which is what keeps the background the single writer
+ * while every context still sees the change.
  */
 import type { StoreName } from "./messages.ts";
-
-export interface MirrorCollection {
-    comparator?: unknown;
-    get(id: string): { set(attrs: Record<string, unknown>): void } | undefined;
-    add(
-        records: Record<string, unknown>[],
-        options?: { merge?: boolean; sort?: boolean }
-    ): unknown;
-    remove(model: unknown): unknown;
-    sort(options?: { silent?: boolean }): unknown;
-}
+import type { HasId, RecordStore } from "./recordStore.ts";
 
 export interface DataChange {
     store: StoreName;
@@ -24,30 +14,26 @@ export interface DataChange {
     removed?: string[];
 }
 
+type AnyStore = RecordStore<HasId>;
+
 export function applyDataChange(
-    collections: Partial<Record<StoreName, MirrorCollection>>,
+    stores: Partial<Record<StoreName, AnyStore>>,
     change: DataChange
 ): boolean {
-    const collection = collections[change.store];
-    if (!collection) {
+    const store = stores[change.store];
+    if (!store) {
         return false;
     }
 
     if (change.added?.length) {
-        // Backbone fires "sort" for every add that reorders, and the article
-        // list rebuilds itself from scratch on it. One add, one silent sort.
-        collection.add(change.added, { merge: true, sort: false });
-        if (collection.comparator) {
-            collection.sort({ silent: true });
-        }
+        store.add(change.added as unknown as (Partial<HasId> & HasId)[]);
     }
-    change.changed?.forEach(({ id, attrs }) => collection.get(id)?.set(attrs));
-    change.removed?.forEach((id) => {
-        const model = collection.get(id);
-        if (model) {
-            collection.remove(model);
-        }
-    });
+    if (change.changed?.length) {
+        store.patch(change.changed as unknown as { id: string; attrs: Partial<HasId> }[]);
+    }
+    if (change.removed?.length) {
+        store.remove(change.removed);
+    }
 
     return true;
 }

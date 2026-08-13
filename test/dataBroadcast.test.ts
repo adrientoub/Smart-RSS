@@ -1,32 +1,17 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { RecordStore } from "../src/scripts/shared/recordStore.ts";
 import {
     chunk,
     MAX_RECORDS_PER_MESSAGE,
     startDataBroadcast,
-} from "../src/scripts/bgprocess/modules/dataBroadcast.js";
+} from "../src/scripts/bgprocess/modules/dataBroadcast.ts";
 
 const range = (n: number) => Array.from({ length: n }, (_, i) => i);
 
-/** Minimal stand-ins for the Backbone collections the broadcaster watches. */
-function fakeCollections() {
-    const handlers: Record<string, Record<string, (model: unknown) => void>> = {};
-    const make = (store: string) => {
-        handlers[store] = {};
-        return {
-            on(event: string, callback: (model: unknown) => void) {
-                handlers[store][event] = callback;
-            },
-        };
-    };
-    const collections = {
-        sources: make("sources"),
-        folders: make("folders"),
-        items: make("items"),
-    };
-    const add = (store: string, id: string) =>
-        handlers[store].add({ toJSON: () => ({ id }), get: () => id });
-    return { collections, add };
+function fakeStores() {
+    const make = () => new RecordStore<{ id: string }>({} as never);
+    return { sources: make(), folders: make(), items: make() };
 }
 
 function captureMessages() {
@@ -49,11 +34,11 @@ describe("broadcast ordering", () => {
      */
     it("sends sources before items, whatever order they changed in", async () => {
         const sent = captureMessages();
-        const { collections, add } = fakeCollections();
-        startDataBroadcast(collections);
+        const stores = fakeStores();
+        startDataBroadcast(stores);
 
-        add("items", "i1");
-        add("sources", "s1");
+        stores.items.add([{ id: "i1" }]);
+        stores.sources.add([{ id: "s1" }]);
         await new Promise((resolve) => setTimeout(resolve, 0));
 
         assert.deepEqual(
@@ -64,14 +49,26 @@ describe("broadcast ordering", () => {
 
     it("coalesces one task into a single flush", async () => {
         const sent = captureMessages();
-        const { collections, add } = fakeCollections();
-        startDataBroadcast(collections);
+        const stores = fakeStores();
+        startDataBroadcast(stores);
 
-        add("items", "i1");
-        add("items", "i2");
+        stores.items.add([{ id: "i1" }]);
+        stores.items.add([{ id: "i2" }]);
         await new Promise((resolve) => setTimeout(resolve, 0));
 
         assert.equal(sent.length, 1);
+    });
+
+    /** A reset is a full re-read; every context does its own. */
+    it("does not replay a reset", async () => {
+        const sent = captureMessages();
+        const stores = fakeStores();
+        startDataBroadcast(stores);
+
+        stores.items.reset([{ id: "i1" }, { id: "i2" }]);
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        assert.equal(sent.length, 0);
     });
 });
 

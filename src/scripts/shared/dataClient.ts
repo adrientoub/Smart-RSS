@@ -3,15 +3,12 @@
  * the only writer; see shared/messages.ts.
  */
 import { sendMessage, type StoreName } from "./messages.ts";
+import type { HasId } from "./recordStore.ts";
 
-interface HasId {
-    get(key: string): unknown;
-}
-
-/** Backbone models cannot cross the boundary, so only their ids do. */
-export function idsOf(models: HasId[] | HasId): string[] {
-    const list = Array.isArray(models) ? models : [models];
-    return list.map((model) => String(model.get("id")));
+/** Records cross the boundary as ids only. */
+export function idsOf(records: readonly HasId[] | HasId): string[] {
+    const list = Array.isArray(records) ? records : [records as HasId];
+    return list.map((record) => String(record.id));
 }
 
 export function createRecord(

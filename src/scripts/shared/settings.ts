@@ -1,8 +1,7 @@
 /**
  * Settings store backed by `browser.storage.local`.
  *
- * The old store kept settings in IndexedDB behind a hand-written Backbone.sync
- * adapter, with a single in-memory copy living in the background page. Every
+ * The old store kept settings in IndexedDB behind a hand-written sync adapter, with a single in-memory copy living in the background page. Every
  * other context had to reach into that copy through `getBackgroundPage()`,
  * which is why changing a setting needed the background at all.
  *
@@ -30,7 +29,7 @@ export interface StorageChange {
 
 type Listener = (key: SettingKey, value: unknown) => void;
 
-/** Backbone's `on(event, listener, context)` is still used by the view layer. */
+/** Listeners may bind a context, as the old model-style API allowed. */
 interface Binding {
     fn: Listener;
     context?: unknown;
@@ -108,7 +107,7 @@ export function createSettingsStore(area: StorageArea, navigatorLanguage = "en")
         },
 
         /**
-         * Backbone-compatible alias; callers do not await it. Accepts both
+         * Convenience alias; callers do not await it. Accepts both
          * `save("layout", "vertical")` and `save({ posB: 300 })`.
          */
         save(keyOrValues: SettingKey | Partial<Settings>, value?: unknown): void {

@@ -1,76 +1,83 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import BB from "backbone";
+import { RecordStore } from "../src/scripts/shared/recordStore.ts";
 import { applyDataChange } from "../src/scripts/shared/dataMirror.ts";
 
-const mirror = (records: Record<string, unknown>[] = []) => {
-    const items = new BB.Collection(records);
-    return { collections: { items }, items };
+interface Row {
+    id: string;
+    title: string;
+    unread: boolean;
+}
+
+const mirror = (records: (Partial<Row> & { id: string })[] = []) => {
+    const items = new RecordStore<Row>({ title: "", unread: true });
+    items.add(records);
+    return { stores: { items } as never, items };
 };
 
 describe("applyDataChange", () => {
     it("adds new records", () => {
-        const { collections, items } = mirror();
-        applyDataChange(collections, { store: "items", added: [{ id: "a", title: "One" }] });
+        const { stores, items } = mirror();
+        applyDataChange(stores, { store: "items", added: [{ id: "a", title: "One" }] });
 
-        assert.equal(items.length, 1);
-        assert.equal(items.get("a").get("title"), "One");
+        assert.equal(items.size, 1);
+        assert.equal(items.get("a").title, "One");
     });
 
     it("merges an add for a record it already has", () => {
-        const { collections, items } = mirror([{ id: "a", title: "One" }]);
-        applyDataChange(collections, { store: "items", added: [{ id: "a", title: "Renamed" }] });
+        const { stores, items } = mirror([{ id: "a", title: "One" }]);
+        applyDataChange(stores, { store: "items", added: [{ id: "a", title: "Renamed" }] });
 
-        assert.equal(items.length, 1);
-        assert.equal(items.get("a").get("title"), "Renamed");
+        assert.equal(items.size, 1);
+        assert.equal(items.get("a").title, "Renamed");
     });
 
     it("applies partial changes without dropping other attributes", () => {
-        const { collections, items } = mirror([{ id: "a", title: "One", unread: true }]);
-        applyDataChange(collections, {
+        const { stores, items } = mirror([{ id: "a", title: "One", unread: true }]);
+        applyDataChange(stores, {
             store: "items",
             changed: [{ id: "a", attrs: { unread: false } }],
         });
 
-        assert.equal(items.get("a").get("unread"), false);
-        assert.equal(items.get("a").get("title"), "One");
+        assert.equal(items.get("a").unread, false);
+        assert.equal(items.get("a").title, "One");
     });
 
-    it("fires change events so views re-render", () => {
-        const { collections, items } = mirror([{ id: "a", unread: true }]);
+    it("notifies subscribers so the UI re-renders", () => {
+        const { stores, items } = mirror([{ id: "a", unread: true }]);
         const seen: unknown[] = [];
-        items.get("a").on("change:unread", (_model: unknown, value: unknown) => seen.push(value));
+        items.subscribe((change) => seen.push(change.changed[0]?.attrs));
 
-        applyDataChange(collections, {
+        applyDataChange(stores, {
             store: "items",
             changed: [{ id: "a", attrs: { unread: false } }],
         });
 
-        assert.deepEqual(seen, [false]);
+        assert.deepEqual(seen, [{ unread: false }]);
     });
 
     it("removes records", () => {
-        const { collections, items } = mirror([{ id: "a" }, { id: "b" }]);
-        applyDataChange(collections, { store: "items", removed: ["a"] });
+        const { stores, items } = mirror([{ id: "a" }, { id: "b" }]);
+        applyDataChange(stores, { store: "items", removed: ["a"] });
 
-        assert.equal(items.length, 1);
+        assert.equal(items.size, 1);
         assert.equal(items.get("a"), undefined);
     });
 
     it("ignores changes and removals for unknown ids", () => {
-        const { collections, items } = mirror([{ id: "a" }]);
-        applyDataChange(collections, {
+        const { stores, items } = mirror([{ id: "a" }]);
+        applyDataChange(stores, {
             store: "items",
             changed: [{ id: "ghost", attrs: { unread: false } }],
             removed: ["ghost"],
         });
 
-        assert.equal(items.length, 1);
+        assert.equal(items.size, 1);
     });
 
     it("applies a batch with all three kinds at once", () => {
-        const { collections, items } = mirror([{ id: "a", unread: true }, { id: "b" }]);
-        applyDataChange(collections, {
+        const { stores, items } = mirror([{ id: "a", unread: true }, { id: "b" }]);
+        applyDataChange(stores, {
             store: "items",
             added: [{ id: "c" }],
             changed: [{ id: "a", attrs: { unread: false } }],
@@ -78,84 +85,14 @@ describe("applyDataChange", () => {
         });
 
         assert.deepEqual(
-            items.map((model) => model.id),
+            items.all().map((record) => record.id),
             ["a", "c"]
         );
-        assert.equal(items.get("a").get("unread"), false);
+        assert.equal(items.get("a").unread, false);
     });
 
     it("reports an unknown store rather than throwing", () => {
-        const { collections } = mirror();
-        assert.equal(
-            applyDataChange(collections, { store: "sources", added: [{ id: "a" }] }),
-            false
-        );
-    });
-});
-
-describe("applyDataChange / a sorted collection", () => {
-    const Sorted = BB.Collection.extend({
-        comparator: (model: { get(key: string): number }) => model.get("date"),
-    });
-
-    // The article list rebuilds its whole DOM on "sort", so a feed refresh used
-    // to make it flicker once per incoming article.
-    it("adds a batch without announcing a re-sort", () => {
-        const items = new Sorted([{ id: "b", date: 2 }]);
-        let sorts = 0;
-        items.on("sort", () => (sorts += 1));
-
-        applyDataChange(
-            { items },
-            {
-                store: "items",
-                added: [
-                    { id: "c", date: 3 },
-                    { id: "a", date: 1 },
-                ],
-            }
-        );
-
-        assert.equal(sorts, 0);
-    });
-
-    it("still leaves the collection in comparator order", () => {
-        const items = new Sorted([{ id: "b", date: 2 }]);
-        applyDataChange(
-            { items },
-            {
-                store: "items",
-                added: [
-                    { id: "c", date: 3 },
-                    { id: "a", date: 1 },
-                ],
-            }
-        );
-
-        assert.deepEqual(
-            items.map((model: { id: string }) => model.id),
-            ["a", "b", "c"]
-        );
-    });
-
-    // The list inserts each new row itself, and it needs one event per article.
-    it("still fires add for every new record", () => {
-        const items = new Sorted([{ id: "b", date: 2 }]);
-        const added: string[] = [];
-        items.on("add", (model: { id: string }) => added.push(model.id));
-
-        applyDataChange(
-            { items },
-            {
-                store: "items",
-                added: [
-                    { id: "c", date: 3 },
-                    { id: "a", date: 1 },
-                    { id: "b", date: 2 },
-                ],
-            }
-        );
-
-        assert.deepEqual(added.sort(), ["a", "c"]);
+        const { stores } = mirror();
+        assert.equal(applyDataChange(stores, { store: "sources", added: [{ id: "a" }] }), false);
     });
 });

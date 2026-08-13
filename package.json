@@ -5,10 +5,11 @@
   "homepage": "https://github.com/zakius/Smart-RSS",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/backbone": "^1.4.23",
     "@types/firefox-webext-browser": "^120.0.4",
     "@types/he": "^1.2.3",
     "@types/node": "^26.1.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
     "@types/webextension-polyfill": "^0.12.5",
     "adm-zip": "^0.6.0",
     "chokidar": "^4.0.3",
@@ -63,12 +64,12 @@
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
     "@rgrove/parse-xml": "^4.2.3",
+    "@tanstack/react-virtual": "^3.14.9",
     "@tanstack/virtual-core": "^3.17.7",
-    "backbone": "^1.6.1",
     "dexie": "^4.4.4",
     "he": "^1.2.0",
-    "jquery": "^3.7.1",
-    "underscore": "^1.13.8",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "webextension-polyfill": "^0.12.0"
   }
 }

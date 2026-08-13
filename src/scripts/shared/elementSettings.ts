@@ -1,17 +1,18 @@
 /**
  * Per-element setting overrides.
  *
- * Settings themselves are typed since they moved to `storage.local`, but source
- * and folder attributes are still legacy Backbone values holding loose strings
- * like `"global"`, `"1"` or `"on"`, so reading one still needs coercion.
+ * Settings themselves are typed since they moved to `storage.local`, but the
+ * stored source and folder overrides are loose strings like `"global"`, `"1"`
+ * or `"on"`, so reading one still needs coercion.
  */
 import { settingsStore, type SettingsStore } from "./settings.ts";
 import type { SettingKey } from "./settingsSchema.ts";
 
-/** Anything with a Backbone-style attribute reader. */
-export interface AttributeSource {
-    get(key: string): unknown;
-}
+/** A source or folder record, read by attribute name. */
+export type AttributeSource = object;
+
+const read = (element: AttributeSource, key: string): unknown =>
+    (element as Record<string, unknown>)[key];
 
 export function valueToBoolean(value: unknown): unknown {
     if (
@@ -47,7 +48,7 @@ export function getElementBoolean(
     if (!element) {
         return settings.get(setting);
     }
-    const elementValue = element.get(setting);
+    const elementValue = read(element, setting);
     if (elementValue === "global") {
         return settings.get(setting);
     }
@@ -64,7 +65,7 @@ export function getElementSetting(
     if (!element) {
         return settings.get(setting);
     }
-    const elementSetting = element.get(setting);
+    const elementSetting = read(element, setting);
     return elementSetting === "global" || elementSetting === "USE_GLOBAL"
         ? settings.get(setting)
         : elementSetting;

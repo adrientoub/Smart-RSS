@@ -1,11 +1,11 @@
 /**
- * Article counters, derived purely from the items collection so the badge and
- * the reader's special views can compute them independently.
+ * Article counters, derived purely from the item records so the badge and the
+ * reader's special views can compute them independently.
+ *
+ * Counts are never persisted and never stored on a record: each context derives
+ * them from its own copy of the items.
  */
-
-export interface CountableItem {
-    get(key: string): unknown;
-}
+import type { FolderRecord, ItemRecord, SourceRecord } from "./records.ts";
 
 export interface Counters {
     allCountUnread: number;
@@ -17,10 +17,25 @@ export interface Counters {
     pinnedCountTotal: number;
 }
 
-const alive = (item: CountableItem) =>
-    item.get("trashed") === false && item.get("deleted") === false;
+/** Unread and total, in that order. */
+export type CountPair = [number, number];
 
-export function computeCounters(items: CountableItem[]): Counters {
+export const NO_COUNTS: CountPair = [0, 0];
+
+export interface DerivedCounts {
+    counters: Counters;
+    bySource: Map<string, CountPair>;
+    byFolder: Map<string, CountPair>;
+}
+
+type CountableItem = Pick<
+    ItemRecord,
+    "trashed" | "deleted" | "unread" | "visited" | "pinned" | "sourceID"
+>;
+
+const alive = (item: CountableItem) => item.trashed === false && item.deleted === false;
+
+export function computeCounters(items: Iterable<CountableItem>): Counters {
     const counters: Counters = {
         allCountUnread: 0,
         allCountTotal: 0,
@@ -32,8 +47,8 @@ export function computeCounters(items: CountableItem[]): Counters {
     };
 
     for (const item of items) {
-        const unread = item.get("unread") === true;
-        const pinned = item.get("pinned") === true;
+        const unread = item.unread === true;
+        const pinned = item.pinned === true;
 
         if (alive(item)) {
             counters.allCountTotal += 1;
@@ -49,11 +64,11 @@ export function computeCounters(items: CountableItem[]): Counters {
         }
 
         // Deliberately not filtered on `deleted`, matching the original query.
-        if (item.get("visited") === false && item.get("trashed") === false) {
+        if (item.visited === false && item.trashed === false) {
             counters.allCountUnvisited += 1;
         }
 
-        if (item.get("trashed") === true && item.get("deleted") === false) {
+        if (item.trashed === true && item.deleted === false) {
             counters.trashCountTotal += 1;
             if (unread) {
                 counters.trashCountUnread += 1;
@@ -65,16 +80,16 @@ export function computeCounters(items: CountableItem[]): Counters {
 }
 
 /** Per-source unread/total, keyed by source id. */
-export function computeSourceCounts(items: CountableItem[]): Map<string, [number, number]> {
-    const counts = new Map<string, [number, number]>();
+export function computeSourceCounts(items: Iterable<CountableItem>): Map<string, CountPair> {
+    const counts = new Map<string, CountPair>();
     for (const item of items) {
-        if (item.get("trashed") !== false) {
+        if (item.trashed !== false) {
             continue;
         }
-        const sourceID = String(item.get("sourceID"));
+        const sourceID = String(item.sourceID);
         const entry = counts.get(sourceID) ?? [0, 0];
         entry[1] += 1;
-        if (item.get("unread") === true) {
+        if (item.unread === true) {
             entry[0] += 1;
         }
         counts.set(sourceID, entry);
@@ -82,39 +97,40 @@ export function computeSourceCounts(items: CountableItem[]): Map<string, [number
     return counts;
 }
 
-interface CountableCollection {
-    toArray(): any[];
-    where(attrs: Record<string, unknown>): any[];
+/** Folder totals, summed from the sources each folder holds. */
+export function computeFolderCounts(
+    sources: Iterable<Pick<SourceRecord, "id" | "folderID">>,
+    bySource: Map<string, CountPair>
+): Map<string, CountPair> {
+    const counts = new Map<string, CountPair>();
+    for (const source of sources) {
+        const folderID = String(source.folderID ?? "");
+        if (!folderID || folderID === "0") {
+            continue;
+        }
+        const [count, countAll] = bySource.get(String(source.id)) ?? NO_COUNTS;
+        const entry = counts.get(folderID) ?? [0, 0];
+        entry[0] += count;
+        entry[1] += countAll;
+        counts.set(folderID, entry);
+    }
+    return counts;
 }
 
-/**
- * Writes the derived counts onto sources and folders.
- *
- * These are `set`, never saved: they are not persisted, so every context has to
- * derive them from its own items after loading.
- */
-export function applyCounts(collections: {
-    items: CountableCollection;
-    sources: CountableCollection;
-    folders: CountableCollection;
-}): Counters {
-    const items = collections.items.toArray();
-    const perSource = computeSourceCounts(items);
-
-    collections.sources.toArray().forEach((source) => {
-        const [count, countAll] = perSource.get(String(source.id)) ?? [0, 0];
-        source.set({ count, countAll });
-    });
-
-    collections.folders.toArray().forEach((folder) => {
-        let count = 0;
-        let countAll = 0;
-        collections.sources.where({ folderID: folder.id }).forEach((source) => {
-            count += source.get("count");
-            countAll += source.get("countAll");
-        });
-        folder.set({ count, countAll });
-    });
-
-    return computeCounters(items);
+export function computeCounts(data: {
+    items: Iterable<CountableItem>;
+    sources: Iterable<Pick<SourceRecord, "id" | "folderID">>;
+    folders?: Iterable<Pick<FolderRecord, "id">>;
+}): DerivedCounts {
+    const items = [...data.items];
+    const bySource = computeSourceCounts(items);
+    const byFolder = computeFolderCounts(data.sources, bySource);
+    if (data.folders) {
+        for (const folder of data.folders) {
+            if (!byFolder.has(String(folder.id))) {
+                byFolder.set(String(folder.id), [0, 0]);
+            }
+        }
+    }
+    return { counters: computeCounters(items), bySource, byFolder };
 }

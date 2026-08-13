@@ -31,9 +31,7 @@ async function storeWith(values: Record<string, unknown>) {
     return store;
 }
 
-const element = (attrs: Record<string, unknown>) => ({
-    get: (key: string) => attrs[key],
-});
+const element = (attrs: Record<string, unknown>) => attrs;
 
 describe("valueToBoolean", () => {
     it("recognises the truthy spellings", () => {

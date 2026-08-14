@@ -7,7 +7,7 @@
  */
 import type { FolderRecord, SourceRecord } from "../../shared/records.ts";
 import type { CountPair } from "../../shared/counters.ts";
-import { NO_COUNTS } from "../../shared/counters.ts";
+import { NO_COUNTS, type Counters } from "../../shared/counters.ts";
 import type { Special, SpecialName } from "../staticdb/specials.ts";
 
 export type FeedRowKind = "special" | "folder" | "source";
@@ -19,6 +19,8 @@ export interface FeedRowBase {
     title: string;
     count: number;
     countAll: number;
+    /** What the counter shows; the trash deliberately shows nothing. */
+    badge: number;
     /** Hidden rows keep their place so a folder can be collapsed without a rebuild. */
     hidden: boolean;
 }
@@ -58,13 +60,18 @@ export interface FeedListInput {
     showAllFeeds: boolean;
     showPinned: boolean;
     showOnlyUnread: boolean;
-    counters: { allCountUnread: number; pinnedCountUnread: number; trashCountTotal: number };
+    counters: Counters;
 }
 
 export function buildFeedRows(input: FeedListInput): FeedRow[] {
     const rows: FeedRow[] = [];
 
-    const specialRow = (name: SpecialName, count: number): SpecialRow => {
+    const specialRow = (
+        name: SpecialName,
+        count: number,
+        countAll: number,
+        badge = count
+    ): SpecialRow => {
         const special = input.specials[name];
         return {
             key: feedRowKey("special", name),
@@ -72,14 +79,21 @@ export function buildFeedRows(input: FeedListInput): FeedRow[] {
             id: name,
             title: special.title,
             count,
-            countAll: count,
+            countAll,
+            badge,
             hidden: false,
             special,
         };
     };
 
     if (input.showAllFeeds) {
-        rows.push(specialRow("all-feeds", input.counters.allCountUnread));
+        rows.push(
+            specialRow(
+                "all-feeds",
+                input.counters.allCountUnread,
+                input.counters.allCountTotal
+            )
+        );
     }
 
     const inFolder = new Map<string, SourceRecord[]>();
@@ -104,6 +118,7 @@ export function buildFeedRows(input: FeedListInput): FeedRow[] {
             title: source.title,
             count,
             countAll,
+            badge: count,
             hidden,
             source,
             folderID,
@@ -122,6 +137,7 @@ export function buildFeedRows(input: FeedListInput): FeedRow[] {
             title: folder.title,
             count,
             countAll,
+            badge: count,
             hidden: false,
             folder,
         });
@@ -143,9 +159,17 @@ export function buildFeedRows(input: FeedListInput): FeedRow[] {
     }
 
     if (input.showPinned) {
-        rows.push(specialRow("pinned", input.counters.pinnedCountUnread));
+        rows.push(
+            specialRow(
+                "pinned",
+                input.counters.pinnedCountUnread,
+                input.counters.pinnedCountTotal
+            )
+        );
     }
-    rows.push(specialRow("trash", 0));
+    rows.push(
+        specialRow("trash", input.counters.trashCountUnread, input.counters.trashCountTotal, 0)
+    );
 
     return rows;
 }

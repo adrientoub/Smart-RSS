@@ -86,7 +86,7 @@ function FeedListRow({ row, selected, lastSelected, focusKey }: RowProps) {
         }
     }
 
-    if (row.count > 0) {
+    if (row.badge > 0) {
         classes.push("has-unread");
     }
     if (selected) {
@@ -146,7 +146,7 @@ function FeedListRow({ row, selected, lastSelected, focusKey }: RowProps) {
         >
             {icon}
             <div className="source-title">{row.title}</div>
-            <div className="source-counter">{row.count}</div>
+            <div className="source-counter">{row.badge}</div>
         </a>
     );
 }

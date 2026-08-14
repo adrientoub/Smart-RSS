@@ -41,7 +41,15 @@ const build = (overrides: Record<string, unknown> = {}) =>
         showAllFeeds: true,
         showPinned: false,
         showOnlyUnread: false,
-        counters: { allCountUnread: 0, pinnedCountUnread: 0, trashCountTotal: 0 },
+        counters: {
+            allCountUnread: 0,
+            allCountTotal: 0,
+            allCountUnvisited: 0,
+            pinnedCountUnread: 0,
+            pinnedCountTotal: 0,
+            trashCountUnread: 0,
+            trashCountTotal: 0,
+        },
         ...overrides,
     } as never);
 
@@ -108,6 +116,45 @@ describe("buildFeedRows", () => {
         const row = rows.find((entry) => entry.key === "source:a");
         assert.equal(row.count, 2);
         assert.equal(row.countAll, 5);
+        assert.equal(row.badge, 2);
+    });
+
+    it("gives the specials their own unread and total counts", () => {
+        const rows = build({
+            showPinned: true,
+            counters: {
+                allCountUnread: 3,
+                allCountTotal: 9,
+                allCountUnvisited: 0,
+                pinnedCountUnread: 1,
+                pinnedCountTotal: 4,
+                trashCountUnread: 2,
+                trashCountTotal: 7,
+            },
+        });
+
+        const special = (name: string) => rows.find((row) => row.key === `special:${name}`);
+
+        assert.deepEqual([special("all-feeds").count, special("all-feeds").countAll], [3, 9]);
+        assert.deepEqual([special("pinned").count, special("pinned").countAll], [1, 4]);
+        assert.deepEqual([special("trash").count, special("trash").countAll], [2, 7]);
+    });
+
+    /** The trash counter has always been left blank, unlike its tooltip. */
+    it("shows no counter on the trash row", () => {
+        const rows = build({
+            counters: {
+                allCountUnread: 0,
+                allCountTotal: 0,
+                allCountUnvisited: 0,
+                pinnedCountUnread: 0,
+                pinnedCountTotal: 0,
+                trashCountUnread: 2,
+                trashCountTotal: 7,
+            },
+        });
+
+        assert.equal(rows.find((row) => row.key === "special:trash").badge, 0);
     });
 
     it("drops read feeds and folders when only unread are shown", () => {

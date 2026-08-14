@@ -8,8 +8,11 @@
  * Both palettes live in one place through `light-dark()`, which picks a value
  * from the used `color-scheme`. That means "auto" needs no class, no attribute
  * and no script: the default `color-scheme: light dark` already follows the
- * browser. `data-theme` only has to pin the two explicit overrides, so there is
+ * browser. `data-theme` only has to pin the explicit overrides, so there is
  * no flash of the wrong palette before the settings have loaded.
+ *
+ * Themes beyond light and dark are their own palette and restate the tokens
+ * below rather than adding a third arm to `light-dark()`, which has none.
  */
 
 :root {
@@ -68,4 +71,110 @@
 
 :root[data-theme="dark"] {
     color-scheme: dark;
+}
+
+/*
+ * The named palettes below cannot use `light-dark()`: they are a single palette
+ * each, so they restate every colour token. `color-scheme` still has to be set,
+ * because it drives what the browser draws itself — scrollbars, form controls
+ * and the sandbox iframe's default canvas.
+ */
+
+/* True black, for OLED panels where an unlit pixel costs nothing. */
+:root[data-theme="oled"] {
+    color-scheme: dark;
+
+    --surface: #000000;
+    --surface-sunken: #000000;
+    --surface-raised: #0b0b0d;
+    --surface-floating: #141418;
+    --surface-hover: rgba(255, 255, 255, 0.06);
+    --surface-active: rgba(255, 255, 255, 0.12);
+
+    --text: #e8e8ee;
+    --text-muted: #9a9aa4;
+    --text-faint: #6c6c76;
+
+    --line: #232329;
+    --line-strong: #3a3a42;
+
+    --accent: #4c8dff;
+    --accent-hover: #6ba0ff;
+    --accent-text: #ffffff;
+    --accent-soft: #0f1c2e;
+    --link: #8ab4f8;
+    --focus-ring: rgba(76, 141, 255, 0.6);
+
+    --unread: #6fa0ea;
+    --unseen: #b18cf0;
+    --pinned: #f0a54a;
+    --danger: #f16b6b;
+
+    --shadow-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Warm paper, for long reading sessions in a bright room. */
+:root[data-theme="sepia"] {
+    color-scheme: light;
+
+    --surface: #f6ecd9;
+    --surface-sunken: #ede0c8;
+    --surface-raised: #f1e4cf;
+    --surface-floating: #fbf4e6;
+    --surface-hover: rgba(90, 62, 30, 0.07);
+    --surface-active: rgba(90, 62, 30, 0.13);
+
+    --text: #40301c;
+    --text-muted: #6d5a40;
+    --text-faint: #93815f;
+
+    --line: #ddcaa8;
+    --line-strong: #c2a97f;
+
+    --accent: #a2571b;
+    --accent-hover: #8a4714;
+    --accent-text: #fff8ec;
+    --accent-soft: #f0dcbd;
+    --link: #8a4714;
+    --focus-ring: rgba(162, 87, 27, 0.45);
+
+    --unread: #a2571b;
+    --unseen: #7a5aa8;
+    --pinned: #b8860b;
+    --danger: #a33131;
+
+    --shadow-color: rgba(90, 62, 30, 0.22);
+}
+
+/* Cool blue-grey dark, lower contrast than the default dark palette. */
+:root[data-theme="nord"] {
+    color-scheme: dark;
+
+    --surface: #2e3440;
+    --surface-sunken: #272c36;
+    --surface-raised: #363d4a;
+    --surface-floating: #3b4252;
+    --surface-hover: rgba(216, 222, 233, 0.07);
+    --surface-active: rgba(216, 222, 233, 0.13);
+
+    --text: #eceff4;
+    --text-muted: #b9c1cf;
+    --text-faint: #8d97a8;
+
+    --line: #3f4757;
+    --line-strong: #55607a;
+
+    --accent: #88c0d0;
+    --accent-hover: #96ccdb;
+    --accent-text: #2e3440;
+    --accent-soft: #3b4a56;
+    --link: #8fbcbb;
+    --focus-ring: rgba(136, 192, 208, 0.5);
+
+    --unread: #81a1c1;
+    --unseen: #b48ead;
+    --pinned: #ebcb8b;
+    --danger: #bf616a;
+
+    --shadow-color: rgba(0, 0, 0, 0.5);
 }

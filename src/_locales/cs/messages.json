@@ -647,6 +647,15 @@
   "STATIC_DARK_J8M6W5": {
     "message": "Tmavý"
   },
+  "THEME_OLED_DARK": {
+    "message": "Tmavý OLED"
+  },
+  "THEME_SEPIA": {
+    "message": "Sépiový"
+  },
+  "THEME_NORD": {
+    "message": "Nord"
+  },
   "STATIC_HORIZONTAL_TYAPAH": {
     "message": "Vodorovné"
   },

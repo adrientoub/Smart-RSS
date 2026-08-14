@@ -71,6 +71,10 @@ export function Toolbar({ items }: ToolbarProps) {
                         data-action={item}
                         title={actionTitle(item)}
                         hidden={hidden}
+                        // A button is not focusable, so clicking one would
+                        // otherwise move focus off the row and out of the region
+                        // the hotkey table is keyed on.
+                        onMouseDown={(event) => event.preventDefault()}
                         onClick={(event) => executeAction(item, event)}
                     >
                         <Icon name={actionIcon(item)} className="button-icon" />

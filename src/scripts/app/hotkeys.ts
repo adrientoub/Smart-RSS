@@ -8,6 +8,7 @@
 import shortcuts from "./staticdb/shortcuts.js";
 import { executeAction } from "./actions.ts";
 import { settings } from "./state/settings.ts";
+import { ui } from "./state/uiState.ts";
 
 export function handleKeyDown(event: KeyboardEvent): void {
     const eventDocument = (event.target as Node | null)?.ownerDocument ?? document;
@@ -36,7 +37,12 @@ export function handleKeyDown(event: KeyboardEvent): void {
     }
 
     const hotkeys = settings.get("hotkeys") as Record<string, Record<string, string>>;
-    const region = eventDocument === document ? activeElement?.closest(".region")?.id : "sandbox";
+    // Focus can end up on <body> after a click on anything unfocusable, and the
+    // shortcut still belongs to whichever region the user was last working in.
+    const region =
+        eventDocument === document
+            ? (activeElement?.closest(".region")?.id ?? ui().focusRegion)
+            : "sandbox";
     if (region && hotkeys[region]?.[shortcut]) {
         executeAction(hotkeys[region][shortcut], event);
         event.preventDefault();

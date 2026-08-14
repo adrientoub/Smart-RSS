@@ -51,7 +51,11 @@ export function Indicator() {
                 </span>
             </div>
             <div id="indicator-toolbar">
-                <div id="indicator-stop" onClick={() => executeAction("feeds:stopUpdate")}>
+                <div
+                    id="indicator-stop"
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => executeAction("feeds:stopUpdate")}
+                >
                     <Icon name="stop" className="button-icon" />
                 </div>
             </div>

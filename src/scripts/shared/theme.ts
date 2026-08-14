@@ -1,17 +1,29 @@
 /**
  * Theme preference, shared by the reader, the article sandbox and the options page.
  *
- * The stylesheets do the real work: `theme.css` declares every colour through
+ * The stylesheets do the real work: `theme.css` declares the default colours through
  * `light-dark()` under `color-scheme: light dark`, so "auto" already follows the
- * browser with no script at all. All this module does is pin the two explicit
- * overrides onto `<html>` and answer "which one is showing right now" for the
- * toolbar toggle.
+ * browser with no script at all, and each named palette restates those colours under
+ * its own `data-theme` selector. All this module does is pin the explicit choice onto
+ * `<html>` and answer "light or dark?" for the toolbar toggle.
  */
 
-export type ThemePreference = "auto" | "light" | "dark";
+export type ThemePreference = "auto" | "light" | "dark" | "oled" | "sepia" | "nord";
 export type ResolvedTheme = "light" | "dark";
 
-export const THEME_PREFERENCES: readonly ThemePreference[] = ["auto", "light", "dark"];
+/** Which base scheme each named palette reads as, for the toggle and its icon. */
+const THEME_SCHEMES = {
+    light: "light",
+    dark: "dark",
+    oled: "dark",
+    sepia: "light",
+    nord: "dark",
+} as const satisfies Record<Exclude<ThemePreference, "auto">, ResolvedTheme>;
+
+export const THEME_PREFERENCES: readonly ThemePreference[] = [
+    "auto",
+    ...(Object.keys(THEME_SCHEMES) as Exclude<ThemePreference, "auto">[]),
+];
 
 const DARK_QUERY = "(prefers-color-scheme: dark)";
 
@@ -20,8 +32,8 @@ export function isThemePreference(value: unknown): value is ThemePreference {
 }
 
 export function resolveTheme(preference: ThemePreference, prefersDark: boolean): ResolvedTheme {
-    if (preference === "light" || preference === "dark") {
-        return preference;
+    if (preference !== "auto") {
+        return THEME_SCHEMES[preference];
     }
     return prefersDark ? "dark" : "light";
 }
@@ -29,11 +41,10 @@ export function resolveTheme(preference: ThemePreference, prefersDark: boolean):
 /**
  * What the toggle button should switch to: always an explicit choice, so a user
  * on "auto" gets the opposite of what they are looking at rather than a no-op.
+ * A named palette toggles to plain light or dark rather than to its own inverse,
+ * since none of them come in pairs.
  */
-export function toggledTheme(
-    preference: ThemePreference,
-    prefersDark: boolean
-): Exclude<ThemePreference, "auto"> {
+export function toggledTheme(preference: ThemePreference, prefersDark: boolean): ResolvedTheme {
     return resolveTheme(preference, prefersDark) === "dark" ? "light" : "dark";
 }
 

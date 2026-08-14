@@ -18,7 +18,8 @@ itself a continuation of the reader originally developed for Opera 15+ by BS-Har
   Backbone models and views. See [docs/backbone-migration.md](docs/backbone-migration.md).
 - **Faster.** The article list is virtualized, storage moved to Dexie/IndexedDB, and the
   code is bundled with esbuild instead of being loaded module-by-module by RequireJS.
-- **Dark mode** driven by CSS colour tokens, plus an SVG icon set that follows the theme.
+- **Themes** driven by CSS colour tokens — light, dark, OLED dark, sepia and nord, or
+  whatever the browser asks for — plus an SVG icon set that follows the theme.
 
 ## Stack
 

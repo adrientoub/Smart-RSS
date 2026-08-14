@@ -647,6 +647,15 @@
   "STATIC_DARK_J8M6W5": {
     "message": "Ciemny"
   },
+  "THEME_OLED_DARK": {
+    "message": "Ciemny OLED"
+  },
+  "THEME_SEPIA": {
+    "message": "Sepia"
+  },
+  "THEME_NORD": {
+    "message": "Nord"
+  },
   "STATIC_HORIZONTAL_TYAPAH": {
     "message": "Poziomy"
   },

@@ -18,6 +18,12 @@ describe("resolveTheme", () => {
         assert.equal(resolveTheme("light", true), "light");
         assert.equal(resolveTheme("dark", false), "dark");
     });
+
+    it("maps the named palettes onto a base scheme", () => {
+        assert.equal(resolveTheme("oled", false), "dark");
+        assert.equal(resolveTheme("nord", false), "dark");
+        assert.equal(resolveTheme("sepia", true), "light");
+    });
 });
 
 describe("toggledTheme", () => {
@@ -30,12 +36,20 @@ describe("toggledTheme", () => {
         assert.equal(toggledTheme("dark", false), "light");
         assert.equal(toggledTheme("light", true), "dark");
     });
+
+    it("leaves a named palette for plain light or dark", () => {
+        assert.equal(toggledTheme("oled", false), "light");
+        assert.equal(toggledTheme("sepia", true), "dark");
+    });
 });
 
 describe("isThemePreference", () => {
-    it("accepts only the three preferences", () => {
+    it("accepts only the known preferences", () => {
         assert.equal(isThemePreference("auto"), true);
         assert.equal(isThemePreference("dark"), true);
+        assert.equal(isThemePreference("oled"), true);
+        assert.equal(isThemePreference("sepia"), true);
+        assert.equal(isThemePreference("nord"), true);
         assert.equal(isThemePreference("inverted"), false);
         assert.equal(isThemePreference(undefined), false);
     });

@@ -647,6 +647,15 @@
   "STATIC_DARK_J8M6W5": {
     "message": "Escuro"
   },
+  "THEME_OLED_DARK": {
+    "message": "Escuro OLED"
+  },
+  "THEME_SEPIA": {
+    "message": "Sépia"
+  },
+  "THEME_NORD": {
+    "message": "Nord"
+  },
   "STATIC_HORIZONTAL_TYAPAH": {
     "message": "Horizontal"
   },

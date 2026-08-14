@@ -1,2 +1,2 @@
 import "./shared/polyfill.js";
-import "./bgprocess/bg.js";
+import "./bgprocess/bg.ts";

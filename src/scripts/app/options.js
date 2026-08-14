@@ -1,4 +1,4 @@
-import actions from "./staticdb/actions.js";
+import { actions, actionTitle } from "./actions.ts";
 import shortcuts from "./staticdb/shortcuts.js";
 import { sendMessage } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
@@ -7,7 +7,7 @@ import { localizeDocument, translate } from "../shared/i18n.ts";
 import { languages } from "../shared/locales.ts";
 import { createRecord, updateRecords, destroyRecords, idsOf } from "../shared/dataClient.ts";
 import { db } from "../shared/db.ts";
-import { sources, items, folders, reloadData } from "./modules/data.js";
+import { sources, items, folders, reloadData } from "./state/data.ts";
 
 const settings = settingsStore();
 
@@ -170,9 +170,9 @@ const documentReady = () => {
         settings.save("hotkeys", hotkeysSettings);
     };
     const actionsMap = {};
-    Object.entries(actions).forEach((obj) => {
-        Object.entries(obj[1]).forEach((action) => {
-            actionsMap[obj[0] + ":" + action[0]] = obj[0] + ":" + action[1]["title"];
+    Object.entries(actions).forEach(([region, regionActions]) => {
+        Object.keys(regionActions).forEach((name) => {
+            actionsMap[region + ":" + name] = region + ":" + actionTitle(region + ":" + name);
         });
     });
 
@@ -230,9 +230,7 @@ const documentReady = () => {
             return true;
         }
         if (target.classList.contains("resetHotkeysButton")) {
-            if (
-                confirm(translate("RESET_HOTKEYS_CONFIRM"))
-            ) {
+            if (confirm(translate("RESET_HOTKEYS_CONFIRM"))) {
                 settings.save("hotkeys", settings.defaults.hotkeys);
                 browser.runtime.reload();
             }
@@ -296,9 +294,9 @@ function handleCheck(event) {
 function handleExportSmart() {
     const smartExportStatus = document.querySelector("#smart-exported");
     const data = {
-        folders: folders.toJSON(),
-        sources: sources.toJSON(),
-        items: items.toJSON(),
+        folders: folders.all(),
+        sources: sources.all(),
+        items: items.all(),
     };
 
     smartExportStatus.setAttribute("href", "#");
@@ -370,24 +368,24 @@ function handleExportOPML() {
     setTimeout(() => {
         const body = doc.querySelector("body");
 
-        folders.forEach((folder) => {
+        folders.all().forEach((folder) => {
             addLine(doc, body);
-            body.appendChild(addFolder(doc, folder.get("title"), folder.get("id")));
+            body.appendChild(addFolder(doc, folder.title, folder.id));
         });
 
-        sources.forEach((source) => {
-            if (source.get("folderID")) {
-                const folder = body.querySelector('[id="' + source.get("folderID") + '"]');
+        sources.all().forEach((source) => {
+            if (source.folderID) {
+                const folder = body.querySelector('[id="' + source.folderID + '"]');
                 if (folder) {
                     addLine(doc, folder, "\n\t\t");
-                    folder.appendChild(addSource(doc, source.get("title"), source.get("url")));
+                    folder.appendChild(addSource(doc, source.title, source.url));
                 } else {
                     addLine(doc, body);
-                    body.appendChild(addSource(doc, source.get("title"), source.get("url")));
+                    body.appendChild(addSource(doc, source.title, source.url));
                 }
             } else {
                 addLine(doc, body);
-                body.appendChild(addSource(doc, source.get("title"), source.get("url")));
+                body.appendChild(addSource(doc, source.title, source.url));
             }
         });
 
@@ -525,7 +523,7 @@ function handleImportOPML(event) {
                 });
 
                 const folderId = duplicate
-                    ? duplicate.get("id")
+                    ? duplicate.id
                     : (await createRecord("folders", { title: folderTitle })).id;
 
                 for (const subFeed of [...subFeeds]) {
@@ -595,9 +593,7 @@ async function handleClearData() {
 }
 
 async function handleClearDeletedStorage() {
-    if (
-        !confirm(translate("REMOVE_DELETED_CONFIRM"))
-    ) {
+    if (!confirm(translate("REMOVE_DELETED_CONFIRM"))) {
         return;
     }
 
@@ -611,7 +607,7 @@ function handleClearFavicons() {
         return;
     }
 
-    updateRecords("sources", idsOf(sources.toArray()), {
+    updateRecords("sources", idsOf(sources.all()), {
         favicon: "/images/feed.png",
         faviconExpires: 0,
     });

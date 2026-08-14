@@ -1,7 +1,7 @@
 /**
  * The settings schema: every key, its type, and its default.
  *
- * This replaces the `defaults` block of the old Backbone model. The old store
+ * This replaces the `defaults` block of the old settings model. The old store
  * had no schema, which is why booleans ended up written as `true`, `"true"`,
  * `1`, `"1"`, `"on"` and `"yes"` and needed a `valueToBoolean` helper to read
  * back. Declaring types here removes that whole class of problem.

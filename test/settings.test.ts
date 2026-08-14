@@ -206,10 +206,10 @@ describe("settings store / cross-context updates", () => {
 });
 
 /**
- * The view layer still calls the store the way it called the Backbone model it
- * replaced, so both Backbone spellings have to keep working.
+ * The reader calls the store the way it called the settings model it replaced,
+ * so both spellings have to keep working.
  */
-describe("settings store / Backbone call shapes", () => {
+describe("settings store / model call shapes", () => {
     it("save() accepts the object form used by the resizable layouts", async () => {
         const area = fakeStorage();
         const store = createSettingsStore(area);

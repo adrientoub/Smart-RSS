@@ -75,8 +75,8 @@ async function toDataURI(favicon: string): Promise<FaviconResult> {
     return { favicon: imageDataUri, faviconExpires: expiresFrom(response.headers) };
 }
 
-export async function getFavicon(source: { get(key: string): unknown }): Promise<FaviconResult> {
-    return toDataURI(faviconUrlFor(String(source.get("base"))));
+export async function getFavicon(source: { base?: string }): Promise<FaviconResult> {
+    return toDataURI(faviconUrlFor(String(source.base)));
 }
 
 export default { getFavicon };

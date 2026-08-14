@@ -12,7 +12,7 @@ import { waitForBackground } from "./shared/messages.ts";
     await settings.load();
     settings.on("change:lang", () => location.reload());
 
-    const { loadData } = await import("./app/modules/data.js");
+    const { loadData } = await import("./app/state/data.ts");
     await loadData({ live: false });
 
     await import("./app/options.js");

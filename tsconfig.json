@@ -4,6 +4,7 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "jsx": "react-jsx",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": false,
@@ -33,6 +34,6 @@
     // TS 6+ no longer auto-includes every @types package.
     "types": ["firefox-webext-browser", "node"]
   },
-  "include": ["src/**/*.js", "src/**/*.ts", "test/**/*.ts", "build.js"],
+  "include": ["src/**/*.js", "src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "build.js"],
   "exclude": ["node_modules", "dist"]
 }

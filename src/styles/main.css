@@ -29,6 +29,11 @@ body {
     max-height: 100%;
 }
 
+/* The React root must not become a layout box of its own. */
+#root {
+    display: contents;
+}
+
 ::selection {
     background: var(--accent);
     color: var(--accent-text);
@@ -347,9 +352,9 @@ input[type="search"]:not(:focus):placeholder-shown {
 }
 
 #feeds.feed-list-hidden .dynamic-space,
-#feeds.feed-list-hidden .toolbar [data-action]:not([data-action="feeds:addSource"]):not(
-        [data-action="feeds:toggleFeedList"]
-    ) {
+#feeds.feed-list-hidden
+    .toolbar
+    [data-action]:not([data-action="feeds:addSource"]):not([data-action="feeds:toggleFeedList"]) {
     display: none;
 }
 
@@ -1168,7 +1173,7 @@ body.loading .loader {
     display: block;
 }
 
-body.loading > section {
+body.loading section {
     display: none;
 }
 

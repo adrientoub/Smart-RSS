@@ -19,10 +19,15 @@ This works today with no build changes:
 Existing `.js` files are migrated **opportunistically**, not in bulk:
 
 - Converting a file you are already substantially changing is welcome.
-- A mass `.js` → `.ts` rename is not. `checkJs` across the tree still reports ~280
-  errors, ~160 of them in the Backbone view layer, where `View.extend({...})` and
-  untyped `model.get("x")` mean annotations buy little until the model layer is typed.
+- A mass `.js` → `.ts` rename is not. The few survivors (`app/options.js`,
+  `app/helpers/dateUtils.js`, `staticdb/shortcuts.js`, the entry points) are stable and
+  buy little from annotation until someone rewrites them.
 - To type-check an existing `.js` file without renaming it, add `// @ts-check` at the top.
+
+React components are `.tsx`. `jsx` is `react-jsx`, so no `React` import is needed.
+Node's type stripping does not handle JSX, so **nothing under `test/` may import a
+`.tsx` file** — keep testable logic in plain `.ts` helpers, as `helpers/selection.ts`
+and `helpers/feedRows.ts` do.
 
 Typing is deliberately loose (`strict: false`, `checkJs: false`). Prefer accurate narrow
 types on new code, but do not tighten `tsconfig.json` globally without discussion.
@@ -58,8 +63,12 @@ list what needs manual testing rather than implying it works.
 
 - **Modules are ESM.** RequireJS and `src/scripts/libs/` are gone; third-party code comes
   from npm and is bundled by `build.js` (esbuild).
-- **`src/scripts/globals.d.ts`** declares `app`, the last ambient global, assigned by
-  `app/app.js` and read by the views. **Do not add new ambient globals.**
+- **There are no ambient globals.** Backbone, Underscore, jQuery and the `app` global are
+  gone; the reader is React over typed record stores. See
+  [`docs/backbone-migration.md`](../docs/backbone-migration.md) for the layering, and read
+  it before touching `shared/recordStore.ts`, `shared/repository.ts` or `app/state/`.
+- **Records are immutable.** An update replaces the object, so never hold a record across
+  one — hold its id and read it back from the store.
 - **`src/scripts/` is ESM, the repo root is CommonJS.** `build.js` is CommonJS. `test/` and
   `src/scripts/` each carry a `package.json` with `"type": "module"`.
 - Anything under `src/scripts/` is bundled; everything else in `src/` is copied verbatim.

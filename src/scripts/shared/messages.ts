@@ -5,11 +5,11 @@
  * means adding an entry to `MessageMap`, and both ends are then checked against
  * it.
  *
- * Only structured-cloneable data crosses the boundary. Backbone models cannot,
- * which is why everything here travels as ids and plain attributes.
+ * Only structured-cloneable data crosses the boundary, which is why everything
+ * here travels as ids and plain attributes.
  */
 
-/** The persisted Backbone collections. The background is their only writer. */
+/** The persisted record stores. The background is their only writer. */
 export type StoreName = "sources" | "items" | "folders";
 
 export interface MessageMap {

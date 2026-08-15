@@ -158,6 +158,18 @@
   "ADD_RSS_SOURCE": {
     "message": "Adicionar origem do RSS"
   },
+  "ALREADY_SUBSCRIBED": {
+    "message": "Essa fonte já está na sua lista."
+  },
+  "IMPORT_OPML": {
+    "message": "Importar OPML"
+  },
+  "OPML_IMPORTED": {
+    "message": "{count} fontes importadas."
+  },
+  "OR": {
+    "message": "ou"
+  },
   "FEED_MARKETPLACE": {
     "message": "Explorar fontes"
   },

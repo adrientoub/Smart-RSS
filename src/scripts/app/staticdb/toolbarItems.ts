@@ -2,7 +2,6 @@ export type ToolbarItem = `${string}:${string}` | "!dynamicSpace";
 
 export const toolbarItems = {
     feeds: [
-        "feeds:addSource",
         "feeds:openMarketplace",
         "feeds:addFolder",
         "feeds:updateAll",

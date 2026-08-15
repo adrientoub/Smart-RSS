@@ -158,6 +158,18 @@
   "ADD_RSS_SOURCE": {
     "message": "RSS Ekle"
   },
+  "ALREADY_SUBSCRIBED": {
+    "message": "Bu akış zaten listenizde."
+  },
+  "IMPORT_OPML": {
+    "message": "OPML içe aktar"
+  },
+  "OPML_IMPORTED": {
+    "message": "{count} akış içe aktarıldı."
+  },
+  "OR": {
+    "message": "veya"
+  },
   "FEED_MARKETPLACE": {
     "message": "Akışlara göz at"
   },

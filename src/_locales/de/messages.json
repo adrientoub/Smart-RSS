@@ -158,6 +158,18 @@
   "ADD_RSS_SOURCE": {
     "message": "Feed hinzufügen ..."
   },
+  "ALREADY_SUBSCRIBED": {
+    "message": "Dieser Feed ist bereits in Ihrer Liste."
+  },
+  "IMPORT_OPML": {
+    "message": "OPML importieren"
+  },
+  "OPML_IMPORTED": {
+    "message": "{count} Feeds importiert."
+  },
+  "OR": {
+    "message": "oder"
+  },
   "FEED_MARKETPLACE": {
     "message": "Feeds durchsuchen"
   },

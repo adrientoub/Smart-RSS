@@ -158,6 +158,18 @@
   "ADD_RSS_SOURCE": {
     "message": "Dodaj RSS izvor"
   },
+  "ALREADY_SUBSCRIBED": {
+    "message": "Taj je izvor već na vašem popisu."
+  },
+  "IMPORT_OPML": {
+    "message": "Uvezi OPML"
+  },
+  "OPML_IMPORTED": {
+    "message": "Uvezeno izvora: {count}."
+  },
+  "OR": {
+    "message": "ili"
+  },
   "FEED_MARKETPLACE": {
     "message": "Pregledaj izvore"
   },

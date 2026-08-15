@@ -1,11 +1,11 @@
-import { actions, actionTitle } from "./actions.ts";
+import { actions, actionTitle, importOpmlFeeds } from "./actions.ts";
 import shortcuts from "./staticdb/shortcuts.js";
 import { sendMessage } from "../shared/messages.ts";
 import { settingsStore } from "../shared/settings.ts";
 import { applyTheme } from "../shared/theme.ts";
 import { localizeDocument, translate } from "../shared/i18n.ts";
 import { languages } from "../shared/locales.ts";
-import { createRecord, updateRecords, destroyRecords, idsOf } from "../shared/dataClient.ts";
+import { updateRecords, destroyRecords, idsOf } from "../shared/dataClient.ts";
 import { db } from "../shared/db.ts";
 import { sources, items, folders, reloadData } from "./state/data.ts";
 
@@ -31,21 +31,6 @@ function escapeHtml(string) {
         .replace(/\s/, (f) => {
             return f === " " ? " " : "";
         });
-}
-
-function decodeHTML(str = "") {
-    const map = { gt: ">", lt: "<", amp: "&", quot: '"' };
-    return str.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gim, function ($0, $1) {
-        if ($1[0] === "#") {
-            return String.fromCharCode(
-                $1[1].toLowerCase() === "x"
-                    ? parseInt($1.substr(2), 16)
-                    : parseInt($1.substr(1), 10)
-            );
-        } else {
-            return Object.hasOwn(map, $1) ? map[$1] : $0;
-        }
-    });
 }
 
 JSON.safeParse = function (str) {
@@ -498,75 +483,14 @@ function handleImportOPML(event) {
 
     opmlImportStatus.textContent = translate("IMPORTING_WAIT");
 
-    const reader = new FileReader();
-    reader.onload = async function () {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(this.result, "application/xml");
-
-        if (!doc) {
+    file.text()
+        .then((xml) => importOpmlFeeds(xml))
+        .then(() => {
+            opmlImportStatus.textContent = translate("IMPORT_COMPLETED");
+        })
+        .catch(() => {
             opmlImportStatus.textContent = translate("WRONG_FILE");
-            return;
-        }
-
-        const feeds = doc.querySelectorAll("body > outline[text], body > outline[title]");
-
-        // Sequential: a folder's id is needed before its feeds can reference it.
-        for (const feed of [...feeds]) {
-            if (!feed.hasAttribute("xmlUrl")) {
-                const subFeeds = feed.querySelectorAll("outline[xmlUrl]");
-                const folderTitle = decodeHTML(
-                    feed.getAttribute("title") || feed.getAttribute("text")
-                );
-
-                const duplicate = folders.findWhere({
-                    title: folderTitle,
-                });
-
-                const folderId = duplicate
-                    ? duplicate.id
-                    : (await createRecord("folders", { title: folderTitle })).id;
-
-                for (const subFeed of [...subFeeds]) {
-                    if (
-                        sources.findWhere({
-                            url: decodeHTML(subFeed.getAttribute("xmlUrl")),
-                        })
-                    ) {
-                        continue;
-                    }
-                    await createRecord("sources", {
-                        title: decodeHTML(
-                            subFeed.getAttribute("title") || subFeed.getAttribute("text")
-                        ),
-                        url: decodeHTML(subFeed.getAttribute("xmlUrl")),
-                        updateEvery: -1,
-                        folderID: folderId,
-                    });
-                }
-            } else {
-                if (
-                    sources.findWhere({
-                        url: decodeHTML(feed.getAttribute("xmlUrl")),
-                    })
-                ) {
-                    continue;
-                }
-                await createRecord("sources", {
-                    title: decodeHTML(feed.getAttribute("title") || feed.getAttribute("text")),
-                    url: decodeHTML(feed.getAttribute("xmlUrl")),
-                    updateEvery: -1,
-                });
-            }
-        }
-
-        opmlImportStatus.textContent = translate("IMPORT_COMPLETED");
-
-        setTimeout(function () {
-            sendMessage("load-all");
-        }, 10);
-    };
-
-    reader.readAsText(file);
+        });
 }
 
 function handleClearSettings() {

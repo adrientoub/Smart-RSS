@@ -158,6 +158,54 @@
   "ADD_RSS_SOURCE": {
     "message": "Додај RSS извор"
   },
+  "FEED_MARKETPLACE": {
+    "message": "Прегледај изворе"
+  },
+  "FEED_MARKETPLACE_INTRO": {
+    "message": "Пажљиво одабрани извори које вреди пратити."
+  },
+  "SEARCH_FEEDS": {
+    "message": "Претражи изворе"
+  },
+  "NO_FEEDS_FOUND": {
+    "message": "Ниједан извор не одговара претрази."
+  },
+  "ALL_CATEGORIES": {
+    "message": "Све"
+  },
+  "ADD": {
+    "message": "Додај"
+  },
+  "ADDED": {
+    "message": "Додато"
+  },
+  "CLOSE": {
+    "message": "Затвори"
+  },
+  "CATEGORY_NEWS": {
+    "message": "Вести"
+  },
+  "CATEGORY_TECHNOLOGY": {
+    "message": "Технологија"
+  },
+  "CATEGORY_DEVELOPMENT": {
+    "message": "Развој"
+  },
+  "CATEGORY_SCIENCE": {
+    "message": "Наука"
+  },
+  "CATEGORY_DESIGN": {
+    "message": "Дизајн"
+  },
+  "CATEGORY_GAMING": {
+    "message": "Игре"
+  },
+  "CATEGORY_BUSINESS": {
+    "message": "Бизнис"
+  },
+  "CATEGORY_CULTURE": {
+    "message": "Култура"
+  },
   "UPDATE_ALL": {
     "message": "Ажурирај све"
   },

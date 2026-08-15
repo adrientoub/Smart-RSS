@@ -15,6 +15,7 @@ import { folders, items, sources } from "./state/data.ts";
 import { setFocus, hideOverlays, ui, uiStore } from "./state/uiState.ts";
 import * as commands from "./state/commands.ts";
 import { selectedSources, selectedArticles, contentArticle } from "./state/selectors.ts";
+import { normalizeFeedUrl } from "./helpers/feedUrl.ts";
 
 const settings = settingsStore();
 const L = (key: string) => translate(key);
@@ -29,6 +30,64 @@ export interface ActionDefinition {
 
 export function fixURL(url: string): string {
     return url.search(/[a-z]+:\/\//) === -1 ? "https://" + url : url;
+}
+
+/** The folder a new feed lands in: the selected one, or the root. */
+function targetFolderID(): string {
+    const selectedFolder = ui().feedSelection.selected.find((key) => key.startsWith("folder:"));
+    if (selectedFolder) {
+        const id = selectedFolder.slice("folder:".length);
+        if (folders.has(id)) {
+            return id;
+        }
+    }
+    return "0";
+}
+
+export interface AddSourceOptions {
+    title?: string;
+    folderID?: string;
+    /** Reveal and select the feed once it exists. */
+    focus?: boolean;
+}
+
+/**
+ * Subscribes to a feed, or focuses the existing subscription. Returns its id.
+ *
+ * Shared by the toolbar prompt and the feed marketplace so both go through the
+ * same duplicate check.
+ */
+export async function addSourceByUrl(
+    entered: string,
+    { title, folderID = targetFolderID(), focus = true }: AddSourceOptions = {}
+): Promise<string | null> {
+    const trimmed = entered.trim();
+    if (!trimmed) {
+        return null;
+    }
+    const url = fixURL(trimmed);
+    const duplicate = sources.findWhere({ uid: normalizeFeedUrl(url) });
+
+    if (focus) {
+        settings.save("feedListVisible", true);
+    }
+    if (duplicate) {
+        if (focus) {
+            commands.focusFeed(duplicate.id);
+        }
+        return duplicate.id;
+    }
+    // Awaited for the new feed's id, which the background generates.
+    const { id } = await createRecord("sources", {
+        title: title || url,
+        url,
+        updateEvery: -1,
+        folderID,
+    });
+    if (focus) {
+        commands.focusFeed(id);
+    }
+    return id;
 }
 
 const contentFrame = () => document.querySelector("iframe") as HTMLIFrameElement | null;
@@ -135,41 +194,14 @@ export const actions: Record<string, Record<string, ActionDefinition>> = {
         addSource: {
             icon: "plus",
             title: L("ADD_RSS_SOURCE"),
-            // Awaited for the new feed's id, which the background generates.
             fn: async () => {
-                const entered = (prompt(L("RSS_FEED_URL")) || "").trim();
-                if (!entered) {
-                    return;
-                }
-
-                let folderID = "0";
-                const selectedFolder = ui().feedSelection.selected.find((key) =>
-                    key.startsWith("folder:")
-                );
-                if (selectedFolder) {
-                    const id = selectedFolder.slice("folder:".length);
-                    if (folders.has(id)) {
-                        folderID = id;
-                    }
-                }
-
-                const url = fixURL(entered);
-                const uid = url.replace(/^(.*:)?(\/\/)?(www*?\.)?/, "").replace(/\/$/, "");
-                const duplicate = sources.findWhere({ uid });
-
-                settings.save("feedListVisible", true);
-                if (duplicate) {
-                    commands.focusFeed(duplicate.id);
-                    return;
-                }
-                const { id } = await createRecord("sources", {
-                    title: url,
-                    url,
-                    updateEvery: -1,
-                    folderID,
-                });
-                commands.focusFeed(id);
+                await addSourceByUrl(prompt(L("RSS_FEED_URL")) || "");
             },
+        },
+        openMarketplace: {
+            icon: "store",
+            title: L("FEED_MARKETPLACE"),
+            fn: () => uiStore.setState({ marketplaceOpen: true }),
         },
         addFolder: {
             icon: "folder-plus",

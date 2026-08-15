@@ -15,6 +15,7 @@ import {
 } from "../helpers/feedRows.ts";
 import { specials } from "../staticdb/specials.ts";
 import { createItemComparator } from "../helpers/itemSort.ts";
+import { escapeRegExp, stripDiacritics } from "../helpers/text.ts";
 import { articlesMatchingQuery, listArticles } from "./articleList.ts";
 import { type FolderRecord, type ItemRecord, type SourceRecord } from "../../shared/records.ts";
 
@@ -83,13 +84,6 @@ export function queryArticles(query: ArticleQuery = ui().query): ItemRecord[] {
         .filter((item) => !query.unreadOnly || item.unread)
         .sort(createItemComparator(settings));
 }
-
-const stripDiacritics = (text: unknown) =>
-    String(text)
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
-
-const escapeRegExp = (text: string) => text.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
 
 /** Applies the search box. An empty query keeps everything. */
 export function searchArticles(articles: ItemRecord[], search: string): ItemRecord[] {

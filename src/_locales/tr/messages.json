@@ -158,6 +158,54 @@
   "ADD_RSS_SOURCE": {
     "message": "RSS Ekle"
   },
+  "FEED_MARKETPLACE": {
+    "message": "Akışlara göz at"
+  },
+  "FEED_MARKETPLACE_INTRO": {
+    "message": "Takip etmeye değer, özenle seçilmiş akışlar."
+  },
+  "SEARCH_FEEDS": {
+    "message": "Akış ara"
+  },
+  "NO_FEEDS_FOUND": {
+    "message": "Aramanızla eşleşen akış yok."
+  },
+  "ALL_CATEGORIES": {
+    "message": "Tümü"
+  },
+  "ADD": {
+    "message": "Ekle"
+  },
+  "ADDED": {
+    "message": "Eklendi"
+  },
+  "CLOSE": {
+    "message": "Kapat"
+  },
+  "CATEGORY_NEWS": {
+    "message": "Haberler"
+  },
+  "CATEGORY_TECHNOLOGY": {
+    "message": "Teknoloji"
+  },
+  "CATEGORY_DEVELOPMENT": {
+    "message": "Geliştirme"
+  },
+  "CATEGORY_SCIENCE": {
+    "message": "Bilim"
+  },
+  "CATEGORY_DESIGN": {
+    "message": "Tasarım"
+  },
+  "CATEGORY_GAMING": {
+    "message": "Oyun"
+  },
+  "CATEGORY_BUSINESS": {
+    "message": "İş dünyası"
+  },
+  "CATEGORY_CULTURE": {
+    "message": "Kültür"
+  },
   "UPDATE_ALL": {
     "message": "Tümünü Güncelle"
   },

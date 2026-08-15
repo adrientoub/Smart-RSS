@@ -158,6 +158,54 @@
   "ADD_RSS_SOURCE": {
     "message": "Adicionar origem do RSS"
   },
+  "FEED_MARKETPLACE": {
+    "message": "Explorar fontes"
+  },
+  "FEED_MARKETPLACE_INTRO": {
+    "message": "Uma seleção de fontes que vale a pena seguir."
+  },
+  "SEARCH_FEEDS": {
+    "message": "Procurar fontes"
+  },
+  "NO_FEEDS_FOUND": {
+    "message": "Nenhuma fonte corresponde à pesquisa."
+  },
+  "ALL_CATEGORIES": {
+    "message": "Todas"
+  },
+  "ADD": {
+    "message": "Adicionar"
+  },
+  "ADDED": {
+    "message": "Adicionada"
+  },
+  "CLOSE": {
+    "message": "Fechar"
+  },
+  "CATEGORY_NEWS": {
+    "message": "Notícias"
+  },
+  "CATEGORY_TECHNOLOGY": {
+    "message": "Tecnologia"
+  },
+  "CATEGORY_DEVELOPMENT": {
+    "message": "Desenvolvimento"
+  },
+  "CATEGORY_SCIENCE": {
+    "message": "Ciência"
+  },
+  "CATEGORY_DESIGN": {
+    "message": "Design"
+  },
+  "CATEGORY_GAMING": {
+    "message": "Jogos"
+  },
+  "CATEGORY_BUSINESS": {
+    "message": "Negócios"
+  },
+  "CATEGORY_CULTURE": {
+    "message": "Cultura"
+  },
   "UPDATE_ALL": {
     "message": "Atualizar todos"
   },

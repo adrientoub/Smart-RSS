@@ -158,6 +158,54 @@
   "ADD_RSS_SOURCE": {
     "message": "Добавить RSS"
   },
+  "FEED_MARKETPLACE": {
+    "message": "Каталог лент"
+  },
+  "FEED_MARKETPLACE_INTRO": {
+    "message": "Тщательно отобранные ленты, которые стоит читать."
+  },
+  "SEARCH_FEEDS": {
+    "message": "Поиск лент"
+  },
+  "NO_FEEDS_FOUND": {
+    "message": "Ничего не найдено."
+  },
+  "ALL_CATEGORIES": {
+    "message": "Все"
+  },
+  "ADD": {
+    "message": "Добавить"
+  },
+  "ADDED": {
+    "message": "Добавлено"
+  },
+  "CLOSE": {
+    "message": "Закрыть"
+  },
+  "CATEGORY_NEWS": {
+    "message": "Новости"
+  },
+  "CATEGORY_TECHNOLOGY": {
+    "message": "Технологии"
+  },
+  "CATEGORY_DEVELOPMENT": {
+    "message": "Разработка"
+  },
+  "CATEGORY_SCIENCE": {
+    "message": "Наука"
+  },
+  "CATEGORY_DESIGN": {
+    "message": "Дизайн"
+  },
+  "CATEGORY_GAMING": {
+    "message": "Игры"
+  },
+  "CATEGORY_BUSINESS": {
+    "message": "Бизнес"
+  },
+  "CATEGORY_CULTURE": {
+    "message": "Культура"
+  },
   "UPDATE_ALL": {
     "message": "Обновить всё"
   },

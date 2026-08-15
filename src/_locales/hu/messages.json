@@ -158,6 +158,54 @@
   "ADD_RSS_SOURCE": {
     "message": "Hírcsatorna forrás hozzáadása"
   },
+  "FEED_MARKETPLACE": {
+    "message": "Hírcsatornák böngészése"
+  },
+  "FEED_MARKETPLACE_INTRO": {
+    "message": "Válogatott hírcsatornák, amelyeket érdemes követni."
+  },
+  "SEARCH_FEEDS": {
+    "message": "Hírcsatornák keresése"
+  },
+  "NO_FEEDS_FOUND": {
+    "message": "Nincs a keresésnek megfelelő hírcsatorna."
+  },
+  "ALL_CATEGORIES": {
+    "message": "Összes"
+  },
+  "ADD": {
+    "message": "Hozzáadás"
+  },
+  "ADDED": {
+    "message": "Hozzáadva"
+  },
+  "CLOSE": {
+    "message": "Bezárás"
+  },
+  "CATEGORY_NEWS": {
+    "message": "Hírek"
+  },
+  "CATEGORY_TECHNOLOGY": {
+    "message": "Technológia"
+  },
+  "CATEGORY_DEVELOPMENT": {
+    "message": "Fejlesztés"
+  },
+  "CATEGORY_SCIENCE": {
+    "message": "Tudomány"
+  },
+  "CATEGORY_DESIGN": {
+    "message": "Dizájn"
+  },
+  "CATEGORY_GAMING": {
+    "message": "Játékok"
+  },
+  "CATEGORY_BUSINESS": {
+    "message": "Üzlet"
+  },
+  "CATEGORY_CULTURE": {
+    "message": "Kultúra"
+  },
   "UPDATE_ALL": {
     "message": "Az összes frissítése"
   },

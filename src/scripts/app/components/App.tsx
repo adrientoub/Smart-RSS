@@ -5,6 +5,7 @@ import { ArticleList } from "./ArticleList.tsx";
 import { ContentPane } from "./ContentPane.tsx";
 import { Indicator } from "./Indicator.tsx";
 import { Properties } from "./Properties.tsx";
+import { Marketplace } from "./Marketplace.tsx";
 import { ContextMenu } from "./ContextMenu.tsx";
 import { Resizer } from "./Resizer.tsx";
 import { toolbarItems } from "../staticdb/toolbarItems.ts";
@@ -124,6 +125,7 @@ export function App() {
                 onCommit={(size) => settings.save(vertical ? "posC" : "posB", size)}
             />
             <ContextMenu />
+            <Marketplace />
         </>
     );
 }

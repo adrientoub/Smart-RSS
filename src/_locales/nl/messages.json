@@ -158,6 +158,54 @@
   "ADD_RSS_SOURCE": {
     "message": "RSS-bron toevoegen"
   },
+  "FEED_MARKETPLACE": {
+    "message": "Feeds verkennen"
+  },
+  "FEED_MARKETPLACE_INTRO": {
+    "message": "Een zorgvuldig gekozen selectie feeds die het volgen waard zijn."
+  },
+  "SEARCH_FEEDS": {
+    "message": "Feeds zoeken"
+  },
+  "NO_FEEDS_FOUND": {
+    "message": "Geen feeds gevonden."
+  },
+  "ALL_CATEGORIES": {
+    "message": "Alle"
+  },
+  "ADD": {
+    "message": "Toevoegen"
+  },
+  "ADDED": {
+    "message": "Toegevoegd"
+  },
+  "CLOSE": {
+    "message": "Sluiten"
+  },
+  "CATEGORY_NEWS": {
+    "message": "Nieuws"
+  },
+  "CATEGORY_TECHNOLOGY": {
+    "message": "Technologie"
+  },
+  "CATEGORY_DEVELOPMENT": {
+    "message": "Ontwikkeling"
+  },
+  "CATEGORY_SCIENCE": {
+    "message": "Wetenschap"
+  },
+  "CATEGORY_DESIGN": {
+    "message": "Ontwerp"
+  },
+  "CATEGORY_GAMING": {
+    "message": "Games"
+  },
+  "CATEGORY_BUSINESS": {
+    "message": "Zakelijk"
+  },
+  "CATEGORY_CULTURE": {
+    "message": "Cultuur"
+  },
   "UPDATE_ALL": {
     "message": "Alles bijwerken"
   },

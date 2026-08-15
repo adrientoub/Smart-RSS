@@ -158,6 +158,54 @@
   "ADD_RSS_SOURCE": {
     "message": "Pridať RSS zdroj"
   },
+  "FEED_MARKETPLACE": {
+    "message": "Prehľadávať kanály"
+  },
+  "FEED_MARKETPLACE_INTRO": {
+    "message": "Ručne vybraný výber kanálov, ktoré stojí za sledovanie."
+  },
+  "SEARCH_FEEDS": {
+    "message": "Hľadať kanály"
+  },
+  "NO_FEEDS_FOUND": {
+    "message": "Žiadny kanál nezodpovedá hľadaniu."
+  },
+  "ALL_CATEGORIES": {
+    "message": "Všetko"
+  },
+  "ADD": {
+    "message": "Pridať"
+  },
+  "ADDED": {
+    "message": "Pridané"
+  },
+  "CLOSE": {
+    "message": "Zavrieť"
+  },
+  "CATEGORY_NEWS": {
+    "message": "Správy"
+  },
+  "CATEGORY_TECHNOLOGY": {
+    "message": "Technológie"
+  },
+  "CATEGORY_DEVELOPMENT": {
+    "message": "Vývoj"
+  },
+  "CATEGORY_SCIENCE": {
+    "message": "Veda"
+  },
+  "CATEGORY_DESIGN": {
+    "message": "Dizajn"
+  },
+  "CATEGORY_GAMING": {
+    "message": "Hry"
+  },
+  "CATEGORY_BUSINESS": {
+    "message": "Biznis"
+  },
+  "CATEGORY_CULTURE": {
+    "message": "Kultúra"
+  },
   "UPDATE_ALL": {
     "message": "Aktualizovať všetko"
   },

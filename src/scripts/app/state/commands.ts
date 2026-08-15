@@ -35,7 +35,7 @@ import {
 } from "../../shared/dataClient.ts";
 import { translate } from "../../shared/i18n.ts";
 import type { FeedRow } from "../helpers/feedRows.ts";
-import type { ItemRecord } from "../../shared/records.ts";
+import type { ItemRecord, SourceRecord } from "../../shared/records.ts";
 
 /* -------------------------------------------------------------------------- *
  * Feed list
@@ -409,18 +409,38 @@ export function markSelectedFeedsAsRead(): void {
     updateRecords("sources", idsOf(flagged), { hasNew: false });
 }
 
-export function deleteSelectedFeeds(): void {
-    if (!confirm(translate("REALLY_DELETE"))) {
+export function deleteFeeds(feeds: readonly SourceRecord[]): void {
+    if (!feeds.length) {
         return;
     }
-    const feeds = selectedSources();
-    const selectedFolderRecords = selectedFolders();
     // Articles of a deleted feed have nowhere to belong.
     const orphaned = items.filter((item) =>
         feeds.some((source) => source.id === String(item.sourceID))
     );
     destroyRecords("items", idsOf(orphaned));
     destroyRecords("sources", idsOf(feeds));
+}
+
+/** Unsubscribes from one feed, from outside the feed list's selection. */
+export function removeFeed(id: string): void {
+    const source = sources.get(id);
+    if (!source) {
+        return;
+    }
+    deleteFeeds([source]);
+    if (ui().feedSelection.selected.includes("source:" + id)) {
+        uiStore.setState({ feedSelection: { selected: [], pivot: null, last: null } });
+        selectAllFeedsSpecial();
+    }
+}
+
+export function deleteSelectedFeeds(): void {
+    if (!confirm(translate("REALLY_DELETE"))) {
+        return;
+    }
+    const feeds = selectedSources();
+    const selectedFolderRecords = selectedFolders();
+    deleteFeeds(feeds);
     destroyRecords("folders", idsOf(selectedFolderRecords));
     uiStore.setState({ feedSelection: { selected: [], pivot: null, last: null } });
     selectAllFeedsSpecial();

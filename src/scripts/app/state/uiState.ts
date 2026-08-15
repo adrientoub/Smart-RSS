@@ -52,6 +52,8 @@ export interface UiState {
     /** "" follows the feed's default view. */
     contentMode: "" | "feed" | "mozilla";
     properties: PropertiesTarget | null;
+    /** Whether the feed marketplace overlay is showing. */
+    marketplaceOpen: boolean;
     contextMenu: ContextMenuState | null;
     focusRegion: RegionName;
     /** Bumped to re-assert focus even when the region did not change. */
@@ -70,6 +72,7 @@ export const uiStore = createStore<UiState>({
     contentId: null,
     contentMode: "",
     properties: null,
+    marketplaceOpen: false,
     contextMenu: null,
     focusRegion: "feeds",
     focusTick: 0,
@@ -84,7 +87,7 @@ export function setFocus(region: RegionName): void {
 }
 
 export function hideOverlays(): void {
-    uiStore.setState({ contextMenu: null, properties: null });
+    uiStore.setState({ contextMenu: null, properties: null, marketplaceOpen: false });
 }
 
 export function showContextMenu(menu: string, x: number, y: number): void {

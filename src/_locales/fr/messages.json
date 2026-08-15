@@ -158,6 +158,18 @@
   "ADD_RSS_SOURCE": {
     "message": "Ajouter un flux RSS"
   },
+  "ALREADY_SUBSCRIBED": {
+    "message": "Ce flux est déjà dans votre liste."
+  },
+  "IMPORT_OPML": {
+    "message": "Importer un OPML"
+  },
+  "OPML_IMPORTED": {
+    "message": "{count} flux importés."
+  },
+  "OR": {
+    "message": "ou"
+  },
   "FEED_MARKETPLACE": {
     "message": "Parcourir les flux"
   },

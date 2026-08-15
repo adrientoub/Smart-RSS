@@ -16,6 +16,7 @@ import { setFocus, hideOverlays, ui, uiStore } from "./state/uiState.ts";
 import * as commands from "./state/commands.ts";
 import { selectedSources, selectedArticles, contentArticle } from "./state/selectors.ts";
 import { normalizeFeedUrl } from "./helpers/feedUrl.ts";
+import { parseOpml } from "./helpers/opml.ts";
 
 const settings = settingsStore();
 const L = (key: string) => translate(key);
@@ -88,6 +89,58 @@ export async function addSourceByUrl(
         commands.focusFeed(id);
     }
     return id;
+}
+
+/** The existing subscription for a feed url, if there is one. */
+export function findSubscription(url: string) {
+    return sources.findWhere({ uid: normalizeFeedUrl(fixURL(url.trim())) });
+}
+
+export interface OpmlImportResult {
+    added: number;
+    /** Feeds already subscribed to. */
+    skipped: number;
+}
+
+/** Throws if the document is not well-formed XML. */
+export async function importOpmlFeeds(xml: string): Promise<OpmlImportResult> {
+    const entries = parseOpml(xml);
+    const folderIds = new Map<string, string>();
+    let added = 0;
+    let skipped = 0;
+
+    // Sequential: a folder must exist before the feeds that reference it.
+    for (const entry of entries) {
+        if (sources.findWhere({ uid: normalizeFeedUrl(entry.url) })) {
+            skipped++;
+            continue;
+        }
+        let folderID = "0";
+        if (entry.folder) {
+            const known = folderIds.get(entry.folder);
+            if (known) {
+                folderID = known;
+            } else {
+                const existing = folders.findWhere({ title: entry.folder });
+                folderID = existing
+                    ? existing.id
+                    : (await createRecord("folders", { title: entry.folder })).id;
+                folderIds.set(entry.folder, folderID);
+            }
+        }
+        await createRecord("sources", {
+            title: entry.title,
+            url: entry.url,
+            updateEvery: -1,
+            folderID,
+        });
+        added++;
+    }
+
+    if (added) {
+        sendMessage("load-all");
+    }
+    return { added, skipped };
 }
 
 const contentFrame = () => document.querySelector("iframe") as HTMLIFrameElement | null;
@@ -194,9 +247,7 @@ export const actions: Record<string, Record<string, ActionDefinition>> = {
         addSource: {
             icon: "plus",
             title: L("ADD_RSS_SOURCE"),
-            fn: async () => {
-                await addSourceByUrl(prompt(L("RSS_FEED_URL")) || "");
-            },
+            fn: () => uiStore.setState({ marketplaceOpen: true }),
         },
         openMarketplace: {
             icon: "store",

@@ -158,6 +158,18 @@
   "ADD_RSS_SOURCE": {
     "message": "Hírcsatorna forrás hozzáadása"
   },
+  "ALREADY_SUBSCRIBED": {
+    "message": "Ez a hírcsatorna már a listán van."
+  },
+  "IMPORT_OPML": {
+    "message": "OPML importálása"
+  },
+  "OPML_IMPORTED": {
+    "message": "{count} hírcsatorna importálva."
+  },
+  "OR": {
+    "message": "vagy"
+  },
   "FEED_MARKETPLACE": {
     "message": "Hírcsatornák böngészése"
   },

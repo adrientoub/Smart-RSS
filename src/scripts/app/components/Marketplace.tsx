@@ -5,9 +5,9 @@
  * needs no host permission - unlike a fetch, which Firefox MV3 would block
  * until the user grants access to all sites.
  */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { Icon } from "./Icon.tsx";
-import { addSourceByUrl } from "../actions.ts";
+import { addSourceByUrl, findSubscription, importOpmlFeeds } from "../actions.ts";
 import { sources } from "../state/data.ts";
 import { uiStore } from "../state/uiState.ts";
 import { settings, useRecordVersion, useStoreState } from "../state/hooks.ts";
@@ -30,6 +30,11 @@ const faviconFor = (feed: CatalogFeed) => feed.favicon ?? new URL("/favicon.ico"
 
 const close = () => uiStore.setState({ marketplaceOpen: false });
 
+interface Status {
+    kind: "ok" | "error" | "busy";
+    text: string;
+}
+
 export function Marketplace() {
     const open = useStoreState(uiStore, (state) => state.marketplaceOpen);
     if (!open) {
@@ -43,7 +48,11 @@ function MarketplaceOverlay() {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState<CatalogCategory | null>(null);
     const [pending, setPending] = useState<readonly string[]>([]);
+    const [ownUrl, setOwnUrl] = useState("");
+    const [status, setStatus] = useState<Status | null>(null);
+    const [busy, setBusy] = useState(false);
     const searchRef = useRef<HTMLInputElement>(null);
+    const fileRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         searchRef.current?.focus();
@@ -75,6 +84,49 @@ function MarketplaceOverlay() {
             await addSourceByUrl(feed.url, { title: feed.title, focus: false });
         } finally {
             setPending((current) => current.filter((url) => url !== feed.url));
+        }
+    };
+
+    const addOwn = async (event: FormEvent) => {
+        event.preventDefault();
+        const entered = ownUrl.trim();
+        if (!entered || busy) {
+            return;
+        }
+        if (findSubscription(entered)) {
+            setStatus({ kind: "error", text: L("ALREADY_SUBSCRIBED") });
+            return;
+        }
+        setBusy(true);
+        setStatus(null);
+        try {
+            settings.save("feedListVisible", true);
+            await addSourceByUrl(entered, { focus: false });
+            setOwnUrl("");
+            setStatus({ kind: "ok", text: L("ADDED") });
+        } finally {
+            setBusy(false);
+        }
+    };
+
+    const importFile = async (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        // Cleared so picking the same file again still fires a change event.
+        event.target.value = "";
+        if (!file || file.size === 0) {
+            setStatus({ kind: "error", text: L("WRONG_FILE") });
+            return;
+        }
+        setBusy(true);
+        setStatus({ kind: "busy", text: L("IMPORTING_WAIT") });
+        try {
+            settings.save("feedListVisible", true);
+            const { added } = await importOpmlFeeds(await file.text());
+            setStatus({ kind: "ok", text: translate("OPML_IMPORTED", { count: String(added) }) });
+        } catch {
+            setStatus({ kind: "error", text: L("WRONG_FILE") });
+        } finally {
+            setBusy(false);
         }
     };
 
@@ -114,6 +166,56 @@ function MarketplaceOverlay() {
                         <Icon name="x" className="button-icon" />
                     </button>
                 </header>
+
+                <div className="marketplace-own">
+                    <form className="marketplace-own-form" onSubmit={addOwn}>
+                        <Icon name="rss" className="marketplace-own-icon" />
+                        <input
+                            className="marketplace-own-input"
+                            type="text"
+                            inputMode="url"
+                            spellCheck={false}
+                            autoComplete="off"
+                            value={ownUrl}
+                            placeholder="https://example.com/feed.xml"
+                            aria-label={L("ADD_RSS_SOURCE")}
+                            onChange={(event) => {
+                                setOwnUrl(event.target.value);
+                                setStatus(null);
+                            }}
+                        />
+                        <button
+                            className="marketplace-own-add"
+                            type="submit"
+                            disabled={busy || !ownUrl.trim()}
+                        >
+                            <Icon name="plus" className="button-icon" />
+                            {L("ADD")}
+                        </button>
+                    </form>
+
+                    <span className="marketplace-own-separator">{L("OR")}</span>
+
+                    <button
+                        className="marketplace-own-opml"
+                        disabled={busy}
+                        onClick={() => fileRef.current?.click()}
+                    >
+                        <Icon name="download" className="button-icon" />
+                        {L("IMPORT_OPML")}
+                    </button>
+                    <input
+                        ref={fileRef}
+                        type="file"
+                        accept=".opml,.xml,text/xml,application/xml"
+                        hidden
+                        onChange={importFile}
+                    />
+
+                    {status ? (
+                        <p className={"marketplace-own-status " + status.kind}>{status.text}</p>
+                    ) : null}
+                </div>
 
                 <div className="marketplace-categories">
                     <button

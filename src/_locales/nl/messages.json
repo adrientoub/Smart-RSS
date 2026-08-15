@@ -158,6 +158,18 @@
   "ADD_RSS_SOURCE": {
     "message": "RSS-bron toevoegen"
   },
+  "ALREADY_SUBSCRIBED": {
+    "message": "Deze feed staat al in je lijst."
+  },
+  "IMPORT_OPML": {
+    "message": "OPML importeren"
+  },
+  "OPML_IMPORTED": {
+    "message": "{count} feeds geïmporteerd."
+  },
+  "OR": {
+    "message": "of"
+  },
   "FEED_MARKETPLACE": {
     "message": "Feeds verkennen"
   },

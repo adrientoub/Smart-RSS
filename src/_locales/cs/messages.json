@@ -158,6 +158,18 @@
   "ADD_RSS_SOURCE": {
     "message": "Přidat RSS zdroj"
   },
+  "ALREADY_SUBSCRIBED": {
+    "message": "Tento kanál už máte v seznamu."
+  },
+  "IMPORT_OPML": {
+    "message": "Importovat OPML"
+  },
+  "OPML_IMPORTED": {
+    "message": "Importováno {count} kanálů."
+  },
+  "OR": {
+    "message": "nebo"
+  },
   "FEED_MARKETPLACE": {
     "message": "Procházet kanály"
   },

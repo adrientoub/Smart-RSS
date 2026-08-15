@@ -218,7 +218,7 @@ export const feedCatalog: readonly CatalogFeed[] = [
         category: "tech",
     },
     {
-        url: "https://www.tomshardware.com/feeds/all",
+        url: "https://www.tomshardware.com/feeds.xml",
         title: "Tom's Hardware",
         description: "PC components, benchmarks and build advice.",
         site: "https://www.tomshardware.com",
@@ -364,7 +364,7 @@ export const feedCatalog: readonly CatalogFeed[] = [
 
     // Science
     {
-        url: "https://api.quantamagazine.org/feed/",
+        url: "https://www.quantamagazine.org/feed/",
         title: "Quanta Magazine",
         description: "Mathematics, physics and biology reported without the hype.",
         site: "https://www.quantamagazine.org",
@@ -485,7 +485,7 @@ export const feedCatalog: readonly CatalogFeed[] = [
         category: "gaming",
     },
     {
-        url: "https://www.polygon.com/rss/index.xml",
+        url: "https://www.polygon.com/feed/",
         title: "Polygon",
         description: "Games, film and television seen as popular culture.",
         site: "https://www.polygon.com",
@@ -507,7 +507,7 @@ export const feedCatalog: readonly CatalogFeed[] = [
         category: "gaming",
     },
     {
-        url: "https://feeds.ign.com/ign/all",
+        url: "https://www.ign.com/rss/articles/feed",
         title: "IGN",
         description: "Broad games and entertainment coverage, reviews included.",
         site: "https://www.ign.com",
@@ -516,7 +516,7 @@ export const feedCatalog: readonly CatalogFeed[] = [
 
     // Business
     {
-        url: "https://www.ft.com/rss/home",
+        url: "https://www.ft.com/rss/home/international",
         title: "Financial Times",
         description: "Global business, markets and economic policy.",
         site: "https://www.ft.com",

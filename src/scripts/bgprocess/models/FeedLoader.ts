@@ -88,10 +88,16 @@ export default class FeedLoader {
             base: source.base,
             title: source.title,
         });
-        const { items: parsedItems, sourceData } = parser.parse();
+        const parsed = parser.parse();
+        const sourceData: Partial<SourceRecord> = { ...parsed.sourceData };
+        // uid is the subscription's identity: following a redirect rewrites
+        // `url`, and recomputing uid from it would break duplicate detection.
+        if (source.uid) {
+            delete sourceData.uid;
+        }
         // The parser is pure, so persisting what it discovered is done here.
-        this.save(sourceData as Partial<SourceRecord>);
-        return parsedItems;
+        this.save(sourceData);
+        return parsed.items;
     }
 
     private matchesQuery(item: { title: string; author: string; content: string }): boolean {

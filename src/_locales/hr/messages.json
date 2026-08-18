@@ -480,7 +480,7 @@
     "message": "Pomakni dolje"
   },
   "EXTENSION_NAME": {
-    "message": "Smart RSS"
+    "message": "Smarter RSS"
   },
   "EXTENSION_DESCRIPTION": {
     "message": "RSS čitač"
@@ -648,16 +648,16 @@
     "message": "Ako je omogućeno, preglednik će prikazati obavijest kada se pronađu novi članci."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_S56NYT": {
-    "message": "SMART je poseban format proširenja Smart RSS. Izvozi i uvozi kanale i njihove članke."
+    "message": "SMART je poseban format proširenja Smarter RSS. Izvozi i uvozi kanale i njihove članke."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_EXPORT_FEEDS_FROM_SMA_1B1P69M": {
-    "message": "Format OPML možete koristiti za izvoz kanala iz Smart RSS-a u Operu 12."
+    "message": "Format OPML možete koristiti za izvoz kanala iz Smarter RSS-a u Operu 12."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_HPG76L": {
-    "message": "SMART je poseban format proširenja Smart RSS. Izvozi i uvozi sve kanale, mape i članke."
+    "message": "SMART je poseban format proširenja Smarter RSS. Izvozi i uvozi sve kanale, mape i članke."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_IMPORT_FEEDS_AND_FOLD_1MKEBH7": {
-    "message": "Format OPML možete koristiti za uvoz kanala i mapa iz Opere 12 u Smart RSS."
+    "message": "Format OPML možete koristiti za uvoz kanala i mapa iz Opere 12 u Smarter RSS."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_YOURS_FEEDS_AND_ARTICLES_AN_VTXBG9": {
     "message": "Time će se ukloniti svi vaši kanali, članci i postavke."
@@ -666,7 +666,7 @@
     "message": "Time će se ukloniti predmemorija svih uklonjenih članaka. Neki uklonjeni članci mogu se ponovno pojaviti."
   },
   "STATIC_SMART_RSS_OPTIONS_H34A8V": {
-    "message": "Smart RSS - Opcije"
+    "message": "Smarter RSS - Opcije"
   },
   "STATIC_LOCALIZATION_EUKV6O": {
     "message": "Lokalizacija"
@@ -909,7 +909,7 @@
     "message": "Uvoz"
   },
   "STATIC_WARNING_SMART_RSS_WILL_RELOAD_AFTER_FINISHING_TH_1A77IDQ": {
-    "message": "Upozorenje: Smart RSS ponovno će se učitati nakon dovršetka uvoza u formatu SMART; to je očekivano ponašanje"
+    "message": "Upozorenje: Smarter RSS ponovno će se učitati nakon dovršetka uvoza u formatu SMART; to je očekivano ponašanje"
   },
   "STATIC_ADVANCED_FEATURES_MOSTLY_FOR_TROUBLESHOOTING_PUR_120JK38": {
     "message": "Napredne značajke, uglavnom namijenjene rješavanju problema"

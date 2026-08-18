@@ -17,5 +17,5 @@ import { waitForBackground } from "./shared/messages.ts";
 
     await import("./app/options.js");
 })().catch((error) => {
-    console.error("Smart RSS options failed to start", error);
+    console.error("Smarter RSS options failed to start", error);
 });

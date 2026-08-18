@@ -344,7 +344,7 @@ function handleExportOPML() {
     opmlExportStatus.textContent = translate("EXPORTING_WAIT");
 
     const start =
-        '<?xml version="1.0" encoding="utf-8"?>\n<opml version="1.0">\n<head>\n\t<title>Newsfeeds exported from Smart RSS</title>\n</head>\n<body>';
+        '<?xml version="1.0" encoding="utf-8"?>\n<opml version="1.0">\n<head>\n\t<title>Newsfeeds exported from Smarter RSS</title>\n</head>\n<body>';
     const end = "\n</body>\n</opml>";
 
     const parser = new DOMParser();

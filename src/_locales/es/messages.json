@@ -480,7 +480,7 @@
     "message": "Desplazarse hacia abajo"
   },
   "EXTENSION_NAME": {
-    "message": "Smart RSS"
+    "message": "Smarter RSS"
   },
   "EXTENSION_DESCRIPTION": {
     "message": "Lector RSS"
@@ -648,16 +648,16 @@
     "message": "Si se activa, el navegador mostrará una notificación cuando se encuentren artículos nuevos."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_S56NYT": {
-    "message": "SMART es un formato especial de la extensión Smart RSS. Exporta e importa tanto canales como sus artículos."
+    "message": "SMART es un formato especial de la extensión Smarter RSS. Exporta e importa tanto canales como sus artículos."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_EXPORT_FEEDS_FROM_SMA_1B1P69M": {
-    "message": "Puede usar el formato OPML para exportar canales de Smart RSS a Opera 12."
+    "message": "Puede usar el formato OPML para exportar canales de Smarter RSS a Opera 12."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_HPG76L": {
-    "message": "SMART es un formato especial de la extensión Smart RSS. Exporta e importa todos los canales, carpetas y artículos."
+    "message": "SMART es un formato especial de la extensión Smarter RSS. Exporta e importa todos los canales, carpetas y artículos."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_IMPORT_FEEDS_AND_FOLD_1MKEBH7": {
-    "message": "Puede usar el formato OPML para importar canales y carpetas de Opera 12 a Smart RSS."
+    "message": "Puede usar el formato OPML para importar canales y carpetas de Opera 12 a Smarter RSS."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_YOURS_FEEDS_AND_ARTICLES_AN_VTXBG9": {
     "message": "Esto eliminará todos sus canales, artículos y ajustes."
@@ -666,7 +666,7 @@
     "message": "Esto eliminará la caché de artículos eliminados. Puede hacer que algunos artículos eliminados vuelvan a aparecer."
   },
   "STATIC_SMART_RSS_OPTIONS_H34A8V": {
-    "message": "Smart RSS - Opciones"
+    "message": "Smarter RSS - Opciones"
   },
   "STATIC_LOCALIZATION_EUKV6O": {
     "message": "Idioma"
@@ -909,7 +909,7 @@
     "message": "Importar"
   },
   "STATIC_WARNING_SMART_RSS_WILL_RELOAD_AFTER_FINISHING_TH_1A77IDQ": {
-    "message": "Advertencia: Smart RSS se recargará al finalizar la importación SMART; este es el comportamiento esperado"
+    "message": "Advertencia: Smarter RSS se recargará al finalizar la importación SMART; este es el comportamiento esperado"
   },
   "STATIC_ADVANCED_FEATURES_MOSTLY_FOR_TROUBLESHOOTING_PUR_120JK38": {
     "message": "Funciones avanzadas, principalmente para solucionar problemas"

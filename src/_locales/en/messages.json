@@ -480,7 +480,7 @@
     "message": "Scroll down"
   },
   "EXTENSION_NAME": {
-    "message": "Smart RSS"
+    "message": "Smarter RSS"
   },
   "EXTENSION_DESCRIPTION": {
     "message": "RSS Reader"
@@ -648,16 +648,16 @@
     "message": "If enabled, browser will display a notification when new articles are found."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_S56NYT": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports both, feeds and feeds's articles."
+    "message": "SMART is special format of Smarter RSS extension. It exports/imports both, feeds and feeds's articles."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_EXPORT_FEEDS_FROM_SMA_1B1P69M": {
-    "message": "You can use OPML format to export feeds from Smart RSS to Opera 12."
+    "message": "You can use OPML format to export feeds from Smarter RSS to Opera 12."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_HPG76L": {
-    "message": "SMART is special format of Smart RSS extension. It exports/imports all feeds, folders and articles."
+    "message": "SMART is special format of Smarter RSS extension. It exports/imports all feeds, folders and articles."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_IMPORT_FEEDS_AND_FOLD_1MKEBH7": {
-    "message": "You can use OPML format to import feeds and folders from Opera 12 to Smart RSS."
+    "message": "You can use OPML format to import feeds and folders from Opera 12 to Smarter RSS."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_YOURS_FEEDS_AND_ARTICLES_AN_VTXBG9": {
     "message": "This will remove all yours feeds and articles and settings."
@@ -666,7 +666,7 @@
     "message": "This will remove all removed articles cache. It may cause some removed articles to appear again."
   },
   "STATIC_SMART_RSS_OPTIONS_H34A8V": {
-    "message": "Smart RSS - Options"
+    "message": "Smarter RSS - Options"
   },
   "STATIC_LOCALIZATION_EUKV6O": {
     "message": "Localization"
@@ -909,7 +909,7 @@
     "message": "Import"
   },
   "STATIC_WARNING_SMART_RSS_WILL_RELOAD_AFTER_FINISHING_TH_1A77IDQ": {
-    "message": "Warning: Smart RSS will reload after finishing the SMART import, it's expected behavior"
+    "message": "Warning: Smarter RSS will reload after finishing the SMART import, it's expected behavior"
   },
   "STATIC_ADVANCED_FEATURES_MOSTLY_FOR_TROUBLESHOOTING_PUR_120JK38": {
     "message": "Advanced features. Mostly for troubleshooting purposes"

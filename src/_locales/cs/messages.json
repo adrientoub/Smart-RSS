@@ -480,7 +480,7 @@
     "message": "Posunout níže"
   },
   "EXTENSION_NAME": {
-    "message": "Smart RSS"
+    "message": "Smarter RSS"
   },
   "EXTENSION_DESCRIPTION": {
     "message": "Čtečka RSS"
@@ -648,16 +648,16 @@
     "message": "Je-li povoleno, prohlížeč při nalezení nových článků zobrazí oznámení."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_S56NYT": {
-    "message": "SMART je speciální formát rozšíření Smart RSS. Exportuje a importuje zdroje i jejich články."
+    "message": "SMART je speciální formát rozšíření Smarter RSS. Exportuje a importuje zdroje i jejich články."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_EXPORT_FEEDS_FROM_SMA_1B1P69M": {
-    "message": "Formát OPML můžete použít k exportu zdrojů ze Smart RSS do Opery 12."
+    "message": "Formát OPML můžete použít k exportu zdrojů ze Smarter RSS do Opery 12."
   },
   "STATIC_SMART_IS_SPECIAL_FORMAT_OF_SMART_RSS_EXTENSION_I_HPG76L": {
-    "message": "SMART je speciální formát rozšíření Smart RSS. Exportuje a importuje všechny zdroje, složky a články."
+    "message": "SMART je speciální formát rozšíření Smarter RSS. Exportuje a importuje všechny zdroje, složky a články."
   },
   "STATIC_YOU_CAN_USE_OPML_FORMAT_TO_IMPORT_FEEDS_AND_FOLD_1MKEBH7": {
-    "message": "Formát OPML můžete použít k importu zdrojů a složek z Opery 12 do Smart RSS."
+    "message": "Formát OPML můžete použít k importu zdrojů a složek z Opery 12 do Smarter RSS."
   },
   "STATIC_THIS_WILL_REMOVE_ALL_YOURS_FEEDS_AND_ARTICLES_AN_VTXBG9": {
     "message": "Tímto odstraníte všechny své zdroje, články a nastavení."
@@ -666,7 +666,7 @@
     "message": "Tímto vymažete mezipaměť všech odstraněných článků. Některé odstraněné články se mohou znovu objevit."
   },
   "STATIC_SMART_RSS_OPTIONS_H34A8V": {
-    "message": "Smart RSS - Možnosti"
+    "message": "Smarter RSS - Možnosti"
   },
   "STATIC_LOCALIZATION_EUKV6O": {
     "message": "Lokalizace"
@@ -909,7 +909,7 @@
     "message": "Importovat"
   },
   "STATIC_WARNING_SMART_RSS_WILL_RELOAD_AFTER_FINISHING_TH_1A77IDQ": {
-    "message": "Upozornění: Po dokončení importu SMART se Smart RSS znovu načte; jde o očekávané chování"
+    "message": "Upozornění: Po dokončení importu SMART se Smarter RSS znovu načte; jde o očekávané chování"
   },
   "STATIC_ADVANCED_FEATURES_MOSTLY_FOR_TROUBLESHOOTING_PUR_120JK38": {
     "message": "Pokročilé funkce. Určeno především k řešení potíží"

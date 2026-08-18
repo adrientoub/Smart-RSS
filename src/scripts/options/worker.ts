@@ -1,5 +1,5 @@
 /**
- * Bulk import of a Smart RSS backup, off the options page's thread.
+ * Bulk import of a Smarter RSS backup, off the options page's thread.
  *
  * Writes straight into the database rather than going through the background:
  * this replaces whole tables, and the options page reloads the extension once

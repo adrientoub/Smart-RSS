@@ -152,7 +152,7 @@ export default class Loader {
         if (settings.get("systemNotifications")) {
             browser.notifications.create({
                 type: "basic",
-                title: "Smart RSS",
+                title: "Smarter RSS",
                 message: translate("NEW_ARTICLES_FOUND"),
             });
         }

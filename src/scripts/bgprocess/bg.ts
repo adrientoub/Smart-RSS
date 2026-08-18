@@ -242,7 +242,7 @@ const appStarted = new Promise<true>((resolve, reject) => {
         // Without this the promise stays pending, and every page waiting on
         // "background-ready" hangs on a blank screen instead of failing.
         .catch((error) => {
-            console.error("Smart RSS background failed to start", error);
+            console.error("Smarter RSS background failed to start", error);
             Animation.stop();
             reject(error);
         });

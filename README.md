@@ -1,13 +1,14 @@
-# Smart RSS extension
+# Smarter RSS
 
-A browser extension RSS reader: a three-pane feed reader that fetches, stores and renders
-your subscriptions entirely locally, with no account and no server.
+Smarter RSS is an upgraded version of Smart RSS: a three-pane browser extension that
+fetches, stores and renders your subscriptions entirely locally, with no account and no
+server.
 
-This repository is a fork of [zakius/Smart-RSS](https://github.com/zakius/Smart-RSS),
-itself a continuation of the reader originally developed for Opera 15+ by BS-Harou
-(Martin Kadlec).
+It builds on [zakius/Smart-RSS](https://github.com/zakius/Smart-RSS), itself a
+continuation of the reader originally developed for Opera 15+ by BS-Harou (Martin
+Kadlec), while modernizing the interface, architecture and browser support.
 
-## What changed in this fork
+## What Smarter RSS upgrades
 
 - **JavaScript → TypeScript.** New code is written in TypeScript; the remaining `.js`
   files are converted opportunistically as they are touched.

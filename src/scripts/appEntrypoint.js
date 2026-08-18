@@ -25,5 +25,5 @@ import { waitForBackground } from "./shared/messages.ts";
     startApplyingChanges();
 })().catch((error) => {
     // Nothing renders if this rejects, so the page would just sit there loading.
-    console.error("Smart RSS failed to start", error);
+    console.error("Smarter RSS failed to start", error);
 });

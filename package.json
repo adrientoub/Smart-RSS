@@ -2,7 +2,7 @@
   "name": "smartrss",
   "version": "3.0.0",
   "description": "RSS Reader",
-  "homepage": "https://github.com/zakius/Smart-RSS",
+  "homepage": "https://github.com/adrientoub/Smart-RSS",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/firefox-webext-browser": "^120.0.4",
@@ -45,12 +45,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/zakius/Smart-RSS.git"
+    "url": "git://github.com/adrientoub/Smart-RSS.git"
   },
-  "author": "zakius",
+  "author": "adrientoub",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zakius/Smart-RSS/issues"
+    "url": "https://github.com/adrientoub/Smart-RSS/issues"
   },
   "type": "commonjs",
   "engines": {

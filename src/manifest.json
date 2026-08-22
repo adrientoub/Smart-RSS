@@ -36,11 +36,12 @@
     "open_in_tab": true
   },
   "icons": {
-    "19": "images/icon19-arrow-orange.png",
-    "48": "images/48-inverted-round.png",
-    "64": "images/64-inverted-round.png",
-    "96": "images/96-inverted-round.png",
-    "128": "images/128-inverted-round.png"
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "64": "images/icon64.png",
+    "96": "images/icon96.png",
+    "128": "images/icon128.png"
   },
   "commands": {
     "_execute_action": {
